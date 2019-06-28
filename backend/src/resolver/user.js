@@ -189,15 +189,23 @@ async function changeCard(root, args, ctx, info) {
     const user = await prisma.user({email: ctx.user.email});
 
     if (!user.stripe_customer_id) {
-        throw new GQLError({message: 'Stripe customer id not found in DB', code: 404});
-    }
-
-    try {
-        await stripe.changeCard(user.stripe_customer_id, newStripeTokToken);
-        return true
-    } catch (e) {
-        log.error('Change card error:', e);
-        return false;
+        // throw new GQLError({message: 'Stripe customer id not found in DB', code: 404});
+        try {
+            const customer_id = (await stripe.createCustomer(newStripeTokToken, ctx.user.email)).id;
+            await prisma.updateUser({where: {email: ctx.user.email}, data: {stripe_customer_id: customer_id}});
+            return true;
+        } catch (e) {
+            log.error('Create customer error:', e);
+            return false;
+        }
+    } else {
+        try {
+            await stripe.changeCard(user.stripe_customer_id, newStripeTokToken);
+            return true
+        } catch (e) {
+            log.error('Change card error:', e);
+            return false;
+        }
     }
 }
 

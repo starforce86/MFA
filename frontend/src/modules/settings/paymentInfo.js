@@ -1,12 +1,15 @@
 import React, {Component} from "react";
 import {withApollo} from "react-apollo";
 import logger from "../../util/logger";
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faEdit, faSave} from '@fortawesome/free-solid-svg-icons'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faEdit, faSave, faWindowClose} from '@fortawesome/free-solid-svg-icons';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import * as moment from 'moment';
 import * as _ from 'lodash';
 import SubscribePlan from "../../components/stripe/SubscribePlan";
 import gql from "graphql-tag";
+import PlanSelector from "../../components/stripe/PlanSelector";
+
 
 const log = logger('PaymentInfo');
 
@@ -18,13 +21,25 @@ const ChangeCardMutation = gql`
     }
 `;
 
+const PURCHASE = gql`
+    mutation purchase($token: String!, $plan: StripePlan!) {
+        purchase(stripe_tok_token: $token, plan: $plan)
+    }
+`;
+
 class PaymentInfo extends Component {
     state = {
-        edit: false
+        edit: false,
+        plan: 'MONTHLY',
+        inProgress: false,
     };
 
     handleEdit = () => {
         this.setState({edit: true})
+    };
+
+    handleCancel = () => {
+        this.setState({edit: false})
     };
 
     handleSave = async () => {
@@ -32,15 +47,32 @@ class PaymentInfo extends Component {
         try {
             const token = await this.getTokenFn();
             if (!token) return;
-            const res = await this.props.client.mutate({
-                mutation: ChangeCardMutation,
-                variables: {
-                    newStripeTokToken: token.id
+            if (this.props.user.billing_subscription_active) {
+                this.setState({inProgress: true});
+                const res = await this.props.client.mutate({
+                    mutation: ChangeCardMutation,
+                    variables: {
+                        newStripeTokToken: token.id
+                    }
+                });
+                this.setState({inProgress: false});
+                if(res) {
+                    this.props.user.last4 = token.card.last4;
+                    this.setState({edit: false});
                 }
-            });
-            if(res) {
-                this.props.user.last4 = token.card.last4;
-                this.setState({edit: false});
+            } else {
+                this.setState({inProgress: true});
+                const res = await this.props.client.mutate({
+                    mutation: PURCHASE,
+                    variables: {
+                        token: token.id,
+                        plan: this.state.plan
+                    }
+                });
+                this.setState({inProgress: false});
+                if(res) {
+                    location.reload();
+                }
             }
         } catch (error) {
             log.trace(error);
@@ -53,16 +85,27 @@ class PaymentInfo extends Component {
         ).format("YYYY-MM-DD HH:mm");
         return (
             <>
-                <div style={{display: "flex"}}>
+                <div style={{ display: "flex", paddingTop: 10 }}>
                     <h6>Payment info</h6>
-                    <FontAwesomeIcon onClick={this.state.edit ? this.handleSave : this.handleEdit}
-                                     style={{cursor: "pointer", margin: "2px", marginLeft: "8px"}} color="white"
-                                     icon={this.state.edit ? faSave : faEdit}/>
+                    {this.state.edit
+                        ? <React.Fragment>
+                            <FontAwesomeIcon onClick={this.handleSave}
+                                style={{ cursor: "pointer", margin: "2px", marginLeft: "8px" }} color="white"
+                                icon={faSave} />
+                            <FontAwesomeIcon onClick={this.handleCancel}
+                                style={{ cursor: "pointer", margin: "2px", marginLeft: "8px" }} color="white"
+                                icon={faWindowClose} />
+                        </React.Fragment>
+                        : <FontAwesomeIcon onClick={this.handleEdit}
+                            style={{ cursor: "pointer", margin: "2px", marginLeft: "8px" }} color="white"
+                            icon={faEdit} />}
                 </div>
-                {this.state.edit ?
+                {this.state.edit && !this.state.inProgress ?
                     (
                         <div style={{width: "400px", marginBottom: "1rem"}}>
                             <SubscribePlan getToken={fn => this.getTokenFn = fn}/>
+                            {!this.props.user.billing_subscription_active && 
+                            <PlanSelector onChange={value => this.setState({plan: value})} value={this.state.plan}/>}
                         </div>
                     ) :
                     (<>
@@ -70,6 +113,7 @@ class PaymentInfo extends Component {
                         {this.props.user.last4 ? <p><b>Card №:</b> **** **** **** {this.props.user.last4}</p> : null}
                     </>)
                 }
+                {this.state.inProgress && <div style={{ width: "400px", textAlign: 'center' }}><CircularProgress color="secondary" /></div>}
             </>
         );
     }

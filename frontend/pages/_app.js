@@ -574,24 +574,21 @@ class MyApp extends App {
                                                     <button
                                                         className="btn btn-primary"
                                                         onClick={async () => {
-                                                            if (confirm('Are you sure?')) {
-                                                                const CANCEL_SUBSCRIPTION = gql`
+                                                            const CANCEL_SUBSCRIPTION = gql`
                                                                     mutation CancelSubscriptionMutation {
                                                                         delete_subscription
                                                                     }
                                                                 `;
 
-                                                                try {
-                                                                    const res = await this.props.apolloClient.mutate({
-                                                                        mutation: CANCEL_SUBSCRIPTION
-                                                                    });
+                                                            try {
+                                                                const res = await this.props.apolloClient.mutate({
+                                                                    mutation: CANCEL_SUBSCRIPTION
+                                                                });
 
-                                                                    alert('Success');
-                                                                    location.reload();
-                                                                } catch (e) {
-                                                                    alert('Error: ' + e.message);
-                                                                    log.error('Cancel purchase error:', e);
-                                                                }
+                                                                location.reload();
+                                                            } catch (e) {
+                                                                alert('Error: ' + e.message);
+                                                                log.error('Cancel purchase error:', e);
                                                             }
                                                         }}
                                                     >

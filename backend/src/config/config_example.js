@@ -194,7 +194,7 @@ const config = {
         max_user_avatar_size_in_bytes: 2500 * 1024 // 2.5MB
     },
     maintenance_mode: {
-        maintenance_mode_enabled: true,
+        maintenance_mode_enabled: false,
         message: 'Sorry, we are down for maintenance',
         allowed_hosts: [
             '127.1.0.1',
@@ -216,10 +216,10 @@ const config = {
         level: -1 // https://github.com/expressjs/compression#level
     },
     stripe: {
-        sk_token: 'sk_test_GieF9Ood8iiqu8zahg1Ir1pha3rohHaidae',
+        sk_token: 'sk_test_DRmXbnm90ppJhPsz1WjuSAnu',
         plans:{
-            monthly_plan_id: 'plan_EoWWUP8CrYGuWl',
-            yearly_plan_id: 'plan_EyElcHbfxKJdWp',
+            monthly_plan_id: 'plan_FKDSHOa4hi6uGZ',
+            yearly_plan_id: 'plan_FKDShVVk9AyCsp',
         }
     },
     likelog: {
