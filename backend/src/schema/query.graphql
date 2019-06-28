@@ -1,0 +1,44 @@
+type Query {
+    """
+    Get cached value (first request will not be cached).
+
+    Example of query:
+
+    {
+        request_1: cachedResponse(id: 1)
+        request_2: cachedResponse(id: 2)
+        request_3: cachedResponse(id: 3)
+        request_4: cachedResponse(id: 4)
+    }
+    """
+    cachedResponse(id: Int!): String @cost(complexity: 5)
+
+    """Clear cached value"""
+    clearCachedResponse(id: Int!): Boolean
+
+    systemInfo: SystemInfo @cost(complexity: 50) @cacheControl(maxAge: 5)
+    isPurchaseActive: Boolean
+    featured_videos: [Video]
+
+    activationCode(where: ActivationCodeWhereUniqueInput!): ActivationCode
+    activationCodes(where: ActivationCodeWhereInput, orderBy: ActivationCodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActivationCode]!
+    activationCodesConnection(where: ActivationCodeWhereInput, orderBy: ActivationCodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ActivationCodeConnection!
+    category(where: CategoryWhereUniqueInput!): Category
+    categories(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Category]!
+    categoriesConnection(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CategoryConnection!
+    post(where: PostWhereUniqueInput!): Post
+    posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
+    postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
+    restoreCode(where: RestoreCodeWhereUniqueInput!): RestoreCode
+    restoreCodes(where: RestoreCodeWhereInput, orderBy: RestoreCodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RestoreCode]!
+    restoreCodesConnection(where: RestoreCodeWhereInput, orderBy: RestoreCodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RestoreCodeConnection!
+    tag(where: TagWhereUniqueInput!): Tag
+    tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag]!
+    tagsConnection(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TagConnection!
+    user(where: UserWhereUniqueInput!): User
+    users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+    usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+    video(where: VideoWhereUniqueInput!): Video
+    videos(where: VideoWhereInput, orderBy: VideoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Video]!
+    videosConnection(where: VideoWhereInput, orderBy: VideoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): VideoConnection!
+}

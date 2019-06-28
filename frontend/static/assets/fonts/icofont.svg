@@ -1,0 +1,14 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg">
+<defs>
+<font id="icofont" horiz-adv-x="1000" >
+<font-face font-family="IcoFont" font-weight="400" font-style="Regular" units-per-em="1000" ascent="850" descent="-150" />
+<missing-glyph horiz-adv-x="1000" />
+<glyph glyph-name="play-alt-2" horiz-adv-x="1000" unicode="&#xeca7;" d="M501 850c-278 0-501-224-501-503 3-276 224-497 501-497 137 0 256 50 353 147 97 97 146 216 146 353 1 275-224 500-499 500z m4-920c-230 0-417 186-417 415 0 231 186 418 417 417 231-1 416-186 415-418-1-230-186-413-415-414z m40 523c-49 30-98 59-147 89-4 3-7 3-6-4 0-1 0-2 0-4v-388c0-12 0-12 11-6 105 55 209 110 314 165 12 7 24 13 38 21-3 2-4 3-6 4-68 41-136 82-204 123z" />
+<glyph glyph-name="thin-down" horiz-adv-x="1000" unicode="&#xeac8;" d="M800 497l-300-309-300 309 17 16 283-292 284 291 16-15z" />
+<glyph glyph-name="square-down" horiz-adv-x="1000" unicode="&#xeaba;" d="M871 788h-742c-37 0-66-30-66-67v-742c0-37 29-66 66-66h742c37 0 66 29 66 66v742c1 37-29 67-66 67z m-57-337l-296-296c-10-10-26-10-35 0l-296 296c-10 10-10 26 0 35l59 59c9 10 25 10 35 0l202-202c9-10 25-10 35 0l202 202c9 10 25 10 35 0l59-59c9-9 9-25 0-35z" />
+<glyph glyph-name="navigation-menu" horiz-adv-x="1000" unicode="&#xefa2;" d="M63 628v-24c0-38 30-69 68-69h738c38 0 68 31 68 69v24c0 38-30 69-68 69h-738c-38 0-68-31-68-69z m68-359h738c38 0 68 31 68 69v24c0 38-30 69-68 69h-738c-38 0-68-31-68-69v-24c0-38 30-69 68-69z m0-266h738c38 0 68 30 68 68v25c0 38-30 68-68 68h-738c-38 0-68-30-68-68v-25c0-38 30-68 68-68z" />
+</font>
+</defs>
+</svg>

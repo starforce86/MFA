@@ -1,0 +1,73 @@
+version: '2'
+services:
+    postgres:
+        image: 'postgres:latest'
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+            PGDATA: /data/postgres
+        ports:
+            - "5445:5432"
+        volumes:
+            - './data/postgres:/data/postgres'
+        networks:
+            - uxbackend_network_debug
+    mongodb:
+        image: 'mongo:latest'
+        environment:
+            - MONGO_DATA_DIR=/data/db
+            - MONGO_LOG_DIR=/dev/null
+        volumes:
+            - './data/mongodb:/data/db'
+        ports:
+            - '27017:27017'
+        networks:
+            - uxbackend_network_debug
+        command: 'mongod --smallfiles --logpath=/dev/null'
+    pgadmin:
+        image: fenglc/pgadmin4
+        links:
+            - 'postgres:postgres'
+        depends_on:
+            - postgres
+        volumes:
+            - './data/pgadmin:/root/.pgadmin'
+        ports:
+            - '5775:5050'
+        networks:
+            - uxbackend_network_debug
+        environment:
+            DEFAULT_USER: admin@admin.com
+            DEFAULT_PASSWORD: admin
+    prisma:
+        image: prismagraphql/prisma:1.29.2
+        networks:
+            - uxbackend_network_debug
+        ports:
+            - "4466:4466"
+        depends_on:
+            - postgres
+        links:
+            - 'postgres:postgres'
+        environment:
+            PRISMA_CONFIG: |
+                port: 4466
+                databases:
+                    default:
+                        connector: postgres
+                        host: postgres
+                        port: 5432
+                        user: postgres
+                        password: postgres
+                        connectionLimit: 15
+    redis:
+        image: redis:latest
+        ports:
+            - "6379:6379"
+        networks:
+            - uxbackend_network_debug
+        volumes:
+            - ./data/redis:/data
+networks:
+    uxbackend_network_debug:
+        driver: bridge

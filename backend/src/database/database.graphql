@@ -1,0 +1,118 @@
+type User {
+    id: ID! @unique
+    createdAt: DateTime!
+    updatedAt: DateTime!
+
+    firstname: String
+    lastname: String
+
+    username: String
+    email: String! @unique
+    phone: String @unique
+    role: UserRole! @default(value: "USER_VIEWER")
+
+    password_hash: String!
+    password_salt: String! @unique
+
+    avatar: String
+    background_image: String
+    about_text: String
+
+    my_videos: [Video!]! @relation(name: "VideoAuthorRel")
+
+    liked_videos: [Video!]! @relation(name: "VideoLikeUsersRel")
+    watched_videos: [Video!]! @relation(name: "WatchedVideoUsersRel")
+
+    my_subscription_users: [User!]! @relation(name: "UserSubscriptionsRel")
+    subscribed_users: [User!]! @relation(name: "UserSubscriptionsRel")
+
+    billing_subscription_active: Boolean! @default(value: "false")
+    stripe_customer_id: String @unique
+    stripe_subsciption_json: Json
+
+    last_login_date: DateTime
+}
+
+type ActivationCode {
+    id: ID! @unique
+    createdAt: DateTime!
+    updatedAt: DateTime!
+
+    email: String! @unique
+    valid_until: DateTime!
+    code: String!
+}
+
+type RestoreCode {
+    id: ID! @unique
+    createdAt: DateTime!
+    updatedAt: DateTime!
+
+    email: String! @unique
+    valid_until: DateTime!
+    code: String!
+}
+
+enum UserRole {
+    USER_VIEWER
+    USER_PUBLISHER
+    MODERATOR
+    ADMIN
+}
+
+type Video {
+    id: ID! @unique
+    createdAt: DateTime!
+    updatedAt: DateTime!
+
+    title: String
+    description: String
+    publish_date: DateTime
+
+    file_url: String
+    video_duration: Int
+
+    preview_url: String
+
+    preview_video_url: String
+    preview_video_duration: String
+
+    author: User! @relation(name: "VideoAuthorRel")
+    categories: [Category!]! @relation(name: "VideoCategoryRel")
+
+    like_users: [User!]! @relation(name: "VideoLikeUsersRel")
+    watched_users: [User!]! @relation(name: "WatchedVideoUsersRel")
+
+    tags: [Tag!]! @relation(name: "VideosTagsRel")
+}
+
+type Tag {
+    id: ID! @unique
+    createdAt: DateTime!
+    updatedAt: DateTime!
+
+    text: String!
+    videos: [Video!]! @relation(name: "VideosTagsRel")
+}
+
+type Category {
+    id: ID! @unique
+    createdAt: DateTime!
+    updatedAt: DateTime!
+
+    title: String!
+    description: String
+
+    videos: [Video!]! @relation(name: "VideoCategoryRel")
+}
+
+type Post {
+    id: ID! @unique
+    createdAt: DateTime!
+    updatedAt: DateTime!
+
+    title: String!
+    mainImageUrl: String
+    text: String!
+    author: User!
+}

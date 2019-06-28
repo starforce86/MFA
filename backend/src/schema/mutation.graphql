@@ -1,0 +1,53 @@
+type Mutation {
+    sign_up(email: String!, firstname: String, lastname: String, phone: String, password: String, activation_code: String, step: SignUpStep!, role: UserRole): UserAuthResponse!
+    sign_in(email: String!, password: String!): UserAuthResponse!
+    change_password(old_password: String!, new_password: String!): UserAuthResponse!
+    restore_password(email: String!, restore_code: String, new_password: String, step: RestorePasswordStep!): UserAuthResponse!
+    purchase(stripe_tok_token: String!, plan: StripePlan!): Boolean
+    changeCard(newStripeTokToken: String!): Boolean
+    delete_subscription: Boolean
+    addContactUsMessage(email: String! text: String!): Boolean
+
+    createActivationCode(data: ActivationCodeCreateInput!): ActivationCode!
+    updateActivationCode(data: ActivationCodeUpdateInput!, where: ActivationCodeWhereUniqueInput!): ActivationCode
+    updateManyActivationCodes(data: ActivationCodeUpdateManyMutationInput!, where: ActivationCodeWhereInput): BatchPayload!
+    upsertActivationCode(where: ActivationCodeWhereUniqueInput!, create: ActivationCodeCreateInput!, update: ActivationCodeUpdateInput!): ActivationCode!
+    deleteActivationCode(where: ActivationCodeWhereUniqueInput!): ActivationCode
+    deleteManyActivationCodes(where: ActivationCodeWhereInput): BatchPayload!
+    createCategory(data: CategoryCreateInput!): Category!
+    updateCategory(data: CategoryUpdateInput!, where: CategoryWhereUniqueInput!): Category
+    updateManyCategories(data: CategoryUpdateManyMutationInput!, where: CategoryWhereInput): BatchPayload!
+    upsertCategory(where: CategoryWhereUniqueInput!, create: CategoryCreateInput!, update: CategoryUpdateInput!): Category!
+    deleteCategory(where: CategoryWhereUniqueInput!): Category
+    deleteManyCategories(where: CategoryWhereInput): BatchPayload!
+    #    createPost(data: PostCreateInput!): Post!
+    #    updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
+    #    updateManyPosts(data: PostUpdateManyMutationInput!, where: PostWhereInput): BatchPayload!
+    #    upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
+    #    deletePost(where: PostWhereUniqueInput!): Post
+    #    deleteManyPosts(where: PostWhereInput): BatchPayload!
+    createRestoreCode(data: RestoreCodeCreateInput!): RestoreCode!
+    updateRestoreCode(data: RestoreCodeUpdateInput!, where: RestoreCodeWhereUniqueInput!): RestoreCode
+    updateManyRestoreCodes(data: RestoreCodeUpdateManyMutationInput!, where: RestoreCodeWhereInput): BatchPayload!
+    upsertRestoreCode(where: RestoreCodeWhereUniqueInput!, create: RestoreCodeCreateInput!, update: RestoreCodeUpdateInput!): RestoreCode!
+    deleteRestoreCode(where: RestoreCodeWhereUniqueInput!): RestoreCode
+    deleteManyRestoreCodes(where: RestoreCodeWhereInput): BatchPayload!
+    createTag(data: TagCreateInput!): Tag!
+    updateTag(data: TagUpdateInput!, where: TagWhereUniqueInput!): Tag
+    updateManyTags(data: TagUpdateManyMutationInput!, where: TagWhereInput): BatchPayload!
+    upsertTag(where: TagWhereUniqueInput!, create: TagCreateInput!, update: TagUpdateInput!): Tag!
+    deleteTag(where: TagWhereUniqueInput!): Tag
+    deleteManyTags(where: TagWhereInput): BatchPayload!
+    createUser(data: UserCreateInput!): User!
+    updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+    updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+    upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+    deleteUser(where: UserWhereUniqueInput!): User
+    deleteManyUsers(where: UserWhereInput): BatchPayload!
+    createVideo(data: VideoCreateInput!): Video!
+    updateVideo(data: VideoUpdateInput!, where: VideoWhereUniqueInput!): Video
+    updateManyVideos(data: VideoUpdateManyMutationInput!, where: VideoWhereInput): BatchPayload!
+    upsertVideo(where: VideoWhereUniqueInput!, create: VideoCreateInput!, update: VideoUpdateInput!): Video!
+    deleteVideo(where: VideoWhereUniqueInput!): Video
+    deleteManyVideos(where: VideoWhereInput): BatchPayload!
+}

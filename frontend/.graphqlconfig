@@ -1,0 +1,20 @@
+{
+  "schemaPath": "schema.graphql",
+  "extensions": {
+    "endpoints": {
+      "Default Introspection Endpoint": {
+        "url": "http://3.87.225.224:4002/api",
+        "introspect": true,
+        "headers": {
+          "user-agent": "JS GraphQL"
+        }
+      },
+      "Default (http://3.87.225.224:4002/api)": {
+        "url": "http://3.87.225.224:4002/api",
+        "headers": {
+          "user-agent": "JS GraphQL"
+        }
+      }
+    }
+  }
+}
