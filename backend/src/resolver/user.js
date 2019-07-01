@@ -209,6 +209,123 @@ async function changeCard(root, args, ctx, info) {
     }
 }
 
+async function addWatchedVideo(root, args, ctx, info) {
+    if (!ctx.user || !ctx.user.id) {
+        throw new GQLError({message: 'Unauthorized', code: 401});
+    }
+
+    const { videoId } = args;
+
+    const user = await prisma.user({email: ctx.user.email});
+
+    try {
+        let watchedVideos = await prisma
+            .user({ id: ctx.user.id })
+            .watched_videos();
+        watchedVideos = await Promise.all(watchedVideos.map(async (d) => {
+            d.video = await prisma
+                .watchedVideoUser({ id: d.id })
+                .video();
+            return d;
+        }));
+        const watchedVideo = watchedVideos.find(v => v.video.id == videoId);
+        if (!watchedVideo) {
+            await prisma.createWatchedVideoUser({
+                watched_seconds: watchedSeconds,
+                user: {
+                    connect: { id: ctx.user.id }
+                },
+                video: {
+                    connect: { id: videoId }
+                }
+            });
+        }
+        
+        return true;
+    } catch (e) {
+        log.error('Create customer error:', e);
+        return false;
+    }
+}
+
+async function updateWatchedVideo(root, args, ctx, info) {
+    if (!ctx.user || !ctx.user.id) {
+        throw new GQLError({message: 'Unauthorized', code: 401});
+    }
+
+    const { videoId, watchedSeconds } = args;
+
+    const user = await prisma.user({email: ctx.user.email});
+
+    try {
+        let watchedVideos = await prisma
+            .user({ id: ctx.user.id })
+            .watched_videos();
+        watchedVideos = await Promise.all(watchedVideos.map(async (d) => {
+            d.video = await prisma
+                .watchedVideoUser({ id: d.id })
+                .video();
+            return d;
+        }));
+        const watchedVideo = watchedVideos.find(v => v.video.id == videoId);
+        if (watchedVideo) {
+            await prisma.updateWatchedVideoUser({
+                data: { 
+                    watched_seconds: watchedSeconds 
+                },
+                where: {
+                    id: watchedVideo.id
+                }
+            });
+        } else {
+            await prisma.createWatchedVideoUser({
+                watched_seconds: watchedSeconds,
+                user: {
+                    connect: { id: ctx.user.id }
+                },
+                video: {
+                    connect: { id: videoId }
+                }
+            });
+        }
+        
+        return true;
+    } catch (e) {
+        log.error('Create customer error:', e);
+        return false;
+    }
+}
+
+async function watchedVideoUser(root, args, ctx, info) {
+    if (!ctx.user || !ctx.user.id) {
+        throw new GQLError({message: 'Unauthorized', code: 401});
+    }
+
+    const { id } = args.where;
+
+    const user = await prisma.user({email: ctx.user.email});
+
+    try {
+        let watchedVideos = await prisma
+            .user({ id: ctx.user.id })
+            .watched_videos();
+        watchedVideos = await Promise.all(watchedVideos.map(async (d) => {
+            d.video = await prisma
+                .watchedVideoUser({ id: d.id })
+                .video();
+            return d;
+        }));
+        const watchedVideo = watchedVideos.find(v => v.video.id == id);
+        if (watchedVideo) {
+            return await prisma.watchedVideoUser({ id: watchedVideo.id });
+        } 
+        return null;
+    } catch (e) {
+        log.error('Create customer error:', e);
+        return null;
+    }
+}
+
 module.exports = {
     signUp: signUp,
     change_password: change_password,
@@ -217,5 +334,8 @@ module.exports = {
     changeCard: changeCard,
     delete_subscription: delete_subscription,
     isPurchaseActive: isPurchaseActive,
-    signIn: signIn
+    signIn: signIn,
+    addWatchedVideo: addWatchedVideo,
+    updateWatchedVideo: updateWatchedVideo,
+    watchedVideoUser: watchedVideoUser
 };

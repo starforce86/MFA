@@ -59,20 +59,17 @@ const VIDEO_QUERY = gql`
                 avatar
             }
         }
+        watchedVideoUser(where: { id: $id }) {
+            watched_seconds
+        }
     }
 `;
 
 const ADD_WATCHED_VIDEO_MUTATION = gql`
-    mutation AddWatchedVideo($userId: ID!, $videoId: ID!) {
-        updateUser(
-            where: { id: $userId }
-            data: { watched_videos: { connect: { id: $videoId } } }
-        ) {
-            id
-            watched_videos {
-                id
-            }
-        }
+    mutation AddWatchedVideo($videoId: String!) {
+        addWatchedVideo(
+            videoId: $videoId
+        )
     }
 `;
 
@@ -86,7 +83,6 @@ class VideoPage extends Component {
         this.props.apolloClient.mutate({
             mutation: ADD_WATCHED_VIDEO_MUTATION,
             variables: {
-                userId: this.props.id,
                 videoId: this.props.videoId
             }
         });
@@ -103,7 +99,7 @@ class VideoPage extends Component {
                        variables={{id: this.props.videoId, myId: this.props.id || ''}}
                 >
                     {({loading, error, data}) => {
-                   //     log.trace("v-page", data);
+                        log.trace("v-page", data);
                         log.trace("v-page-error", error);
 
                         const video = data ? (data.video ? data.video : {}) : {};
@@ -111,7 +107,8 @@ class VideoPage extends Component {
                         const author = video.author ? video.author : {};
                         const {preview_url, file_url} = video;
                         const title = data ? (data.category ? data.category.title : "") : "";
-                        return <Video {...this.props} video={video} author={author}/>;
+                        const startTime = data ? (data.watchedVideoUser ? (data.watchedVideoUser ? data.watchedVideoUser.watched_seconds : 0) : 0) : 0;
+                        return <Video {...this.props} video={video} startTime={startTime} author={author}/>;
                     }}
                 </Query>
             </div>

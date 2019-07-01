@@ -2726,3 +2726,12 @@ input VideoWhereInput {
 input VideoWhereUniqueInput {
     id: ID
 }
+
+type WatchedVideoUser {
+    id: ID
+    watched_seconds: Int
+}
+
+input WatchedVideoUserWhereUniqueInput {
+    id: ID
+}

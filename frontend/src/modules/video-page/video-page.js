@@ -64,7 +64,7 @@ class VideoPage extends Component {
                             <div className="col-md-8">
                                 <div className="single-video-left">
                                     <div className="single-video">
-                                        <MyPlayer video={this.props.video}/>{" "}
+                                        <MyPlayer {...this.props} video={this.props.video} startTime={this.props.startTime} />{" "}
                                     </div>
                                     <div className="single-video-title box mb-3">
                                         <div className="row">

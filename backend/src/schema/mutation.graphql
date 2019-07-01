@@ -7,6 +7,8 @@ type Mutation {
     changeCard(newStripeTokToken: String!): Boolean
     delete_subscription: Boolean
     addContactUsMessage(email: String! text: String!): Boolean
+    addWatchedVideo(videoId: String!): Boolean
+    updateWatchedVideo(videoId: String! watchedSeconds: Int!): Boolean
 
     createActivationCode(data: ActivationCodeCreateInput!): ActivationCode!
     updateActivationCode(data: ActivationCodeUpdateInput!, where: ActivationCodeWhereUniqueInput!): ActivationCode

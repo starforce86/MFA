@@ -86,6 +86,7 @@ const resolvers = {
         videosConnection: async (root, args) => {
             return {aggregate: await prisma.videosConnection(args).aggregate()}
         },
+        watchedVideoUser: userResolver.watchedVideoUser,
     },
     Mutation: {
         sign_up: userResolver.signUp,
@@ -100,6 +101,8 @@ const resolvers = {
             log.error(`STUB. Implement: addContactUsMessage(${email}:${text})`);
             return true;
         },
+        addWatchedVideo: userResolver.addWatchedVideo,
+        updateWatchedVideo: userResolver.updateWatchedVideo,
 
         createActivationCode: (root, args) => prisma.createActivationCode(args.data),
         updateActivationCode: (root, args) => prisma.updateActivationCode(args),

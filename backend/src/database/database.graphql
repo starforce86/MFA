@@ -21,7 +21,7 @@ type User {
     my_videos: [Video!]! @relation(name: "VideoAuthorRel")
 
     liked_videos: [Video!]! @relation(name: "VideoLikeUsersRel")
-    watched_videos: [Video!]! @relation(name: "WatchedVideoUsersRel")
+    watched_videos: [WatchedVideoUser!]! @relation(name: "WatchedVideoUserRel")
 
     my_subscription_users: [User!]! @relation(name: "UserSubscriptionsRel")
     subscribed_users: [User!]! @relation(name: "UserSubscriptionsRel")
@@ -81,9 +81,16 @@ type Video {
     categories: [Category!]! @relation(name: "VideoCategoryRel")
 
     like_users: [User!]! @relation(name: "VideoLikeUsersRel")
-    watched_users: [User!]! @relation(name: "WatchedVideoUsersRel")
+    watched_users: [WatchedVideoUser!]! @relation(name: "WatchedUserVideoRel")
 
     tags: [Tag!]! @relation(name: "VideosTagsRel")
+}
+
+type WatchedVideoUser {
+    id: ID! @unique
+    video: Video! @relation(name: "WatchedUserVideoRel")
+    user: User! @relation(name: "WatchedVideoUserRel")
+    watched_seconds: Int! @default(value: 0)
 }
 
 type Tag {

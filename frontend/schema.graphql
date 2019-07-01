@@ -157,6 +157,8 @@ type Mutation {
     upsertTag(create: TagCreateInput!, update: TagUpdateInput!, where: TagWhereUniqueInput!): Tag!
     upsertUser(create: UserCreateInput!, update: UserUpdateInput!, where: UserWhereUniqueInput!): User!
     upsertVideo(create: VideoCreateInput!, update: VideoUpdateInput!, where: VideoWhereUniqueInput!): Video!
+    addWatchedVideo(videoId: String!): Boolean
+    updateWatchedVideo(videoId: String!, watchedSeconds: Int!): Boolean
 }
 
 type PageInfo {

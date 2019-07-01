@@ -41,4 +41,5 @@ type Query {
     video(where: VideoWhereUniqueInput!): Video
     videos(where: VideoWhereInput, orderBy: VideoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Video]!
     videosConnection(where: VideoWhereInput, orderBy: VideoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): VideoConnection!
+    watchedVideoUser(where: WatchedVideoUserWhereUniqueInput!): WatchedVideoUser
 }
