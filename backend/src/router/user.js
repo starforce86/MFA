@@ -84,6 +84,71 @@ router.get('/avatar', function (req, res) {
     );
 });
 
+router.post('/backgroundImage', upload.single('backgroundImage'), async function (req, res) {
+    if (!req.file) {
+        res.status(401).json({
+            result: 'BackgroundImage in body parameter "backgroundImage" is required'
+        });
+        return;
+    }
+
+    let user;
+    try {
+        user = await token.validateToken(req.body.token);
+    } catch (e) {
+        res.status(401).json({
+            result: 'Token in body parameter "token" is required'
+        });
+        return;
+    }
+    const userId = user.id;
+    log.trace('Change user background_image request', {user_id: user.id});
+
+    try {
+        const result = await prisma.updateUser({
+            where: {id: userId},
+            data: {background_image: `/user/avatar?file_id=${req.file.filename}`}
+        });
+
+    } catch (e) {
+        res.status(404).json({
+            result: 'User not found'
+        });
+        try {
+            fs.unlinkSync(`./uploads/user_avatars/${req.file.filename}`);
+        } catch (e) {
+            log.warn(`Can't delete file:`, e);
+        }
+        return;
+    }
+
+    res.status(200).json({
+        result: 'ok',
+        file_url: `/user/avatar?file_id=${req.file.filename}`
+    });
+});
+
+router.get('/backgroundImage', function (req, res) {
+    const file_id = req.query.file_id.replace(/([^a-z0-9\s]+)/gi, '_');
+
+    const fn = path.normalize(`${UPLOADS_DIR}/${file_id}`);
+
+    if (!fs.existsSync(fn) || !fs.lstatSync(fn).isFile()) {
+        return res.status(404).json({
+            message: 'File not found'
+        });
+    }
+
+    res.sendFile(
+        fn,
+        {
+            headers: {
+                'Content-Type': 'image/jpeg'
+            }
+        }
+    );
+});
+
 module.exports = {
     router: router,
     path: '/user'

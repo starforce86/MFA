@@ -38,9 +38,9 @@ const CANCEL_SUBSCRIPTION = gql`
 `;
 
 const UPDATE_USER_PROFILE = gql`
-    mutation UpdateUserProfile($id: ID, $firstname: String, $lastname: String, $username:String) {
+    mutation UpdateUserProfile($id: ID, $firstname: String, $lastname: String, $username:String, $about_text:String) {
         updateUser(
-            data: { firstname: $firstname, lastname: $lastname, username: $username }
+            data: { firstname: $firstname, lastname: $lastname, username: $username, about_text: $about_text }
             where: { id: $id }
         ) {
             firstname
@@ -93,7 +93,8 @@ class SettingsPageWithoutMutations extends Component {
         lastname,
         // oldPassword,
         // newPassword,
-        username
+        username,
+        about_text
     ) => {
         if (firstname && lastname) {
             await this.props.updateUserProfile({
@@ -101,7 +102,8 @@ class SettingsPageWithoutMutations extends Component {
                     id: this.props.id,
                     firstname: firstname,
                     lastname: lastname,
-                    username: username
+                    username: username,
+                    about_text: about_text
                 }
             });
         }
@@ -127,11 +129,12 @@ class SettingsPageWithoutMutations extends Component {
             (this.props.getUserProfile.user && (
                 <Settings
                     {...this.props}
-                    saveUserProfile={(firstname, lastname, username) =>
+                    saveUserProfile={(firstname, lastname, username, bio) =>
                         this.handleSaveUserProfile(
                             firstname,
                             lastname,
-                            username
+                            username,
+                            bio
                         )
                     }
                     cancelSubscription={() => this.handleCancelSubscription()}

@@ -12,17 +12,25 @@ class Channel extends Component {
     render() {
         return (
             <Menu {...this.props}>
-                <div>
+                <div style={{ width: '100%' }}>
                     <div id="wrapper">
                         <div className="single-channel-page" id="content-wrapper">
                             <div className="single-channel-image">
-                                <img className="img-fluid"
-                                     src={this.props.user ? this.props.user.background_image ? this.props.user.background_image : "/static/img/favicon.png" : "/static/img/channel_bg_default.webp"}/>
+                                {this.props.user
+                                    ? (this.props.user.background_image
+                                        ? (<img style={{ width: '100%', height: '160px' }} src={API_URL + this.props.user.background_image} />)
+                                        : (<img className="img-fluid" src={"/static/img/favicon.png"} />))
+                                    : (<img className="img-fluid" src={"/static/img/channel_bg_default.webp"} />)}
                                 <div className="channel-profile">
                                     <img className="channel-profile-img"
                                          src={this.props.user ? this.props.user.avatar ? API_URL + this.props.user.avatar : "/static/img/user.png" : "/static/img/user.png"}/>
                                 </div>
                             </div>
+                            {this.props.user && this.props.user.role == "USER_PUBLISHER" && (
+                                <div style={{ padding: '5px 30px' }}>
+                                    {this.props.user.about_text}
+                                </div>
+                            )}
                             <div className="single-channel-nav">
                                 <nav className="navbar navbar-expand-lg navbar-light">
                                     <a className="channel-brand"
@@ -56,8 +64,10 @@ class Channel extends Component {
                                             <div className="row">
                                                 {this.props.user.my_videos.map(v => <Video video={v} key={v.id}/>)}
                                             </div> :
-                                            <div>
-                                                <h6>This channel hasn't videos</h6>
+                                            <div className="row">
+                                                <div className="col-sm-12">
+                                                    <h6>This channel hasn't videos</h6>
+                                                </div>
                                             </div>
                                     }
 

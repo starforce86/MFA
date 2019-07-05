@@ -1305,7 +1305,7 @@ a:hover, h1, h2, h3, h4, h5, h6 {
     margin-left: auto;
     margin-right: auto;
     /*width: 50%;*/
-    height: 125px;
+    height: 160px;
 }
 
 .single-channel-nav .navbar {
@@ -1344,14 +1344,14 @@ a:hover, h1, h2, h3, h4, h5, h6 {
     padding: 1rem 30px;
     position: absolute;
     right: 0;
-    height: 125px;
+    height: 160px;
     display: flex;
     align-items: center;
 }
 
 .single-channel-image .img-fluid {
     width: 100%;
-    height: 125px;
+    height: 160px;
     object-fit: contain;
     padding: 15px;
 }

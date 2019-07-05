@@ -18,6 +18,7 @@ const GET_CHANNELS_QUERY = gql`
             username
             email
             avatar
+            role
             my_videos {
                 id
                 title

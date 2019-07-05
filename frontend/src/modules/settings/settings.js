@@ -20,7 +20,9 @@ class Settings extends PureComponent {
             // oldPassword: null,
             // newPaswword: null,
             avatarFile: props.user.avatar,
+            backgroundImageFile: props.user.background_image,
             username: props.user.username,
+            about_text: props.user.about_text,
             stripe: null
         };
     }
@@ -54,7 +56,10 @@ class Settings extends PureComponent {
                 this.setState({username: event.target.value});
                 break;
             case "newPassword":
-                this.setState({newPassword: event.target.value});
+                this.setState({ newPassword: event.target.value });
+                break;
+            case "about_text":
+                this.setState({ about_text: event.target.value });
                 break;
         }
     }
@@ -65,7 +70,8 @@ class Settings extends PureComponent {
             this.state.lastname,
             // this.state.oldPassword,
             // this.state.newPassword,
-            this.state.username
+            this.state.username,
+            this.state.about_text
         );
         Router.push('/hacky', "/");
         location.reload();
@@ -77,7 +83,7 @@ class Settings extends PureComponent {
         this.props.cancelSubscription();
     };
 
-    async uploadFile(file) {
+    async uploadAvatarFile(file) {
         const formData = new FormData();
         formData.append('avatar', file);
         formData.append('token', this.props.token);
@@ -91,13 +97,25 @@ class Settings extends PureComponent {
         return res.file_url;
     }
 
+    async uploadBgImageFile(file) {
+        const formData = new FormData();
+        formData.append('backgroundImage', file);
+        formData.append('token', this.props.token);
+
+        const res = await (await fetch(`${API_URL}/user/backgroundImage`, {
+            method: 'POST',
+            body: formData
+        })).json();
+
+        log.error('res', res);
+        return res.file_url;
+    }
+
     componentDidMount() {
         this.setState({stripe: window.Stripe(consts.STRIPE_KEY)});
     }
 
     render() {
-        log.error(this.props);
-        // log.trace("MEGAAAAAAAAAAAAA", this.props.user);
         return (
             <Menu {...this.props}>
                 <div id="wrapper">
@@ -109,7 +127,7 @@ class Settings extends PureComponent {
                                         <h5>My account</h5>
                                         <Dropzone
                                             onDrop={async (files) => {
-                                                const res = await this.uploadFile(files[0]);
+                                                const res = await this.uploadAvatarFile(files[0]);
                                                 this.setState({
                                                     avatarFile: res
                                                 });
@@ -137,6 +155,46 @@ class Settings extends PureComponent {
                                                         <br/>
                                                         <p>
                                                             Drag & drop avatar here, or click to select file
+                                                        </p>
+                                                        <br/>
+                                                    </div>
+                                                </section>
+                                            )}
+                                        </Dropzone>
+                                    </div>
+                                </div>
+                                <div className="col-lg-12">
+                                    <div className="main-title" style={{ paddingTop: 10 }}>
+                                        <h6>Header Image</h6>
+                                        <Dropzone
+                                            onDrop={async (files) => {
+                                                const res = await this.uploadBgImageFile(files[0]);
+                                                this.setState({
+                                                    backgroundImageFile: res
+                                                });
+                                            }}>
+                                            {({getRootProps, getInputProps}) => (
+                                                <section>
+                                                    <div
+                                                        {...getRootProps()}
+                                                        style={{
+                                                            textAlign: "center",
+                                                            marginLeft: "auto",
+                                                            marginRight: "auto"
+                                                        }}
+                                                    >
+                                                        <br/>
+                                                        <input {...getInputProps()} />
+                                                        <img
+                                                            width={this.state.backgroundImageFile ? '100%' : 100}
+                                                            height={this.state.backgroundImageFile ? 160 : 100}
+                                                            src={this.state.backgroundImageFile ? API_URL + this.state.backgroundImageFile : "/static/img/favicon.png"}
+                                                            alt=''
+                                                        />
+                                                        <br/>
+                                                        <br/>
+                                                        <p>
+                                                            Drag & drop background image here, or click to select file
                                                         </p>
                                                         <br/>
                                                     </div>
@@ -215,6 +273,26 @@ class Settings extends PureComponent {
                                         </div>
                                     </div>
                                 </div>
+                                {this.props.getUserProfile.user.role == "USER_PUBLISHER" && (
+                                    <div className="row">
+                                        <div className="col-sm-12">
+                                            <div className="form-group">
+                                                <label className="control-label">
+                                                    Artist Bio <span className="required" />
+                                                </label>
+                                                <input
+                                                    className="form-control border-form-control "
+                                                    placeholder=""
+                                                    onChange={value =>
+                                                        this.handleChange("about_text", value)
+                                                    }
+                                                    type="text"
+                                                    value={this.state.about_text ? this.state.about_text : ""}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
                                 <div className="text-center mt-5">
                                     <p className="light-gray">
 
