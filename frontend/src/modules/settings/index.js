@@ -37,6 +37,12 @@ const CANCEL_SUBSCRIPTION = gql`
     }
 `;
 
+const RESUBSCRIBE = gql`
+    mutation purchase($token: String!, $plan: StripePlan!) {
+        purchase(stripe_tok_token: $token, plan: $plan)
+    }
+`;
+
 const UPDATE_USER_PROFILE = gql`
     mutation UpdateUserProfile($id: ID, $firstname: String, $lastname: String, $username:String, $about_text:String) {
         updateUser(
@@ -124,6 +130,15 @@ class SettingsPageWithoutMutations extends Component {
         await this.props.cancelSubscription();
     };
 
+    handleResubscribe = async (token, plan) => {
+        await this.props.resubscribe({
+            variables: {
+                token: token,
+                plan: plan
+            }
+        });
+    };
+
     render() {
         return (
             (this.props.getUserProfile.user && (
@@ -138,6 +153,7 @@ class SettingsPageWithoutMutations extends Component {
                         )
                     }
                     cancelSubscription={() => this.handleCancelSubscription()}
+                    resubscribe={(token, plan) => this.handleResubscribe(token, plan)}
                     user={this.props.getUserProfile.user}
                 />
             )) || <div/>
@@ -186,6 +202,25 @@ const SettingsPage = compose(
                 alert('Error');
             }
         }
+    }),
+
+    graphql(RESUBSCRIBE, {
+        name: "resubscribe",
+        options: props => ({
+            variables: {
+                token: props.token,
+                plan: props.plan
+            },
+            onCompleted: () => {
+                location.reload();
+            },
+            onError: async errors => {
+                let errs = JSON.stringify(errors);
+                //TODO return error to component
+                log.trace(JSON.stringify(errs));
+                alert('Error');
+            }
+        })
     }),
 
     graphql(PROFILE_QUERY, {

@@ -92,7 +92,7 @@ class VideoPage extends Component {
    //     log.trace("v-p-w", this.props.id);
 
         return (
-            <div>
+            <div style={{width: '100%'}}>
                 <Query errorPolicy={"ignore"}
                        query={VIDEO_QUERY}
                        fetchPolicy={"cache-and-network"}

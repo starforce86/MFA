@@ -24,10 +24,16 @@ class Channel extends Component {
                                 <div className="channel-profile">
                                     <img className="channel-profile-img"
                                          src={this.props.user ? this.props.user.avatar ? API_URL + this.props.user.avatar : "/static/img/user.png" : "/static/img/user.png"}/>
+                                    {this.props.user && (
+                                        <span style={{ background: 'white', borderRadius: 10, marginLeft: 5, paddingLeft: 5, paddingRight: 5 }}>
+                                            {this.props.user.username ? this.props.user.username : `${this.props.user.firstname} ${this.props.user.lastname}`}
+                                        </span>
+                                    )}
                                 </div>
                             </div>
                             {this.props.user && this.props.user.role == "USER_PUBLISHER" && (
-                                <div style={{ padding: '5px 30px' }}>
+                                <div style={{ padding: '10px 30px 20px 30px', color: 'white' }}>
+                                    <p style={{fontSize: 20, marginBottom: 5}}>About the artist:</p>
                                     {this.props.user.about_text}
                                 </div>
                             )}

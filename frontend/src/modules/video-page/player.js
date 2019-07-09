@@ -32,7 +32,6 @@ class player extends Component {
         if (player.paused) {
             return;
         }
-        console.log('########## updateWatchedVideoTime', this.refs.player.getState(), Math.floor(player.currentTime));
         this.props.apolloClient.mutate({
             mutation: UPDATE_WATCHED_VIDEO_MUTATION,
             variables: {

@@ -1,12 +1,15 @@
 import Menu from "../../components/menu";
 import Dropzone from "react-dropzone";
 import {PureComponent} from "react";
+import CircularProgress from '@material-ui/core/CircularProgress';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import logger from "../../util/logger";
 import {API_URL} from "../../util/consts";
 import Router from "next/dist/client/router";
 import PaymentInfo from "./paymentInfo";
 import {Elements, StripeProvider} from 'react-stripe-elements'
 import * as consts from "../../util/consts";
+import SubscribePlan from "../../components/stripe/SubscribePlan";
 
 const log = logger('Settings');
 
@@ -23,7 +26,9 @@ class Settings extends PureComponent {
             backgroundImageFile: props.user.background_image,
             username: props.user.username,
             about_text: props.user.about_text,
-            stripe: null
+            stripe: null,
+            plan: 'YEARLY',
+            resubscribeInProgress: false,
         };
     }
 
@@ -82,6 +87,15 @@ class Settings extends PureComponent {
 
         this.props.cancelSubscription();
     };
+
+    onClickResubscribe = async () => {
+        const token = await this.getTokenFn();
+        if (!token) return;
+        this.setState({
+            resubscribeInProgress: true
+        });
+        this.props.resubscribe(token.id, this.state.plan);
+    }
 
     async uploadAvatarFile(file) {
         const formData = new FormData();
@@ -280,7 +294,7 @@ class Settings extends PureComponent {
                                                 <label className="control-label">
                                                     Artist Bio <span className="required" />
                                                 </label>
-                                                <input
+                                                {/* <input
                                                     className="form-control border-form-control "
                                                     placeholder=""
                                                     onChange={value =>
@@ -288,7 +302,17 @@ class Settings extends PureComponent {
                                                     }
                                                     type="text"
                                                     value={this.state.about_text ? this.state.about_text : ""}
-                                                />
+                                                /> */}
+                                                <TextareaAutosize
+                                                    rows={3}
+                                                    placeholder=""
+                                                    className="form-control border-form-control "
+                                                    onChange={value =>
+                                                        this.handleChange("about_text", value)
+                                                    }
+                                                >
+                                                    {this.state.about_text ? this.state.about_text : ""}
+                                                </TextareaAutosize>
                                             </div>
                                         </div>
                                     </div>
@@ -309,20 +333,101 @@ class Settings extends PureComponent {
                                 <h6>Subscription</h6>
                                 <div className="row mb15">
                                     <div className="col-sm-6">
-                                        {this.props.user.billing_subscription_active ?
-                                            <a href="#" data-toggle="modal" data-target="#unsubscribeModal">
-                                                <button
-                                                    type="button"
-                                                    className="btn btn-warning border-none"
-                                                    // onClick={
-                                                    //
-                                                    //     // () => this.onClickCancelSubscription()
-                                                    // }
+                                        {this.props.user.billing_subscription_active
+                                            ?
+                                            <React.Fragment>
+                                                <a href="#" data-toggle="modal" data-target="#unsubscribeModal">
+                                                    <button
+                                                        type="button"
+                                                        className="btn btn-warning border-none"
+                                                    >
+                                                        Cancel Subscription </button>
+                                                </a>
+                                                <a href="#" data-toggle="modal" data-target="#resubscribeModal">
+                                                    <button
+                                                        type="button"
+                                                        className="btn btn-warning border-none"
+                                                        style={{ marginLeft: 10 }}
+                                                    >
+                                                        Re-Subscribe </button>
+                                                </a>
+                                                {/* Re-Subscribe Modal begin*/}
+                                                <div
+                                                    className="modal fade"
+                                                    id="resubscribeModal"
+                                                    tabIndex={-1}
+                                                    role="dialog"
+                                                    aria-hidden="true"
                                                 >
-                                                    {" "}
-                                                    Cancel subscription
-                                                </button>
-                                            </a> : 'Not active'}
+                                                    <div
+                                                        className="modal-dialog modal-sm modal-dialog-centered"
+                                                        role="document"
+                                                    >
+                                                        <div className="modal-content" style={{ color: "#FFF" }}>
+                                                            <div className="modal-header">
+                                                                <h5 className="modal-title">
+                                                                    Re-Subscribe to MFA</h5>
+                                                                <br />
+
+                                                                <button
+                                                                    className="close"
+                                                                    type="button"
+                                                                    data-dismiss="modal"
+                                                                    aria-label="Close"
+                                                                >
+                                                                    <span aria-hidden="true">×</span>
+                                                                </button>
+                                                            </div>
+
+                                                            <div className="modal-body">
+                                                                <StripeProvider stripe={this.state.stripe}>
+                                                                    <Elements>
+                                                                        <SubscribePlan
+                                                                            // ref={el => this.stripeTokenProvider = el}
+                                                                            getToken={getTokenFn => this.getTokenFn = getTokenFn} />
+                                                                    </Elements>
+                                                                </StripeProvider>
+
+                                                                <div style={{ marginTop: 10 }}>
+                                                                    <input type="radio" id="plan"
+                                                                        name="plan" value="MONTHLY" onChange={() => {
+                                                                            this.setState({ plan: "MONTHLY" })
+                                                                        }} checked={this.state.plan === "MONTHLY"} />
+                                                                    <label htmlFor="contactChoice2"
+                                                                        style={{ marginLeft: 10 }}>$29.99/month</label>
+                                                                </div>
+                                                                <div>
+                                                                    <input type="radio" id="plan"
+                                                                        name="plan" value="YEARLY" onChange={() => {
+                                                                            this.setState({ plan: "YEARLY" })
+                                                                        }} checked={this.state.plan === "YEARLY"} />
+                                                                    <label htmlFor="contactChoice2"
+                                                                        style={{ marginLeft: 10 }}>$300.00/year</label>
+                                                                </div>
+                                                                {this.state.resubscribeInProgress && (<div style={{ width: "100%", textAlign: 'center' }}><CircularProgress color="secondary" /></div>)}
+                                                            </div>
+
+                                                            <div className="modal-footer">
+                                                                <button
+                                                                    className="btn btn-secondary"
+                                                                    type="button"
+                                                                    data-dismiss="modal"
+                                                                >
+                                                                    Cancel </button>
+                                                                <button
+                                                                    className="btn btn-primary"
+                                                                    type="button"
+                                                                    disabled={this.state.resubscribeInProgress}
+                                                                    onClick={() => this.onClickResubscribe()}
+                                                                >
+                                                                    Submit </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {/* Re-Subscribe Modal end*/}
+                                            </React.Fragment>
+                                            : 'Not active'}
                                     </div>
                                 </div>
                                 <div className="col-sm-12 text-center">
@@ -331,7 +436,6 @@ class Settings extends PureComponent {
                                         className="btn btn-outline-danger btn-sm"
                                         onClick={() => this.onClickSaveUserProfile()}
                                     >
-                                        {" "}
                                         Save Changes
                                     </button>
                                 </div>
