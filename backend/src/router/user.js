@@ -6,6 +6,8 @@ const config = require('../config/config');
 const token = require('../helper/token');
 const multer = require('multer');
 const router = require('express').Router();
+var AWS = require("aws-sdk");
+const moment = require('moment');
 
 const UPLOADS_DIR = `${__dirname}/../../uploads/user_avatars`;
 
@@ -15,6 +17,12 @@ const upload = multer({
         fileSize: config.uploads.max_user_avatar_size_in_bytes,
         files: 1
     }
+});
+
+// var storage = multer.memoryStorage();
+var awsUpload = multer({ 
+    // storage: storage,
+    limits: { fileSize: config.uploads.max_video_size_in_bytes }
 });
 
 //todo fix multer error sending to client
@@ -147,6 +155,108 @@ router.get('/backgroundImage', function (req, res) {
             }
         }
     );
+});
+
+router.post('/video', awsUpload.single('video'), async function (req, res) {
+    if (!req.file) {
+        res.status(401).json({
+            result: 'Video in body parameter "video" is required'
+        });
+        return;
+    }
+
+    let user;
+    try {
+        user = await token.validateToken(req.body.token);
+    } catch (e) {
+        res.status(401).json({
+            result: 'Token in body parameter "token" is required'
+        });
+        return;
+    }
+    const userId = user.id;
+    log.trace('Upload artist user video request', {user_id: user.id});
+
+    const file = req.file;
+    const s3FileURL = process.env.AWS_Uploaded_File_URL_LINK;
+
+    let s3bucket = new AWS.S3({
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+        region: process.env.AWS_REGION
+    });
+
+    const curTime = moment().format('YYYYMMDDhhmmss');
+
+    var params = {
+        Bucket: process.env.AWS_BUCKET_NAME,
+        Key: `${curTime}_${file.originalname}`,
+        Body: file.buffer,
+        ContentType: file.mimetype,
+        ACL: "public-read"
+    };
+
+    s3bucket.upload(params, function (err, data) {
+        if (err) {
+            res.status(500).json({ result: err });
+        } else {
+            res.status(200).json({
+                result: 'ok',
+                file_url: s3FileURL + params.Key
+            });
+        }
+    });
+});
+
+router.post('/videoPreviewImage', awsUpload.single('videoPreviewImage'), async function (req, res) {
+    if (!req.file) {
+        res.status(401).json({
+            result: 'VideoPreviewImage in body parameter "videoPreviewImage" is required'
+        });
+        return;
+    }
+
+    let user;
+    try {
+        user = await token.validateToken(req.body.token);
+    } catch (e) {
+        res.status(401).json({
+            result: 'Token in body parameter "token" is required'
+        });
+        return;
+    }
+    const userId = user.id;
+    log.trace('Upload artist user video preview image request', {user_id: user.id});
+
+    const file = req.file;
+    const s3FileURL = process.env.AWS_Uploaded_File_URL_LINK;
+
+    let s3bucket = new AWS.S3({
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+        region: process.env.AWS_REGION
+    });
+
+    const curTime = moment().format('YYYYMMDDhhmmss');
+
+    var params = {
+        Bucket: process.env.AWS_BUCKET_NAME,
+        Key: `${curTime}_${file.originalname}`,
+        Body: file.buffer,
+        ContentType: file.mimetype,
+        ACL: "public-read"
+    };
+
+    s3bucket.upload(params, function (err, data) {
+        if (err) {
+            res.status(500).json({ result: err });
+        } else {
+            res.status(200).json({
+                result: 'ok',
+                file_url: s3FileURL + params.Key
+            });
+        }
+    });
 });
 
 module.exports = {

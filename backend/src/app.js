@@ -146,7 +146,7 @@ const resolvers = {
         deleteUser: (root, args) => prisma.deleteUser(args.where),
         deleteManyUsers: (root, args) => prisma.deleteManyUsers(args.where),
 
-        createVideo: (root, args) => prisma.createVideo(args.data),
+        createVideo: (root, args) => prisma.createVideo({ ...args.data, publish_date: moment() }),
         updateVideo: (root, args) => prisma.updateVideo(args),
         updateManyVideos: (root, args) => prisma.updateManyVideos(args),
         upsertVideo: (root, args) => prisma.upsertVideo(args),
@@ -408,7 +408,7 @@ const permissions = shield({
         deleteUser: isAdmin,
         deleteManyUsers: isAdmin,
 
-        createVideo: isAdmin,
+        // createVideo: isAdmin,
         updateVideo: or(isAdmin, updateVideoRule),
         updateManyVideos: isAdmin,
         upsertVideo: isAdmin,

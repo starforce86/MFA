@@ -5,9 +5,10 @@ const GQLError = require('../helper/GQLError');
 const emailHelper = require('../helper/email_helper');
 const password_helper = require('../helper/password_helper');
 const token = require('../helper/token');
-const stripe = require('../helper/StripeHelper');
+const stripeHelper = require('../helper/StripeHelper');
 const job_scheduler = require('../helper/job_scheduler');
 const config = require('../config/config');
+const stripe = require("stripe")(config.stripe.sk_token);
 
 async function signUp(root, {email, firstname, lastname, phone, password, step, activation_code, role}, ctx, info) {
     return userCore.signUp(email, firstname, lastname, phone, password, step, activation_code, role);
@@ -90,15 +91,29 @@ async function purchase(root, {stripe_tok_token, plan}, ctx, info) {
 
     await job_scheduler.addUserCheckPurchaseEvent(user.id);
 
-    const customer_id = !user.stripe_customer_id ? (await stripe.createCustomer(stripe_tok_token, ctx.user.email)).id : user.stripe_customer_id;
+    const customer_id = !user.stripe_customer_id ? (await stripeHelper.createCustomer(stripe_tok_token, ctx.user.email)).id : user.stripe_customer_id;
 
     await prisma.updateUser({where: {email: ctx.user.email}, data: {stripe_customer_id: customer_id}});
 
-    const isSubsActive = await stripe.isSubscriptionActive(customer_id).result;
+    // const isSubsActive = await stripeHelper.isSubscriptionActive(customer_id).result;
+    const customer = await stripe.customers.retrieve(customer_id);
+
+    let isSubsActive = false;
+    customer.subscriptions.data.forEach(item => {
+        if (item.status.toLowerCase() === 'active') {
+            isSubsActive = true;
+        }
+    });
 
     if (isSubsActive) {
-        log.trace('isSubsActive === true');
-        return true;
+        log.trace('Resubscribe');
+
+        await stripeHelper.changeCard(customer_id, stripe_tok_token);
+
+        if (!user.stripe_subsciption_json) throw new GQLError({ message: 'You have not any subscriptions' });
+        const subs_id = user.stripe_subsciption_json.id;
+        const result = await stripeHelper.unsubscribeUser(subs_id);
+        if (result.status !== 'canceled') throw new GQLError({ message: "Stripe unsubscribe result status != 'canceled'" });
     }
 
     let STRIPE_PLAN_ID = '';
@@ -113,7 +128,7 @@ async function purchase(root, {stripe_tok_token, plan}, ctx, info) {
             throw new GQLError({message: 'Wrong plan', code: 400});
     }
 
-    const subscription = await stripe.subscribeUser(customer_id, STRIPE_PLAN_ID);
+    const subscription = await stripeHelper.subscribeUser(customer_id, STRIPE_PLAN_ID);
     log.trace('New Stripe subscription: ', subscription);
 
     await prisma.updateUser({
@@ -124,7 +139,7 @@ async function purchase(root, {stripe_tok_token, plan}, ctx, info) {
         }
     });
 
-    return await stripe.isSubscriptionActive(customer_id).result;
+    return await stripeHelper.isSubscriptionActive(customer_id).result;
 }
 
 async function delete_subscription(root, args, ctx, info) {
@@ -142,7 +157,7 @@ async function delete_subscription(root, args, ctx, info) {
 
     const subs_id = user.stripe_subsciption_json.id;
 
-    const result = await stripe.unsubscribeUser(subs_id);
+    const result = await stripeHelper.unsubscribeUser(subs_id);
 
     if (result.status !== 'canceled') throw new GQLError({message: "Stripe unsubscribe result status != 'canceled'"});
 
@@ -155,7 +170,7 @@ async function delete_subscription(root, args, ctx, info) {
         }
     });
 
-    const isSubsActive = await stripe.isSubscriptionActive(user.stripe_customer_id).result;
+    const isSubsActive = await stripeHelper.isSubscriptionActive(user.stripe_customer_id).result;
 
     if (!isSubsActive) {
         log.trace('isSubsActive === false');
@@ -191,7 +206,7 @@ async function changeCard(root, args, ctx, info) {
     if (!user.stripe_customer_id) {
         // throw new GQLError({message: 'Stripe customer id not found in DB', code: 404});
         try {
-            const customer_id = (await stripe.createCustomer(newStripeTokToken, ctx.user.email)).id;
+            const customer_id = (await stripeHelper.createCustomer(newStripeTokToken, ctx.user.email)).id;
             await prisma.updateUser({where: {email: ctx.user.email}, data: {stripe_customer_id: customer_id}});
             return true;
         } catch (e) {
@@ -200,7 +215,7 @@ async function changeCard(root, args, ctx, info) {
         }
     } else {
         try {
-            await stripe.changeCard(user.stripe_customer_id, newStripeTokToken);
+            await stripeHelper.changeCard(user.stripe_customer_id, newStripeTokToken);
             return true
         } catch (e) {
             log.error('Change card error:', e);
