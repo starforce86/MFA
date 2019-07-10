@@ -12,6 +12,7 @@ const redisClient = redis.createClient(config.redis);
 const GQLError = require('./helper/GQLError');
 const product_core = require('./core/product');
 const _ = require('lodash');
+const moment = require('moment');
 const InputShieldFilter = require('./helper/InputSheldFilter');
 const yup = require('yup');
 const stripeHelper = require('./helper/StripeHelper');

@@ -9,6 +9,8 @@ const router = require('express').Router();
 var AWS = require("aws-sdk");
 const moment = require('moment');
 
+const production = process.env.NODE_ENV === 'production';
+
 const UPLOADS_DIR = `${__dirname}/../../uploads/user_avatars`;
 
 const upload = multer({
@@ -38,6 +40,7 @@ router.post('/avatar', upload.single('avatar'), async function (req, res) {
     let user;
     try {
         user = await token.validateToken(req.body.token);
+
     } catch (e) {
         res.status(401).json({
             result: 'Token in body parameter "token" is required'
@@ -178,18 +181,18 @@ router.post('/video', awsUpload.single('video'), async function (req, res) {
     log.trace('Upload artist user video request', {user_id: user.id});
 
     const file = req.file;
-    const s3FileURL = process.env.AWS_Uploaded_File_URL_LINK;
+    const s3FileURL = config.aws.aws_uploaded_file_url_link;
 
     let s3bucket = new AWS.S3({
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-        region: process.env.AWS_REGION
+        accessKeyId: config.aws.aws_access_key_id,
+        secretAccessKey: config.aws.aws_secret_access_key,
+        region: config.aws.aws_region
     });
 
     const curTime = moment().format('YYYYMMDDhhmmss');
 
     var params = {
-        Bucket: process.env.AWS_BUCKET_NAME,
+        Bucket: config.aws.aws_bucket_name,
         Key: `${curTime}_${file.originalname}`,
         Body: file.buffer,
         ContentType: file.mimetype,
@@ -229,18 +232,18 @@ router.post('/videoPreviewImage', awsUpload.single('videoPreviewImage'), async f
     log.trace('Upload artist user video preview image request', {user_id: user.id});
 
     const file = req.file;
-    const s3FileURL = process.env.AWS_Uploaded_File_URL_LINK;
+    const s3FileURL = config.aws.aws_uploaded_file_url_link;
 
     let s3bucket = new AWS.S3({
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-        region: process.env.AWS_REGION
+        accessKeyId: config.aws.aws_access_key_id,
+        secretAccessKey: config.aws.aws_secret_access_key,
+        region: config.aws.aws_region
     });
 
     const curTime = moment().format('YYYYMMDDhhmmss');
 
     var params = {
-        Bucket: process.env.AWS_BUCKET_NAME,
+        Bucket: config.aws.aws_bucket_name,
         Key: `${curTime}_${file.originalname}`,
         Body: file.buffer,
         ContentType: file.mimetype,

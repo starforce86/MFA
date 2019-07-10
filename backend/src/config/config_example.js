@@ -222,6 +222,13 @@ const config = {
             yearly_plan_id: 'plan_FKDShVVk9AyCsp',
         }
     },
+    aws: {
+        aws_bucket_name: 'mfa-video-bucket',
+        aws_access_key_id: 'AKIARFV4DDDML2A3JLGJ',
+        aws_secret_access_key: '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',
+        aws_region: 'us-east-2',
+        aws_uploaded_file_url_link: 'https://s3.us-east-2.amazonaws.com/mfa-video-bucket/'
+    },
     likelog: {
         enabled: true,
         path: '/log'

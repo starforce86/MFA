@@ -50,7 +50,7 @@ process.on('uncaughtException', function (error) {
         mocks: config.graphql.mocks,
         typeDefs: importSchema(__dirname + '/../src/schema/schema.graphql'),
         resolvers: app.resolvers,
-        middlewares: [app.permissions],
+        // middlewares: [app.permissions],
         context: async ({request}) => {
             GraphqlRequestLogger.log(request);
 
