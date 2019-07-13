@@ -40,8 +40,8 @@ class History extends Component {
                                             </div>
                                         </div>
                                         {
-                                            this.props.user && this.props.user.billing_subscription_active && this.props.history.map(item =>
-                                                <Video video={item} key={item.id}/>
+                                            this.props.user && this.props.user.billing_subscription_active && this.props.history && this.props.history.map(item =>
+                                                <Video video={item.video} key={item.video.id}/>
                                             )
                                         }
                                     </div>

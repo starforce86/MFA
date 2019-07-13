@@ -179,6 +179,9 @@ const resolvers = {
     Post: {
         author: (root, args) => prisma.post({id: root.id}).author(args),
     },
+    WatchedVideoUser: {
+        video: (root, args) => prisma.watchedVideoUser({id: root.id}).video(args),
+    },
     Node: { // to remove warning "Type "Node" is missing a "__resolveType" resolver. Pass false into "resolverValidationOptions.requireResolversForResolveType" to disable this warning."
         __resolveType() {
             return null;

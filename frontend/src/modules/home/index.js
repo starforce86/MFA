@@ -79,18 +79,21 @@ const HOMEPAGE_QUERY = gql`
             id
             watched_videos {
                 id
-                publish_date
-                description
-                title
-                file_url
-                preview_url
-                video_duration
-                author {
+                video {
                     id
-                    email
-                    avatar
-                    username
-                }
+                    publish_date
+                    description
+                    title
+                    file_url
+                    preview_url
+                    video_duration
+                    author {
+                        id
+                        email
+                        avatar
+                        username
+                    }
+              }
             }
         }
     }
@@ -170,17 +173,21 @@ const HOMEPAGE_QUERY_WITH_SEARCH = gql`
             id
             watched_videos {
                 id
-                publish_date
-                description
-                title
-                file_url
-                preview_url
-                author {
+                video {
                     id
-                    username
-                    email
-                    avatar
-                }
+                    publish_date
+                    description
+                    title
+                    file_url
+                    preview_url
+                    video_duration
+                    author {
+                        id
+                        email
+                        avatar
+                        username
+                    }
+              }
             }
         }
     }
@@ -213,7 +220,7 @@ class HomePage extends Component {
                     minHeight: "130px",
                     height: "auto"
                 }}>
-                    <MyPlayer className="h500" video={promoVideo.videos[0]}/>
+                    <MyPlayer className="h500" video={promoVideo.videos[0]} startTime={0} />
                 </div>
                 <div style={{
                     marginBottom: '30px',
@@ -243,7 +250,7 @@ class HomePage extends Component {
                             </div>
 
                             {videos.map(item => {
-                                return <Video video={item} key={item.id}/>;
+                                return <Video video={item.video} key={item.video.id}/>;
                             })}
                         </div>
                     </div>

@@ -14,16 +14,21 @@ const GET_HISTORY_QUERY = gql`
             id
             watched_videos {
                 id
-                publish_date
-                description
-                title
-                file_url
-                preview_url
-                author {
+                video {
                     id
-                    email
-                    avatar
-                }
+                    publish_date
+                    description
+                    title
+                    file_url
+                    preview_url
+                    video_duration
+                    author {
+                        id
+                        email
+                        avatar
+                        username
+                    }
+              }
             }
         }
     }
