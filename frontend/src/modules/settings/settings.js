@@ -64,6 +64,7 @@ class Settings extends PureComponent {
                 this.setState({ newPassword: event.target.value });
                 break;
             case "about_text":
+                event.target.value = event.target.value.slice(0,500);
                 this.setState({ about_text: event.target.value });
                 break;
         }
@@ -305,7 +306,7 @@ class Settings extends PureComponent {
                                                 /> */}
                                                 <TextareaAutosize
                                                     rows={3}
-                                                    placeholder=""
+                                                    placeholder="Not allowed to be more than 500 letters"
                                                     className="form-control border-form-control "
                                                     onChange={value =>
                                                         this.handleChange("about_text", value)
