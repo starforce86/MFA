@@ -258,7 +258,7 @@ class HomePage extends Component {
                                 </div>
                             </div>
 
-                            {videos.map(item => {
+                            {videos.filter(v => v.video).map(item => {
                                 return <Video video={item.video} key={item.video.id}/>;
                             })}
                         </div>
@@ -290,10 +290,11 @@ class HomePage extends Component {
             >
                 {({loading, error, data}) => {
                     log.debug('query:', {loading, error, data});
-                    //if (loading) return "Loading...";
+                    if (loading) return "Loading...";
                     if (error) return "Error";
+                    console.log('############## data', data)
                     const videos = data ? (data.videos ? data.videos : []) : [];
-                    const featureVideos = data ? (data.featuredVideos ? data.featuredVideos.videos.filter(v => v.approved == true) : []) : [];
+                    const featureVideos = data ? (data.featuredVideos ? (data.featuredVideos.videos ? data.featuredVideos.videos.filter(v => v.approved == true) : []) : []) : [];
                     const featureTitle = data ? (data.featuredVideos ? data.featuredVideos.title : "Featured Videos") : "Featured Videos";
                     log.trace('videos', videos);
                     // const vf = videos ? videos.find(v => v.id === 'cjuya09zk00nk07492dmxbetb') : null

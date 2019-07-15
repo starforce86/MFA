@@ -90,7 +90,7 @@ type Video {
 
 type WatchedVideoUser {
     id: ID! @unique
-    video: Video! @relation(name: "WatchedUserVideoRel")
+    video: Video @relation(name: "WatchedUserVideoRel")
     user: User! @relation(name: "WatchedVideoUserRel")
     watched_seconds: Int! @default(value: 0)
 }
