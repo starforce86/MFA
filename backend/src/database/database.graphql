@@ -84,6 +84,8 @@ type Video {
     watched_users: [WatchedVideoUser!]! @relation(name: "WatchedUserVideoRel")
 
     tags: [Tag!]! @relation(name: "VideosTagsRel")
+
+    approved: Boolean! @default(value: "false")
 }
 
 type WatchedVideoUser {

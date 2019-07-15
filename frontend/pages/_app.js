@@ -74,8 +74,6 @@ class MyApp extends App {
             pageProps = await Component.getInitialProps(ctx);
         }
 
-        console.log('############### pageProps', pageProps)
-
         const {token, id} = pageProps;
 
         // log.trace("gip", token);
@@ -120,7 +118,6 @@ class MyApp extends App {
                                 // this.setState({isPurchaseActive})
                                 // log.trace("_app", isPurchaseActive);
                                 // log.trace("_app", user);
-                                console.log('############### 01')
                                 return (
                                     <UserContext.Provider
                                         value={{user, isPurchaseActive, id, token}}
@@ -138,7 +135,6 @@ class MyApp extends App {
         }
 
         const propsId = this.props ? this.props.id ? this.props.id : '' : '';
-        console.log('########### propsId', propsId)
 
         return (
             <Container>
@@ -161,7 +157,6 @@ class MyApp extends App {
                     >
                         {({data, error}) => {
                             //       log.trace("data", error);
-                            console.log('############ data', data)
 
                             log.trace('MENU_QUERY:', {data, error});
                             const user = data ? data.user : null;
@@ -178,7 +173,6 @@ class MyApp extends App {
                             //      <Component {...pageProps} />
                             //
                             //  </UserContext.Provider>)
-                            console.log('############### 02', user, id)
                             return (
                                 <UserContext.Provider
                                     value={{user, isPurchaseActive, id, token}}

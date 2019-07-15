@@ -31,6 +31,7 @@ const GET_CHANNELS_QUERY = gql`
                     id
                     email
                 }
+                approved
             }
             subscribed_users_count
         }

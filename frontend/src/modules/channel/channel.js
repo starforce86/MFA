@@ -66,9 +66,9 @@ class Channel extends Component {
                             <div className="container-fluid">
                                 <div className="video-block section-padding">
                                     {
-                                        (this.props.user && this.props.user.my_videos && this.props.user.my_videos.length > 0) ?
+                                        (this.props.user && this.props.user.my_videos && this.props.user.my_videos.filter(v => v.approved == true).length > 0) ?
                                             <div className="row">
-                                                {this.props.user.my_videos.map(v => <Video video={v} key={v.id}/>)}
+                                                {this.props.user.my_videos.filter(v => v.approved == true).map(v => <Video video={v} key={v.id}/>)}
                                             </div> :
                                             <div className="row">
                                                 <div className="col-sm-12">

@@ -93,6 +93,13 @@ process.on('uncaughtException', function (error) {
         }
     });
 
+    // Allow Access-Control-Allow-Origin header
+    graphqlServer.express.use((req, res, next) => {
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Headers', '*');
+        next();
+    });
+    
     // Log ip
     graphqlServer.express.use((req, res, next) => {
         const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;

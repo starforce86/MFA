@@ -32,6 +32,7 @@ const HOMEPAGE_QUERY = gql`
                 email
                 avatar
             }
+            approved
         }
         featuredVideos: category(where: {id: "${consts.FEATURED_CATEGORY_ID}"}){
             title
@@ -51,7 +52,7 @@ const HOMEPAGE_QUERY = gql`
                     email
                     avatar
                 }
-
+                approved
             }
         }
         promoVideos: category( where: {id: "${consts.PROMO_CATEGORY_ID}"}){
@@ -72,7 +73,7 @@ const HOMEPAGE_QUERY = gql`
                     email
                     avatar
                 }
-
+                approved
             }
         }
         history: user(where: { id: $myId }) {
@@ -93,6 +94,7 @@ const HOMEPAGE_QUERY = gql`
                         avatar
                         username
                     }
+                    approved
               }
             }
         }
@@ -128,6 +130,7 @@ const HOMEPAGE_QUERY_WITH_SEARCH = gql`
                 email
                 avatar
             }
+            approved
         }
         featuredVideos: category(where: {id: "cjv2ytlrj0l940749kefajzgd"}){
             title
@@ -146,7 +149,7 @@ const HOMEPAGE_QUERY_WITH_SEARCH = gql`
                     email
                     avatar
                 }
-
+                approved
             }
         }
         promoVideos: category( where: {id: "cjv41fccs0ny607491ieb7b6q"}){
@@ -166,7 +169,7 @@ const HOMEPAGE_QUERY_WITH_SEARCH = gql`
                     email
                     avatar
                 }
-
+                approved
             }
         }
         history: user(where: { id: $myId }) {
@@ -187,6 +190,7 @@ const HOMEPAGE_QUERY_WITH_SEARCH = gql`
                         avatar
                         username
                     }
+                    approved
               }
             }
         }
@@ -209,32 +213,37 @@ class HomePage extends Component {
     }
 
     contentBlock(promoVideo) {
-        if (promoVideo && promoVideo.videos && promoVideo.videos[0])
-
-            return <>
-                <h6>
-                    {promoVideo.title}
-                </h6>
-                <br/>
-                <div className="single-channel-image" style={{
-                    minHeight: "130px",
-                    height: "auto"
-                }}>
-                    <MyPlayer className="h500" video={promoVideo.videos[0]} startTime={0} />
-                </div>
-                <div style={{
-                    marginBottom: '30px',
-                    marginTop: '5px'
-                }}>
-                    <h5>
-                        {promoVideo.videos[0].title}
-                    </h5>
-                    {promoVideo.description && <h6>
-                        {promoVideo.description}
-                    </h6>}
-                </div>
-            </>;
-        else return "No featured videos"
+        if (promoVideo && promoVideo.videos && promoVideo.videos[0]) {
+            const videos = promoVideo.videos.filter(v => v.approved == true);
+            if(videos && videos.length > 0) {
+                return <>
+                    <h6>
+                        {promoVideo.title}
+                    </h6>
+                    <br />
+                    <div className="single-channel-image" style={{
+                        minHeight: "130px",
+                        height: "auto"
+                    }}>
+                        <MyPlayer className="h500" video={videos[0]} startTime={0} />
+                    </div>
+                    <div style={{
+                        marginBottom: '30px',
+                        marginTop: '5px'
+                    }}>
+                        <h5>
+                            {videos[0].title}
+                        </h5>
+                        {promoVideo.description && <h6>
+                            {promoVideo.description}
+                        </h6>}
+                    </div>
+                </>;
+            } else {
+                return "No promo videos"
+            }
+        }
+        else return "No promo videos"
     }
 
     historyBlock(videos) {
@@ -284,7 +293,7 @@ class HomePage extends Component {
                     //if (loading) return "Loading...";
                     if (error) return "Error";
                     const videos = data ? (data.videos ? data.videos : []) : [];
-                    const featureVideos = data ? (data.featuredVideos ? data.featuredVideos.videos : []) : [];
+                    const featureVideos = data ? (data.featuredVideos ? data.featuredVideos.videos.filter(v => v.approved == true) : []) : [];
                     const featureTitle = data ? (data.featuredVideos ? data.featuredVideos.title : "Featured Videos") : "Featured Videos";
                     log.trace('videos', videos);
                     // const vf = videos ? videos.find(v => v.id === 'cjuya09zk00nk07492dmxbetb') : null

@@ -31,6 +31,7 @@ const CATEGORY_QUERY = gql`
                     email
                     avatar
                 }
+                approved
             }
         }
     }
@@ -55,7 +56,7 @@ class CategoryPage extends Component {
                   //  log.trace(data);
                     const videos = data
                         ? data.category
-                            ? data.category.videos
+                            ? data.category.videos.filter(v => v.approved == true)
                             : []
                         : [];
                     const title = data ? (data.category ? data.category.title : "") : "";
