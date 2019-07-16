@@ -160,6 +160,40 @@ router.get('/backgroundImage', function (req, res) {
     );
 });
 
+router.post('/sign_s3', function (req, res) {
+
+    let s3bucket = new AWS.S3({
+        accessKeyId: config.aws.aws_access_key_id,
+        secretAccessKey: config.aws.aws_secret_access_key,
+        region: config.aws.aws_region
+    });
+
+    const fileName = req.body.fileName;
+    const fileType = req.body.fileType;
+    const curTime = moment().format('YYYYMMDDhhmmss');
+    const s3FileName = `${curTime}_${fileName}.${fileType}`;
+
+    var params = {
+        Bucket: config.aws.aws_bucket_name,
+        Key: s3FileName,
+        Expires: 500,
+        ContentType: fileType,
+        ACL: "public-read"
+    };
+
+    s3bucket.getSignedUrl('putObject', params, (err, data) => {
+        if (err) {
+            log.error('getSignedUrl error : ', err);
+            res.json({ success: false, error: err })
+        }
+        const returnData = {
+            signedRequest: data,
+            url: `https://${config.aws.aws_bucket_name}.s3.amazonaws.com/${s3FileName}`
+        }
+        res.json({success:true, data:{returnData}});
+    })
+});
+
 router.post('/video', awsUpload.single('video'), async function (req, res) {
     if (!req.file) {
         res.status(401).json({

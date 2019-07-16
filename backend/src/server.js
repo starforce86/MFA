@@ -35,6 +35,7 @@ const basicAuth = require('express-basic-auth');
 const path = require('path');
 const cors = require('cors');
 const Likelog = require('likelogserver');
+var bodyParser = require('body-parser')
 
 process.on('unhandledRejection', (reason, p) => {
     log.error('Unhandled Rejection at:', p, 'reason:', reason);
@@ -76,6 +77,8 @@ process.on('uncaughtException', function (error) {
      */
     graphqlServer.express.use(compression(config.compression));
     graphqlServer.express.use(cors());
+    graphqlServer.express.use(bodyParser.urlencoded({ extended: false }));
+    graphqlServer.express.use(bodyParser.json());
 
     // DDoS protection
     const limiter = rateLimit({
@@ -99,7 +102,7 @@ process.on('uncaughtException', function (error) {
         res.header('Access-Control-Allow-Headers', '*');
         next();
     });
-    
+
     // Log ip
     graphqlServer.express.use((req, res, next) => {
         const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;

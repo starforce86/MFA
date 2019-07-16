@@ -1,9 +1,10 @@
 import React, {Component} from "react";
 import Dropzone from "react-dropzone";
-import CircularProgress from '@material-ui/core/CircularProgress';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import "video-react/dist/video-react.css"; // import css
 import {Player} from "video-react";
 import { Snackbar, FormControl, MenuItem, ListItemText, Select, Checkbox, Input, InputLabel } from '@material-ui/core';
+import axios from 'axios';
 import Menu from "../../components/menu";
 import Video from "../../components/video";
 import SubscribeButton from "../channel/SubscribeButton";
@@ -17,8 +18,10 @@ class MyUploadVideo extends Component {
         this.state = {
             videoFile: '',
             videoFileUploading: false,
+            videoFileProgress: 0,
             previewImageFile: '',
             previewImageFileUploading: false,
+            previewImageFileProgress: 0,
             title: '',
             description: '',
             categories: [],
@@ -71,35 +74,38 @@ class MyUploadVideo extends Component {
         }
     }
 
-    async uploadVideoFile(file) {
-        const formData = new FormData();
-        formData.append('video', file);
-        formData.append('token', this.props.token);
-
-        try {
-            const res = await (await fetch(`${API_URL}/user/video`, {
-                method: 'POST',
-                body: formData
-            })).json();
-            console.log('uploadVideoFile', res);
-            return {success: true, file_url: res.file_url};
-        } catch(error) {
-            return {success: false, error: error};
-        }
+    onUploadProgress(progressEvent) {
+        var percentCompleted = ((progressEvent.loaded * 100) / progressEvent.total).toFixed(2);
+        console.log(percentCompleted)
+        this.setState({
+            videoFileProgress: percentCompleted
+        });
     }
 
-    async uploadPreviewImageFile(file) {
-        const formData = new FormData();
-        formData.append('videoPreviewImage', file);
-        formData.append('token', this.props.token);
+    async uploadFile2S3(file) {
+        let fileParts = file.name.split('.');
+        let fileName = fileParts[0];
+        let fileType = fileParts[1];
+        console.log("Preparing the upload video file");
+        const response = await axios.post(`${API_URL}/user/sign_s3`, {
+            fileName: fileName,
+            fileType: fileType
+        });
+        var returnData = response.data.data.returnData;
+        var signedRequest = returnData.signedRequest;
+        var file_url = returnData.url;
+        console.log("Recieved a signed request for video " + signedRequest);
 
-        const res = await (await fetch(`${API_URL}/user/videoPreviewImage`, {
-            method: 'POST',
-            body: formData
-        })).json();
+        var options = {
+            headers: {
+                'Content-Type': fileType
+            },
+            onUploadProgress: (progressEvent) => this.onUploadProgress(progressEvent)
+        };
+        const result = await axios.put(signedRequest, file, options);
+        console.log("Response from s3")
 
-        console.log('uploadPreviewImageFile', res);
-        return res.file_url;
+        return { success: true, file_url: file_url };
     }
 
     handleClose = (event, reason) => {
@@ -127,7 +133,7 @@ class MyUploadVideo extends Component {
                         horizontal: 'right',
                     }}
                     open={this.state.notification.open}
-                    autoHideDuration={3000}
+                    autoHideDuration={5000}
                     onClose={this.handleClose}
                 >
                     <MySnackbarContentWrapper
@@ -148,13 +154,25 @@ class MyUploadVideo extends Component {
                                     </div>
                                     <div className="col-lg-6">
                                         <div className="main-title">
-                                            <h6>Video File</h6>
+                                            <h6>Video File (Maximum : 5GB)</h6>
                                             <Dropzone
+                                                accept={'video/*'}
                                                 onDrop={async (files) => {
+                                                    if(files[0].size > 5 * 1024 * 1024 * 1024) {
+                                                        this.setState({
+                                                            notification: {
+                                                                open: true,
+                                                                type: 'error',
+                                                                message: 'The video file should not be more than 5GB'
+                                                            }
+                                                        });
+                                                        return;
+                                                    }
                                                     this.setState({
-                                                        videoFileUploading: true
+                                                        videoFileUploading: true,
+                                                        videoFileProgress: 0
                                                     })
-                                                    const res = await this.uploadVideoFile(files[0]);
+                                                    const res = await this.uploadFile2S3(files[0]);
                                                     this.setState({
                                                         videoFileUploading: false,
                                                     });
@@ -167,7 +185,7 @@ class MyUploadVideo extends Component {
                                                             notification: {
                                                                 open: true,
                                                                 type: 'error',
-                                                                message: 'Uploading failed, Please check if size is more thatn 500MB'
+                                                                message: 'Uploading failed!'
                                                             }
                                                         });
                                                     }
@@ -195,7 +213,11 @@ class MyUploadVideo extends Component {
                                                             </p>
                                                                 <br />
                                                             </div>)
-                                                            : (<div style={{ width: "100%", textAlign: 'center' }}><CircularProgress color="secondary" /></div>)}
+                                                            : (<div style={{ width: "100%", textAlign: 'center' }}>
+                                                                {`${this.state.videoFileProgress} %`}
+                                                                <LinearProgress color="secondary" variant="determinate" value={this.state.videoFileProgress} />
+                                                                <br/>{'Please wait while uploading file...'}
+                                                            </div>)}
                                                     </section>
                                                 )}
                                             </Dropzone>
@@ -203,17 +225,41 @@ class MyUploadVideo extends Component {
                                     </div>
                                     <div className="col-lg-6">
                                         <div className="main-title">
-                                            <h6>Preview Image File</h6>
+                                            <h6>Preview Image File (Maximum : 1.5MB)</h6>
                                             <Dropzone
+                                                accept={'image/*'}
                                                 onDrop={async (files) => {
+                                                    if(files[0].size > 1.5 * 1024 * 1024) {
+                                                        this.setState({
+                                                            notification: {
+                                                                open: true,
+                                                                type: 'error',
+                                                                message: 'The video file should not be more than 1.5MB'
+                                                            }
+                                                        });
+                                                        return;
+                                                    }
                                                     this.setState({
-                                                        previewImageFileUploading: true
+                                                        previewImageFileUploading: true,
+                                                        previewImageFileProgress: 0
                                                     })
-                                                    const res = await this.uploadPreviewImageFile(files[0]);
+                                                    const res = await this.uploadFile2S3(files[0]);
                                                     this.setState({
                                                         previewImageFileUploading: false,
-                                                        previewImageFile: res
                                                     });
+                                                    if(res.success) {
+                                                        this.setState({
+                                                            previewImageFile: res.file_url
+                                                        })
+                                                    } else {
+                                                        this.setState({
+                                                            notification: {
+                                                                open: true,
+                                                                type: 'error',
+                                                                message: 'Uploading failed!'
+                                                            }
+                                                        });
+                                                    }
                                                 }}>
                                                 {({ getRootProps, getInputProps }) => (
                                                     <section>
@@ -242,7 +288,11 @@ class MyUploadVideo extends Component {
                                                         </p>
                                                                 <br />
                                                             </div>)
-                                                            : (<div style={{ width: "100%", textAlign: 'center' }}><CircularProgress color="secondary" /></div>)}
+                                                            : (<div style={{ width: "100%", textAlign: 'center' }}>
+                                                                {`${this.state.previewImageFileProgress} %`}
+                                                                <LinearProgress color="secondary" variant="determinate" value={this.state.previewImageFileProgress} />
+                                                                <br/>{'Please wait while uploading file...'}
+                                                            </div>)}
                                                     </section>
                                                 )}
                                             </Dropzone>
