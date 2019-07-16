@@ -210,7 +210,7 @@ async function changeCard(root, args, ctx, info) {
             await prisma.updateUser({where: {email: ctx.user.email}, data: {stripe_customer_id: customer_id}});
             return true;
         } catch (e) {
-            log.error('Create customer error:', e);
+            log.error('Change card error:', e);
             return false;
         }
     } else {
@@ -243,7 +243,7 @@ async function addWatchedVideo(root, args, ctx, info) {
                 .video();
             return d;
         }));
-        const watchedVideo = watchedVideos.find(v => v.video.id == videoId);
+        const watchedVideo = watchedVideos.find(v => v.video && v.video.id == videoId);
         if (!watchedVideo) {
             await prisma.createWatchedVideoUser({
                 watched_seconds: watchedSeconds,
@@ -258,7 +258,7 @@ async function addWatchedVideo(root, args, ctx, info) {
         
         return true;
     } catch (e) {
-        log.error('Create customer error:', e);
+        log.error('addWatchedVideo error:', e);
         return false;
     }
 }
@@ -282,11 +282,17 @@ async function updateWatchedVideo(root, args, ctx, info) {
                 .video();
             return d;
         }));
-        const watchedVideo = watchedVideos.find(v => v.video.id == videoId);
+        const watchedVideo = watchedVideos.find(v => v.video && v.video.id == videoId);
         if (watchedVideo) {
             await prisma.updateWatchedVideoUser({
                 data: { 
-                    watched_seconds: watchedSeconds 
+                    watched_seconds: watchedSeconds,
+                    user: {
+                        connect: { id: ctx.user.id }
+                    },
+                    video: {
+                        connect: { id: videoId }
+                    }
                 },
                 where: {
                     id: watchedVideo.id
@@ -306,7 +312,7 @@ async function updateWatchedVideo(root, args, ctx, info) {
         
         return true;
     } catch (e) {
-        log.error('Create customer error:', e);
+        log.error('updateWatchedVideo error:', e);
         return false;
     }
 }
@@ -330,13 +336,13 @@ async function watchedVideoUser(root, args, ctx, info) {
                 .video();
             return d;
         }));
-        const watchedVideo = watchedVideos.find(v => v.video.id == id);
+        const watchedVideo = watchedVideos.find(v => v.video && v.video.id == id);
         if (watchedVideo) {
             return await prisma.watchedVideoUser({ id: watchedVideo.id });
         } 
         return null;
     } catch (e) {
-        log.error('Create customer error:', e);
+        log.error('watchedVideoUser error:', e);
         return null;
     }
 }

@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import {compose, graphql, Query, withApollo} from "react-apollo";
+import {compose, graphql, Query} from "react-apollo";
 import Videos from "../../components/videos";
 import React, {Component} from "react";
 import {withRouter} from "next/router";
@@ -8,6 +8,7 @@ import MyPlayer from "../../modules/video-page/player";
 import Video from "../../components/video";
 import logger from "../../util/logger";
 import * as consts from "../../util/consts";
+import withApollo from "../../util/withApollo";
 
 const log = logger('HomePage');
 
@@ -207,6 +208,14 @@ const PROFILE_QUERY = gql`
     }
 `;
 
+const WATCHED_TIME_QUERY = gql`
+    query GetWatchedTime($videoId: ID) {
+        watchedVideoUser(where: { id: $videoId }) {
+            watched_seconds
+        }
+    }
+`;
+
 class HomePage extends Component {
     constructor(props) {
         super(props);
@@ -216,29 +225,45 @@ class HomePage extends Component {
         if (promoVideo && promoVideo.videos && promoVideo.videos[0]) {
             const videos = promoVideo.videos.filter(v => v.approved == true);
             if(videos && videos.length > 0) {
-                return <>
-                    <h6>
-                        {promoVideo.title}
-                    </h6>
-                    <br />
-                    <div className="single-channel-image" style={{
-                        minHeight: "130px",
-                        height: "auto"
-                    }}>
-                        <MyPlayer className="h500" video={videos[0]} startTime={0} />
-                    </div>
-                    <div style={{
-                        marginBottom: '30px',
-                        marginTop: '5px'
-                    }}>
-                        <h5>
-                            {videos[0].title}
-                        </h5>
-                        {promoVideo.description && <h6>
-                            {promoVideo.description}
-                        </h6>}
-                    </div>
-                </>;
+                return (
+                    <Query
+                        errorPolicy={"ignore"}
+                        query={WATCHED_TIME_QUERY}
+                        variables={{ videoId: videos[0].id }}
+                        fetchPolicy={"cache-and-network"}
+                    >
+                        {({ loading, error, data }) => {
+                            if (loading) return "Loading...";
+                            if (error) return "Error";
+                            const startTime = data ? (data.watchedVideoUser ? data.watchedVideoUser.watched_seconds : 0) : 0;
+                            return (
+                                <>
+                                    <h6>
+                                        {promoVideo.title}
+                                    </h6>
+                                    <br />
+                                    <div className="single-channel-image" style={{
+                                        minHeight: "130px",
+                                        height: "auto"
+                                    }}>
+                                        <MyPlayer className="h500" video={videos[0]} startTime={startTime} />
+                                    </div>
+                                    <div style={{
+                                        marginBottom: '30px',
+                                        marginTop: '5px'
+                                    }}>
+                                        <h5>
+                                            {videos[0].title}
+                                        </h5>
+                                        {promoVideo.description && <h6>
+                                            {promoVideo.description}
+                                        </h6>}
+                                    </div>
+                                </>
+                            );
+                        }}
+                    </Query>
+                );
             } else {
                 return "No promo videos"
             }
@@ -292,7 +317,6 @@ class HomePage extends Component {
                     log.debug('query:', {loading, error, data});
                     if (loading) return "Loading...";
                     if (error) return "Error";
-                    console.log('############## data', data)
                     const videos = data ? (data.videos ? data.videos : []) : [];
                     const featureVideos = data ? (data.featuredVideos ? (data.featuredVideos.videos ? data.featuredVideos.videos.filter(v => v.approved == true) : []) : []) : [];
                     const featureTitle = data ? (data.featuredVideos ? data.featuredVideos.title : "Featured Videos") : "Featured Videos";

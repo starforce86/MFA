@@ -3,6 +3,7 @@ import {withUser} from "../../util/auth";
 import "video-react/dist/video-react.css"; // import css
 import {Player} from "video-react";
 import gql from "graphql-tag";
+import withApollo from "../../util/withApollo";
 
 const UPDATE_WATCHED_VIDEO_MUTATION = gql`
     mutation UpdateWatchedVideo($videoId: String!, $watchedSeconds: Int!) {
@@ -67,4 +68,4 @@ class player extends Component {
 
 }
 
-export default withUser(player);
+export default withUser(withApollo(player));
