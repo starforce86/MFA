@@ -46,13 +46,14 @@ const GET_MY_VIDEOS_QUERY = gql`
 `;
 
 const CREATE_VIDEO = gql`
-    mutation CreateVideo($title: String, $description: String, $file_url: String, $preview_url: String, $author: ID, $categories: [CategoryWhereUniqueInput!], $tags: [TagWhereUniqueInput!]) {
+    mutation CreateVideo($title: String, $description: String, $file_url: String, $preview_url: String, $preview_video_url: String, $author: ID, $categories: [CategoryWhereUniqueInput!], $tags: [TagWhereUniqueInput!]) {
         createVideo(
             data: {
                 title: $title
                 description: $description
                 file_url: $file_url
                 preview_url: $preview_url
+                preview_video_url: $preview_video_url
                 author: {
                     connect: {
                         id: $author
@@ -78,6 +79,7 @@ class MyVideoPageWithoutMutations extends Component {
 
     handleSaveVideo = async (
         videoFile,
+        previewVideoFile,
         videoPreviewImageFile,
         title,
         description,
@@ -105,6 +107,7 @@ class MyVideoPageWithoutMutations extends Component {
                 description: description,
                 file_url: videoFile,
                 preview_url: videoPreviewImageFile,
+                preview_video_url: previewVideoFile,
                 author: author,
                 categories: categories,
                 tags: tags
@@ -127,9 +130,10 @@ class MyVideoPageWithoutMutations extends Component {
 
                     return <MyUploadVideo
                         {...this.props}
-                        saveVideo={async (videoFile, videoPreviewImageFile, title, description, categories, tags) =>
+                        saveVideo={async (videoFile, previewVideoFile, videoPreviewImageFile, title, description, categories, tags) =>
                             await this.handleSaveVideo(
                                 videoFile,
+                                previewVideoFile,
                                 videoPreviewImageFile,
                                 title,
                                 description,

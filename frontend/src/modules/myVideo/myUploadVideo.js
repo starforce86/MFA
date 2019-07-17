@@ -19,6 +19,9 @@ class MyUploadVideo extends Component {
             videoFile: '',
             videoFileUploading: false,
             videoFileProgress: 0,
+            previewVideoFile: '',
+            previewVideoFileUploading: false,
+            previewVideoFileProgress: 0,
             previewImageFile: '',
             previewImageFileUploading: false,
             previewImageFileProgress: 0,
@@ -37,6 +40,7 @@ class MyUploadVideo extends Component {
     onClickSaveVideo = async () => {
         const result = await this.props.saveVideo(
             this.state.videoFile,
+            this.state.previewVideoFile,
             this.state.previewImageFile,
             this.state.title,
             this.state.description,
@@ -152,7 +156,7 @@ class MyUploadVideo extends Component {
                                             <h5>Video Upload</h5>
                                         </div>
                                     </div>
-                                    <div className="col-lg-6">
+                                    <div className="col-lg-4">
                                         <div className="main-title">
                                             <h6>Video File (Maximum : 5GB)</h6>
                                             <Dropzone
@@ -223,7 +227,7 @@ class MyUploadVideo extends Component {
                                             </Dropzone>
                                         </div>
                                     </div>
-                                    <div className="col-lg-6">
+                                    <div className="col-lg-4">
                                         <div className="main-title">
                                             <h6>Preview Image File (Maximum : 1.5MB)</h6>
                                             <Dropzone
@@ -291,6 +295,77 @@ class MyUploadVideo extends Component {
                                                             : (<div style={{ width: "100%", textAlign: 'center' }}>
                                                                 {`${this.state.previewImageFileProgress} %`}
                                                                 <LinearProgress color="secondary" variant="determinate" value={this.state.previewImageFileProgress} />
+                                                                <br/>{'Please wait while uploading file...'}
+                                                            </div>)}
+                                                    </section>
+                                                )}
+                                            </Dropzone>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4">
+                                        <div className="main-title">
+                                            <h6>Preview Video File (Maximum : 5GB)</h6>
+                                            <Dropzone
+                                                accept={'video/*'}
+                                                onDrop={async (files) => {
+                                                    if(files[0].size > 5 * 1024 * 1024 * 1024) {
+                                                        this.setState({
+                                                            notification: {
+                                                                open: true,
+                                                                type: 'error',
+                                                                message: 'The preview video file should not be more than 5GB'
+                                                            }
+                                                        });
+                                                        return;
+                                                    }
+                                                    this.setState({
+                                                        previewVideoFileUploading: true,
+                                                        previewVideoFileProgress: 0
+                                                    })
+                                                    const res = await this.uploadFile2S3(files[0]);
+                                                    this.setState({
+                                                        previewVideoFileUploading: false,
+                                                    });
+                                                    if(res.success) {
+                                                        this.setState({
+                                                            previewVideoFile: res.file_url
+                                                        })
+                                                    } else {
+                                                        this.setState({
+                                                            notification: {
+                                                                open: true,
+                                                                type: 'error',
+                                                                message: 'Uploading failed!'
+                                                            }
+                                                        });
+                                                    }
+                                                }}>
+                                                {({ getRootProps, getInputProps }) => (
+                                                    <section>
+                                                        {!this.state.previewVideoFileUploading
+                                                            ? (<div
+                                                                {...getRootProps()}
+                                                                style={{
+                                                                    textAlign: "center",
+                                                                    marginLeft: "auto",
+                                                                    marginRight: "auto"
+                                                                }}
+                                                            >
+                                                                <br />
+                                                                <input {...getInputProps()} />
+                                                                {this.state.previewVideoFile && (
+                                                                    <Player src={this.state.previewVideoFile} />
+                                                                )}
+                                                                <br />
+                                                                <br />
+                                                                <p>
+                                                                    Drag & drop preview video file here, or click to select file
+                                                            </p>
+                                                                <br />
+                                                            </div>)
+                                                            : (<div style={{ width: "100%", textAlign: 'center' }}>
+                                                                {`${this.state.previewVideoFileProgress} %`}
+                                                                <LinearProgress color="secondary" variant="determinate" value={this.state.previewVideoFileProgress} />
                                                                 <br/>{'Please wait while uploading file...'}
                                                             </div>)}
                                                     </section>
