@@ -328,6 +328,15 @@ class MyApp extends App {
                                             <Categories categories={categories}
                                                         billing_subscription_active={true}/>
 
+                                            <li className={`nav-item ${this.props.router.pathname === "/news" ? " active" : ""}`}>
+                                                <Link prefetch href={"news"}>
+                                                    <a className="nav-link">
+                                                        <i className="fas fa-fw fa-newspaper" />
+                                                        <span>News</span>
+                                                    </a>
+                                                </Link>
+                                            </li>
+
                                             {user && (user.role == "USER_PUBLISHER" || user.role == "ADMIN") && (
                                                 <li className={`nav-item ${this.props.router.pathname === "/myVideo" ? " active" : ""}`}>
                                                     <Link prefetch href={"myVideo"}>

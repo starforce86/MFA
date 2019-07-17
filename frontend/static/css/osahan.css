@@ -994,6 +994,53 @@ a:hover, h1, h2, h3, h4, h5, h6 {
     min-height: 217.27px;
 }
 
+.news-card {
+    background: #1c1c1c none repeat scroll 0 0;
+    border-radius: 2px;
+    transition-duration: 0.4s;
+}
+
+.news-card-image {
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+}
+
+.news-card-image img {
+    width: 100%;
+}
+
+.news-card:hover .play-icon {
+    background: #000 none repeat scroll 0 0;
+    border-radius: 2px;
+    bottom: 0;
+    color: #fff;
+    font-size: 35px;
+    left: 0;
+    opacity: 0.4;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+    transition-duration: 0.4s;
+}
+
+.newsd-title {
+    color: white;
+    font-size: 34px;
+    text-align: center;
+}
+
+.newsd-date {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.newsd-content {
+    font-size: 18px;
+    margin-top: 12px;
+}
+
 .time {
     background: #f5234a none repeat scroll 0 0;
     border-radius: 2px;

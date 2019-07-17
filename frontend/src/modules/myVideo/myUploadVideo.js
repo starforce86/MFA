@@ -78,7 +78,7 @@ class MyUploadVideo extends Component {
         }
     }
 
-    onUploadProgress(progressEvent) {
+    onVideoFileUploadProgress(progressEvent) {
         var percentCompleted = ((progressEvent.loaded * 100) / progressEvent.total).toFixed(2);
         console.log(percentCompleted)
         this.setState({
@@ -86,7 +86,23 @@ class MyUploadVideo extends Component {
         });
     }
 
-    async uploadFile2S3(file) {
+    onPreviewVideoFileUploadProgress(progressEvent) {
+        var percentCompleted = ((progressEvent.loaded * 100) / progressEvent.total).toFixed(2);
+        console.log(percentCompleted)
+        this.setState({
+            previewVideoFileProgress: percentCompleted
+        });
+    }
+
+    onPreviewImageFileUploadProgress(progressEvent) {
+        var percentCompleted = ((progressEvent.loaded * 100) / progressEvent.total).toFixed(2);
+        console.log(percentCompleted)
+        this.setState({
+            previewImageFileProgress: percentCompleted
+        });
+    }
+
+    async uploadVideoFile2S3(file) {
         let fileParts = file.name.split('.');
         let fileName = fileParts[0];
         let fileType = fileParts[1];
@@ -104,7 +120,59 @@ class MyUploadVideo extends Component {
             headers: {
                 'Content-Type': fileType
             },
-            onUploadProgress: (progressEvent) => this.onUploadProgress(progressEvent)
+            onUploadProgress: (progressEvent) => this.onVideoFileUploadProgress(progressEvent)
+        };
+        const result = await axios.put(signedRequest, file, options);
+        console.log("Response from s3")
+
+        return { success: true, file_url: file_url };
+    }
+
+    async uploadPreviewVideoFile2S3(file) {
+        let fileParts = file.name.split('.');
+        let fileName = fileParts[0];
+        let fileType = fileParts[1];
+        console.log("Preparing the upload video file");
+        const response = await axios.post(`${API_URL}/user/sign_s3`, {
+            fileName: fileName,
+            fileType: fileType
+        });
+        var returnData = response.data.data.returnData;
+        var signedRequest = returnData.signedRequest;
+        var file_url = returnData.url;
+        console.log("Recieved a signed request for video " + signedRequest);
+
+        var options = {
+            headers: {
+                'Content-Type': fileType
+            },
+            onUploadProgress: (progressEvent) => this.onPreviewVideoFileUploadProgress(progressEvent)
+        };
+        const result = await axios.put(signedRequest, file, options);
+        console.log("Response from s3")
+
+        return { success: true, file_url: file_url };
+    }
+
+    async uploadPreviewImageFile2S3(file) {
+        let fileParts = file.name.split('.');
+        let fileName = fileParts[0];
+        let fileType = fileParts[1];
+        console.log("Preparing the upload video file");
+        const response = await axios.post(`${API_URL}/user/sign_s3`, {
+            fileName: fileName,
+            fileType: fileType
+        });
+        var returnData = response.data.data.returnData;
+        var signedRequest = returnData.signedRequest;
+        var file_url = returnData.url;
+        console.log("Recieved a signed request for video " + signedRequest);
+
+        var options = {
+            headers: {
+                'Content-Type': fileType
+            },
+            onUploadProgress: (progressEvent) => this.onPreviewImageFileUploadProgress(progressEvent)
         };
         const result = await axios.put(signedRequest, file, options);
         console.log("Response from s3")
@@ -176,7 +244,7 @@ class MyUploadVideo extends Component {
                                                         videoFileUploading: true,
                                                         videoFileProgress: 0
                                                     })
-                                                    const res = await this.uploadFile2S3(files[0]);
+                                                    const res = await this.uploadVideoFile2S3(files[0]);
                                                     this.setState({
                                                         videoFileUploading: false,
                                                     });
@@ -247,7 +315,7 @@ class MyUploadVideo extends Component {
                                                         previewImageFileUploading: true,
                                                         previewImageFileProgress: 0
                                                     })
-                                                    const res = await this.uploadFile2S3(files[0]);
+                                                    const res = await this.uploadPreviewImageFile2S3(files[0]);
                                                     this.setState({
                                                         previewImageFileUploading: false,
                                                     });
@@ -322,7 +390,7 @@ class MyUploadVideo extends Component {
                                                         previewVideoFileUploading: true,
                                                         previewVideoFileProgress: 0
                                                     })
-                                                    const res = await this.uploadFile2S3(files[0]);
+                                                    const res = await this.uploadPreviewVideoFile2S3(files[0]);
                                                     this.setState({
                                                         previewVideoFileUploading: false,
                                                     });
