@@ -229,6 +229,7 @@ const config = {
         aws_region: 'us-east-2',
         aws_uploaded_file_url_link: 'https://s3.us-east-2.amazonaws.com/mfa-video-bucket/'
     },
+    cloudfront_url: 'https://d1v7rt2mkfalrq.cloudfront.net',
     likelog: {
         enabled: true,
         path: '/log'
