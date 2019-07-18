@@ -188,7 +188,8 @@ router.post('/sign_s3', function (req, res) {
         }
         const returnData = {
             signedRequest: data,
-            url: `https://${config.aws.aws_bucket_name}.s3.amazonaws.com/${s3FileName}`
+            // url: `https://${config.aws.aws_bucket_name}.s3.amazonaws.com/${s3FileName}`
+            url: `${config.cloudfront_url}/${s3FileName}`
         }
         res.json({success:true, data:{returnData}});
     })
