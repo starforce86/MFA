@@ -238,6 +238,10 @@ type AggregateVideo {
     count: Int!
 }
 
+type AggregateWatchedVideoUser {
+  count: Int!
+}
+
 type BatchPayload {
     count: Long!
 }
@@ -847,6 +851,17 @@ input RestoreCodeWhereUniqueInput {
     email: String
 }
 
+type Subscription {
+  activationCode(where: ActivationCodeSubscriptionWhereInput): ActivationCodeSubscriptionPayload
+  category(where: CategorySubscriptionWhereInput): CategorySubscriptionPayload
+  post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
+  restoreCode(where: RestoreCodeSubscriptionWhereInput): RestoreCodeSubscriptionPayload
+  tag(where: TagSubscriptionWhereInput): TagSubscriptionPayload
+  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  video(where: VideoSubscriptionWhereInput): VideoSubscriptionPayload
+  watchedVideoUser(where: WatchedVideoUserSubscriptionWhereInput): WatchedVideoUserSubscriptionPayload
+}
+
 type Tag {
     id: ID!
     createdAt: DateTime!
@@ -1110,7 +1125,7 @@ input UserCreateInput {
     about_text: String
     my_videos: VideoCreateManyWithoutAuthorInput
     liked_videos: VideoCreateManyWithoutLike_usersInput
-    watched_videos: VideoCreateManyWithoutWatched_usersInput
+    watched_videos: WatchedVideoUserCreateManyWithoutUserInput
     my_subscription_users: UserCreateManyWithoutSubscribed_usersInput
     subscribed_users: UserCreateManyWithoutMy_subscription_usersInput
     billing_subscription_active: Boolean
@@ -1134,11 +1149,6 @@ input UserCreateManyWithoutSubscribed_usersInput {
     connect: [UserWhereUniqueInput!]
 }
 
-input UserCreateManyWithoutWatched_videosInput {
-    create: [UserCreateWithoutWatched_videosInput!]
-    connect: [UserWhereUniqueInput!]
-}
-
 input UserCreateOneInput {
     create: UserCreateInput
     connect: UserWhereUniqueInput
@@ -1146,6 +1156,11 @@ input UserCreateOneInput {
 
 input UserCreateOneWithoutMy_videosInput {
     create: UserCreateWithoutMy_videosInput
+    connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutWatched_videosInput {
+    create: UserCreateWithoutWatched_videosInput
     connect: UserWhereUniqueInput
 }
 
@@ -1160,7 +1175,7 @@ input UserCreateWithoutLiked_videosInput {
     background_image: String
     about_text: String
     my_videos: VideoCreateManyWithoutAuthorInput
-    watched_videos: VideoCreateManyWithoutWatched_usersInput
+    watched_videos: WatchedVideoUserCreateManyWithoutUserInput
     my_subscription_users: UserCreateManyWithoutSubscribed_usersInput
     subscribed_users: UserCreateManyWithoutMy_subscription_usersInput
     billing_subscription_active: Boolean
@@ -1181,7 +1196,7 @@ input UserCreateWithoutMy_subscription_usersInput {
     about_text: String
     my_videos: VideoCreateManyWithoutAuthorInput
     liked_videos: VideoCreateManyWithoutLike_usersInput
-    watched_videos: VideoCreateManyWithoutWatched_usersInput
+    watched_videos: WatchedVideoUserCreateManyWithoutUserInput
     subscribed_users: UserCreateManyWithoutMy_subscription_usersInput
     billing_subscription_active: Boolean
     stripe_customer_id: String
@@ -1200,7 +1215,7 @@ input UserCreateWithoutMy_videosInput {
     background_image: String
     about_text: String
     liked_videos: VideoCreateManyWithoutLike_usersInput
-    watched_videos: VideoCreateManyWithoutWatched_usersInput
+    watched_videos: WatchedVideoUserCreateManyWithoutUserInput
     my_subscription_users: UserCreateManyWithoutSubscribed_usersInput
     subscribed_users: UserCreateManyWithoutMy_subscription_usersInput
     billing_subscription_active: Boolean
@@ -1221,7 +1236,7 @@ input UserCreateWithoutSubscribed_usersInput {
     about_text: String
     my_videos: VideoCreateManyWithoutAuthorInput
     liked_videos: VideoCreateManyWithoutLike_usersInput
-    watched_videos: VideoCreateManyWithoutWatched_usersInput
+    watched_videos: WatchedVideoUserCreateManyWithoutUserInput
     my_subscription_users: UserCreateManyWithoutSubscribed_usersInput
     billing_subscription_active: Boolean
     stripe_customer_id: String
@@ -1521,7 +1536,7 @@ input UserUpdateDataInput {
     about_text: String
     my_videos: VideoUpdateManyWithoutAuthorInput
     liked_videos: VideoUpdateManyWithoutLike_usersInput
-    watched_videos: VideoUpdateManyWithoutWatched_usersInput
+    watched_videos: WatchedVideoUserUpdateManyWithoutUserInput
     my_subscription_users: UserUpdateManyWithoutSubscribed_usersInput
     subscribed_users: UserUpdateManyWithoutMy_subscription_usersInput
     billing_subscription_active: Boolean
@@ -1542,7 +1557,7 @@ input UserUpdateInput {
     about_text: String
     my_videos: VideoUpdateManyWithoutAuthorInput
     liked_videos: VideoUpdateManyWithoutLike_usersInput
-    watched_videos: VideoUpdateManyWithoutWatched_usersInput
+    watched_videos: WatchedVideoUserUpdateManyWithoutUserInput
     my_subscription_users: UserUpdateManyWithoutSubscribed_usersInput
     subscribed_users: UserUpdateManyWithoutMy_subscription_usersInput
     billing_subscription_active: Boolean
@@ -1619,18 +1634,6 @@ input UserUpdateManyWithoutSubscribed_usersInput {
     updateMany: [UserUpdateManyWithWhereNestedInput!]
 }
 
-input UserUpdateManyWithoutWatched_videosInput {
-    create: [UserCreateWithoutWatched_videosInput!]
-    delete: [UserWhereUniqueInput!]
-    connect: [UserWhereUniqueInput!]
-    set: [UserWhereUniqueInput!]
-    disconnect: [UserWhereUniqueInput!]
-    update: [UserUpdateWithWhereUniqueWithoutWatched_videosInput!]
-    upsert: [UserUpsertWithWhereUniqueWithoutWatched_videosInput!]
-    deleteMany: [UserScalarWhereInput!]
-    updateMany: [UserUpdateManyWithWhereNestedInput!]
-}
-
 input UserUpdateManyWithWhereNestedInput {
     where: UserScalarWhereInput!
     data: UserUpdateManyDataInput!
@@ -1650,6 +1653,13 @@ input UserUpdateOneRequiredWithoutMy_videosInput {
     connect: UserWhereUniqueInput
 }
 
+input UserUpdateOneRequiredWithoutWatched_videosInput {
+  create: UserCreateWithoutWatched_videosInput
+  update: UserUpdateWithoutWatched_videosDataInput
+  upsert: UserUpsertWithoutWatched_videosInput
+  connect: UserWhereUniqueInput
+}
+
 input UserUpdateWithoutLiked_videosDataInput {
     firstname: String
     lastname: String
@@ -1661,7 +1671,7 @@ input UserUpdateWithoutLiked_videosDataInput {
     background_image: String
     about_text: String
     my_videos: VideoUpdateManyWithoutAuthorInput
-    watched_videos: VideoUpdateManyWithoutWatched_usersInput
+    watched_videos: WatchedVideoUserUpdateManyWithoutUserInput
     my_subscription_users: UserUpdateManyWithoutSubscribed_usersInput
     subscribed_users: UserUpdateManyWithoutMy_subscription_usersInput
     billing_subscription_active: Boolean
@@ -1682,7 +1692,7 @@ input UserUpdateWithoutMy_subscription_usersDataInput {
     about_text: String
     my_videos: VideoUpdateManyWithoutAuthorInput
     liked_videos: VideoUpdateManyWithoutLike_usersInput
-    watched_videos: VideoUpdateManyWithoutWatched_usersInput
+    watched_videos: WatchedVideoUserUpdateManyWithoutUserInput
     subscribed_users: UserUpdateManyWithoutMy_subscription_usersInput
     billing_subscription_active: Boolean
     stripe_customer_id: String
@@ -1701,7 +1711,7 @@ input UserUpdateWithoutMy_videosDataInput {
     background_image: String
     about_text: String
     liked_videos: VideoUpdateManyWithoutLike_usersInput
-    watched_videos: VideoUpdateManyWithoutWatched_usersInput
+    watched_videos: WatchedVideoUserUpdateManyWithoutUserInput
     my_subscription_users: UserUpdateManyWithoutSubscribed_usersInput
     subscribed_users: UserUpdateManyWithoutMy_subscription_usersInput
     billing_subscription_active: Boolean
@@ -1722,7 +1732,7 @@ input UserUpdateWithoutSubscribed_usersDataInput {
     about_text: String
     my_videos: VideoUpdateManyWithoutAuthorInput
     liked_videos: VideoUpdateManyWithoutLike_usersInput
-    watched_videos: VideoUpdateManyWithoutWatched_usersInput
+    watched_videos: WatchedVideoUserUpdateManyWithoutUserInput
     my_subscription_users: UserUpdateManyWithoutSubscribed_usersInput
     billing_subscription_active: Boolean
     stripe_customer_id: String
@@ -1765,11 +1775,6 @@ input UserUpdateWithWhereUniqueWithoutSubscribed_usersInput {
     data: UserUpdateWithoutSubscribed_usersDataInput!
 }
 
-input UserUpdateWithWhereUniqueWithoutWatched_videosInput {
-    where: UserWhereUniqueInput!
-    data: UserUpdateWithoutWatched_videosDataInput!
-}
-
 input UserUpsertNestedInput {
     update: UserUpdateDataInput!
     create: UserCreateInput!
@@ -1778,6 +1783,11 @@ input UserUpsertNestedInput {
 input UserUpsertWithoutMy_videosInput {
     update: UserUpdateWithoutMy_videosDataInput!
     create: UserCreateWithoutMy_videosInput!
+}
+
+input UserUpsertWithoutWatched_videosInput {
+  update: UserUpdateWithoutWatched_videosDataInput!
+  create: UserCreateWithoutWatched_videosInput!
 }
 
 input UserUpsertWithWhereUniqueWithoutLiked_videosInput {
@@ -1796,12 +1806,6 @@ input UserUpsertWithWhereUniqueWithoutSubscribed_usersInput {
     where: UserWhereUniqueInput!
     update: UserUpdateWithoutSubscribed_usersDataInput!
     create: UserCreateWithoutSubscribed_usersInput!
-}
-
-input UserUpsertWithWhereUniqueWithoutWatched_videosInput {
-    where: UserWhereUniqueInput!
-    update: UserUpdateWithoutWatched_videosDataInput!
-    create: UserCreateWithoutWatched_videosInput!
 }
 
 input UserWhereInput {
@@ -1957,9 +1961,9 @@ input UserWhereInput {
     liked_videos_every: VideoWhereInput
     liked_videos_some: VideoWhereInput
     liked_videos_none: VideoWhereInput
-    watched_videos_every: VideoWhereInput
-    watched_videos_some: VideoWhereInput
-    watched_videos_none: VideoWhereInput
+    watched_videos_every: WatchedVideoUserWhereInput
+    watched_videos_some: WatchedVideoUserWhereInput
+    watched_videos_none: WatchedVideoUserWhereInput
     my_subscription_users_every: UserWhereInput
     my_subscription_users_some: UserWhereInput
     my_subscription_users_none: UserWhereInput
@@ -2017,7 +2021,7 @@ type Video {
     author: User!
     categories(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Category!]
     like_users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
-    watched_users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+    watched_users(where: WatchedVideoUserWhereInput, orderBy: WatchedVideoUserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [WatchedVideoUser!]
     tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
     approved: Boolean!
 }
@@ -2040,7 +2044,7 @@ input VideoCreateInput {
     author: UserCreateOneWithoutMy_videosInput!
     categories: CategoryCreateManyWithoutVideosInput
     like_users: UserCreateManyWithoutLiked_videosInput
-    watched_users: UserCreateManyWithoutWatched_videosInput
+    watched_users: WatchedVideoUserCreateManyWithoutVideoInput
     tags: TagCreateManyWithoutVideosInput
     approved: Boolean
 }
@@ -2065,9 +2069,9 @@ input VideoCreateManyWithoutTagsInput {
     connect: [VideoWhereUniqueInput!]
 }
 
-input VideoCreateManyWithoutWatched_usersInput {
-    create: [VideoCreateWithoutWatched_usersInput!]
-    connect: [VideoWhereUniqueInput!]
+input VideoCreateOneWithoutWatched_usersInput {
+   create: VideoCreateWithoutWatched_usersInput
+   connect: VideoWhereUniqueInput
 }
 
 input VideoCreateWithoutAuthorInput {
@@ -2081,7 +2085,7 @@ input VideoCreateWithoutAuthorInput {
     preview_video_duration: String
     categories: CategoryCreateManyWithoutVideosInput
     like_users: UserCreateManyWithoutLiked_videosInput
-    watched_users: UserCreateManyWithoutWatched_videosInput
+    watched_users: WatchedVideoUserCreateManyWithoutVideoInput
     tags: TagCreateManyWithoutVideosInput
     approved: Boolean
 }
@@ -2097,7 +2101,7 @@ input VideoCreateWithoutCategoriesInput {
     preview_video_duration: String
     author: UserCreateOneWithoutMy_videosInput!
     like_users: UserCreateManyWithoutLiked_videosInput
-    watched_users: UserCreateManyWithoutWatched_videosInput
+    watched_users: WatchedVideoUserCreateManyWithoutVideoInput
     tags: TagCreateManyWithoutVideosInput
     approved: Boolean
 }
@@ -2113,7 +2117,7 @@ input VideoCreateWithoutLike_usersInput {
     preview_video_duration: String
     author: UserCreateOneWithoutMy_videosInput!
     categories: CategoryCreateManyWithoutVideosInput
-    watched_users: UserCreateManyWithoutWatched_videosInput
+    watched_users: WatchedVideoUserCreateManyWithoutVideoInput
     tags: TagCreateManyWithoutVideosInput
     approved: Boolean
 }
@@ -2130,7 +2134,7 @@ input VideoCreateWithoutTagsInput {
     author: UserCreateOneWithoutMy_videosInput!
     categories: CategoryCreateManyWithoutVideosInput
     like_users: UserCreateManyWithoutLiked_videosInput
-    watched_users: UserCreateManyWithoutWatched_videosInput
+    watched_users: WatchedVideoUserCreateManyWithoutVideoInput
     approved: Boolean
 }
 
@@ -2365,7 +2369,7 @@ input VideoUpdateInput {
     author: UserUpdateOneRequiredWithoutMy_videosInput
     categories: CategoryUpdateManyWithoutVideosInput
     like_users: UserUpdateManyWithoutLiked_videosInput
-    watched_users: UserUpdateManyWithoutWatched_videosInput
+    watched_users: WatchedVideoUserUpdateManyWithoutVideoInput
     tags: TagUpdateManyWithoutVideosInput
     approved: Boolean
 }
@@ -2442,21 +2446,18 @@ input VideoUpdateManyWithoutTagsInput {
     updateMany: [VideoUpdateManyWithWhereNestedInput!]
 }
 
-input VideoUpdateManyWithoutWatched_usersInput {
-    create: [VideoCreateWithoutWatched_usersInput!]
-    delete: [VideoWhereUniqueInput!]
-    connect: [VideoWhereUniqueInput!]
-    set: [VideoWhereUniqueInput!]
-    disconnect: [VideoWhereUniqueInput!]
-    update: [VideoUpdateWithWhereUniqueWithoutWatched_usersInput!]
-    upsert: [VideoUpsertWithWhereUniqueWithoutWatched_usersInput!]
-    deleteMany: [VideoScalarWhereInput!]
-    updateMany: [VideoUpdateManyWithWhereNestedInput!]
-}
-
 input VideoUpdateManyWithWhereNestedInput {
     where: VideoScalarWhereInput!
     data: VideoUpdateManyDataInput!
+}
+
+input VideoUpdateOneWithoutWatched_usersInput {
+  create: VideoCreateWithoutWatched_usersInput
+  update: VideoUpdateWithoutWatched_usersDataInput
+  upsert: VideoUpsertWithoutWatched_usersInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: VideoWhereUniqueInput
 }
 
 input VideoUpdateWithoutAuthorDataInput {
@@ -2470,7 +2471,7 @@ input VideoUpdateWithoutAuthorDataInput {
     preview_video_duration: String
     categories: CategoryUpdateManyWithoutVideosInput
     like_users: UserUpdateManyWithoutLiked_videosInput
-    watched_users: UserUpdateManyWithoutWatched_videosInput
+    watched_users: WatchedVideoUserUpdateManyWithoutVideoInput
     tags: TagUpdateManyWithoutVideosInput
     approved: Boolean
 }
@@ -2486,7 +2487,7 @@ input VideoUpdateWithoutCategoriesDataInput {
     preview_video_duration: String
     author: UserUpdateOneRequiredWithoutMy_videosInput
     like_users: UserUpdateManyWithoutLiked_videosInput
-    watched_users: UserUpdateManyWithoutWatched_videosInput
+    watched_users: WatchedVideoUserUpdateManyWithoutVideoInput
     tags: TagUpdateManyWithoutVideosInput
     approved: Boolean
 }
@@ -2502,7 +2503,7 @@ input VideoUpdateWithoutLike_usersDataInput {
     preview_video_duration: String
     author: UserUpdateOneRequiredWithoutMy_videosInput
     categories: CategoryUpdateManyWithoutVideosInput
-    watched_users: UserUpdateManyWithoutWatched_videosInput
+    watched_users: WatchedVideoUserUpdateManyWithoutVideoInput
     tags: TagUpdateManyWithoutVideosInput
     approved: Boolean
 }
@@ -2519,7 +2520,7 @@ input VideoUpdateWithoutTagsDataInput {
     author: UserUpdateOneRequiredWithoutMy_videosInput
     categories: CategoryUpdateManyWithoutVideosInput
     like_users: UserUpdateManyWithoutLiked_videosInput
-    watched_users: UserUpdateManyWithoutWatched_videosInput
+    watched_users: WatchedVideoUserUpdateManyWithoutVideoInput
     approved: Boolean
 }
 
@@ -2559,9 +2560,9 @@ input VideoUpdateWithWhereUniqueWithoutTagsInput {
     data: VideoUpdateWithoutTagsDataInput!
 }
 
-input VideoUpdateWithWhereUniqueWithoutWatched_usersInput {
-    where: VideoWhereUniqueInput!
-    data: VideoUpdateWithoutWatched_usersDataInput!
+input VideoUpsertWithoutWatched_usersInput {
+    update: VideoUpdateWithoutWatched_usersDataInput!
+    create: VideoCreateWithoutWatched_usersInput!
 }
 
 input VideoUpsertWithWhereUniqueWithoutAuthorInput {
@@ -2586,12 +2587,6 @@ input VideoUpsertWithWhereUniqueWithoutTagsInput {
     where: VideoWhereUniqueInput!
     update: VideoUpdateWithoutTagsDataInput!
     create: VideoCreateWithoutTagsInput!
-}
-
-input VideoUpsertWithWhereUniqueWithoutWatched_usersInput {
-    where: VideoWhereUniqueInput!
-    update: VideoUpdateWithoutWatched_usersDataInput!
-    create: VideoCreateWithoutWatched_usersInput!
 }
 
 input VideoWhereInput {
@@ -2732,9 +2727,9 @@ input VideoWhereInput {
     like_users_every: UserWhereInput
     like_users_some: UserWhereInput
     like_users_none: UserWhereInput
-    watched_users_every: UserWhereInput
-    watched_users_some: UserWhereInput
-    watched_users_none: UserWhereInput
+    watched_users_every: WatchedVideoUserWhereInput
+    watched_users_some: WatchedVideoUserWhereInput
+    watched_users_none: WatchedVideoUserWhereInput
     tags_every: TagWhereInput
     tags_some: TagWhereInput
     tags_none: TagWhereInput
@@ -2743,6 +2738,191 @@ input VideoWhereInput {
     AND: [VideoWhereInput!]
     OR: [VideoWhereInput!]
     NOT: [VideoWhereInput!]
+}
+
+input VideoWhereUniqueInput {
+  id: ID
+}
+
+type WatchedVideoUser {
+  id: ID!
+  video: Video
+  user: User!
+  watched_seconds: Int!
+}
+
+type WatchedVideoUserConnection {
+  pageInfo: PageInfo!
+  edges: [WatchedVideoUserEdge]!
+  aggregate: AggregateWatchedVideoUser!
+}
+
+input WatchedVideoUserCreateInput {
+  video: VideoCreateOneWithoutWatched_usersInput
+  user: UserCreateOneWithoutWatched_videosInput!
+  watched_seconds: Int
+}
+
+input WatchedVideoUserCreateManyWithoutUserInput {
+  create: [WatchedVideoUserCreateWithoutUserInput!]
+  connect: [WatchedVideoUserWhereUniqueInput!]
+}
+
+input WatchedVideoUserCreateManyWithoutVideoInput {
+  create: [WatchedVideoUserCreateWithoutVideoInput!]
+  connect: [WatchedVideoUserWhereUniqueInput!]
+}
+
+input WatchedVideoUserCreateWithoutUserInput {
+  video: VideoCreateOneWithoutWatched_usersInput
+  watched_seconds: Int
+}
+
+input WatchedVideoUserCreateWithoutVideoInput {
+  user: UserCreateOneWithoutWatched_videosInput!
+  watched_seconds: Int
+}
+
+type WatchedVideoUserEdge {
+  node: WatchedVideoUser!
+  cursor: String!
+}
+
+enum WatchedVideoUserOrderByInput {
+  id_ASC
+  id_DESC
+  watched_seconds_ASC
+  watched_seconds_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type WatchedVideoUserPreviousValues {
+  id: ID!
+  watched_seconds: Int!
+}
+
+input WatchedVideoUserScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  watched_seconds: Int
+  watched_seconds_not: Int
+  watched_seconds_in: [Int!]
+  watched_seconds_not_in: [Int!]
+  watched_seconds_lt: Int
+  watched_seconds_lte: Int
+  watched_seconds_gt: Int
+  watched_seconds_gte: Int
+  AND: [WatchedVideoUserScalarWhereInput!]
+  OR: [WatchedVideoUserScalarWhereInput!]
+  NOT: [WatchedVideoUserScalarWhereInput!]
+}
+
+type WatchedVideoUserSubscriptionPayload {
+  mutation: MutationType!
+  node: WatchedVideoUser
+  updatedFields: [String!]
+  previousValues: WatchedVideoUserPreviousValues
+}
+
+input WatchedVideoUserSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: WatchedVideoUserWhereInput
+  AND: [WatchedVideoUserSubscriptionWhereInput!]
+  OR: [WatchedVideoUserSubscriptionWhereInput!]
+  NOT: [WatchedVideoUserSubscriptionWhereInput!]
+}
+
+input WatchedVideoUserUpdateInput {
+  video: VideoUpdateOneWithoutWatched_usersInput
+  user: UserUpdateOneRequiredWithoutWatched_videosInput
+  watched_seconds: Int
+}
+
+input WatchedVideoUserUpdateManyDataInput {
+  watched_seconds: Int
+}
+
+input WatchedVideoUserUpdateManyMutationInput {
+  watched_seconds: Int
+}
+
+input WatchedVideoUserUpdateManyWithoutUserInput {
+  create: [WatchedVideoUserCreateWithoutUserInput!]
+  delete: [WatchedVideoUserWhereUniqueInput!]
+  connect: [WatchedVideoUserWhereUniqueInput!]
+  set: [WatchedVideoUserWhereUniqueInput!]
+  disconnect: [WatchedVideoUserWhereUniqueInput!]
+  update: [WatchedVideoUserUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [WatchedVideoUserUpsertWithWhereUniqueWithoutUserInput!]
+  deleteMany: [WatchedVideoUserScalarWhereInput!]
+  updateMany: [WatchedVideoUserUpdateManyWithWhereNestedInput!]
+}
+
+input WatchedVideoUserUpdateManyWithoutVideoInput {
+  create: [WatchedVideoUserCreateWithoutVideoInput!]
+  delete: [WatchedVideoUserWhereUniqueInput!]
+  connect: [WatchedVideoUserWhereUniqueInput!]
+  set: [WatchedVideoUserWhereUniqueInput!]
+  disconnect: [WatchedVideoUserWhereUniqueInput!]
+  update: [WatchedVideoUserUpdateWithWhereUniqueWithoutVideoInput!]
+  upsert: [WatchedVideoUserUpsertWithWhereUniqueWithoutVideoInput!]
+  deleteMany: [WatchedVideoUserScalarWhereInput!]
+  updateMany: [WatchedVideoUserUpdateManyWithWhereNestedInput!]
+}
+
+input WatchedVideoUserUpdateManyWithWhereNestedInput {
+  where: WatchedVideoUserScalarWhereInput!
+  data: WatchedVideoUserUpdateManyDataInput!
+}
+
+input WatchedVideoUserUpdateWithoutUserDataInput {
+  video: VideoUpdateOneWithoutWatched_usersInput
+  watched_seconds: Int
+}
+
+input WatchedVideoUserUpdateWithoutVideoDataInput {
+  user: UserUpdateOneRequiredWithoutWatched_videosInput
+  watched_seconds: Int
+}
+
+input WatchedVideoUserUpdateWithWhereUniqueWithoutUserInput {
+  where: WatchedVideoUserWhereUniqueInput!
+  data: WatchedVideoUserUpdateWithoutUserDataInput!
+}
+
+input WatchedVideoUserUpdateWithWhereUniqueWithoutVideoInput {
+  where: WatchedVideoUserWhereUniqueInput!
+  data: WatchedVideoUserUpdateWithoutVideoDataInput!
+}
+
+input WatchedVideoUserUpsertWithWhereUniqueWithoutUserInput {
+  where: WatchedVideoUserWhereUniqueInput!
+  update: WatchedVideoUserUpdateWithoutUserDataInput!
+  create: WatchedVideoUserCreateWithoutUserInput!
+}
+
+input WatchedVideoUserUpsertWithWhereUniqueWithoutVideoInput {
+  where: WatchedVideoUserWhereUniqueInput!
+  update: WatchedVideoUserUpdateWithoutVideoDataInput!
+  create: WatchedVideoUserCreateWithoutVideoInput!
 }
 
 input WatchedVideoUserWhereInput {
@@ -2775,27 +2955,6 @@ input WatchedVideoUserWhereInput {
   NOT: [WatchedVideoUserWhereInput!]
 }
 
-enum WatchedVideoUserOrderByInput {
-  id_ASC
-  id_DESC
-  watched_seconds_ASC
-  watched_seconds_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-}
-
-input VideoWhereUniqueInput {
-    id: ID
-}
-
-type WatchedVideoUser {
-    id: ID
-    watched_seconds: Int
-    video: Video
-}
-
 input WatchedVideoUserWhereUniqueInput {
-    id: ID
+  id: ID
 }

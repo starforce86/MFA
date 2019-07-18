@@ -52,4 +52,10 @@ type Mutation {
     upsertVideo(where: VideoWhereUniqueInput!, create: VideoCreateInput!, update: VideoUpdateInput!): Video!
     deleteVideo(where: VideoWhereUniqueInput!): Video
     deleteManyVideos(where: VideoWhereInput): BatchPayload!
+    createWatchedVideoUser(data: WatchedVideoUserCreateInput!): WatchedVideoUser!
+    updateWatchedVideoUser(data: WatchedVideoUserUpdateInput!, where: WatchedVideoUserWhereUniqueInput!): WatchedVideoUser
+    updateManyWatchedVideoUsers(data: WatchedVideoUserUpdateManyMutationInput!, where: WatchedVideoUserWhereInput): BatchPayload!
+    upsertWatchedVideoUser(where: WatchedVideoUserWhereUniqueInput!, create: WatchedVideoUserCreateInput!, update: WatchedVideoUserUpdateInput!): WatchedVideoUser!
+    deleteWatchedVideoUser(where: WatchedVideoUserWhereUniqueInput!): WatchedVideoUser
+    deleteManyWatchedVideoUsers(where: WatchedVideoUserWhereInput): BatchPayload!
 }
