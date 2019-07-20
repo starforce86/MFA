@@ -301,12 +301,12 @@ class MyUploadVideo extends Component {
                                             <Dropzone
                                                 accept={'image/*'}
                                                 onDrop={async (files) => {
-                                                    if(files[0].size > 1.5 * 1024 * 1024) {
+                                                    if(files[0].size > 10 * 1024 * 1024) {
                                                         this.setState({
                                                             notification: {
                                                                 open: true,
                                                                 type: 'error',
-                                                                message: 'The video file should not be more than 1.5MB'
+                                                                message: 'The video file should not be more than 10MB'
                                                             }
                                                         });
                                                         return;
