@@ -125,3 +125,14 @@ type Post {
     text: String!
     author: User!
 }
+
+type PlayHistory {
+    id: ID! @unique
+    createdAt: DateTime!
+    updatedAt: DateTime!
+
+    user: User!
+    video: Video!
+    playSeconds: Int!
+    realPlaySeconds: Int!
+}

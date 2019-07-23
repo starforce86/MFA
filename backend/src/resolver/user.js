@@ -318,17 +318,12 @@ async function updateWatchedVideo(root, args, ctx, info) {
 }
 
 async function watchedVideoUser(root, args, ctx, info) {
-    if (!ctx.user || !ctx.user.id) {
-        throw new GQLError({message: 'Unauthorized', code: 401});
-    }
 
     const { id } = args.where;
 
-    const user = await prisma.user({email: ctx.user.email});
-
     try {
         let watchedVideos = await prisma
-            .user({ id: ctx.user.id })
+            .user({ id: id })
             .watched_videos();
         watchedVideos = await Promise.all(watchedVideos.map(async (d) => {
             d.video = await prisma

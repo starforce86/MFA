@@ -3,6 +3,7 @@
 const log = require('./helper/logger').getLogger('app');
 const config = require('./config/config');
 const userResolver = require('./resolver/user');
+const statsResolver = require('./resolver/stats');
 const prisma = require('./helper/prisma_helper').prisma;
 const roleHelper = require('./helper/roles_helper');
 const {rule, shield, and, or, not, allow, deny} = require('graphql-shield');
@@ -88,6 +89,7 @@ const resolvers = {
             return {aggregate: await prisma.videosConnection(args).aggregate()}
         },
         watchedVideoUser: userResolver.watchedVideoUser,
+        videoStats: statsResolver.videoStats,
     },
     Mutation: {
         sign_up: userResolver.signUp,
@@ -118,6 +120,13 @@ const resolvers = {
         upsertCategory: (root, args) => prisma.upsertCategory(args),
         deleteCategory: (root, args) => prisma.deleteCategory(args.where),
         deleteManyCategories: (root, args) => prisma.deleteManyCategories(args.where),
+
+        createPlayHistory: (root, args) => prisma.createPlayHistory(args.data),
+        updatePlayHistory: (root, args) => prisma.updatePlayHistory(args),
+        updateManyPlayHistories: (root, args) => prisma.updateManyPlayHistories(args),
+        upsertPlayHistory: (root, args) => prisma.upsertPlayHistory(args),
+        deletePlayHistory: (root, args) => prisma.deletePlayHistory(args.where),
+        deleteManyPlayHistories: (root, args) => prisma.deleteManyPlayHistories(args.where),
 
         // createPost: (root, args) => prisma.createPost(args.data),
         // updatePost: (root, args) => prisma.updatePost(args),
@@ -168,6 +177,7 @@ const resolvers = {
         categories: (root, args) => prisma.video({id: root.id}).categories(args),
         like_users: (root, args) => prisma.video({id: root.id}).like_users(args),
         tags: (root, args) => prisma.video({id: root.id}).tags(args),
+        watched_users: (root, args) => prisma.video({id: root.id}).watched_users(args),
         likes_count: root => prisma.usersConnection({where: {liked_videos_some: {id: root.id}}}).aggregate().count(),
     },
     Tag: {
@@ -180,6 +190,7 @@ const resolvers = {
         author: (root, args) => prisma.post({id: root.id}).author(args),
     },
     WatchedVideoUser: {
+        user: (root, args) => prisma.watchedVideoUser({id: root.id}).user(args),
         video: (root, args) => prisma.watchedVideoUser({id: root.id}).video(args),
     },
     Node: { // to remove warning "Type "Node" is missing a "__resolveType" resolver. Pass false into "resolverValidationOptions.requireResolversForResolveType" to disable this warning."

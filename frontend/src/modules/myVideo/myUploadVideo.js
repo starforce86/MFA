@@ -297,7 +297,7 @@ class MyUploadVideo extends Component {
                                     </div>
                                     <div className="col-lg-4">
                                         <div className="main-title">
-                                            <h6>Preview Image File (Maximum : 1.5MB)</h6>
+                                            <h6>Preview Image File (Maximum : 10MB)</h6>
                                             <Dropzone
                                                 accept={'image/*'}
                                                 onDrop={async (files) => {

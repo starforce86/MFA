@@ -26,6 +26,9 @@ type Query {
     category(where: CategoryWhereUniqueInput!): Category
     categories(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Category]!
     categoriesConnection(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CategoryConnection!
+    playHistory(where: PlayHistoryWhereUniqueInput!): PlayHistory
+    playHistories(where: PlayHistoryWhereInput, orderBy: PlayHistoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PlayHistory]!
+    playHistoriesConnection(where: PlayHistoryWhereInput, orderBy: PlayHistoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PlayHistoryConnection!
     post(where: PostWhereUniqueInput!): Post
     posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
     postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
@@ -44,5 +47,6 @@ type Query {
     watchedVideoUser(where: WatchedVideoUserWhereUniqueInput!): WatchedVideoUser
     watchedVideoUsers(where: WatchedVideoUserWhereInput, orderBy: WatchedVideoUserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [WatchedVideoUser]!
     watchedVideoUsersConnection(where: WatchedVideoUserWhereInput, orderBy: WatchedVideoUserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): WatchedVideoUserConnection!
+    videoStats(userId: String, beginDate: DateTime, endDate: DateTime, type: String): [StatsResult]
     node(id: ID!): Node
 }

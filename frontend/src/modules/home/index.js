@@ -4,7 +4,7 @@ import Videos from "../../components/videos";
 import React, {Component} from "react";
 import {withRouter} from "next/router";
 import "video-react/dist/video-react.css"; // import css
-import MyPlayer from "../../modules/video-page/player";
+import MyPlayer from "../../modules/video-page/promoPlayer";
 import Video from "../../components/video";
 import logger from "../../util/logger";
 import * as consts from "../../util/consts";

@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400');
+/* @import '~antd/dist/antd.css'; */
 
 /* Body */
 html {
@@ -7,11 +8,11 @@ html {
 }
 
 body {
-    background-color: #121212;
-    color: #888;
-    font-size: 13px;
-    height: 100%;
-    font-family: FuturaBookC;
+    background-color: #121212 !important;
+    color: #888 !important;
+    font-size: 13px !important;
+    height: 100% !important;
+    font-family: FuturaBookC !important;
 }
 
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
@@ -902,7 +903,7 @@ a {
 }
 
 a:hover, h1, h2, h3, h4, h5, h6 {
-    color: #fff;
+    color: #fff !important;
 }
 
 .upload-video .fas {
@@ -2169,4 +2170,33 @@ ul.menu li a {
 .hash-text span {
     color: #bc1e3e;
     cursor: pointer;
+}
+
+/* .ant-table {
+    color: white !important;
+}
+
+.ant-table-thead > tr > th {
+    color: white !important;
+}
+
+.ant-table-thead > tr > th, .ant-table-tbody > tr > td {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+a:not([href]):not([tabindex]) {
+    color: white !important;
+}
+
+.ant-pagination-item-active a:not([href]):not([tabindex]) {
+    color: black !important;
+} */
+
+.ant-table-body {
+    overflow-x: auto;
+}
+
+input[type="date"] {
+    color: white;
 }
