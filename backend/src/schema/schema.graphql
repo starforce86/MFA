@@ -218,6 +218,10 @@ type AggregateCategory {
     count: Int!
 }
 
+type AggregateChargeHistory {
+  count: Int!
+}
+
 type AggregatePlayHistory {
     count: Int!
 }
@@ -228,6 +232,10 @@ type AggregatePost {
 
 type AggregateRestoreCode {
     count: Int!
+}
+
+type AggregateSubscriptionHistory {
+  count: Int!
 }
 
 type AggregateTag {
@@ -507,6 +515,139 @@ input CategoryWhereInput {
 
 input CategoryWhereUniqueInput {
     id: ID
+}
+
+type ChargeHistory {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  user: User!
+  amount: Int!
+  chargeDate: DateTime
+}
+
+type ChargeHistoryConnection {
+  pageInfo: PageInfo!
+  edges: [ChargeHistoryEdge]!
+  aggregate: AggregateChargeHistory!
+}
+
+input ChargeHistoryCreateInput {
+  user: UserCreateOneInput!
+  amount: Int!
+  chargeDate: DateTime
+}
+
+type ChargeHistoryEdge {
+  node: ChargeHistory!
+  cursor: String!
+}
+
+enum ChargeHistoryOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  amount_ASC
+  amount_DESC
+  chargeDate_ASC
+  chargeDate_DESC
+}
+
+type ChargeHistoryPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  amount: Int!
+  chargeDate: DateTime
+}
+
+type ChargeHistorySubscriptionPayload {
+  mutation: MutationType!
+  node: ChargeHistory
+  updatedFields: [String!]
+  previousValues: ChargeHistoryPreviousValues
+}
+
+input ChargeHistorySubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ChargeHistoryWhereInput
+  AND: [ChargeHistorySubscriptionWhereInput!]
+  OR: [ChargeHistorySubscriptionWhereInput!]
+  NOT: [ChargeHistorySubscriptionWhereInput!]
+}
+
+input ChargeHistoryUpdateInput {
+  user: UserUpdateOneRequiredInput
+  amount: Int
+  chargeDate: DateTime
+}
+
+input ChargeHistoryUpdateManyMutationInput {
+  amount: Int
+  chargeDate: DateTime
+}
+
+input ChargeHistoryWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  user: UserWhereInput
+  amount: Int
+  amount_not: Int
+  amount_in: [Int!]
+  amount_not_in: [Int!]
+  amount_lt: Int
+  amount_lte: Int
+  amount_gt: Int
+  amount_gte: Int
+  chargeDate: DateTime
+  chargeDate_not: DateTime
+  chargeDate_in: [DateTime!]
+  chargeDate_not_in: [DateTime!]
+  chargeDate_lt: DateTime
+  chargeDate_lte: DateTime
+  chargeDate_gt: DateTime
+  chargeDate_gte: DateTime
+  AND: [ChargeHistoryWhereInput!]
+  OR: [ChargeHistoryWhereInput!]
+  NOT: [ChargeHistoryWhereInput!]
+}
+
+input ChargeHistoryWhereUniqueInput {
+  id: ID
 }
 
 scalar DateTime
@@ -995,13 +1136,161 @@ input RestoreCodeWhereUniqueInput {
 type Subscription {
   activationCode(where: ActivationCodeSubscriptionWhereInput): ActivationCodeSubscriptionPayload
   category(where: CategorySubscriptionWhereInput): CategorySubscriptionPayload
+  chargeHistory(where: ChargeHistorySubscriptionWhereInput): ChargeHistorySubscriptionPayload
   playHistory(where: PlayHistorySubscriptionWhereInput): PlayHistorySubscriptionPayload
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   restoreCode(where: RestoreCodeSubscriptionWhereInput): RestoreCodeSubscriptionPayload
+  subscriptionHistory(where: SubscriptionHistorySubscriptionWhereInput): SubscriptionHistorySubscriptionPayload
   tag(where: TagSubscriptionWhereInput): TagSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   video(where: VideoSubscriptionWhereInput): VideoSubscriptionPayload
   watchedVideoUser(where: WatchedVideoUserSubscriptionWhereInput): WatchedVideoUserSubscriptionPayload
+}
+
+type SubscriptionHistory {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  user: User!
+  interval: String!
+  amount: Int!
+  subscriptionDate: DateTime
+}
+
+type SubscriptionHistoryConnection {
+  pageInfo: PageInfo!
+  edges: [SubscriptionHistoryEdge]!
+  aggregate: AggregateSubscriptionHistory!
+}
+
+input SubscriptionHistoryCreateInput {
+  user: UserCreateOneInput!
+  interval: String!
+  amount: Int!
+  subscriptionDate: DateTime
+}
+
+type SubscriptionHistoryEdge {
+  node: SubscriptionHistory!
+  cursor: String!
+}
+
+enum SubscriptionHistoryOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  interval_ASC
+  interval_DESC
+  amount_ASC
+  amount_DESC
+  subscriptionDate_ASC
+  subscriptionDate_DESC
+}
+
+type SubscriptionHistoryPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  interval: String!
+  amount: Int!
+  subscriptionDate: DateTime
+}
+
+type SubscriptionHistorySubscriptionPayload {
+  mutation: MutationType!
+  node: SubscriptionHistory
+  updatedFields: [String!]
+  previousValues: SubscriptionHistoryPreviousValues
+}
+
+input SubscriptionHistorySubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: SubscriptionHistoryWhereInput
+  AND: [SubscriptionHistorySubscriptionWhereInput!]
+  OR: [SubscriptionHistorySubscriptionWhereInput!]
+  NOT: [SubscriptionHistorySubscriptionWhereInput!]
+}
+
+input SubscriptionHistoryUpdateInput {
+  user: UserUpdateOneRequiredInput
+  interval: String!
+  amount: Int!
+  subscriptionDate: DateTime
+}
+
+input SubscriptionHistoryUpdateManyMutationInput {
+  interval: String!
+  amount: Int!
+  subscriptionDate: DateTime
+}
+
+input SubscriptionHistoryWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  user: UserWhereInput
+  interval: String
+  interval_not: String
+  interval_in: [String!]
+  interval_not_in: [String!]
+  interval_lt: String
+  interval_lte: String
+  interval_gt: String
+  interval_gte: String
+  interval_contains: String
+  interval_not_contains: String
+  interval_starts_with: String
+  interval_not_starts_with: String
+  interval_ends_with: String
+  interval_not_ends_with: String
+  amount: Int
+  amount_not: Int
+  amount_in: [Int!]
+  amount_not_in: [Int!]
+  amount_lt: Int
+  amount_lte: Int
+  amount_gt: Int
+  amount_gte: Int
+  AND: [SubscriptionHistoryWhereInput!]
+  OR: [SubscriptionHistoryWhereInput!]
+  NOT: [SubscriptionHistoryWhereInput!]
+}
+
+input SubscriptionHistoryWhereUniqueInput {
+  id: ID
 }
 
 type Tag {
@@ -3135,7 +3424,13 @@ input WatchedVideoUserWhereUniqueInput {
   id: ID
 }
 
-type StatsResult {
+type SignupStatsResult {
+    begin: DateTime
+    end: DateTime
+    signupCount: Int
+}
+
+type VideoStatsResult {
     id: String
     title: String
     timespans: [TimeSpan]
@@ -3148,4 +3443,23 @@ type TimeSpan {
     uniqueUserCount: Int
     playSeconds: Int
     realPlaySeconds: Int
+}
+
+type ChargeStatsResult {
+    begin: DateTime
+    end: DateTime
+    monthlyChargeCount: Int
+    monthlyChargeAmount: Int
+    yearlyChargeCount: Int
+    yearlyChargeAmount: Int
+    totalChargeCount: Int
+    totalChargeAmount: Int
+}
+
+type SubscriptionStatsResult {
+    begin: DateTime
+    end: DateTime
+    monthlySubscriptionCount: Int
+    yearlySubscriptionCount: Int
+    totalSubscriptionCount: Int
 }

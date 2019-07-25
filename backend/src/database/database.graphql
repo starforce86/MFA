@@ -136,3 +136,24 @@ type PlayHistory {
     playSeconds: Int!
     realPlaySeconds: Int!
 }
+
+type ChargeHistory {
+    id: ID! @unique
+    createdAt: DateTime!
+    updatedAt: DateTime!
+
+    user: User!
+    amount: Int!
+    chargeDate: DateTime
+}
+
+type SubscriptionHistory {
+    id: ID! @unique
+    createdAt: DateTime!
+    updatedAt: DateTime!
+
+    user: User!
+    interval: String!
+    amount: Int!
+    subscriptionDate: DateTime
+}

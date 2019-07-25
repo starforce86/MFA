@@ -89,7 +89,12 @@ const resolvers = {
             return {aggregate: await prisma.videosConnection(args).aggregate()}
         },
         watchedVideoUser: userResolver.watchedVideoUser,
+        signupStats: statsResolver.signupStats,
         videoStats: statsResolver.videoStats,
+        chargeStats: statsResolver.chargeStats,
+        subscriptionStats: statsResolver.subscriptionStats,
+        populateChargeHistory: statsResolver.populateChargeHistory,
+        populateSubscriptionHistory: statsResolver.populateSubscriptionHistory,
     },
     Mutation: {
         sign_up: userResolver.signUp,

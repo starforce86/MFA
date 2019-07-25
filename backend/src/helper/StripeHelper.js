@@ -3,6 +3,14 @@ const stripe = require("stripe")(config.stripe.sk_token);
 const log = require('./logger').getLogger('StripeHelper');
 const _ = require('lodash');
 
+async function getCharges() {
+    return await stripe.charges.list({limit: 100});
+}
+
+async function getSubscriptions() {
+    return await stripe.subscriptions.list({limit: 100});
+}
+
 async function createCustomer(stripe_tok_token, email) {
     return await stripe.customers.create({
         email: email,
@@ -60,4 +68,6 @@ module.exports = {
     unsubscribeUser: unsubscribeUser,
     isSubscriptionActive: isSubscriptionActive,
     getLast4: getLast4,
+    getCharges: getCharges,
+    getSubscriptions: getSubscriptions,
 };

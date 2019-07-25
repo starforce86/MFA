@@ -2,10 +2,243 @@ const log = require('../helper/logger').getLogger('stats_resolver');
 const prisma = require('../helper/prisma_helper').prisma;
 const moment = require('moment');
 const GQLError = require('../helper/GQLError');
+const stripeHelper = require('../helper/StripeHelper');
 const token = require('../helper/token');
 const config = require('../config/config');
 
 const dateFormat = 'YYYY-MM-DD HH:mm:ss';
+
+async function signupStats(root, args, ctx, info) {
+    try {
+        let beginDate = args.beginDate;
+        let endDate = args.endDate;
+        const type = args.type;
+
+        let timespans = [];
+        beginDate = moment(beginDate)
+        endDate = moment(endDate)
+
+        if(type == 'daily') {
+            beginDate.set({'hour': 0, 'minute': 0, 'second': 0});
+            endDate.set({'hour': 0, 'minute': 0, 'second': 0});
+            let startTime = beginDate.clone();
+            let tmpTime = beginDate.clone();
+            let endTime = null;
+            while(!endTime || endTime <= endDate) {
+                endTime = tmpTime.add(moment.duration(1, 'days')).clone();
+                timespans.push({
+                    begin: startTime,
+                    end: endTime
+                });
+                startTime = endTime.clone();
+            }
+            timespans.push({
+                begin: beginDate.clone(),
+                end: endTime.clone()
+            });
+        }
+        else if(type == 'monthly') {
+            beginDate.set({'date': 1, 'hour': 0, 'minute': 0, 'second': 0});
+            endDate.set({'date': 1, 'hour': 0, 'minute': 0, 'second': 0});
+            let startTime = beginDate.clone();
+            let tmpTime = beginDate.clone();
+            let endTime = null;
+            while(!endTime || endTime <= endDate) {
+                endTime = tmpTime.add(moment.duration(1, 'months')).clone();
+                timespans.push({
+                    begin: startTime,
+                    end: endTime
+                });
+                startTime = endTime.clone();
+            }
+            timespans.push({
+                begin: beginDate.clone(),
+                end: endTime.clone()
+            });
+        }
+
+        await Promise.all(timespans.map(async (ts) => {
+            ts.signupCount = (await prisma.users({
+                where: {
+                    createdAt_gte: ts.begin,
+                    createdAt_lt: ts.end
+                }
+            })).length;
+        }));
+
+        return timespans;
+    } catch (e) {
+        log.error('subscriptionStats error:', e);
+        return null;
+    }
+}
+
+async function subscriptionStats(root, args, ctx, info) {
+    try {
+        let beginDate = args.beginDate;
+        let endDate = args.endDate;
+        const type = args.type;
+
+        let timespans = [];
+        beginDate = moment(beginDate)
+        endDate = moment(endDate)
+
+        if(type == 'monthly') {
+            beginDate.set({'date': 1, 'hour': 0, 'minute': 0, 'second': 0});
+            endDate.set({'date': 1, 'hour': 0, 'minute': 0, 'second': 0});
+            let startTime = beginDate.clone();
+            let tmpTime = beginDate.clone();
+            let endTime = null;
+            while(!endTime || endTime <= endDate) {
+                endTime = tmpTime.add(moment.duration(1, 'months')).clone();
+                timespans.push({
+                    begin: startTime,
+                    end: endTime
+                });
+                startTime = endTime.clone();
+            }
+            timespans.push({
+                begin: beginDate.clone(),
+                end: endTime.clone()
+            });
+        }
+        else if(type == 'yearly') {
+            beginDate.set({'month': 0, 'date': 1, 'hour': 0, 'minute': 0, 'second': 0});
+            endDate.set({'month': 0, 'date': 1, 'hour': 0, 'minute': 0, 'second': 0});
+            let startTime = beginDate.clone();
+            let tmpTime = beginDate.clone();
+            let endTime = null;
+            while(!endTime || endTime <= endDate) {
+                endTime = tmpTime.add(moment.duration(1, 'years')).clone();
+                timespans.push({
+                    begin: startTime,
+                    end: endTime
+                });
+                startTime = endTime.clone();
+            }
+            timespans.push({
+                begin: beginDate.clone(),
+                end: endTime.clone()
+            });
+        }
+
+        await Promise.all(timespans.map(async (ts) => {
+            ts.monthlySubscriptionCount = (await prisma.subscriptionHistories({
+                where: {
+                    interval: "month",
+                    subscriptionDate_gte: ts.begin,
+                    subscriptionDate_lt: ts.end
+                }
+            })).length;
+            
+            ts.yearlySubscriptionCount = (await prisma.subscriptionHistories({
+                where: {
+                    interval: "year",
+                    subscriptionDate_gte: ts.begin,
+                    subscriptionDate_lt: ts.end
+                }
+            })).length;
+            
+            ts.totalSubscriptionCount = ts.monthlySubscriptionCount + ts.yearlySubscriptionCount;
+        }));
+
+        return timespans;
+    } catch (e) {
+        log.error('subscriptionStats error:', e);
+        return null;
+    }
+}
+
+async function chargeStats(root, args, ctx, info) {
+    try {
+        let beginDate = args.beginDate;
+        let endDate = args.endDate;
+        const type = args.type;
+
+        let timespans = [];
+        beginDate = moment(beginDate)
+        endDate = moment(endDate)
+
+        if(type == 'monthly') {
+            beginDate.set({'date': 1, 'hour': 0, 'minute': 0, 'second': 0});
+            endDate.set({'date': 1, 'hour': 0, 'minute': 0, 'second': 0});
+            let startTime = beginDate.clone();
+            let tmpTime = beginDate.clone();
+            let endTime = null;
+            while(!endTime || endTime <= endDate) {
+                endTime = tmpTime.add(moment.duration(1, 'months')).clone();
+                timespans.push({
+                    begin: startTime,
+                    end: endTime
+                });
+                startTime = endTime.clone();
+            }
+            timespans.push({
+                begin: beginDate.clone(),
+                end: endTime.clone()
+            });
+        }
+        else if(type == 'yearly') {
+            beginDate.set({'month': 0, 'date': 1, 'hour': 0, 'minute': 0, 'second': 0});
+            endDate.set({'month': 0, 'date': 1, 'hour': 0, 'minute': 0, 'second': 0});
+            let startTime = beginDate.clone();
+            let tmpTime = beginDate.clone();
+            let endTime = null;
+            while(!endTime || endTime <= endDate) {
+                endTime = tmpTime.add(moment.duration(1, 'years')).clone();
+                timespans.push({
+                    begin: startTime,
+                    end: endTime
+                });
+                startTime = endTime.clone();
+            }
+            timespans.push({
+                begin: beginDate.clone(),
+                end: endTime.clone()
+            });
+        }
+
+        const monthlyCharge = 2999;
+        const yearlyCharge = 30000;
+
+        await Promise.all(timespans.map(async (ts) => {
+            let histories = await prisma.chargeHistories({
+                where: {
+                    amount: monthlyCharge,
+                    chargeDate_gte: ts.begin,
+                    chargeDate_lt: ts.end
+                }
+            });
+            let sumMonthly = 0;
+            for (history of histories) {
+                sumMonthly += history.amount;
+            }
+            ts.monthlyChargeCount = histories.length;
+            ts.monthlyChargeAmount = sumMonthly;
+
+            histories = await prisma.chargeHistories({
+                where: {
+                    amount: yearlyCharge,
+                    chargeDate_gte: ts.begin,
+                    chargeDate_lt: ts.end
+                }
+            });
+            let sumYearly = 0;
+            for (history of histories) {
+                sumYearly += history.amount;
+            }
+            ts.yearlyChargeCount = histories.length;
+            ts.yearlyChargeAmount = sumYearly;
+            ts.totalChargeCount = ts.monthlyChargeCount + ts.yearlyChargeCount;
+            ts.totalChargeAmount = sumMonthly + sumYearly;
+        }));
+
+        return timespans;
+    } catch (e) {
+        log.error('chargeStats error:', e);
+        return null;
+    }
+}
 
 async function videoStats(root, args, ctx, info) {
 
@@ -73,11 +306,13 @@ async function videoStats(root, args, ctx, info) {
             });
         }
         else if(type == 'yearly') {
-            const stepCnt = Math.ceil(diffDays / 365);
+            beginDate.set({'month': 1, 'date': 1, 'hour': 0, 'minute': 0, 'second': 0});
+            endDate.set({'month': 1, 'date': 1, 'hour': 0, 'minute': 0, 'second': 0});
             let startTime = beginDate.clone();
             let tmpTime = beginDate.clone();
-            for (var i = 0; i < stepCnt; i++) {
-                endTime = tmpTime.add(moment.duration(365, 'days')).clone();
+            let endTime = null;
+            while(!endTime || endTime <= endDate) {
+                endTime = tmpTime.add(moment.duration(1, 'years')).clone();
                 timespans.push({
                     begin: startTime,
                     end: endTime
@@ -86,7 +321,7 @@ async function videoStats(root, args, ctx, info) {
             }
             timespans.push({
                 begin: beginDate.clone(),
-                end: endDate.clone()
+                end: endTime.clone()
             });
         }
         const user = await prisma.user({id: userId});
@@ -135,6 +370,58 @@ async function videoStats(root, args, ctx, info) {
     }
 }
 
+async function populateChargeHistory(root, args, ctx, info) {
+    try {
+        const charges = await stripeHelper.getCharges();
+        await Promise.all(charges.data.map(async (c) => {
+            const users = await prisma.users({where: {stripe_customer_id: c.customer}});
+            if(users && users.length > 0) {
+                const user = users[0];
+                await prisma.createChargeHistory({
+                    amount: c.amount,
+                    user: {
+                        connect: {id: user.id}
+                    },
+                    chargeDate: moment(c.created * 1000)
+                });
+            }
+        }));
+        return true;
+    } catch (e) {
+        log.error('populateChargeHistory error:', e);
+        return false;
+    }
+}
+
+async function populateSubscriptionHistory(root, args, ctx, info) {
+    try {
+        const subscriptions = await stripeHelper.getSubscriptions();
+        await Promise.all(subscriptions.data.map(async (s) => {
+            const users = await prisma.users({where: {stripe_customer_id: s.customer}});
+            if(users && users.length > 0) {
+                const user = users[0];
+                await prisma.createSubscriptionHistory({
+                    user: {
+                        connect: {id: user.id}
+                    },
+                    interval: s.plan.interval,
+                    amount: s.plan.amount,
+                    subscriptionDate: moment(s.created * 1000)
+                });
+            }
+        }));
+        return true;
+    } catch (e) {
+        log.error('populateChargeHistory error:', e);
+        return false;
+    }
+}
+
 module.exports = {
-    videoStats: videoStats
+    signupStats: signupStats,
+    subscriptionStats: subscriptionStats,
+    chargeStats: chargeStats,
+    videoStats: videoStats,
+    populateChargeHistory: populateChargeHistory,
+    populateSubscriptionHistory: populateSubscriptionHistory
 };

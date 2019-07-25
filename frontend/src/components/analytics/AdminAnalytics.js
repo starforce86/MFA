@@ -8,36 +8,144 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import moment from 'moment';
-import { Bar } from 'react-chartjs-2';
+import { Line, Bar, Pie } from 'react-chartjs-2';
 import logger from "../../util/logger";
 import Menu from "../../components/menu";
 // import 'antd/dist/antd.css';
 import TextField from '@material-ui/core/TextField';
 
-const log = logger('News');
+const log = logger('AdminAnalytics');
 const dateFormat = 'YYYY-MM-DD HH:mm:ss';
 const dateOnlyFormat = 'YYYY-MM-DD';
 const monthOnlyFormat = 'YYYY-MM';
-
-const VIDEO_STATS_QUERY = gql`
-    query GetVideoStats($userId: String, $beginDate: DateTime!, $endDate: DateTime!, $type: String!) {
-			videoStats(
-				userId: $userId
-				beginDate: $beginDate
-				endDate: $endDate
-				type: $type
-			) {
-				id
-				title
-				timespans {
-					begin
-					end
-					userEventCount
-					uniqueUserCount
-					playSeconds
-					realPlaySeconds
-				}
+const yearOnlyFormat = 'YYYY';
+const charge_line_options = {
+	legend: {
+		position: 'bottom'
+	},
+	scales: {
+		yAxes: [{
+			scaleLabel: {
+				display: true,
+				labelString: '$',
+			},
+			ticks: {
+				suggestedMin: 0
 			}
+		}],
+		xAxes: [{
+			scaleLabel: {
+				display: false,
+			}
+		}],
+	}
+};
+const subscription_line_options = {
+	legend: {
+		position: 'bottom'
+	},
+	scales: {
+		yAxes: [{
+			scaleLabel: {
+				display: true,
+				labelString: 'Count',
+			},
+			ticks: {
+				suggestedMin: 0
+			}
+		}],
+		xAxes: [{
+			scaleLabel: {
+				display: false,
+			}
+		}],
+	}
+};
+const signup_line_options = {
+	legend: {
+		position: 'bottom'
+	},
+	scales: {
+		yAxes: [{
+			scaleLabel: {
+				display: true,
+				labelString: 'Count',
+			},
+			ticks: {
+				suggestedMin: 0
+			}
+		}],
+		xAxes: [{
+			scaleLabel: {
+				display: false,
+			}
+		}],
+	}
+};
+const line_colors = [
+	"142,29,15",
+	"187,172,74",
+	"141,126,188",
+]
+
+const STATS_QUERY = gql`
+    query GetStats(
+		$userId: String, $videoStatsBeginDate: DateTime!, $videoStatsEndDate: DateTime!, $videoStatsType: String!,
+		$chargeStatsBeginDate: DateTime!, $chargeStatsEndDate: DateTime!, $chargeStatsType: String!
+		$subscriptionStatsBeginDate: DateTime!, $subscriptionStatsEndDate: DateTime!, $subscriptionStatsType: String!
+		$signupStatsBeginDate: DateTime!, $signupStatsEndDate: DateTime!, $signupStatsType: String!
+		) {
+		videoStats(
+			userId: $userId
+			beginDate: $videoStatsBeginDate
+			endDate: $videoStatsEndDate
+			type: $videoStatsType
+		) {
+			id
+			title
+			timespans {
+				begin
+				end
+				userEventCount
+				uniqueUserCount
+				playSeconds
+				realPlaySeconds
+			}
+		}
+		chargeStats(
+			beginDate: $chargeStatsBeginDate
+			endDate: $chargeStatsEndDate
+			type: $chargeStatsType
+		) {
+			begin
+			end
+			monthlyChargeCount
+			monthlyChargeAmount
+			yearlyChargeCount
+			yearlyChargeAmount
+			totalChargeCount
+			totalChargeAmount
+		}
+		subscriptionStats(
+			beginDate: $subscriptionStatsBeginDate
+			endDate: $subscriptionStatsEndDate
+			type: $subscriptionStatsType
+		) {
+			begin
+			end
+			monthlySubscriptionCount
+			yearlySubscriptionCount
+			totalSubscriptionCount
+		}
+		signupStats(
+			beginDate: $signupStatsBeginDate
+			endDate: $signupStatsEndDate
+			type: $signupStatsType
+		) {
+			begin
+			end
+			signupCount
+		}
     }
 `;
 
@@ -55,6 +163,21 @@ class AdminAnalytics extends Component {
 			endDate: moment().format(dateOnlyFormat),
 			type: 'daily',
 			target: videoStatsTargets[0],
+		},
+		chargeStats: {
+			beginDate: moment().subtract(moment.duration(12, 'months')).format(dateOnlyFormat),
+			endDate: moment().format(dateOnlyFormat),
+			type: 'monthly',
+		},
+		subscriptionStats: {
+			beginDate: moment().subtract(moment.duration(12, 'months')).format(dateOnlyFormat),
+			endDate: moment().format(dateOnlyFormat),
+			type: 'monthly',
+		},
+		signupStats: {
+			beginDate: moment().subtract(moment.duration(1, 'months')).format(dateOnlyFormat),
+			endDate: moment().format(dateOnlyFormat),
+			type: 'daily',
 		}
 	}
 
@@ -62,10 +185,7 @@ class AdminAnalytics extends Component {
 		super(props);
 	}
 
-	handleRefresh = () => {
-	}
-
-	handleFromDateChange = (e) => {
+	handleVideoFromDateChange = (e) => {
 		if(e.target.value < this.state.videoStats.endDate) {
 			this.setState({
 				videoStats: {
@@ -76,7 +196,7 @@ class AdminAnalytics extends Component {
 		}
 	}
 
-	handleToDateChange = (e) => {
+	handleVideoToDateChange = (e) => {
 		if(e.target.value > this.state.videoStats.beginDate) {
 			this.setState({
 				videoStats: {
@@ -87,7 +207,73 @@ class AdminAnalytics extends Component {
 		}
 	}
 
-	handleTypeChange = (e) => {
+	handleChargeFromDateChange = (e) => {
+		if(e.target.value < this.state.chargeStats.endDate) {
+			this.setState({
+				chargeStats: {
+					...this.state.chargeStats,
+					beginDate: e.target.value
+				}
+			});
+		}
+	}
+
+	handleChargeToDateChange = (e) => {
+		if(e.target.value > this.state.chargeStats.beginDate) {
+			this.setState({
+				chargeStats: {
+					...this.state.chargeStats,
+					endDate: e.target.value
+				}
+			});
+		}
+	}
+
+	handleSubscriptionFromDateChange = (e) => {
+		if(e.target.value < this.state.subscriptionStats.endDate) {
+			this.setState({
+				subscriptionStats: {
+					...this.state.subscriptionStats,
+					beginDate: e.target.value
+				}
+			});
+		}
+	}
+
+	handleSubscriptionToDateChange = (e) => {
+		if(e.target.value > this.state.subscriptionStats.beginDate) {
+			this.setState({
+				subscriptionStats: {
+					...this.state.subscriptionStats,
+					endDate: e.target.value
+				}
+			});
+		}
+	}
+
+	handleSignupFromDateChange = (e) => {
+		if(e.target.value < this.state.signupStats.endDate) {
+			this.setState({
+				signupStats: {
+					...this.state.signupStats,
+					beginDate: e.target.value
+				}
+			});
+		}
+	}
+
+	handleSignupToDateChange = (e) => {
+		if(e.target.value > this.state.signupStats.beginDate) {
+			this.setState({
+				signupStats: {
+					...this.state.signupStats,
+					endDate: e.target.value
+				}
+			});
+		}
+	}
+
+	handleVideoStatsTypeChange = (e) => {
 		const type = e.target.value;
 		if(type == 'daily') {
 			this.setState({
@@ -110,26 +296,104 @@ class AdminAnalytics extends Component {
 		}
 	}
 
+	handleChargeStatsTypeChange = (e) => {
+		const type = e.target.value;
+		if(type == 'yearly') {
+			this.setState({
+				chargeStats: {
+					...this.state.chargeStats, 
+					type: type,
+					beginDate: moment().subtract(moment.duration(10, 'years')).format(dateOnlyFormat),
+					endDate: moment().format(dateOnlyFormat),
+				}
+			});
+		} else if(type == 'monthly') {
+			this.setState({
+				chargeStats: {
+					...this.state.chargeStats, 
+					type: type,
+					beginDate: moment().subtract(moment.duration(12, 'months')).format(dateOnlyFormat),
+					endDate: moment().format(dateOnlyFormat),
+				}
+			});
+		}
+	}
+
+	handleSubscriptionStatsTypeChange = (e) => {
+		const type = e.target.value;
+		if(type == 'yearly') {
+			this.setState({
+				subscriptionStats: {
+					...this.state.subscriptionStats, 
+					type: type,
+					beginDate: moment().subtract(moment.duration(10, 'years')).format(dateOnlyFormat),
+					endDate: moment().format(dateOnlyFormat),
+				}
+			});
+		} else if(type == 'monthly') {
+			this.setState({
+				subscriptionStats: {
+					...this.state.subscriptionStats, 
+					type: type,
+					beginDate: moment().subtract(moment.duration(12, 'months')).format(dateOnlyFormat),
+					endDate: moment().format(dateOnlyFormat),
+				}
+			});
+		}
+	}
+
+	handleSignupStatsTypeChange = (e) => {
+		const type = e.target.value;
+		if(type == 'daily') {
+			this.setState({
+				signupStats: {
+					...this.state.signupStats, 
+					type: type,
+					beginDate: moment().subtract(moment.duration(1, 'months')).format(dateOnlyFormat),
+					endDate: moment().format(dateOnlyFormat),
+				}
+			});
+		} else if(type == 'monthly') {
+			this.setState({
+				signupStats: {
+					...this.state.signupStats, 
+					type: type,
+					beginDate: moment().subtract(moment.duration(12, 'months')).format(dateOnlyFormat),
+					endDate: moment().format(dateOnlyFormat),
+				}
+			});
+		}
+	}
+
 	stringSorter = (key) => (a, b) => {
-		if(a[key] < b[key]) { return -1; }
-    if(a[key] > b[key]) { return 1; }
-    return 0;
+		if (a[key] < b[key]) { return -1; }
+		if (a[key] > b[key]) { return 1; }
+		return 0;
 	}
 
 	render() {
 
 		const { user } = this.props;
-		const { videoStats } = this.state;
+		const { videoStats, chargeStats, subscriptionStats, signupStats } = this.state;
 		console.log('############# request', videoStats.type)
 
 		return <Query errorPolicy={"ignore"}
 			fetchPolicy={"no-cache"}
-			query={VIDEO_STATS_QUERY}
+			query={STATS_QUERY}
 			variables={{
 				userId: user.id,
-				beginDate: videoStats.beginDate,
-				endDate: videoStats.endDate,
-				type: videoStats.type
+				videoStatsBeginDate: videoStats.beginDate,
+				videoStatsEndDate: videoStats.endDate,
+				videoStatsType: videoStats.type,
+				chargeStatsBeginDate: chargeStats.beginDate,
+				chargeStatsEndDate: chargeStats.endDate,
+				chargeStatsType: chargeStats.type,
+				subscriptionStatsBeginDate: subscriptionStats.beginDate,
+				subscriptionStatsEndDate: subscriptionStats.endDate,
+				subscriptionStatsType: subscriptionStats.type,
+				signupStatsBeginDate: signupStats.beginDate,
+				signupStatsEndDate: signupStats.endDate,
+				signupStatsType: signupStats.type,
 			}}>
 			{
 				({ loading, error, data }) => {
@@ -137,7 +401,320 @@ class AdminAnalytics extends Component {
 					if (error) return <div>Error</div>;
 					console.log('############# response', data)
 
-					const video_pie_data = {
+					const signup_line_data = {
+						labels: [],
+						datasets: []
+					};
+					let signup_table_columns = [
+						{
+							title: 'Type',
+							dataIndex: 'type',
+							key: 'type',
+						},
+						{
+							title: 'Row Sum',
+							dataIndex: 'sum',
+							key: 'sum',
+							sorter: (a, b) => a.sum - b.sum,
+							defaultSortOrder: 'descend'
+						}
+					];
+					let signup_table_data = [];
+					if(data.signupStats && data.signupStats.length > 0) {
+						for(let i=0; i<data.signupStats.length-1; i++) {
+							const d = data.signupStats[i];
+							if(this.state.signupStats.type == 'daily') {
+								signup_table_columns.push({
+									title: moment(d.begin).format(dateOnlyFormat),
+									dataIndex: d.end,
+									key: d.end,
+								});
+								signup_line_data.labels.push(moment(d.begin).format(dateOnlyFormat));
+							} else if(this.state.signupStats.type == 'monthly') {
+								signup_table_columns.push({
+									title: moment(d.begin).format(monthOnlyFormat),
+									dataIndex: d.end,
+									key: d.end,
+								});
+								signup_line_data.labels.push(moment(d.begin).format(monthOnlyFormat));
+							}
+						}
+
+						let val = {};
+						for(let i=0; i<data.signupStats.length-1; i++) {
+							const d = data.signupStats[i];
+							val[d.end] = d.signupCount;
+						}
+						signup_table_data.push({
+							type: "User Registration",
+							sum: data.signupStats[data.signupStats.length-1].signupCount,
+							...val
+						});
+					}
+					console.log('############### signup_table_columns signup_table_data', signup_table_columns, signup_table_data)
+					
+					signup_table_data.map((d,i) => {
+						const dataset_data = [];
+						for(let i=2; i<signup_table_columns.length; i++) {
+							dataset_data.push(d[signup_table_columns[i].dataIndex]);
+						}
+						signup_line_data.datasets.push({
+							label: `${d.type}`,
+							fill: false,
+							lineTension: 0.1,
+							backgroundColor: `rgba(${line_colors[i]},0.4)`,
+							borderColor: `rgba(${line_colors[i]},1)`,
+							borderCapStyle: 'butt',
+							borderDash: [],
+							borderDashOffset: 0.0,
+							borderJoinStyle: 'miter',
+							pointBorderColor: `rgba(${line_colors[i]},1)`,
+							pointBackgroundColor: '#fff',
+							pointBorderWidth: 1,
+							pointHoverRadius: 5,
+							pointHoverBackgroundColor: `rgba(${line_colors[i]},1)`,
+							pointHoverBorderColor: 'rgba(220,220,220,1)',
+							pointHoverBorderWidth: 2,
+							pointRadius: 1,
+							pointHitRadius: 10,
+							data: dataset_data
+						});
+					});
+					console.log('############### signup_line_data', signup_line_data)
+
+
+					const subscription_line_data = {
+						labels: [],
+						datasets: []
+					};
+					let subscription_table_columns = [
+						{
+							title: 'Type',
+							dataIndex: 'type',
+							key: 'type',
+						},
+						{
+							title: 'Row Sum',
+							dataIndex: 'sum',
+							key: 'sum',
+							sorter: (a, b) => a.sum - b.sum,
+							defaultSortOrder: 'descend'
+						}
+					];
+					let subscription_table_data = [];
+					if(data.subscriptionStats && data.subscriptionStats.length > 0) {
+						for(let i=0; i<data.subscriptionStats.length-1; i++) {
+							const d = data.subscriptionStats[i];
+							if(this.state.subscriptionStats.type == 'monthly') {
+								subscription_table_columns.push({
+									title: moment(d.begin).format(monthOnlyFormat),
+									dataIndex: d.end,
+									key: d.end,
+								});
+								subscription_line_data.labels.push(moment(d.begin).format(monthOnlyFormat));
+							} else if(this.state.subscriptionStats.type == 'yearly') {
+								subscription_table_columns.push({
+									title: moment(d.begin).format(yearOnlyFormat),
+									dataIndex: d.end,
+									key: d.end,
+								});
+								subscription_line_data.labels.push(moment(d.begin).format(yearOnlyFormat));
+							}
+						}
+
+						let val = {};
+						for(let i=0; i<data.subscriptionStats.length-1; i++) {
+							const d = data.subscriptionStats[i];
+							val[d.end] = d.monthlySubscriptionCount;
+						}
+						subscription_table_data.push({
+							type: "Monthly",
+							sum: data.subscriptionStats[data.subscriptionStats.length-1].monthlySubscriptionCount,
+							...val
+						});
+
+						val = {};
+						for(let i=0; i<data.subscriptionStats.length-1; i++) {
+							const d = data.subscriptionStats[i];
+							val[d.end] = d.yearlySubscriptionCount;
+						}
+						subscription_table_data.push({
+							type: "Yearly",
+							sum: data.subscriptionStats[data.subscriptionStats.length-1].yearlySubscriptionCount,
+							...val
+						});
+
+						val = {};
+						for(let i=0; i<data.subscriptionStats.length-1; i++) {
+							const d = data.subscriptionStats[i];
+							val[d.end] = d.totalSubscriptionCount;
+						}
+						subscription_table_data.push({
+							type: "Total",
+							sum: data.subscriptionStats[data.subscriptionStats.length-1].totalSubscriptionCount,
+							...val
+						});
+					}
+					console.log('############### subscription_table_columns subscription_table_data', subscription_table_columns, subscription_table_data)
+					
+					subscription_table_data.sort((a, b) => (a.sum < b.sum) ? 1: -1);
+
+					subscription_table_data.map((d,i) => {
+						const dataset_data = [];
+						for(let i=2; i<subscription_table_columns.length; i++) {
+							dataset_data.push(d[subscription_table_columns[i].dataIndex]);
+						}
+						subscription_line_data.datasets.push({
+							label: `${d.type}`,
+							fill: false,
+							lineTension: 0.1,
+							backgroundColor: `rgba(${line_colors[i]},0.4)`,
+							borderColor: `rgba(${line_colors[i]},1)`,
+							borderCapStyle: 'butt',
+							borderDash: [],
+							borderDashOffset: 0.0,
+							borderJoinStyle: 'miter',
+							pointBorderColor: `rgba(${line_colors[i]},1)`,
+							pointBackgroundColor: '#fff',
+							pointBorderWidth: 1,
+							pointHoverRadius: 5,
+							pointHoverBackgroundColor: `rgba(${line_colors[i]},1)`,
+							pointHoverBorderColor: 'rgba(220,220,220,1)',
+							pointHoverBorderWidth: 2,
+							pointRadius: 1,
+							pointHitRadius: 10,
+							data: dataset_data
+						});
+					});
+					console.log('############### charge_line_data', subscription_line_data)
+
+
+					const charge_line_data = {
+						labels: [],
+						datasets: []
+					};
+					let charge_table_columns = [
+						{
+							title: 'Type',
+							dataIndex: 'type',
+							key: 'type',
+						},
+						{
+							title: 'Row Sum',
+							dataIndex: 'sum',
+							key: 'sum',
+							sorter: (a, b) => a.sum - b.sum,
+							defaultSortOrder: 'descend'
+						}
+					];
+					let charge_table_data = [];
+					if(data.chargeStats && data.chargeStats.length > 0) {
+						for(let i=0; i<data.chargeStats.length-1; i++) {
+							const d = data.chargeStats[i];
+							if(this.state.chargeStats.type == 'monthly') {
+								charge_table_columns.push({
+									title: moment(d.begin).format(monthOnlyFormat),
+									dataIndex: d.end,
+									key: d.end,
+								});
+								charge_line_data.labels.push(moment(d.begin).format(monthOnlyFormat));
+							} else if(this.state.chargeStats.type == 'yearly') {
+								charge_table_columns.push({
+									title: moment(d.begin).format(yearOnlyFormat),
+									dataIndex: d.end,
+									key: d.end,
+								});
+								charge_line_data.labels.push(moment(d.begin).format(yearOnlyFormat));
+							}
+						}
+
+						let val = {};
+						for(let i=0; i<data.chargeStats.length-1; i++) {
+							const d = data.chargeStats[i];
+							val[d.end] = d.monthlyChargeAmount / 100;
+						}
+						charge_table_data.push({
+							type: "Monthly",
+							sum: data.chargeStats[data.chargeStats.length-1].monthlyChargeAmount / 100,
+							...val
+						});
+
+						val = {};
+						for(let i=0; i<data.chargeStats.length-1; i++) {
+							const d = data.chargeStats[i];
+							val[d.end] = d.yearlyChargeAmount / 100;
+						}
+						charge_table_data.push({
+							type: "Yearly",
+							sum: data.chargeStats[data.chargeStats.length-1].yearlyChargeAmount / 100,
+							...val
+						});
+
+						val = {};
+						for(let i=0; i<data.chargeStats.length-1; i++) {
+							const d = data.chargeStats[i];
+							val[d.end] = d.totalChargeAmount / 100;
+						}
+						charge_table_data.push({
+							type: "Total",
+							sum: data.chargeStats[data.chargeStats.length-1].totalChargeAmount / 100,
+							...val
+						});
+					}
+					console.log('############### charge_table_columns charge_table_data', charge_table_columns, charge_table_data)
+					
+					charge_table_data.sort((a, b) => (a.sum < b.sum) ? 1: -1);
+
+					charge_table_data.map((d,i) => {
+						const dataset_data = [];
+						for(let i=2; i<charge_table_columns.length; i++) {
+							dataset_data.push(d[charge_table_columns[i].dataIndex]);
+						}
+						charge_line_data.datasets.push({
+							label: `${d.type}`,
+							fill: false,
+							lineTension: 0.1,
+							backgroundColor: `rgba(${line_colors[i]},0.4)`,
+							borderColor: `rgba(${line_colors[i]},1)`,
+							borderCapStyle: 'butt',
+							borderDash: [],
+							borderDashOffset: 0.0,
+							borderJoinStyle: 'miter',
+							pointBorderColor: `rgba(${line_colors[i]},1)`,
+							pointBackgroundColor: '#fff',
+							pointBorderWidth: 1,
+							pointHoverRadius: 5,
+							pointHoverBackgroundColor: `rgba(${line_colors[i]},1)`,
+							pointHoverBorderColor: 'rgba(220,220,220,1)',
+							pointHoverBorderWidth: 2,
+							pointRadius: 1,
+							pointHitRadius: 10,
+							data: dataset_data
+						});
+					});
+					console.log('############### charge_line_data', charge_line_data)
+
+					let charge_pie_data = {
+						labels: [
+							charge_table_data[1].type,
+							charge_table_data[2].type,
+						],
+						datasets: [{
+							data: [
+								charge_table_data[1].sum,
+								charge_table_data[2].sum,
+							],
+							backgroundColor: [
+								`rgba(${line_colors[1]}, 0.8)`,
+								`rgba(${line_colors[2]}, 0.8)`,
+							],
+							hoverBackgroundColor: [
+								`rgba(${line_colors[1]}, 0.8)`,
+								`rgba(${line_colors[2]}, 0.8)`,
+							]
+						}]
+					};
+					const video_bar_data = {
 						labels: [],
 						datasets: [
 							{
@@ -150,7 +727,7 @@ class AdminAnalytics extends Component {
 							}
 						]
 					};
-					let columns = [
+					let video_table_columns = [
 						{
 							title: 'Video',
 							dataIndex: 'title',
@@ -165,18 +742,18 @@ class AdminAnalytics extends Component {
 							defaultSortOrder: 'descend'
 						}
 					];
-					let table_data = [];
+					let video_table_data = [];
 					if(data.videoStats && data.videoStats.length > 0) {
 						for(let i=0; i<data.videoStats[0].timespans.length-1; i++) {
 							const d = data.videoStats[0].timespans[i];
 							if(this.state.videoStats.type == 'daily') {
-								columns.push({
+								video_table_columns.push({
 									title: moment(d.end).format(dateOnlyFormat),
 									dataIndex: d.end,
 									key: d.end,
 								});
 							} else if(this.state.videoStats.type == 'monthly') {
-								columns.push({
+								video_table_columns.push({
 									title: moment(d.begin).format(monthOnlyFormat),
 									dataIndex: d.end,
 									key: d.end,
@@ -208,7 +785,7 @@ class AdminAnalytics extends Component {
 							} else if(this.state.videoStats.target == videoStatsTargets[3]) {
 								sum = v.timespans[v.timespans.length-1].realPlaySeconds;
 							}
-							table_data.push({
+							video_table_data.push({
 								title: v.title,
 								sum: sum,
 								...val
@@ -216,13 +793,13 @@ class AdminAnalytics extends Component {
 							
 						});
 					}
-					console.log('###############', columns, table_data)
+					console.log('############### video_table_columns video_table_data', video_table_columns, video_table_data)
 					
-					table_data.sort((a, b) => (a.sum < b.sum) ? 1: -1);
-					table_data.map(v => {
-						video_pie_data.labels.push(v.title);
-						video_pie_data.datasets[0].data.push(v.sum);
-					})
+					video_table_data.sort((a, b) => (a.sum < b.sum) ? 1: -1);
+					video_table_data.map(v => {
+						video_bar_data.labels.push(v.title);
+						video_bar_data.datasets[0].data.push(v.sum);
+					});
 
 					return (
 						<Menu>
@@ -256,7 +833,180 @@ class AdminAnalytics extends Component {
 										<div className="row">
 											<div className="col-md-12">
 												<div className="main-title">
-													<h6>Admin Analytics</h6>
+													<h4>User Registration</h4>
+												</div>
+											</div>
+											<div className="col-md-6 col-xs-12 m-auto">
+												<Select
+													value={this.state.signupStats.type}
+													onChange={this.handleSignupStatsTypeChange}
+													style={{ marginLeft: 100, color: 'white' }}
+												>
+													<MenuItem value={'daily'}>Daily</MenuItem>
+													<MenuItem value={'monthly'}>Monthly</MenuItem>
+												</Select>
+											</div>
+											<div className="col-md-2 col-xs-12 m-auto">
+												<span style={{ color: 'white' }}>from</span>
+												<TextField
+													type="date"
+													defaultValue={this.state.signupStats.beginDate}
+													style={{ marginLeft: 20, color: 'white' }}
+													onChange={this.handleSignupFromDateChange}
+												/>
+											</div>
+											<div className="col-md-3 col-xs-12 m-auto">
+												<span style={{ color: 'white' }}>to</span>
+												<TextField
+													type="date"
+													defaultValue={this.state.signupStats.endDate}
+													style={{ marginLeft: 20, color: 'white' }}
+													onChange={this.handleSignupToDateChange}
+												/>
+											</div>
+											<div className="col-md-12" style={{ marginTop: 20 }}>
+												<Line
+													data={signup_line_data}
+													options={signup_line_options}
+													// key={this.state.key}
+													height={150}
+													width={1024} />
+											</div>
+											<div className="col-md-12" style={{ marginTop: 30 }}>
+												<Table
+													columns={signup_table_columns}
+													dataSource={signup_table_data}
+													size='small'
+													pagination={false}
+												/>
+											</div>
+										</div>
+										<div className="row" style={{ marginTop: 50 }}>
+											<div className="col-md-12">
+												<div className="main-title">
+													<h4>Subscription</h4>
+												</div>
+											</div>
+											<div className="col-md-6 col-xs-12 m-auto">
+												<Select
+													value={this.state.subscriptionStats.type}
+													onChange={this.handleSubscriptionStatsTypeChange}
+													style={{ marginLeft: 100, color: 'white' }}
+												>
+													<MenuItem value={'monthly'}>Monthly</MenuItem>
+													<MenuItem value={'yearly'}>Yearly</MenuItem>
+												</Select>
+											</div>
+											<div className="col-md-2 col-xs-12 m-auto">
+												<span style={{ color: 'white' }}>from</span>
+												<TextField
+													type="date"
+													defaultValue={this.state.subscriptionStats.beginDate}
+													style={{ marginLeft: 20, color: 'white' }}
+													onChange={this.handleSubscriptionFromDateChange}
+												/>
+											</div>
+											<div className="col-md-3 col-xs-12 m-auto">
+												<span style={{ color: 'white' }}>to</span>
+												<TextField
+													type="date"
+													defaultValue={this.state.subscriptionStats.endDate}
+													style={{ marginLeft: 20, color: 'white' }}
+													onChange={this.handleSubscriptionToDateChange}
+												/>
+											</div>
+											<div className="col-md-12" style={{ marginTop: 20 }}>
+												<Line
+													data={subscription_line_data}
+													options={subscription_line_options}
+													// key={this.state.key}
+													height={150}
+													width={1024} />
+											</div>
+											<div className="col-md-12" style={{ marginTop: 30 }}>
+												<Table
+													columns={subscription_table_columns}
+													dataSource={subscription_table_data}
+													size='small'
+													pagination={false}
+												/>
+											</div>
+										</div>
+										<div className="row" style={{ marginTop: 50 }}>
+											<div className="col-md-12">
+												<div className="main-title">
+													<h4>Charge</h4>
+												</div>
+											</div>
+											<div className="col-md-6 col-xs-12 m-auto">
+												<Select
+													value={this.state.chargeStats.type}
+													onChange={this.handleChargeStatsTypeChange}
+													style={{ marginLeft: 100, color: 'white' }}
+												>
+													<MenuItem value={'monthly'}>Monthly</MenuItem>
+													<MenuItem value={'yearly'}>Yearly</MenuItem>
+												</Select>
+											</div>
+											<div className="col-md-2 col-xs-12 m-auto">
+												<span style={{ color: 'white' }}>from</span>
+												<TextField
+													type="date"
+													defaultValue={this.state.chargeStats.beginDate}
+													style={{ marginLeft: 20, color: 'white' }}
+													onChange={this.handleChargeFromDateChange}
+												/>
+											</div>
+											<div className="col-md-3 col-xs-12 m-auto">
+												<span style={{ color: 'white' }}>to</span>
+												<TextField
+													type="date"
+													defaultValue={this.state.chargeStats.endDate}
+													style={{ marginLeft: 20, color: 'white' }}
+													onChange={this.handleChargeToDateChange}
+												/>
+											</div>
+											<div className="col-md-9 col-xs-12" style={{ marginTop: 20 }}>
+												<Line
+													data={charge_line_data}
+													options={charge_line_options}
+													// key={this.state.key}
+													height={200}
+													width={1024} />
+											</div>
+											<div className="col-md-3 col-xs-12">
+												<Pie
+													data={charge_pie_data}
+													options={{
+														title: {
+															display: true,
+															text: `Charge Source Breakdown(${this.state.chargeStats.beginDate}-${this.state.chargeStats.endDate})`
+														},
+														legend: {
+															display: true,
+														},
+														plugins: {
+															datalabels: {
+																anchor: 'center',
+																display: true,
+																color: 'white'
+															}
+														}
+													}} />
+											</div>
+											<div className="col-md-12" style={{ marginTop: 30 }}>
+												<Table
+													columns={charge_table_columns}
+													dataSource={charge_table_data}
+													size='small'
+													pagination={false}
+												/>
+											</div>
+										</div>
+										<div className="row" style={{ marginTop: 50 }}>
+											<div className="col-md-12">
+												<div className="main-title">
+													<h4>Video</h4>
 												</div>
 											</div>
 											<div className="col-md-6 col-xs-12 m-auto">
@@ -264,16 +1014,16 @@ class AdminAnalytics extends Component {
 													variant="contained"
 													color="secondary"
 												>
-													<Button onClick={() => this.setState({videoStats: {...this.state.videoStats, target: videoStatsTargets[0]}})}>User Event</Button>
-													<Button onClick={() => this.setState({videoStats: {...this.state.videoStats, target: videoStatsTargets[1]}})}>Unique User</Button>
-													<Button onClick={() => this.setState({videoStats: {...this.state.videoStats, target: videoStatsTargets[2]}})}>Play Time</Button>
-													<Button onClick={() => this.setState({videoStats: {...this.state.videoStats, target: videoStatsTargets[3]}})}>Real Play Time</Button>
+													<Button onClick={() => this.setState({ videoStats: { ...this.state.videoStats, target: videoStatsTargets[0] } })}>User Event</Button>
+													<Button onClick={() => this.setState({ videoStats: { ...this.state.videoStats, target: videoStatsTargets[1] } })}>Unique User</Button>
+													<Button onClick={() => this.setState({ videoStats: { ...this.state.videoStats, target: videoStatsTargets[2] } })}>Play Time</Button>
+													<Button onClick={() => this.setState({ videoStats: { ...this.state.videoStats, target: videoStatsTargets[3] } })}>Real Play Time</Button>
 												</ButtonGroup>
 
 												<Select
 													value={this.state.videoStats.type}
-													onChange={this.handleTypeChange}
-													style={{marginLeft: 100, color: 'white'}}
+													onChange={this.handleVideoStatsTypeChange}
+													style={{ marginLeft: 100, color: 'white' }}
 												>
 													<MenuItem value={'daily'}>Daily</MenuItem>
 													{/* <MenuItem value={'weekly'}>Weekly</MenuItem> */}
@@ -281,25 +1031,25 @@ class AdminAnalytics extends Component {
 												</Select>
 											</div>
 											<div className="col-md-2 col-xs-12 m-auto">
-												<span style={{color: 'white'}}>from</span>
+												<span style={{ color: 'white' }}>from</span>
 												<TextField
 													type="date"
 													defaultValue={this.state.videoStats.beginDate}
-													style={{marginLeft: 20, color: 'white'}}
-													onChange={this.handleFromDateChange}
+													style={{ marginLeft: 20, color: 'white' }}
+													onChange={this.handleChargeFromDateChange}
 												/>
 											</div>
 											<div className="col-md-3 col-xs-12 m-auto">
-												<span style={{color: 'white'}}>to</span>
+												<span style={{ color: 'white' }}>to</span>
 												<TextField
 													type="date"
 													defaultValue={this.state.videoStats.endDate}
-													style={{marginLeft: 20, color: 'white'}}
-													onChange={this.handleToDateChange}
+													style={{ marginLeft: 20, color: 'white' }}
+													onChange={this.handleChargeToDateChange}
 												/>
 											</div>
-											<div className="col-md-12" style={{marginTop: 20}}>
-												<Bar data={video_pie_data}
+											<div className="col-md-12" style={{ marginTop: 20 }}>
+												<Bar data={video_bar_data}
 													options={{
 														maintainAspectRatio: false,
 														title: {
@@ -316,15 +1066,15 @@ class AdminAnalytics extends Component {
 														}
 													}}
 													key={Math.random()}
-													height={300}
+													height={400}
 													width={1024} />
 											</div>
 											<div className="col-md-12">
 												<Table
-													columns={columns}
-													dataSource={table_data}
+													columns={video_table_columns}
+													dataSource={video_table_data}
 													size='small'
-													pagination = {false}
+													pagination={false}
 												/>
 											</div>
 										</div>

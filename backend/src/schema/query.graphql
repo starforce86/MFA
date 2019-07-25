@@ -26,6 +26,9 @@ type Query {
     category(where: CategoryWhereUniqueInput!): Category
     categories(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Category]!
     categoriesConnection(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CategoryConnection!
+    chargeHistory(where: ChargeHistoryWhereUniqueInput!): ChargeHistory
+    chargeHistories(where: ChargeHistoryWhereInput, orderBy: ChargeHistoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ChargeHistory]!
+    chargeHistoriesConnection(where: ChargeHistoryWhereInput, orderBy: ChargeHistoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ChargeHistoryConnection!
     playHistory(where: PlayHistoryWhereUniqueInput!): PlayHistory
     playHistories(where: PlayHistoryWhereInput, orderBy: PlayHistoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PlayHistory]!
     playHistoriesConnection(where: PlayHistoryWhereInput, orderBy: PlayHistoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PlayHistoryConnection!
@@ -35,6 +38,9 @@ type Query {
     restoreCode(where: RestoreCodeWhereUniqueInput!): RestoreCode
     restoreCodes(where: RestoreCodeWhereInput, orderBy: RestoreCodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RestoreCode]!
     restoreCodesConnection(where: RestoreCodeWhereInput, orderBy: RestoreCodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RestoreCodeConnection!
+    subscriptionHistory(where: SubscriptionHistoryWhereUniqueInput!): SubscriptionHistory
+    subscriptionHistories(where: SubscriptionHistoryWhereInput, orderBy: SubscriptionHistoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SubscriptionHistory]!
+    subscriptionHistoriesConnection(where: SubscriptionHistoryWhereInput, orderBy: SubscriptionHistoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SubscriptionHistoryConnection!
     tag(where: TagWhereUniqueInput!): Tag
     tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag]!
     tagsConnection(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TagConnection!
@@ -47,6 +53,11 @@ type Query {
     watchedVideoUser(where: WatchedVideoUserWhereUniqueInput!): WatchedVideoUser
     watchedVideoUsers(where: WatchedVideoUserWhereInput, orderBy: WatchedVideoUserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [WatchedVideoUser]!
     watchedVideoUsersConnection(where: WatchedVideoUserWhereInput, orderBy: WatchedVideoUserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): WatchedVideoUserConnection!
-    videoStats(userId: String, beginDate: DateTime, endDate: DateTime, type: String): [StatsResult]
+    signupStats(beginDate: DateTime, endDate: DateTime, type: String): [SignupStatsResult]
+    videoStats(userId: String, beginDate: DateTime, endDate: DateTime, type: String): [VideoStatsResult]
+    chargeStats(beginDate: DateTime, endDate: DateTime, type: String): [ChargeStatsResult]
+    subscriptionStats(beginDate: DateTime, endDate: DateTime, type: String): [SubscriptionStatsResult]
+    populateChargeHistory: Boolean
+    populateSubscriptionHistory: Boolean
     node(id: ID!): Node
 }

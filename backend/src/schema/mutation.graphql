@@ -22,6 +22,12 @@ type Mutation {
     upsertCategory(where: CategoryWhereUniqueInput!, create: CategoryCreateInput!, update: CategoryUpdateInput!): Category!
     deleteCategory(where: CategoryWhereUniqueInput!): Category
     deleteManyCategories(where: CategoryWhereInput): BatchPayload!
+    createChargeHistory(data: ChargeHistoryCreateInput!): ChargeHistory!
+    updateChargeHistory(data: ChargeHistoryUpdateInput!, where: ChargeHistoryWhereUniqueInput!): ChargeHistory
+    updateManyChargeHistories(data: ChargeHistoryUpdateManyMutationInput!, where: ChargeHistoryWhereInput): BatchPayload!
+    upsertChargeHistory(where: ChargeHistoryWhereUniqueInput!, create: ChargeHistoryCreateInput!, update: ChargeHistoryUpdateInput!): ChargeHistory!
+    deleteChargeHistory(where: ChargeHistoryWhereUniqueInput!): ChargeHistory
+    deleteManyChargeHistories(where: ChargeHistoryWhereInput): BatchPayload!
     createPlayHistory(data: PlayHistoryCreateInput!): PlayHistory!
     updatePlayHistory(data: PlayHistoryUpdateInput!, where: PlayHistoryWhereUniqueInput!): PlayHistory
     updateManyPlayHistories(data: PlayHistoryUpdateManyMutationInput!, where: PlayHistoryWhereInput): BatchPayload!
@@ -40,6 +46,12 @@ type Mutation {
     upsertRestoreCode(where: RestoreCodeWhereUniqueInput!, create: RestoreCodeCreateInput!, update: RestoreCodeUpdateInput!): RestoreCode!
     deleteRestoreCode(where: RestoreCodeWhereUniqueInput!): RestoreCode
     deleteManyRestoreCodes(where: RestoreCodeWhereInput): BatchPayload!
+    createSubscriptionHistory(data: SubscriptionHistoryCreateInput!): SubscriptionHistory!
+    updateSubscriptionHistory(data: SubscriptionHistoryUpdateInput!, where: SubscriptionHistoryWhereUniqueInput!): SubscriptionHistory
+    updateManySubscriptionHistories(data: SubscriptionHistoryUpdateManyMutationInput!, where: SubscriptionHistoryWhereInput): BatchPayload!
+    upsertSubscriptionHistory(where: SubscriptionHistoryWhereUniqueInput!, create: SubscriptionHistoryCreateInput!, update: SubscriptionHistoryUpdateInput!): SubscriptionHistory!
+    deleteSubscriptionHistory(where: SubscriptionHistoryWhereUniqueInput!): SubscriptionHistory
+    deleteManySubscriptionHistories(where: SubscriptionHistoryWhereInput): BatchPayload!
     createTag(data: TagCreateInput!): Tag!
     updateTag(data: TagUpdateInput!, where: TagWhereUniqueInput!): Tag
     updateManyTags(data: TagUpdateManyMutationInput!, where: TagWhereInput): BatchPayload!
