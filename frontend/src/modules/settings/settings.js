@@ -178,46 +178,48 @@ class Settings extends PureComponent {
                                         </Dropzone>
                                     </div>
                                 </div>
-                                <div className="col-lg-12">
-                                    <div className="main-title" style={{ paddingTop: 10 }}>
-                                        <h6>Header Image</h6>
-                                        <Dropzone
-                                            onDrop={async (files) => {
-                                                const res = await this.uploadBgImageFile(files[0]);
-                                                this.setState({
-                                                    backgroundImageFile: res
-                                                });
-                                            }}>
-                                            {({getRootProps, getInputProps}) => (
-                                                <section>
-                                                    <div
-                                                        {...getRootProps()}
-                                                        style={{
-                                                            textAlign: "center",
-                                                            marginLeft: "auto",
-                                                            marginRight: "auto"
-                                                        }}
-                                                    >
-                                                        <br/>
-                                                        <input {...getInputProps()} />
-                                                        <img
-                                                            width={this.state.backgroundImageFile ? '100%' : 100}
-                                                            height={this.state.backgroundImageFile ? 160 : 100}
-                                                            src={this.state.backgroundImageFile ? API_URL + this.state.backgroundImageFile : "/static/img/favicon.png"}
-                                                            alt=''
-                                                        />
-                                                        <br/>
-                                                        <br/>
-                                                        <p>
-                                                            Drag & drop background image here, or click to select file
+                                {this.props.user.role == "USER_PUBLISHER" && (
+                                    <div className="col-lg-12">
+                                        <div className="main-title" style={{ paddingTop: 10 }}>
+                                            <h6>Header Image</h6>
+                                            <Dropzone
+                                                onDrop={async (files) => {
+                                                    const res = await this.uploadBgImageFile(files[0]);
+                                                    this.setState({
+                                                        backgroundImageFile: res
+                                                    });
+                                                }}>
+                                                {({ getRootProps, getInputProps }) => (
+                                                    <section>
+                                                        <div
+                                                            {...getRootProps()}
+                                                            style={{
+                                                                textAlign: "center",
+                                                                marginLeft: "auto",
+                                                                marginRight: "auto"
+                                                            }}
+                                                        >
+                                                            <br />
+                                                            <input {...getInputProps()} />
+                                                            <img
+                                                                width={this.state.backgroundImageFile ? '100%' : 100}
+                                                                height={this.state.backgroundImageFile ? 160 : 100}
+                                                                src={this.state.backgroundImageFile ? API_URL + this.state.backgroundImageFile : "/static/img/favicon.png"}
+                                                                alt=''
+                                                            />
+                                                            <br />
+                                                            <br />
+                                                            <p>
+                                                                Drag & drop background image here, or click to select file
                                                         </p>
-                                                        <br/>
-                                                    </div>
-                                                </section>
-                                            )}
-                                        </Dropzone>
+                                                            <br />
+                                                        </div>
+                                                    </section>
+                                                )}
+                                            </Dropzone>
+                                        </div>
                                     </div>
-                                </div>
+                                )}
                             </div>
                             <StripeProvider stripe={this.state.stripe}>
                                 <Elements>

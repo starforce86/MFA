@@ -91,7 +91,13 @@ async function purchase(root, {stripe_tok_token, plan}, ctx, info) {
 
     await job_scheduler.addUserCheckPurchaseEvent(user.id);
 
-    const customer_id = !user.stripe_customer_id ? (await stripeHelper.createCustomer(stripe_tok_token, ctx.user.email)).id : user.stripe_customer_id;
+    const stripe_metadata = {
+        name: `${user.firstname} ${user.lastname}`,
+        email: user.email,
+        phone: user.phone
+    };
+
+    const customer_id = !user.stripe_customer_id ? (await stripeHelper.createCustomer(stripe_tok_token, ctx.user.email, stripe_metadata)).id : user.stripe_customer_id;
 
     await prisma.updateUser({where: {email: ctx.user.email}, data: {stripe_customer_id: customer_id}});
 
@@ -206,7 +212,12 @@ async function changeCard(root, args, ctx, info) {
     if (!user.stripe_customer_id) {
         // throw new GQLError({message: 'Stripe customer id not found in DB', code: 404});
         try {
-            const customer_id = (await stripeHelper.createCustomer(newStripeTokToken, ctx.user.email)).id;
+            const stripe_metadata = {
+                name: `${user.firstname} ${user.lastname}`,
+                email: user.email,
+                phone: user.phone
+            };
+            const customer_id = (await stripeHelper.createCustomer(newStripeTokToken, ctx.user.email, stripe_metadata)).id;
             await prisma.updateUser({where: {email: ctx.user.email}, data: {stripe_customer_id: customer_id}});
             return true;
         } catch (e) {

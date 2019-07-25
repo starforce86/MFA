@@ -11,10 +11,11 @@ async function getSubscriptions() {
     return await stripe.subscriptions.list({limit: 100});
 }
 
-async function createCustomer(stripe_tok_token, email) {
+async function createCustomer(stripe_tok_token, email, metadata) {
     return await stripe.customers.create({
         email: email,
-        source: stripe_tok_token
+        source: stripe_tok_token,
+        metadata: metadata
     });
 }
 
