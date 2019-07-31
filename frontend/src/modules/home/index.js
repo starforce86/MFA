@@ -239,7 +239,7 @@ class HomePage extends Component {
                             return (
                                 <>
                                     <h6>
-                                        {promoVideo.title}
+                                        {"Latest Featured Video"}
                                     </h6>
                                     <br />
                                     <div className="single-channel-image" style={{
@@ -259,16 +259,17 @@ class HomePage extends Component {
                                             {promoVideo.description}
                                         </h6>}
                                     </div>
+                                    <br />
                                 </>
                             );
                         }}
                     </Query>
                 );
             } else {
-                return "No promo videos"
+                return "No Latest Featured Video"
             }
         }
-        else return "No promo videos"
+        else return "No Latest Featured Video"
     }
 
     historyBlock(videos) {

@@ -185,13 +185,13 @@ class MyApp extends App {
                                     >
                                         {/*menu*/}
                                         <div className="sticky-top">
-                                            {!user &&
+                                            {/* {!user &&
                                                 <div className="subscribe-banner" onClick={() => {
                                                     this.props.router.push("/login");
                                                 }}>
                                                     <span style={{ color: "white" }}>Subscribe for $29.99/mo or $300.00/yr today to stream all content!</span>
                                                 </div>
-                                            }
+                                            } */}
                                             <nav
                                                 className="navbar navbar-expand navbar-light bg-white static-top osahan-nav sticky-top">
                                                 &nbsp;&nbsp;
@@ -257,7 +257,7 @@ class MyApp extends App {
                                                                 </Link>
                                                                 <Link prefetch
                                                                     href={"/subscriptions"}>
-                                                                    <a className="dropdown-item">
+                                                                    <a className="dropdown-item" style={{backgroundColor: '#bc1e3e'}}>
                                                                         <i className="fas fa-fw fa-video" /> &nbsp; Subscriptions
                                                                 </a>
                                                                 </Link>
@@ -366,7 +366,7 @@ class MyApp extends App {
                                                 )}
 
                                                 {
-                                                    user ?
+                                                    !user ?
                                                         <li className={`nav-item channel-sidebar-list ${this.props.router.pathname === "/subscriptions" ? " active" : ""}`}>
                                                             <Link prefetch
                                                                 href={"/subscriptions"}>

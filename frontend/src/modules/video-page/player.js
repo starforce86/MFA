@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import { connect } from 'react-redux';
 import {withUser} from "../../util/auth";
 import "video-react/dist/video-react.css"; // import css
-import {Player} from "video-react";
+import {Player, BigPlayButton} from "video-react";
 import gql from "graphql-tag";
 import moment from 'moment';
 import withApollo from "../../util/withApollo";
@@ -192,9 +192,13 @@ class player extends Component {
         return (
             <>
                 {isPurchaseActive ?
-                    <Player className={className} playsInline ref={"player"} poster={video.preview_url} src={video.file_url} startTime={startTime} />
+                    <Player className={className} playsInline ref={"player"} poster={video.preview_url} src={video.file_url} startTime={startTime} >
+                        <BigPlayButton position="center" />
+                    </Player>
                     :
-                    <Player className={className} playsInline ref={"player"} poster={video.preview_url} src={video.preview_video_url} startTime={startTime} />
+                    <Player className={className} playsInline ref={"player"} poster={video.preview_url} src={video.preview_video_url} startTime={startTime} >
+                        <BigPlayButton position="center" />
+                    </Player>
                 }
             </>
         );

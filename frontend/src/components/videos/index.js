@@ -70,7 +70,7 @@ const Videos = props => {
                                     : null
                                 : null}
                         </div>
-                        {props ? props.historyBlock ? props.historyBlock : null : null}
+                        {/* {props ? props.historyBlock ? props.historyBlock : null : null} */}
                     </div>
                     <hr className="mt-0"/>
                 </div>

@@ -27,30 +27,32 @@ class Video extends Component {
 		return (
 			<div key={video.id} className="col-xl-3 col-sm-6 mb-3">
 				{!video.preview_video_url && !isPurchaseActive ? (
-					<a href="#" data-toggle="modal" data-target="#paymentModal">
-						<div className="video-card">
-							<div className="video-card-image">
-								<a className="play-icon" href="#">
-									<i className="fas fa-play-circle"/>
-								</a>
-								<a href="#">
-									<img className="img-fluid"
-									     src={video.preview_url ? video.preview_url : "/static/assets/img/video_preview_default.jpg"}
-									     alt/>
-								</a>
-								{formatDuration ?
-									<div className="time">{formatDuration}</div> : null
-								}
-							</div>
-							<div className="video-card-body">
-								<div className="video-title">
-									<a href="#">{video.title}</a>
+					<div style={{ padding: 12 }}>
+						<a href="#" data-toggle="modal" data-target="#paymentModal">
+							<div className="video-card">
+								<div className="video-card-image">
+									<a className="play-icon" href="#">
+										<i className="fas fa-play-circle" />
+									</a>
+									<a href="#">
+										<img className="img-fluid"
+											src={video.preview_url ? video.preview_url : "/static/assets/img/video_preview_default.jpg"}
+											alt />
+									</a>
+									{formatDuration ?
+										<div className="time">{formatDuration}</div> : null
+									}
+								</div>
+								<div className="video-card-body">
+									<div className="video-title">
+										<a href="#">{video.title}</a>
+									</div>
 								</div>
 							</div>
-						</div>
-					</a>
+						</a>
+					</div>
 				) : (
-					<div>
+					<div style={{ padding: 12 }}>
 						<div className="video-card">
 							<div className="video-card-image">
 								<a className="play-icon" href={`/video?id=${video.id}`}>

@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import Dropzone from "react-dropzone";
 import LinearProgress from '@material-ui/core/LinearProgress';
 import "video-react/dist/video-react.css"; // import css
-import {Player} from "video-react";
+import {Player, BigPlayButton} from "video-react";
 import { Snackbar, FormControl, MenuItem, ListItemText, Select, Checkbox, Input, InputLabel } from '@material-ui/core';
 import axios from 'axios';
 import Menu from "../../components/menu";
@@ -276,7 +276,9 @@ class MyUploadVideo extends Component {
                                                                 <br />
                                                                 <input {...getInputProps()} />
                                                                 {this.state.videoFile && (
-                                                                    <Player src={this.state.videoFile} />
+                                                                    <Player src={this.state.videoFile} >
+                                                                        <BigPlayButton position="center" />
+                                                                    </Player>
                                                                 )}
                                                                 <br />
                                                                 <br />
@@ -422,7 +424,9 @@ class MyUploadVideo extends Component {
                                                                 <br />
                                                                 <input {...getInputProps()} />
                                                                 {this.state.previewVideoFile && (
-                                                                    <Player src={this.state.previewVideoFile} />
+                                                                    <Player src={this.state.previewVideoFile} >
+                                                                        <BigPlayButton position="center" />
+                                                                    </Player>
                                                                 )}
                                                                 <br />
                                                                 <br />
