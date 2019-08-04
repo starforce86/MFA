@@ -14,6 +14,8 @@ import Categories from "../src/components/menu/categories";
 import gql from "graphql-tag";
 import SubscribePlan from "../src/components/stripe/SubscribePlan";
 import {Elements, StripeProvider} from "react-stripe-elements";
+import Router from 'next/router';
+import {trackPageView} from '../src/util/helper';
 
 const log = logger('App');
 
@@ -67,6 +69,9 @@ class MyApp extends App {
 
     componentDidMount() {
         this.setState({stripe: window.Stripe(STRIPE_KEY)});
+        // Router.onRouteChangeComplete = url => {
+        //     trackPageView(url);
+        // };
     }
 
     static async getInitialProps({Component, ctx}) {
@@ -334,14 +339,14 @@ class MyApp extends App {
                                                 <Categories categories={categories}
                                                     billing_subscription_active={true} />
 
-                                                <li className={`nav-item ${this.props.router.pathname === "/news" ? " active" : ""}`}>
+                                                {/* <li className={`nav-item ${this.props.router.pathname === "/news" ? " active" : ""}`}>
                                                     <Link prefetch href={"news"}>
                                                         <a className="nav-link">
                                                             <i className="fas fa-fw fa-newspaper" />
                                                             <span>News</span>
                                                         </a>
                                                     </Link>
-                                                </li>
+                                                </li> */}
 
                                                 {user && (user.role == "USER_PUBLISHER" || user.role == "ADMIN") && (
                                                     <li className={`nav-item ${this.props.router.pathname === "/myVideo" ? " active" : ""}`}>
@@ -366,11 +371,11 @@ class MyApp extends App {
                                                 )}
 
                                                 {
-                                                    !user ?
+                                                    user ?
                                                         <li className={`nav-item channel-sidebar-list ${this.props.router.pathname === "/subscriptions" ? " active" : ""}`}>
                                                             <Link prefetch
                                                                 href={"/subscriptions"}>
-                                                                <a className="nav-link"><h6>SUBSCRIPTIONS</h6></a>
+                                                                <a className="nav-link"><h6>Following</h6></a>
                                                             </Link>
                                                             <ul>
                                                                 {

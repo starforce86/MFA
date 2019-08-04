@@ -46,7 +46,7 @@ class Subscriptions extends Component {
                                                 </a>
                                             </div>
                                         </div>*/}
-                                        <h6>My subscriptions</h6>
+                                        {/* <h6>My subscriptions</h6> */}
                                     </div>
                                 </div>
                                 {this.props.user && this.props.user.billing_subscription_active && this.props.channels.map(item => {

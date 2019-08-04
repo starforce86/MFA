@@ -1,12 +1,26 @@
 import Document, {Head, Html, Main, NextScript} from 'next/document';
+import { Fragment } from 'react';
 
 export default class extends Document {
     static async getInitialProps(ctx) {
+        const isProduction = process.env.NODE_ENV === 'production';
         const initialProps = await Document.getInitialProps(ctx);
-        return {...initialProps};
+        return {...initialProps, isProduction};
+    }
+
+    setGoogleTags() {
+        return {
+            __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'UA-144912865-1');
+          `
+        };
     }
 
     render() {
+        const { isProduction } = this.props;
         return (
             <Html>
                 <Head>
@@ -27,6 +41,16 @@ export default class extends Document {
                 <body>
                 <Main/>
                 <NextScript/>
+                    {isProduction && (
+                        <Fragment>
+                            <script
+                                async
+                                src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXXX-X"
+                            />
+                            {/* We call the function above to inject the contents of the script tag */}
+                            <script dangerouslySetInnerHTML={this.setGoogleTags()} />
+                        </Fragment>
+                    )}
                 <script src="/static/vendor/jquery/jquery.min.js"></script>
                 <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
                 <script src="/static/vendor/jquery-easing/jquery.easing.min.js"></script>
