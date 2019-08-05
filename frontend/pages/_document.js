@@ -34,6 +34,7 @@ export default class extends Document {
                     <link rel="stylesheet" href="/static/vendor/owl-carousel/owl.carousel.css"/>
                     <link rel="stylesheet" href="/static/vendor/owl-carousel/owl.theme.css"/>
                     <link rel="stylesheet" href="/static/fonts/futura/stylesheet.css"/>
+                    <link rel="stylesheet" href="/static/assets/css/style.css"/>
                     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"></link>
 
                     <script src="https://js.stripe.com/v3/"></script>
@@ -45,7 +46,7 @@ export default class extends Document {
                         <Fragment>
                             <script
                                 async
-                                src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXXX-X"
+                                src="https://www.googletagmanager.com/gtag/js?id=UA-144912865-1"
                             />
                             {/* We call the function above to inject the contents of the script tag */}
                             <script dangerouslySetInnerHTML={this.setGoogleTags()} />

@@ -301,6 +301,14 @@ class MyApp extends App {
                                                         </a>
                                                     </Link>
                                                 </li>
+                                                <li className={`nav-item ${this.props.router.pathname === "/about" ? " active" : ""}`}>
+                                                    <Link prefetch href={"/about"}>
+                                                        <a className="nav-link">
+                                                            <i className="fas fa-fw fa-info" />
+                                                            <span>About Us</span>
+                                                        </a>
+                                                    </Link>
+                                                </li>
                                                 <li className={`nav-item ${this.props.router.pathname === "/artists" ? " active" : ""}`}>
                                                     <Link prefetch href={"/artists"}>
                                                         <a className="nav-link">

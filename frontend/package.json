@@ -45,6 +45,7 @@
     "react-hashtag": "^2.1.2",
     "react-helmet": "^5.2.0",
     "react-redux": "^7.1.0",
+    "react-responsive-carousel": "^3.1.49",
     "react-router-dom": "^5.0.0",
     "react-stripe-checkout": "^2.6.3",
     "react-stripe-elements": "^3.0.0",

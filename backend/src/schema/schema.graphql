@@ -3436,6 +3436,18 @@ type VideoStatsResult {
     timespans: [TimeSpan]
 }
 
+type ArtistStatsResult {
+    id: ID!
+    fistname: String
+    lastname: String
+    username: String
+    email: String!
+    phone: String
+    viewCount: Int
+    playSeconds: Int
+    realPlaySeconds: Int
+}
+
 type TimeSpan {
     begin: DateTime
     end: DateTime

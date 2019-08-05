@@ -1,16 +1,6 @@
-import React from "react"
+import React from "react";
+import About from "../src/modules/about";
+import {withAuthSync} from "../src/util/auth";
 
-export default class AboutPage extends React.Component {
-	render() {
-		return (
-			<>
-				<div id="content-wrapper">
-					<div className="container-fluid pb-0">
-						About US
-						<hr/>
-					</div>
-				</div>
-			</>
-		)
-	}
-}
+const page = props => <About {...props} />;
+export default withAuthSync(page);

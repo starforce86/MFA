@@ -91,6 +91,7 @@ const resolvers = {
         watchedVideoUser: userResolver.watchedVideoUser,
         signupStats: statsResolver.signupStats,
         videoStats: statsResolver.videoStats,
+        artistStats: statsResolver.artistStats,
         chargeStats: statsResolver.chargeStats,
         subscriptionStats: statsResolver.subscriptionStats,
         populateChargeHistory: statsResolver.populateChargeHistory,

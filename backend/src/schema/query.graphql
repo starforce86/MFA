@@ -55,6 +55,7 @@ type Query {
     watchedVideoUsersConnection(where: WatchedVideoUserWhereInput, orderBy: WatchedVideoUserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): WatchedVideoUserConnection!
     signupStats(beginDate: DateTime, endDate: DateTime, type: String): [SignupStatsResult]
     videoStats(userId: String, beginDate: DateTime, endDate: DateTime, type: String): [VideoStatsResult]
+    artistStats(userId: String, beginDate: DateTime, endDate: DateTime): [ArtistStatsResult]
     chargeStats(beginDate: DateTime, endDate: DateTime, type: String): [ChargeStatsResult]
     subscriptionStats(beginDate: DateTime, endDate: DateTime, type: String): [SubscriptionStatsResult]
     populateChargeHistory: Boolean

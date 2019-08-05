@@ -112,6 +112,20 @@ const STATS_QUERY = gql`
 				realPlaySeconds
 			}
 		}
+		artistStats(
+			userId: $userId
+			beginDate: $videoStatsBeginDate
+			endDate: $videoStatsEndDate
+		) {
+			id
+			fistname
+			lastname
+			username
+			email
+			viewCount
+			playSeconds
+			realPlaySeconds
+		}
 		chargeStats(
 			beginDate: $chargeStatsBeginDate
 			endDate: $chargeStatsEndDate
@@ -375,7 +389,7 @@ class AdminAnalytics extends Component {
 
 		const { user } = this.props;
 		const { videoStats, chargeStats, subscriptionStats, signupStats } = this.state;
-		console.log('############# request', videoStats.type)
+		// console.log('############# request', videoStats.type)
 
 		return <Query errorPolicy={"ignore"}
 			fetchPolicy={"no-cache"}
@@ -451,7 +465,7 @@ class AdminAnalytics extends Component {
 							...val
 						});
 					}
-					console.log('############### signup_table_columns signup_table_data', signup_table_columns, signup_table_data)
+					// console.log('############### signup_table_columns signup_table_data', signup_table_columns, signup_table_data)
 					
 					signup_table_data.map((d,i) => {
 						const dataset_data = [];
@@ -480,7 +494,7 @@ class AdminAnalytics extends Component {
 							data: dataset_data
 						});
 					});
-					console.log('############### signup_line_data', signup_line_data)
+					// console.log('############### signup_line_data', signup_line_data)
 
 
 					const subscription_line_data = {
@@ -555,7 +569,7 @@ class AdminAnalytics extends Component {
 							...val
 						});
 					}
-					console.log('############### subscription_table_columns subscription_table_data', subscription_table_columns, subscription_table_data)
+					// console.log('############### subscription_table_columns subscription_table_data', subscription_table_columns, subscription_table_data)
 					
 					subscription_table_data.sort((a, b) => (a.sum < b.sum) ? 1: -1);
 
@@ -586,7 +600,7 @@ class AdminAnalytics extends Component {
 							data: dataset_data
 						});
 					});
-					console.log('############### charge_line_data', subscription_line_data)
+					// console.log('############### charge_line_data', subscription_line_data)
 
 
 					const charge_line_data = {
@@ -661,7 +675,7 @@ class AdminAnalytics extends Component {
 							...val
 						});
 					}
-					console.log('############### charge_table_columns charge_table_data', charge_table_columns, charge_table_data)
+					// console.log('############### charge_table_columns charge_table_data', charge_table_columns, charge_table_data)
 					
 					charge_table_data.sort((a, b) => (a.sum < b.sum) ? 1: -1);
 
@@ -692,7 +706,7 @@ class AdminAnalytics extends Component {
 							data: dataset_data
 						});
 					});
-					console.log('############### charge_line_data', charge_line_data)
+					// console.log('############### charge_line_data', charge_line_data)
 
 					let charge_pie_data = {
 						labels: [
@@ -793,13 +807,43 @@ class AdminAnalytics extends Component {
 							
 						});
 					}
-					console.log('############### video_table_columns video_table_data', video_table_columns, video_table_data)
+					// console.log('############### video_table_columns video_table_data', video_table_columns, video_table_data)
 					
 					video_table_data.sort((a, b) => (a.sum < b.sum) ? 1: -1);
 					video_table_data.map(v => {
 						video_bar_data.labels.push(v.title);
 						video_bar_data.datasets[0].data.push(v.sum);
 					});
+
+					let artist_view_pie_data = {
+						labels: data.artistStats.map(a => a.username),
+						datasets: [{
+							data: data.artistStats.map(a => a.viewCount),
+							backgroundColor: [
+								`rgba(${line_colors[1]}, 0.8)`,
+								`rgba(${line_colors[2]}, 0.8)`,
+							],
+							hoverBackgroundColor: [
+								`rgba(${line_colors[1]}, 0.8)`,
+								`rgba(${line_colors[2]}, 0.8)`,
+							]
+						}]
+					};
+
+					let artist_playtime_pie_data = {
+						labels: data.artistStats.map(a => a.username),
+						datasets: [{
+							data: data.artistStats.map(a => a.realPlaySeconds),
+							backgroundColor: [
+								`rgba(${line_colors[1]}, 0.8)`,
+								`rgba(${line_colors[2]}, 0.8)`,
+							],
+							hoverBackgroundColor: [
+								`rgba(${line_colors[1]}, 0.8)`,
+								`rgba(${line_colors[2]}, 0.8)`,
+							]
+						}]
+					};
 
 					return (
 						<Menu>
@@ -1069,7 +1113,51 @@ class AdminAnalytics extends Component {
 													height={400}
 													width={1024} />
 											</div>
-											<div className="col-md-12">
+											<div className="col-md-6 col-xs-12" style={{ marginTop: 30 }}>
+												<Pie
+													data={artist_view_pie_data}
+													options={{
+														title: {
+															display: true,
+															text: `Views by artist(${this.state.videoStats.beginDate} ~ ${this.state.videoStats.endDate})`
+														},
+														legend: {
+															display: true,
+														},
+														plugins: {
+															datalabels: {
+																anchor: 'center',
+																display: true,
+																color: 'white'
+															}
+														}
+													}}
+													height={400}
+													width={1024} />
+											</div>
+											<div className="col-md-6 col-xs-12" style={{ marginTop: 30 }}>
+												<Pie
+													data={artist_playtime_pie_data}
+													options={{
+														title: {
+															display: true,
+															text: `Play time by artist(${this.state.videoStats.beginDate} ~ ${this.state.videoStats.endDate})`
+														},
+														legend: {
+															display: true,
+														},
+														plugins: {
+															datalabels: {
+																anchor: 'center',
+																display: true,
+																color: 'white'
+															}
+														}
+													}}
+													height={400}
+													width={1024} />
+											</div>
+											<div className="col-md-12" style={{ marginTop: 30 }}>
 												<Table
 													columns={video_table_columns}
 													dataSource={video_table_data}

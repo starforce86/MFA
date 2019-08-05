@@ -370,6 +370,54 @@ async function videoStats(root, args, ctx, info) {
     }
 }
 
+async function artistStats(root, args, ctx, info) {
+
+    try {
+        const userId = args.userId;
+        let beginDate = args.beginDate;
+        let endDate = args.endDate;
+        
+        beginDate = moment(beginDate)
+        endDate = moment(endDate)
+        const user = await prisma.user({id: userId});
+        if (user.role != "ADMIN") {
+            return null;
+        }
+
+        let artists = await prisma.users({
+            where: {
+                role: "USER_PUBLISHER"
+            }
+        });
+        artists = await Promise.all(artists.map(async (a) => {
+            let artist = {...a};
+            const histories = (await prisma.playHistories({
+                where: {
+                    video: { author: {id: a.id} },
+                    createdAt_gte: beginDate,
+                    createdAt_lt: endDate
+                }
+            }));
+            let totalPlaySeconds = 0;
+            let totalRealPlaySeconds = 0;
+            for (history of histories) {
+                totalPlaySeconds += history.playSeconds;
+                totalRealPlaySeconds += history.realPlaySeconds;
+            }
+
+            artist.viewCount = histories.length;
+            artist.playSeconds = totalPlaySeconds;
+            artist.realPlaySeconds = totalRealPlaySeconds;
+
+            return artist;
+        }));
+        return artists;
+    } catch (e) {
+        log.error('artistStats error:', e);
+        return null;
+    }
+}
+
 async function populateChargeHistory(root, args, ctx, info) {
     try {
         const charges = await stripeHelper.getCharges();
@@ -422,6 +470,7 @@ module.exports = {
     subscriptionStats: subscriptionStats,
     chargeStats: chargeStats,
     videoStats: videoStats,
+    artistStats: artistStats,
     populateChargeHistory: populateChargeHistory,
     populateSubscriptionHistory: populateSubscriptionHistory
 };
