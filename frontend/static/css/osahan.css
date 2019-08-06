@@ -1007,6 +1007,10 @@ a:hover, h1, h2, h3, h4, h5, h6 {
     position: relative;
 }
 
+.news-card-action {
+    padding: 5px;
+}
+
 .news-card-image img {
     width: 100%;
 }
@@ -2172,7 +2176,7 @@ ul.menu li a {
     cursor: pointer;
 }
 
-/* .ant-table {
+.ant-table {
     color: white !important;
 }
 
@@ -2191,7 +2195,7 @@ a:not([href]):not([tabindex]) {
 
 .ant-pagination-item-active a:not([href]):not([tabindex]) {
     color: black !important;
-} */
+}
 
 .ant-table-body {
     overflow-x: auto;
@@ -2199,4 +2203,8 @@ a:not([href]):not([tabindex]) {
 
 input[type="date"] {
     color: white;
+}
+
+.hidden {
+    display: none;
 }

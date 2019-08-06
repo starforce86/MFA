@@ -34,12 +34,12 @@ type Mutation {
     upsertPlayHistory(where: PlayHistoryWhereUniqueInput!, create: PlayHistoryCreateInput!, update: PlayHistoryUpdateInput!): PlayHistory!
     deletePlayHistory(where: PlayHistoryWhereUniqueInput!): PlayHistory
     deleteManyPlayHistories(where: PlayHistoryWhereInput): BatchPayload!
-    #    createPost(data: PostCreateInput!): Post!
-    #    updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
-    #    updateManyPosts(data: PostUpdateManyMutationInput!, where: PostWhereInput): BatchPayload!
-    #    upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
-    #    deletePost(where: PostWhereUniqueInput!): Post
-    #    deleteManyPosts(where: PostWhereInput): BatchPayload!
+    createPost(data: PostCreateInput!): Post!
+    updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
+    updateManyPosts(data: PostUpdateManyMutationInput!, where: PostWhereInput): BatchPayload!
+    upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
+    deletePost(where: PostWhereUniqueInput!): Post
+    deleteManyPosts(where: PostWhereInput): BatchPayload!
     createRestoreCode(data: RestoreCodeCreateInput!): RestoreCode!
     updateRestoreCode(data: RestoreCodeUpdateInput!, where: RestoreCodeWhereUniqueInput!): RestoreCode
     updateManyRestoreCodes(data: RestoreCodeUpdateManyMutationInput!, where: RestoreCodeWhereInput): BatchPayload!

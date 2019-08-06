@@ -134,12 +134,12 @@ const resolvers = {
         deletePlayHistory: (root, args) => prisma.deletePlayHistory(args.where),
         deleteManyPlayHistories: (root, args) => prisma.deleteManyPlayHistories(args.where),
 
-        // createPost: (root, args) => prisma.createPost(args.data),
-        // updatePost: (root, args) => prisma.updatePost(args),
-        // updateManyPosts: (root, args) => prisma.updateManyPosts(args),
-        // upsertPost: (root, args) => prisma.upsertPost(args),
-        // deletePost: (root, args) => prisma.deletePost(args.where),
-        // deleteManyPosts: (root, args) => prisma.deleteManyPosts(args.where),
+        createPost: (root, args) => prisma.createPost(args.data),
+        updatePost: (root, args) => prisma.updatePost(args),
+        updateManyPosts: (root, args) => prisma.updateManyPosts(args),
+        upsertPost: (root, args) => prisma.upsertPost(args),
+        deletePost: (root, args) => prisma.deletePost(args.where),
+        deleteManyPosts: (root, args) => prisma.deleteManyPosts(args.where),
 
         createRestoreCode: (root, args) => prisma.createRestoreCode(args.data),
         updateRestoreCode: (root, args) => prisma.updateRestoreCode(args),
