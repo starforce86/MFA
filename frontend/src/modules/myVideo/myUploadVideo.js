@@ -3,13 +3,14 @@ import Dropzone from "react-dropzone";
 import LinearProgress from '@material-ui/core/LinearProgress';
 import "video-react/dist/video-react.css"; // import css
 import {Player, BigPlayButton} from "video-react";
-import { Snackbar, FormControl, MenuItem, ListItemText, Select, Checkbox, Input, InputLabel } from '@material-ui/core';
+import { MenuItem, ListItemText, Select, Checkbox, Input } from '@material-ui/core';
 import axios from 'axios';
+import { notification } from 'antd';
+import 'antd/dist/antd.css';
 import Menu from "../../components/menu";
 import Video from "../../components/video";
 import SubscribeButton from "../channel/SubscribeButton";
 import {API_URL} from "../../util/consts";
-import MySnackbarContentWrapper from "../../components/notification";
 
 class MyUploadVideo extends Component {
     constructor(props) {
@@ -29,11 +30,6 @@ class MyUploadVideo extends Component {
             description: '',
             categories: [],
             tags: [],
-            notification: {
-                open: false,
-                type: 'error',
-                message: ''
-            }
         };
     }
 
@@ -50,12 +46,9 @@ class MyUploadVideo extends Component {
         if (!result.error) {
             location.reload();
         } else {
-            this.setState({
-                notification: {
-                    open: true,
-                    type: 'error',
-                    message: result.message
-                }
+            notification['error']({
+                message: 'Error!',
+                description: result.message,
             });
         }
 
@@ -122,10 +115,16 @@ class MyUploadVideo extends Component {
             },
             onUploadProgress: (progressEvent) => this.onVideoFileUploadProgress(progressEvent)
         };
-        const result = await axios.put(signedRequest, file, options);
-        console.log("Response from s3")
-
-        return { success: true, file_url: file_url };
+        const result = await axios.put(signedRequest, file, options)
+            .then(response => {
+                console.log("Response from s3")
+                return { success: true, file_url: file_url };
+            })
+            .catch(error => {
+                console.log('Error putting to S3 : ', error.response)
+                return { success: false, msg: JSON.stringify(error.response.data) };
+            });
+        return result;
     }
 
     async uploadPreviewVideoFile2S3(file) {
@@ -148,10 +147,16 @@ class MyUploadVideo extends Component {
             },
             onUploadProgress: (progressEvent) => this.onPreviewVideoFileUploadProgress(progressEvent)
         };
-        const result = await axios.put(signedRequest, file, options);
-        console.log("Response from s3")
-
-        return { success: true, file_url: file_url };
+        const result = await axios.put(signedRequest, file, options)
+            .then(response => {
+                console.log("Response from s3")
+                return { success: true, file_url: file_url };
+            })
+            .catch(error => {
+                console.log('Error putting to S3 : ', error.response)
+                return { success: false, msg: JSON.stringify(error.response.data) };
+            });
+        return result;
     }
 
     async uploadPreviewImageFile2S3(file) {
@@ -174,23 +179,17 @@ class MyUploadVideo extends Component {
             },
             onUploadProgress: (progressEvent) => this.onPreviewImageFileUploadProgress(progressEvent)
         };
-        const result = await axios.put(signedRequest, file, options);
-        console.log("Response from s3")
 
-        return { success: true, file_url: file_url };
-    }
-
-    handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-        this.setState({
-            notification: {
-                open: false,
-                type: 'error',
-                message: ''
-            }
-        })
+        const result = await axios.put(signedRequest, file, options)
+            .then(response => {
+                console.log("Response from s3")
+                return { success: true, file_url: file_url };
+            })
+            .catch(error => {
+                console.log('Error putting to S3 : ', error.response)
+                return { success: false, msg: JSON.stringify(error.response.data) };
+            });
+        return result;
     }
 
     render() {
@@ -199,21 +198,6 @@ class MyUploadVideo extends Component {
         }
         return (
             <Menu {...this.props}>
-                <Snackbar
-                    anchorOrigin={{
-                        vertical: 'top',
-                        horizontal: 'right',
-                    }}
-                    open={this.state.notification.open}
-                    autoHideDuration={5000}
-                    onClose={this.handleClose}
-                >
-                    <MySnackbarContentWrapper
-                        onClose={this.handleClose}
-                        variant={this.state.notification.type}
-                        message={this.state.notification.message}
-                    />
-                </Snackbar>
                 <div style={{ width: '100%' }}>
                     <div id="wrapper">
                         <div className="single-channel-page" id="content-wrapper">
@@ -231,12 +215,9 @@ class MyUploadVideo extends Component {
                                                 accept={'video/*'}
                                                 onDrop={async (files) => {
                                                     if(files[0].size > 5 * 1024 * 1024 * 1024) {
-                                                        this.setState({
-                                                            notification: {
-                                                                open: true,
-                                                                type: 'error',
-                                                                message: 'The video file should not be more than 5GB'
-                                                            }
+                                                        notification['error']({
+                                                            message: 'Error!',
+                                                            description: 'The video file should not be more than 5GB',
                                                         });
                                                         return;
                                                     }
@@ -253,12 +234,9 @@ class MyUploadVideo extends Component {
                                                             videoFile: res.file_url
                                                         })
                                                     } else {
-                                                        this.setState({
-                                                            notification: {
-                                                                open: true,
-                                                                type: 'error',
-                                                                message: 'Uploading failed!'
-                                                            }
+                                                        notification['error']({
+                                                            message: 'Error!',
+                                                            description: 'Uploading failed!',
                                                         });
                                                     }
                                                 }}>
@@ -304,12 +282,9 @@ class MyUploadVideo extends Component {
                                                 accept={'image/*'}
                                                 onDrop={async (files) => {
                                                     if(files[0].size > 10 * 1024 * 1024) {
-                                                        this.setState({
-                                                            notification: {
-                                                                open: true,
-                                                                type: 'error',
-                                                                message: 'The video file should not be more than 10MB'
-                                                            }
+                                                        notification['error']({
+                                                            message: 'Error!',
+                                                            description: 'The video file should not be more than 10MB',
                                                         });
                                                         return;
                                                     }
@@ -326,12 +301,9 @@ class MyUploadVideo extends Component {
                                                             previewImageFile: res.file_url
                                                         })
                                                     } else {
-                                                        this.setState({
-                                                            notification: {
-                                                                open: true,
-                                                                type: 'error',
-                                                                message: 'Uploading failed!'
-                                                            }
+                                                        notification['error']({
+                                                            message: 'Error!',
+                                                            description: res.msg,
                                                         });
                                                     }
                                                 }}>
@@ -379,12 +351,9 @@ class MyUploadVideo extends Component {
                                                 accept={'video/*'}
                                                 onDrop={async (files) => {
                                                     if(files[0].size > 5 * 1024 * 1024 * 1024) {
-                                                        this.setState({
-                                                            notification: {
-                                                                open: true,
-                                                                type: 'error',
-                                                                message: 'The preview video file should not be more than 5GB'
-                                                            }
+                                                        notification['error']({
+                                                            message: 'Error!',
+                                                            description: 'The preview video file should not be more than 5GB',
                                                         });
                                                         return;
                                                     }
@@ -401,12 +370,9 @@ class MyUploadVideo extends Component {
                                                             previewVideoFile: res.file_url
                                                         })
                                                     } else {
-                                                        this.setState({
-                                                            notification: {
-                                                                open: true,
-                                                                type: 'error',
-                                                                message: 'Uploading failed!'
-                                                            }
+                                                        notification['error']({
+                                                            message: 'Error!',
+                                                            description: 'Uploading failed!',
                                                         });
                                                     }
                                                 }}>

@@ -59,7 +59,7 @@ const HOMEPAGE_QUERY = gql`
         promoVideos: category( where: {id: "${consts.PROMO_CATEGORY_ID}"}){
             title
             description
-            videos(first:1 ){
+            videos(orderBy:publish_date_DESC, first:1 ){
                 id
                 preview_video_url
                 publish_date
@@ -223,7 +223,8 @@ class HomePage extends Component {
 
     contentBlock(promoVideo) {
         if (promoVideo && promoVideo.videos && promoVideo.videos[0]) {
-            const videos = promoVideo.videos.filter(v => v.approved == true);
+            // const videos = promoVideo.videos.filter(v => v.approved == true);
+            const videos = promoVideo.videos;
             if(videos && videos.length > 0) {
                 return (
                     <Query
@@ -319,7 +320,8 @@ class HomePage extends Component {
                     if (loading) return "Loading...";
                     if (error) return "Error";
                     const videos = data ? (data.videos ? data.videos : []) : [];
-                    const featureVideos = data ? (data.featuredVideos ? (data.featuredVideos.videos ? data.featuredVideos.videos.filter(v => v.approved == true) : []) : []) : [];
+                    // const featureVideos = data ? (data.featuredVideos ? (data.featuredVideos.videos ? data.featuredVideos.videos.filter(v => v.approved == true) : []) : []) : [];
+                    const featureVideos = data ? (data.featuredVideos ? (data.featuredVideos.videos ? data.featuredVideos.videos : []) : []) : [];
                     const featureTitle = data ? (data.featuredVideos ? data.featuredVideos.title : "Featured Videos") : "Featured Videos";
                     log.trace('videos', videos);
                     // const vf = videos ? videos.find(v => v.id === 'cjuya09zk00nk07492dmxbetb') : null

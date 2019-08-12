@@ -1,4 +1,4 @@
-function trackPageView(url) {
+const trackPageView = (url) => {
     try {
         window.gtag('config', 'UA-144912865-1', {
             page_location: url

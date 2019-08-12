@@ -56,7 +56,8 @@ class CategoryPage extends Component {
                   //  log.trace(data);
                     const videos = data
                         ? data.category
-                            ? data.category.videos.filter(v => v.approved == true)
+                            // ? data.category.videos.filter(v => v.approved == true)
+                            ? data.category.videos
                             : []
                         : [];
                     const title = data ? (data.category ? data.category.title : "") : "";
