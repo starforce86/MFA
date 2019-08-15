@@ -29,6 +29,9 @@ type Query {
     chargeHistory(where: ChargeHistoryWhereUniqueInput!): ChargeHistory
     chargeHistories(where: ChargeHistoryWhereInput, orderBy: ChargeHistoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ChargeHistory]!
     chargeHistoriesConnection(where: ChargeHistoryWhereInput, orderBy: ChargeHistoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ChargeHistoryConnection!
+    curriculum(where: CurriculumWhereUniqueInput!): Curriculum
+    curricula(where: CurriculumWhereInput, orderBy: CurriculumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Curriculum]!
+    curriculaConnection(where: CurriculumWhereInput, orderBy: CurriculumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CurriculumConnection!
     playHistory(where: PlayHistoryWhereUniqueInput!): PlayHistory
     playHistories(where: PlayHistoryWhereInput, orderBy: PlayHistoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PlayHistory]!
     playHistoriesConnection(where: PlayHistoryWhereInput, orderBy: PlayHistoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PlayHistoryConnection!

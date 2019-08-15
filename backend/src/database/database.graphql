@@ -126,6 +126,17 @@ type Post {
     author: User!
 }
 
+type Curriculum {
+    id: ID! @unique
+    createdAt: DateTime!
+    updatedAt: DateTime!
+
+    title: String!
+    text: String!
+    order: Int
+    author: User!
+}
+
 type PlayHistory {
     id: ID! @unique
     createdAt: DateTime!

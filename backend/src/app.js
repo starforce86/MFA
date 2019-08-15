@@ -88,6 +88,11 @@ const resolvers = {
         videosConnection: async (root, args) => {
             return {aggregate: await prisma.videosConnection(args).aggregate()}
         },
+        curriculum: (root, args) => prisma.curriculum(args.where),
+        curricula: (root, args) => prisma.curricula(args),
+        curriculaConnection: async (root, args) => {
+            return {aggregate: await prisma.curriculaConnection(args).aggregate()}
+        },
         watchedVideoUser: userResolver.watchedVideoUser,
         signupStats: statsResolver.signupStats,
         videoStats: statsResolver.videoStats,
@@ -168,6 +173,13 @@ const resolvers = {
         upsertVideo: (root, args) => prisma.upsertVideo(args),
         deleteVideo: (root, args) => prisma.deleteVideo(args.where),
         deleteManyVideos: (root, args) => prisma.deleteManyVideos(args.where),
+
+        createCurriculum: (root, args) => prisma.createCurriculum(args.data),
+        updateCurriculum: (root, args) => prisma.updateCurriculum(args),
+        updateManyCurricula: (root, args) => prisma.updateManyCurricula(args),
+        upsertCurriculum: (root, args) => prisma.upsertCurriculum(args),
+        deleteCurriculum: (root, args) => prisma.deleteCurriculum(args.where),
+        deleteManyCurricula: (root, args) => prisma.deleteManyCurricula(args.where),
     },
     User: {
         my_videos: (root, args) => prisma.user({id: root.id}).my_videos(args),

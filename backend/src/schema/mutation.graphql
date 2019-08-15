@@ -28,6 +28,12 @@ type Mutation {
     upsertChargeHistory(where: ChargeHistoryWhereUniqueInput!, create: ChargeHistoryCreateInput!, update: ChargeHistoryUpdateInput!): ChargeHistory!
     deleteChargeHistory(where: ChargeHistoryWhereUniqueInput!): ChargeHistory
     deleteManyChargeHistories(where: ChargeHistoryWhereInput): BatchPayload!
+    createCurriculum(data: CurriculumCreateInput!): Curriculum!
+    updateCurriculum(data: CurriculumUpdateInput!, where: CurriculumWhereUniqueInput!): Curriculum
+    updateManyCurricula(data: CurriculumUpdateManyMutationInput!, where: CurriculumWhereInput): BatchPayload!
+    upsertCurriculum(where: CurriculumWhereUniqueInput!, create: CurriculumCreateInput!, update: CurriculumUpdateInput!): Curriculum!
+    deleteCurriculum(where: CurriculumWhereUniqueInput!): Curriculum
+    deleteManyCurricula(where: CurriculumWhereInput): BatchPayload!
     createPlayHistory(data: PlayHistoryCreateInput!): PlayHistory!
     updatePlayHistory(data: PlayHistoryUpdateInput!, where: PlayHistoryWhereUniqueInput!): PlayHistory
     updateManyPlayHistories(data: PlayHistoryUpdateManyMutationInput!, where: PlayHistoryWhereInput): BatchPayload!

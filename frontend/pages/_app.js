@@ -356,6 +356,15 @@ class MyApp extends App {
                                                     </Link>
                                                 </li>
 
+                                                <li className={`nav-item ${this.props.router.pathname === "/curriculum" ? " active" : ""}`}>
+                                                    <Link prefetch href={"curriculum"}>
+                                                        <a className="nav-link">
+                                                            <i className="fas fa-fw fa-book-reader" />
+                                                            <span>Curriculum</span>
+                                                        </a>
+                                                    </Link>
+                                                </li>
+
                                                 {user && (user.role == "USER_PUBLISHER" || user.role == "ADMIN") && (
                                                     <li className={`nav-item ${this.props.router.pathname === "/myVideo" ? " active" : ""}`}>
                                                         <Link prefetch href={"myVideo"}>

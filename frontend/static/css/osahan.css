@@ -2208,3 +2208,72 @@ input[type="date"] {
 .hidden {
     display: none;
 }
+
+strong {
+    font-weight: 1000 !important;
+}
+
+.lesson-editor, .lesson {
+    font-family: 'FuturaBookC', sans-serif;
+}
+
+.lesson-editor,
+.lesson-editor h1,
+.lesson-editor h2,
+.lesson-editor h3,
+.lesson-editor h4,
+.lesson-editor h5,
+.lesson-editor h6 {
+    color: black;
+    /* font-weight: 540 !important; */
+}
+
+.lesson-editor a:hover {
+    color: #1890f0 !important;
+}
+
+/* .lesson,
+.lesson h1,
+.lesson h2,
+.lesson h3,
+.lesson h4,
+.lesson h5,
+.lesson h6 {
+    font-weight: 540 !important;
+}  */
+
+.lesson .ant-collapse {
+    font-size: 18px !important;
+}
+
+.lesson a {
+    color: #bc1e3e;
+}
+
+.curriculum-banner {
+    padding: 30px 30px 30px 255px;
+}
+
+.ant-collapse {
+    background-color:rgba(18,18,18) !important;
+    /* color: #bc1e3e !important; */
+    /* border-color: #bc1e3e !important; */
+    border: none !important;
+}
+
+.ant-collapse > .ant-collapse-item {
+    /* border-bottom-color: #bc1e3e !important; */
+    border: none !important;
+}
+
+.ant-collapse > .ant-collapse-item > .ant-collapse-header {
+    color: #bc1e3e !important;
+}
+
+.ant-collapse-content {
+    color: rgba(136,136,136) !important;
+    background-color:rgba(18,18,18) !important;
+    /* border-top-color: #bc1e3e !important; */
+    border: none !important;
+}
+
