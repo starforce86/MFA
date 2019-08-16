@@ -2243,7 +2243,7 @@ strong {
 }  */
 
 .lesson .ant-collapse {
-    font-size: 18px !important;
+    font-size: 20px !important;
 }
 
 .lesson a {
@@ -2262,8 +2262,8 @@ strong {
 }
 
 .ant-collapse > .ant-collapse-item {
-    /* border-bottom-color: #bc1e3e !important; */
-    border: none !important;
+    border-bottom-color: rgba(18,18,18) !important;
+    /* border: none !important; */
 }
 
 .ant-collapse > .ant-collapse-item > .ant-collapse-header {
@@ -2277,3 +2277,9 @@ strong {
     border: none !important;
 }
 
+.ant-collapse > .ant-collapse-item > .ant-collapse-header {
+    font-size: 24px;
+    background-color: #bc1e3e !important;
+    color: white !important;
+    border-radius: 5px !important;
+}

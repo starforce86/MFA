@@ -19,7 +19,15 @@ const HtmlToReactParser = HtmlToReact.Parser;
 
 const styles = {
     pageDesc: {
-        fontSize: 18
+        fontSize: 20
+    },
+    titleLabel: {
+        fontSize: 60,
+        lineHeight: 0,
+        color: '#bc1e3e',
+        position: 'relative',
+        left: 80,
+        bottom: 60
     }
 };
 
@@ -38,7 +46,6 @@ class Curriculum extends Component {
 
     transform = (node) => {
         if (node.type === 'tag' && node.name === 'span' && node.attribs.class === 'mention') {
-            console.log('#############', node)
             const tag = node.attribs['data-mention'].substring(1);
             var htmlInput = `<a href="/?search=${tag}">#${tag}</a>`;
             var htmlToReactParser = new HtmlToReactParser();
@@ -229,9 +236,10 @@ class Curriculum extends Component {
                     </div>
                 </div>
                 <div className="curriculum-banner">
-                    <img className="img-fluid w-100" src="static/img/curriculum-banner.png" />
+                    <img className="img-fluid w-100" src="static/assets/img/Man-Image-min.png" />
+                    <div style={styles.titleLabel}>My Curriculum</div>
                 </div>
-                <div className="container-fluid">
+                <div className="container-fluid pt-0">
                     <div className="row">
                         <div className="col-sm-12 lesson">
                             <p style={styles.pageDesc}>The curriculum I have in mind is a strategy of imparting knowledge  that will give an artist the full understanding of painting concepts on an  intellectual level as well as the fundamental skills necessary to achieve high art.</p>
@@ -260,15 +268,6 @@ class Curriculum extends Component {
                                                 </React.Fragment>
                                             )}
                                             {ReactHtmlParser(c.text, {transform: this.transform})}
-                                            {/* <p>
-                                                <ReactHashTag
-                                                    onHashtagClick={tag => {
-                                                        document.location = `/?search=${tag.substring(1)}`
-                                                    }}
-                                                >
-                                                    {ReactHtmlParser(c.text)}
-                                                </ReactHashTag>
-                                            </p> */}
                                         </Panel>
                                     ))}
                                 </Collapse>
