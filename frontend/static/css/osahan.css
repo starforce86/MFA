@@ -2262,6 +2262,7 @@ strong {
 }
 
 .ant-collapse > .ant-collapse-item {
+    margin-bottom: 10px !important;
     border-bottom-color: rgba(18,18,18) !important;
     /* border: none !important; */
 }
