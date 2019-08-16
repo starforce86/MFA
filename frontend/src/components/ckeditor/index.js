@@ -19,42 +19,23 @@ import ListPlugin from '@ckeditor/ckeditor5-list/src/list';
 import ParagraphPlugin from '@ckeditor/ckeditor5-paragraph/src/paragraph';
 import MentionPlugin from '@ckeditor/ckeditor5-mention/src/mention';
 
-const editorConfiguration = {
-  plugins: [ EssentialsPlugin, BoldPlugin, ItalicPlugin, ParagraphPlugin, MentionPlugin ],
-  toolbar: [ 'heading', '|', 'bold', 'italic', '|', 'undo', 'redo', ],
-  mention: {
-    feeds: [
-      {
-        marker: '#',
-        feed: [
-          '#american', '#asian', '#baking', '#breakfast', '#cake', '#caribbean',
-        ]
-      }
-    ]
-  }
-};
-
 class CKEditorWrapper extends Component {
   render() {
     return <div>
       <CKEditor
         editor={ClassicEditor}
-        // config={
-        //   {
-        //     plugins: [Mention],
-        //     mention: {
-        //       feeds: [
-        //         {
-        //           marker: '#',
-        //           feed: [
-        //             '#american', '#asian', '#baking', '#breakfast', '#cake', '#caribbean',
-        //           ],
-        //         }
-        //       ]
-        //     }
-        //   }
-        // }
-        config={ editorConfiguration }
+        config={{
+          plugins: [EssentialsPlugin, HeadingPlugin, BoldPlugin, ItalicPlugin, LinkPlugin, ListPlugin, BlockQuotePlugin, ParagraphPlugin, MentionPlugin],
+          toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|', 'undo', 'redo',],
+          mention: {
+            feeds: [
+              {
+                marker: '#',
+                feed: this.props.tags.map(t => `#${t.text}`)
+              }
+            ]
+          }
+        }}
         {...this.props}
       />
     </div>
