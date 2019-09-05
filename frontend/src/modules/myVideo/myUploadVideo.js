@@ -7,16 +7,20 @@ import { MenuItem, ListItemText, Select, Checkbox, Input } from '@material-ui/co
 import axios from 'axios';
 import { notification } from 'antd';
 import 'antd/dist/antd.css';
+import * as Scroll from 'react-scroll';
 import Menu from "../../components/menu";
 import Video from "../../components/video";
 import SubscribeButton from "../channel/SubscribeButton";
 import {API_URL} from "../../util/consts";
+
+const scroll = Scroll.animateScroll;
 
 class MyUploadVideo extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            videoId: '',
             videoFile: '',
             videoFileUploading: false,
             videoFileProgress: 0,
@@ -35,6 +39,7 @@ class MyUploadVideo extends Component {
 
     onClickSaveVideo = async () => {
         const result = await this.props.saveVideo(
+            this.state.videoId,
             this.state.videoFile,
             this.state.previewVideoFile,
             this.state.previewImageFile,
@@ -51,8 +56,38 @@ class MyUploadVideo extends Component {
                 description: result.message,
             });
         }
-
     };
+
+    handleCancel = () => {
+        this.setState({
+            videoId: '',
+            videoFile: '',
+            previewVideoFile: '',
+            previewImageFile: '',
+            title: '',
+            description: '',
+            categories: [],
+            tags: [],
+        })
+    };
+
+    handleEdit = (id) => {
+        const video = this.props.videos.find(d => d.id == id);
+		console.log('###############', video)
+
+        this.setState({
+            videoId: id,
+            videoFile: video.file_url,
+            previewVideoFile: video.preview_video_url,
+            previewImageFile: video.preview_url,
+            title: video.title,
+            description: video.description,
+            categories: video.categories,
+            tags: video.tags,
+        }, () => {
+            scroll.scrollToTop();
+        });
+    }
 
     handleChange(field, event) {
         switch (field) {
@@ -423,6 +458,7 @@ class MyUploadVideo extends Component {
                                                     className="form-control border-form-control"
                                                     placeholder=""
                                                     type="text"
+                                                    value={this.state.title}
                                                     onChange={value => this.handleChange("title", value)}
                                                 />
                                             </div>
@@ -436,6 +472,7 @@ class MyUploadVideo extends Component {
                                                     className="form-control border-form-control"
                                                     placeholder=""
                                                     type="text"
+                                                    value={this.state.description}
                                                     onChange={value => this.handleChange("description", value)}
                                                 />
                                             </div>
@@ -495,8 +532,19 @@ class MyUploadVideo extends Component {
                                                 onClick={() => this.onClickSaveVideo()}
                                                 style={{ width: 200 }}
                                             >{" "}
-                                                Save Video
+                                                {this.state.videoId ? "Update Video" : "Add Video"}
                                             </button>
+
+                                            {this.state.videoId && (
+                                                <button
+                                                    type="button"
+                                                    className="btn btn-outline-danger btn-sm"
+                                                    onClick={() => this.handleCancel()}
+                                                    style={{ width: 200, marginLeft: 20 }}
+                                                >
+                                                    Cancel Update
+                                                </button>
+                                            )}
                                         </div>
                                     </div>
                                 </form>
@@ -523,9 +571,13 @@ class MyUploadVideo extends Component {
                                 
                                 <div className="video-block section-padding">
                                     {
-                                        (this.props.user && this.props.user.my_videos && this.props.user.my_videos.length > 0) ?
+                                        (this.props.videos && this.props.videos.length > 0) ?
                                             <div className="row">
-                                                {this.props.user.my_videos.map(v => <Video video={v} key={v.id}/>)}
+                                                {this.props.videos.map(v => <Video
+                                                    video={v}
+                                                    key={v.id}
+                                                    editVideo={this.handleEdit}
+                                                />)}
                                             </div> :
                                             <div className="row">
                                                 <div className="col-sm-12">

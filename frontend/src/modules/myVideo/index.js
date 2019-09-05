@@ -41,6 +41,26 @@ const GET_MY_VIDEOS_QUERY = gql`
         tags {
             id
             text
+        },
+        videos {
+            id
+            title
+            description
+            file_url
+            preview_url
+            preview_video_url
+            author {
+                id
+                email
+            }
+            categories {
+                id
+                title
+            }
+            tags {
+                id
+                text
+            }
         }
     }
 `;
@@ -72,12 +92,41 @@ const CREATE_VIDEO = gql`
     }
 `;
 
+const UPDATE_VIDEO = gql`
+    mutation UpdateVideo($id: ID, $title: String, $description: String, $file_url: String, $preview_url: String, $preview_video_url: String, $author: ID, $categories: [CategoryWhereUniqueInput!], $tags: [TagWhereUniqueInput!]) {
+        updateVideo(
+            where: { id: $id }
+            data: {
+                title: $title
+                description: $description
+                file_url: $file_url
+                preview_url: $preview_url
+                preview_video_url: $preview_video_url
+                author: {
+                    connect: {
+                        id: $author
+                    }
+                }
+                categories: {
+                    connect: $categories
+                }
+                tags: {
+                    connect: $tags
+                }
+            }
+        ) {
+            id
+        }
+    }
+`;
+
 class MyVideoPageWithoutMutations extends Component {
     constructor(props) {
         super(props);
     }
 
     handleSaveVideo = async (
+        videoId,
         videoFile,
         previewVideoFile,
         videoPreviewImageFile,
@@ -101,18 +150,35 @@ class MyVideoPageWithoutMutations extends Component {
         const author = this.props.id;
         categories = categories.map(c => ({id: c.id}));
         tags = tags.map(t => ({id: t.id}));
-        const result = await this.props.createVideo({
-            variables: {
-                title: title,
-                description: description,
-                file_url: videoFile,
-                preview_url: videoPreviewImageFile,
-                preview_video_url: previewVideoFile,
-                author: author,
-                categories: categories,
-                tags: tags
-            }
-        });
+        if (videoId) {
+            const result = await this.props.updateVideo({
+                variables: {
+                    id: videoId,
+                    title: title,
+                    description: description,
+                    file_url: videoFile,
+                    preview_url: videoPreviewImageFile,
+                    preview_video_url: previewVideoFile,
+                    author: author,
+                    categories: categories,
+                    tags: tags
+                }
+            });
+        } else {
+            const result = await this.props.createVideo({
+                variables: {
+                    title: title,
+                    description: description,
+                    file_url: videoFile,
+                    preview_url: videoPreviewImageFile,
+                    preview_video_url: previewVideoFile,
+                    author: author,
+                    categories: categories,
+                    tags: tags
+                }
+            });
+        }
+        
         return {error: false};
     };
 
@@ -128,10 +194,18 @@ class MyVideoPageWithoutMutations extends Component {
                     if (loading) return <div>Loading...</div>;
                     if (error) return <div>Error</div>;
 
+                    let videos = [];
+                    if (data.user.role == 'ADMIN') {
+                        videos = data.videos;
+                    } else if (data.user && data.user.my_videos) {
+                        videos = data.user.my_videos;
+                    }
+
                     return <MyUploadVideo
                         {...this.props}
-                        saveVideo={async (videoFile, previewVideoFile, videoPreviewImageFile, title, description, categories, tags) =>
+                        saveVideo={async (videoId, videoFile, previewVideoFile, videoPreviewImageFile, title, description, categories, tags) =>
                             await this.handleSaveVideo(
+                                videoId,
                                 videoFile,
                                 previewVideoFile,
                                 videoPreviewImageFile,
@@ -144,6 +218,7 @@ class MyVideoPageWithoutMutations extends Component {
                         user={data.user}
                         categories={data.categories}
                         tags={data.tags}
+                        videos={videos}
                     />
                 }
             }
@@ -155,6 +230,30 @@ class MyVideoPageWithoutMutations extends Component {
 const MyVideoPage = compose(
     graphql(CREATE_VIDEO, {
         name: "createVideo",
+        options: {
+            update: async (proxy, {data}) => {
+            },
+            onCompleted: async result => {
+                if (result) {
+                    // log.trace(result);
+                    //TODO await login({user,token}) now token is null
+                }
+            },
+            onError: async errors => {
+                let errorString = "";
+
+              
+                errors.graphQLErrors.map(item => errorString = errorString + JSON.stringify(item.message) + " ");
+
+                //TODO return error to component
+                log.error(JSON.stringify(errors.graphQLErrors));
+                alert(errorString);
+            }
+        }
+    }),
+
+    graphql(UPDATE_VIDEO, {
+        name: "updateVideo",
         options: {
             update: async (proxy, {data}) => {
             },
