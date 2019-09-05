@@ -19,10 +19,11 @@ async function createCustomer(stripe_tok_token, email, metadata) {
     });
 }
 
-async function subscribeUser(customer_id, planId) {
+async function subscribeUser(customer_id, planId, metadata) {
     return await stripe.subscriptions.create({
         customer: customer_id,
         items: [{plan: planId}],
+        metadata: metadata
     });
 }
 

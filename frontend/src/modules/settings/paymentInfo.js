@@ -87,7 +87,7 @@ class PaymentInfo extends Component {
             <>
                 <div style={{ display: "flex", paddingTop: 10 }}>
                     <h6>Payment info</h6>
-                    {this.state.edit
+                    {/* {this.state.edit
                         ? <React.Fragment>
                             <FontAwesomeIcon onClick={this.handleSave}
                                 style={{ cursor: "pointer", margin: "2px", marginLeft: "8px" }} color="white"
@@ -98,7 +98,7 @@ class PaymentInfo extends Component {
                         </React.Fragment>
                         : <FontAwesomeIcon onClick={this.handleEdit}
                             style={{ cursor: "pointer", margin: "2px", marginLeft: "8px" }} color="white"
-                            icon={faEdit} />}
+                            icon={faEdit} />} */}
                 </div>
                 {this.state.edit && !this.state.inProgress ?
                     (

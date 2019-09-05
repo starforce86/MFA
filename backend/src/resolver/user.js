@@ -82,6 +82,7 @@ async function restore_password(root, {email, restore_code, new_password, step},
 }
 
 async function purchase(root, {stripe_tok_token, plan}, ctx, info) {
+    
     if (!ctx.user || !ctx.user.id) {
         throw new GQLError({message: 'Unauthorized', code: 401});
     }
@@ -116,8 +117,18 @@ async function purchase(root, {stripe_tok_token, plan}, ctx, info) {
 
         await stripeHelper.changeCard(customer_id, stripe_tok_token);
 
-        if (!user.stripe_subsciption_json) throw new GQLError({ message: 'You have not any subscriptions' });
-        const subs_id = user.stripe_subsciption_json.id;
+        if (!user.stripe_subsciption_json && customer.subscriptions.data.length == 0) throw new GQLError({ message: 'You have not any subscriptions' });
+        let subs_id;
+        if(user.stripe_subsciption_json) {
+            subs_id = user.stripe_subsciption_json.id;
+        }
+        else {
+            customer.subscriptions.data.forEach(item => {
+                if (item.plan.id == config.stripe.plans.monthly_plan_id || item.plan.id == config.stripe.plans.yearly_plan_id) {
+                    subs_id = item.id;
+                }
+            });
+        }
         const result = await stripeHelper.unsubscribeUser(subs_id);
         if (result.status !== 'canceled') throw new GQLError({ message: "Stripe unsubscribe result status != 'canceled'" });
     }
@@ -134,7 +145,7 @@ async function purchase(root, {stripe_tok_token, plan}, ctx, info) {
             throw new GQLError({message: 'Wrong plan', code: 400});
     }
 
-    const subscription = await stripeHelper.subscribeUser(customer_id, STRIPE_PLAN_ID);
+    const subscription = await stripeHelper.subscribeUser(customer_id, STRIPE_PLAN_ID, stripe_metadata);
     log.trace('New Stripe subscription: ', subscription);
 
     await prisma.updateUser({
@@ -145,7 +156,8 @@ async function purchase(root, {stripe_tok_token, plan}, ctx, info) {
         }
     });
 
-    return await stripeHelper.isSubscriptionActive(customer_id).result;
+    const result = await stripeHelper.isSubscriptionActive(customer_id);
+    return result.result;
 }
 
 async function delete_subscription(root, args, ctx, info) {
@@ -203,9 +215,10 @@ async function changeCard(root, args, ctx, info) {
     if (!ctx.user || !ctx.user.id) {
         throw new GQLError({message: 'Unauthorized', code: 401});
     }
-    log.trace(`changeCard: ${ctx.user.id} (${ctx.user.email})`);
 
     const {newStripeTokToken} = args;
+
+    log.trace(`changeCard: ${ctx.user.id} (${ctx.user.email}) ${newStripeTokToken}`);
 
     const user = await prisma.user({email: ctx.user.email});
 
@@ -336,6 +349,9 @@ async function watchedVideoUser(root, args, ctx, info) {
         let watchedVideos = await prisma
             .user({ id: id })
             .watched_videos();
+        if(!watchedVideos) {
+            return null;
+        }
         watchedVideos = await Promise.all(watchedVideos.map(async (d) => {
             d.video = await prisma
                 .watchedVideoUser({ id: d.id })

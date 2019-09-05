@@ -8,6 +8,8 @@ import {API_URL} from "../../util/consts";
 import Router from "next/dist/client/router";
 import PaymentInfo from "./paymentInfo";
 import {Elements, StripeProvider} from 'react-stripe-elements'
+import { notification } from 'antd';
+import 'antd/dist/antd.css';
 import * as consts from "../../util/consts";
 import SubscribePlan from "../../components/stripe/SubscribePlan";
 
@@ -29,6 +31,7 @@ class Settings extends PureComponent {
             stripe: null,
             plan: 'YEARLY',
             resubscribeInProgress: false,
+            changeCardInProgress: false,
         };
     }
 
@@ -70,17 +73,29 @@ class Settings extends PureComponent {
         }
     }
 
-    onClickSaveUserProfile = () => {
-        this.props.saveUserProfile(
-            this.state.firstname,
-            this.state.lastname,
-            // this.state.oldPassword,
-            // this.state.newPassword,
-            this.state.username,
-            this.state.about_text
-        );
-        Router.push('/hacky', "/");
-        location.reload();
+    onClickSaveUserProfile = async () => {
+        try {
+            console.log(this.paymentInfoRef)
+            console.log(this.paymentInfoRef.current.props.children);
+            this.paymentInfoRef.current.handleSave();
+        } catch(ex) {
+            notification['error']({
+                message: 'Error!',
+                description: ex.message,
+            });
+            return;
+        }
+        
+        // this.props.saveUserProfile(
+        //     this.state.firstname,
+        //     this.state.lastname,
+        //     // this.state.oldPassword,
+        //     // this.state.newPassword,
+        //     this.state.username,
+        //     this.state.about_text
+        // );
+        // Router.push('/hacky', "/");
+        // location.reload();
 
     };
 
@@ -95,7 +110,22 @@ class Settings extends PureComponent {
         this.setState({
             resubscribeInProgress: true
         });
-        this.props.resubscribe(token.id, this.state.plan);
+        const result = await this.props.resubscribe(token.id, this.state.plan);
+        this.setState({
+            resubscribeInProgress: false
+        });
+    }
+
+    onClickChangeCard = async () => {
+        const token = await this.getChangeCardTokenFn();
+        if (!token) return;
+        this.setState({
+            changeCardInProgress: true
+        });
+        const result = await this.props.changeCard(token.id);
+        this.setState({
+            changeCardInProgress: false
+        });
     }
 
     async uploadAvatarFile(file) {
@@ -223,7 +253,7 @@ class Settings extends PureComponent {
                             </div>
                             <StripeProvider stripe={this.state.stripe}>
                                 <Elements>
-                                    <PaymentInfo user={this.props.user} />
+                                    <PaymentInfo ref={this.paymentInfoRef} user={this.props.user} />
                                 </Elements>
                             </StripeProvider>
                             <form>
@@ -297,15 +327,6 @@ class Settings extends PureComponent {
                                                 <label className="control-label">
                                                     Artist Bio <span className="required" />
                                                 </label>
-                                                {/* <input
-                                                    className="form-control border-form-control "
-                                                    placeholder=""
-                                                    onChange={value =>
-                                                        this.handleChange("about_text", value)
-                                                    }
-                                                    type="text"
-                                                    value={this.state.about_text ? this.state.about_text : ""}
-                                                /> */}
                                                 <TextareaAutosize
                                                     rows={3}
                                                     placeholder="Not allowed to be more than 500 letters"
@@ -346,18 +367,20 @@ class Settings extends PureComponent {
                                                     >
                                                         Cancel Subscription </button>
                                                 </a>
-                                                <a href="#" data-toggle="modal" data-target="#resubscribeModal">
+                                                
+                                                <a href="#" data-toggle="modal" data-target="#changeCardModal">
                                                     <button
                                                         type="button"
                                                         className="btn btn-warning border-none"
                                                         style={{ marginLeft: 10 }}
                                                     >
-                                                        Re-Subscribe </button>
+                                                        Change Card </button>
                                                 </a>
-                                                {/* Re-Subscribe Modal begin*/}
+
+                                                {/* Change Card Modal begin*/}
                                                 <div
                                                     className="modal fade"
-                                                    id="resubscribeModal"
+                                                    id="changeCardModal"
                                                     tabIndex={-1}
                                                     role="dialog"
                                                     aria-hidden="true"
@@ -369,7 +392,7 @@ class Settings extends PureComponent {
                                                         <div className="modal-content" style={{ color: "#FFF" }}>
                                                             <div className="modal-header">
                                                                 <h5 className="modal-title">
-                                                                    Re-Subscribe to MFA</h5>
+                                                                    Change Card</h5>
                                                                 <br />
 
                                                                 <button
@@ -387,27 +410,11 @@ class Settings extends PureComponent {
                                                                     <Elements>
                                                                         <SubscribePlan
                                                                             // ref={el => this.stripeTokenProvider = el}
-                                                                            getToken={getTokenFn => this.getTokenFn = getTokenFn} />
+                                                                            getToken={getTokenFn => this.getChangeCardTokenFn = getTokenFn} />
                                                                     </Elements>
                                                                 </StripeProvider>
 
-                                                                <div style={{ marginTop: 10 }}>
-                                                                    <input type="radio" id="plan"
-                                                                        name="plan" value="MONTHLY" onChange={() => {
-                                                                            this.setState({ plan: "MONTHLY" })
-                                                                        }} checked={this.state.plan === "MONTHLY"} />
-                                                                    <label htmlFor="contactChoice2"
-                                                                        style={{ marginLeft: 10 }}>$29.99/month</label>
-                                                                </div>
-                                                                <div>
-                                                                    <input type="radio" id="plan"
-                                                                        name="plan" value="YEARLY" onChange={() => {
-                                                                            this.setState({ plan: "YEARLY" })
-                                                                        }} checked={this.state.plan === "YEARLY"} />
-                                                                    <label htmlFor="contactChoice2"
-                                                                        style={{ marginLeft: 10 }}>$300.00/year</label>
-                                                                </div>
-                                                                {this.state.resubscribeInProgress && (<div style={{ width: "100%", textAlign: 'center' }}><CircularProgress color="secondary" /></div>)}
+                                                                {this.state.changeCardInProgress && (<div style={{ width: "100%", textAlign: 'center', marginTop: 15 }}><CircularProgress color="secondary" /></div>)}
                                                             </div>
 
                                                             <div className="modal-footer">
@@ -420,17 +427,102 @@ class Settings extends PureComponent {
                                                                 <button
                                                                     className="btn btn-primary"
                                                                     type="button"
-                                                                    disabled={this.state.resubscribeInProgress}
-                                                                    onClick={() => this.onClickResubscribe()}
+                                                                    disabled={this.state.changeCardInProgress}
+                                                                    onClick={() => this.onClickChangeCard()}
                                                                 >
                                                                     Submit </button>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                {/* Re-Subscribe Modal end*/}
+                                                {/* Change Card Modal end*/}
+
                                             </React.Fragment>
                                             : 'Not active'}
+
+                                        <a href="#" data-toggle="modal" data-target="#resubscribeModal">
+                                            <button
+                                                type="button"
+                                                className="btn btn-warning border-none"
+                                                style={{ marginLeft: 10 }}
+                                            >
+                                                {this.props.user.billing_subscription_active ? 'Change Plan' : 'Re-Subscribe'} </button>
+                                        </a>
+                                        {/* Re-Subscribe Modal begin*/}
+                                        <div
+                                            className="modal fade"
+                                            id="resubscribeModal"
+                                            tabIndex={-1}
+                                            role="dialog"
+                                            aria-hidden="true"
+                                        >
+                                            <div
+                                                className="modal-dialog modal-sm modal-dialog-centered"
+                                                role="document"
+                                            >
+                                                <div className="modal-content" style={{ color: "#FFF" }}>
+                                                    <div className="modal-header">
+                                                        <h5 className="modal-title">
+                                                            {this.props.user.billing_subscription_active ? 'Change Plan' : 'Re-Subscribe to MFA'}</h5>
+                                                        <br />
+
+                                                        <button
+                                                            className="close"
+                                                            type="button"
+                                                            data-dismiss="modal"
+                                                            aria-label="Close"
+                                                        >
+                                                            <span aria-hidden="true">×</span>
+                                                        </button>
+                                                    </div>
+
+                                                    <div className="modal-body">
+                                                        <StripeProvider stripe={this.state.stripe}>
+                                                            <Elements>
+                                                                <SubscribePlan
+                                                                    // ref={el => this.stripeTokenProvider = el}
+                                                                    getToken={getTokenFn => this.getTokenFn = getTokenFn} />
+                                                            </Elements>
+                                                        </StripeProvider>
+
+                                                        <div style={{ marginTop: 10 }}>
+                                                            <input type="radio" id="plan"
+                                                                name="plan" value="MONTHLY" onChange={() => {
+                                                                    this.setState({ plan: "MONTHLY" })
+                                                                }} checked={this.state.plan === "MONTHLY"} />
+                                                            <label htmlFor="contactChoice2"
+                                                                style={{ marginLeft: 10 }}>$29.99/month</label>
+                                                        </div>
+                                                        <div>
+                                                            <input type="radio" id="plan"
+                                                                name="plan" value="YEARLY" onChange={() => {
+                                                                    this.setState({ plan: "YEARLY" })
+                                                                }} checked={this.state.plan === "YEARLY"} />
+                                                            <label htmlFor="contactChoice2"
+                                                                style={{ marginLeft: 10 }}>$300.00/year</label>
+                                                        </div>
+                                                        {this.state.resubscribeInProgress && (<div style={{ width: "100%", textAlign: 'center' }}><CircularProgress color="secondary" /></div>)}
+                                                    </div>
+
+                                                    <div className="modal-footer">
+                                                        <button
+                                                            className="btn btn-secondary"
+                                                            type="button"
+                                                            data-dismiss="modal"
+                                                        >
+                                                            Cancel </button>
+                                                        <button
+                                                            className="btn btn-primary"
+                                                            type="button"
+                                                            disabled={this.state.resubscribeInProgress}
+                                                            onClick={() => this.onClickResubscribe()}
+                                                        >
+                                                            Submit </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {/* Re-Subscribe Modal end*/}
                                     </div>
                                 </div>
                                 <div className="col-sm-12 text-center">

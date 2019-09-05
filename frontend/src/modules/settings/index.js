@@ -2,6 +2,8 @@ import React, {Component} from "react";
 import Settings from "./settings";
 import gql from "graphql-tag";
 import {compose, graphql, withApollo} from "react-apollo";
+import { notification } from 'antd';
+import 'antd/dist/antd.css';
 import logger from "../../util/logger";
 
 const log = logger('Settings');
@@ -40,6 +42,14 @@ const CANCEL_SUBSCRIPTION = gql`
 const RESUBSCRIBE = gql`
     mutation purchase($token: String!, $plan: StripePlan!) {
         purchase(stripe_tok_token: $token, plan: $plan)
+    }
+`;
+
+const CHANGE_CARD = gql`
+    mutation changeCard($newStripeTokToken: String!) {
+        changeCard(
+            newStripeTokToken: $newStripeTokToken
+        )
     }
 `;
 
@@ -131,10 +141,18 @@ class SettingsPageWithoutMutations extends Component {
     };
 
     handleResubscribe = async (token, plan) => {
-        await this.props.resubscribe({
+        return await this.props.resubscribe({
             variables: {
                 token: token,
                 plan: plan
+            }
+        });
+    };
+
+    handleChangeCard = async (token) => {
+        return await this.props.changeCard({
+            variables: {
+                newStripeTokToken: token
             }
         });
     };
@@ -153,7 +171,8 @@ class SettingsPageWithoutMutations extends Component {
                         )
                     }
                     cancelSubscription={() => this.handleCancelSubscription()}
-                    resubscribe={(token, plan) => this.handleResubscribe(token, plan)}
+                    resubscribe={async (token, plan) => await this.handleResubscribe(token, plan)}
+                    changeCard={async (token) => await this.handleChangeCard(token)}
                     user={this.props.getUserProfile.user}
                 />
             )) || <div/>
@@ -211,14 +230,72 @@ const SettingsPage = compose(
                 token: props.token,
                 plan: props.plan
             },
-            onCompleted: () => {
-                location.reload();
+            onCompleted: (res) => {
+                if(res.purchase) {
+                    location.reload();
+                }
+                else {
+                    notification['error']({
+                        message: 'Error!',
+                        description: "Unknown error occured!",
+                    });
+                }
             },
             onError: async errors => {
                 let errs = JSON.stringify(errors);
                 //TODO return error to component
-                log.trace(JSON.stringify(errs));
-                alert('Error');
+                log.trace(errs);
+                if(errors && errors.graphQLErrors && errors.graphQLErrors.length > 0) {
+                    const errMsg = errors.graphQLErrors.map(e => e.message ? e.message : "").join(" ");
+                    notification['error']({
+                        message: 'Error!',
+                        description: errMsg,
+                    });
+                } else {
+                    notification['error']({
+                        message: 'Error!',
+                        description: "Unknown error occured!",
+                    });
+                }
+                return {error: true}
+            }
+        })
+    }),
+
+    graphql(CHANGE_CARD, {
+        name: "changeCard",
+        options: props => ({
+            variables: {
+                newStripeTokToken: props.newStripeTokToken
+            },
+            onCompleted: (res) => {
+                if(res.changeCard) {
+                    location.reload();
+                }
+                else {
+                    notification['error']({
+                        message: 'Error!',
+                        description: "Unknown error occured!",
+                    });
+                }
+            },
+            onError: async errors => {
+                let errs = JSON.stringify(errors);
+                //TODO return error to component
+                log.trace(errs);
+                if(errors && errors.graphQLErrors && errors.graphQLErrors.length > 0) {
+                    const errMsg = errors.graphQLErrors.map(e => e.message ? e.message : "").join(" ");
+                    notification['error']({
+                        message: 'Error!',
+                        description: errMsg,
+                    });
+                } else {
+                    notification['error']({
+                        message: 'Error!',
+                        description: "Unknown error occured!",
+                    });
+                }
+                return {error: true}
             }
         })
     }),
