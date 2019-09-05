@@ -3,7 +3,7 @@ import {compose, graphql, Query} from "react-apollo";
 import Videos from "../../components/videos";
 import React, {Component} from "react";
 import {withRouter} from "next/router";
-import "video-react/dist/video-react.css"; // import css
+import "video-react/dist/video-react.css";
 import MyPlayer from "../../modules/video-page/promoPlayer";
 import Video from "../../components/video";
 import logger from "../../util/logger";
@@ -209,8 +209,8 @@ const PROFILE_QUERY = gql`
 `;
 
 const WATCHED_TIME_QUERY = gql`
-    query GetWatchedTime($videoId: ID) {
-        watchedVideoUser(where: { id: $videoId }) {
+    query GetWatchedTime($videoId: ID, $myId: ID) {
+        watchedVideoUser(where: { id: $videoId, myId: $myId }) {
             watched_seconds
         }
     }
@@ -225,12 +225,13 @@ class HomePage extends Component {
         if (promoVideo && promoVideo.videos && promoVideo.videos[0]) {
             // const videos = promoVideo.videos.filter(v => v.approved == true);
             const videos = promoVideo.videos;
+            const myId = this.props.id ? this.props.id : '';
             if(videos && videos.length > 0) {
                 return (
                     <Query
                         errorPolicy={"ignore"}
                         query={WATCHED_TIME_QUERY}
-                        variables={{ videoId: videos[0].id }}
+                        variables={{ videoId: videos[0].id, myId: myId }}
                         fetchPolicy={"cache-and-network"}
                     >
                         {({ loading, error, data }) => {

@@ -343,11 +343,11 @@ async function updateWatchedVideo(root, args, ctx, info) {
 
 async function watchedVideoUser(root, args, ctx, info) {
 
-    const { id } = args.where;
+    const { id, myId } = args.where;
 
     try {
         let watchedVideos = await prisma
-            .user({ id: id })
+            .user({ id: myId })
             .watched_videos();
         if(!watchedVideos) {
             return null;

@@ -3587,6 +3587,7 @@ input WatchedVideoUserWhereInput {
 
 input WatchedVideoUserWhereUniqueInput {
   id: ID
+  myId: ID
 }
 
 type SignupStatsResult {

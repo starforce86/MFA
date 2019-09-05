@@ -59,7 +59,7 @@ const VIDEO_QUERY = gql`
                 avatar
             }
         }
-        watchedVideoUser(where: { id: $id }) {
+        watchedVideoUser(where: { id: $id, myId: $myId }) {
             watched_seconds
         }
     }
