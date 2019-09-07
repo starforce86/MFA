@@ -33,7 +33,7 @@ const HOMEPAGE_QUERY = gql`
                 email
                 avatar
             }
-            approved
+            deleted
         }
         featuredVideos: category(where: {id: "${consts.FEATURED_CATEGORY_ID}"}){
             title
@@ -53,7 +53,7 @@ const HOMEPAGE_QUERY = gql`
                     email
                     avatar
                 }
-                approved
+                deleted
             }
         }
         promoVideos: category( where: {id: "${consts.PROMO_CATEGORY_ID}"}){
@@ -74,7 +74,7 @@ const HOMEPAGE_QUERY = gql`
                     email
                     avatar
                 }
-                approved
+                deleted
             }
         }
         history: user(where: { id: $myId }) {
@@ -95,7 +95,7 @@ const HOMEPAGE_QUERY = gql`
                         avatar
                         username
                     }
-                    approved
+                    deleted
               }
             }
         }
@@ -131,7 +131,7 @@ const HOMEPAGE_QUERY_WITH_SEARCH = gql`
                 email
                 avatar
             }
-            approved
+            deleted
         }
         featuredVideos: category(where: {id: "cjv2ytlrj0l940749kefajzgd"}){
             title
@@ -150,7 +150,7 @@ const HOMEPAGE_QUERY_WITH_SEARCH = gql`
                     email
                     avatar
                 }
-                approved
+                deleted
             }
         }
         promoVideos: category( where: {id: "cjv41fccs0ny607491ieb7b6q"}){
@@ -170,7 +170,7 @@ const HOMEPAGE_QUERY_WITH_SEARCH = gql`
                     email
                     avatar
                 }
-                approved
+                deleted
             }
         }
         history: user(where: { id: $myId }) {
@@ -191,7 +191,7 @@ const HOMEPAGE_QUERY_WITH_SEARCH = gql`
                         avatar
                         username
                     }
-                    approved
+                    deleted
               }
             }
         }
@@ -223,8 +223,7 @@ class HomePage extends Component {
 
     contentBlock(promoVideo) {
         if (promoVideo && promoVideo.videos && promoVideo.videos[0]) {
-            // const videos = promoVideo.videos.filter(v => v.approved == true);
-            const videos = promoVideo.videos;
+            const videos = promoVideo.videos.filter(v => v.deleted == false);
             const myId = this.props.id ? this.props.id : '';
             if(videos && videos.length > 0) {
                 return (
@@ -321,8 +320,7 @@ class HomePage extends Component {
                     if (loading) return "Loading...";
                     if (error) return "Error";
                     const videos = data ? (data.videos ? data.videos : []) : [];
-                    // const featureVideos = data ? (data.featuredVideos ? (data.featuredVideos.videos ? data.featuredVideos.videos.filter(v => v.approved == true) : []) : []) : [];
-                    const featureVideos = data ? (data.featuredVideos ? (data.featuredVideos.videos ? data.featuredVideos.videos : []) : []) : [];
+                    const featureVideos = data ? (data.featuredVideos ? (data.featuredVideos.videos ? data.featuredVideos.videos.filter(v => v.deleted == false) : []) : []) : [];
                     const featureTitle = data ? (data.featuredVideos ? data.featuredVideos.title : "Featured Videos") : "Featured Videos";
                     log.trace('videos', videos);
                     // const vf = videos ? videos.find(v => v.id === 'cjuya09zk00nk07492dmxbetb') : null

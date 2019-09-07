@@ -31,7 +31,7 @@ const GET_CHANNELS_QUERY = gql`
                     id
                     email
                 }
-                approved
+                deleted
             }
             subscribed_users_count
         }

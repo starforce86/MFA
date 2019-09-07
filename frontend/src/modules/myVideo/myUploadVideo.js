@@ -73,7 +73,6 @@ class MyUploadVideo extends Component {
 
     handleEdit = (id) => {
         const video = this.props.videos.find(d => d.id == id);
-		console.log('###############', video)
 
         this.setState({
             videoId: id,
@@ -82,11 +81,23 @@ class MyUploadVideo extends Component {
             previewImageFile: video.preview_url,
             title: video.title,
             description: video.description,
-            categories: video.categories,
-            tags: video.tags,
+            categories: video.categories ? video.categories : [],
+            tags: video.tags ? video.tags : [],
         }, () => {
             scroll.scrollToTop();
         });
+    }
+
+    handleDelete = async (id) => {
+        const result = await this.props.deleteVideo(id);
+        if (!result.error) {
+            location.reload();
+        } else {
+            notification['error']({
+                message: 'Error!',
+                description: 'Failed to delete!',
+            });
+        }
     }
 
     handleChange(field, event) {
@@ -228,6 +239,7 @@ class MyUploadVideo extends Component {
     }
 
     render() {
+
         if (this.props.user.role != "USER_PUBLISHER" && this.props.user.role != "ADMIN") {
             return null;
         }
@@ -576,7 +588,8 @@ class MyUploadVideo extends Component {
                                                 {this.props.videos.map(v => <Video
                                                     video={v}
                                                     key={v.id}
-                                                    editVideo={this.handleEdit}
+                                                    editVideo={(id) => { this.handleEdit(id) }}
+                                                    deleteVideo={(id) => { this.handleDelete(id) }}
                                                 />)}
                                             </div> :
                                             <div className="row">

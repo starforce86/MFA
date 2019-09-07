@@ -1,8 +1,11 @@
 import React, {Component} from "react";
 import {withUser} from "../../util/auth";
 import Link from "next/link";
+import {withRouter} from "next/router"
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/DeleteForever';
+import { Modal } from 'antd';
 import logger from "../../util/logger";
 
 const log = logger('VideoComponent');
@@ -13,6 +16,21 @@ class Video extends Component {
 		const { video: {id}, editVideo } = this.props;
 		editVideo(id);
 	};
+
+	handleDelete = () => {
+		Modal.confirm({
+			title: `Are you sure delete?`,
+			okText: 'Yes',
+			okType: 'danger',
+			cancelText: 'No',
+			onOk: () => this.deleteVideo(),
+		});
+	};
+
+	deleteVideo = () => {
+		const { video: {id}, deleteVideo } = this.props;
+		deleteVideo(id);
+	}
 
 	render() {
 		const {
@@ -99,11 +117,14 @@ class Video extends Component {
 									<i className="fas fa-calendar-alt" /> {video.publish_date}
 									</div>
 								</div>
-								{this.props.user && this.props.user.role == "ADMIN" && (
+								{this.props.router.pathname === "/myVideo" && this.props.user && (this.props.user.role == "ADMIN" || this.props.user.role == "USER_PUBLISHER") && (
 									<React.Fragment>
 										<div className="news-card-action">
 											<IconButton onClick={this.handleEdit}>
 												<EditIcon style={{ color: '#bc1e3e' }} />
+											</IconButton>
+											<IconButton onClick={this.handleDelete}>
+												<DeleteIcon style={{ color: '#bc1e3e' }} />
 											</IconButton>
 										</div>
 									</React.Fragment>
@@ -117,4 +138,4 @@ class Video extends Component {
 }
 
 Video.displayName = "Video";
-export default withUser(Video);
+export default withRouter(withUser(Video));

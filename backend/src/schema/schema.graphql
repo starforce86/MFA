@@ -2619,7 +2619,7 @@ type Video {
     like_users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
     watched_users(where: WatchedVideoUserWhereInput, orderBy: WatchedVideoUserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [WatchedVideoUser!]
     tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
-    approved: Boolean!
+    deleted: Boolean!
 }
 
 type VideoConnection {
@@ -2642,7 +2642,7 @@ input VideoCreateInput {
     like_users: UserCreateManyWithoutLiked_videosInput
     watched_users: WatchedVideoUserCreateManyWithoutVideoInput
     tags: TagCreateManyWithoutVideosInput
-    approved: Boolean
+    deleted: Boolean
 }
 
 input VideoCreateManyWithoutAuthorInput {
@@ -2688,7 +2688,7 @@ input VideoCreateWithoutAuthorInput {
     like_users: UserCreateManyWithoutLiked_videosInput
     watched_users: WatchedVideoUserCreateManyWithoutVideoInput
     tags: TagCreateManyWithoutVideosInput
-    approved: Boolean
+    deleted: Boolean
 }
 
 input VideoCreateWithoutCategoriesInput {
@@ -2704,7 +2704,7 @@ input VideoCreateWithoutCategoriesInput {
     like_users: UserCreateManyWithoutLiked_videosInput
     watched_users: WatchedVideoUserCreateManyWithoutVideoInput
     tags: TagCreateManyWithoutVideosInput
-    approved: Boolean
+    deleted: Boolean
 }
 
 input VideoCreateWithoutLike_usersInput {
@@ -2720,7 +2720,7 @@ input VideoCreateWithoutLike_usersInput {
     categories: CategoryCreateManyWithoutVideosInput
     watched_users: WatchedVideoUserCreateManyWithoutVideoInput
     tags: TagCreateManyWithoutVideosInput
-    approved: Boolean
+    deleted: Boolean
 }
 
 input VideoCreateWithoutTagsInput {
@@ -2736,7 +2736,7 @@ input VideoCreateWithoutTagsInput {
     categories: CategoryCreateManyWithoutVideosInput
     like_users: UserCreateManyWithoutLiked_videosInput
     watched_users: WatchedVideoUserCreateManyWithoutVideoInput
-    approved: Boolean
+    deleted: Boolean
 }
 
 input VideoCreateWithoutWatched_usersInput {
@@ -2752,7 +2752,7 @@ input VideoCreateWithoutWatched_usersInput {
     categories: CategoryCreateManyWithoutVideosInput
     like_users: UserCreateManyWithoutLiked_videosInput
     tags: TagCreateManyWithoutVideosInput
-    approved: Boolean
+    deleted: Boolean
 }
 
 type VideoEdge {
@@ -2783,8 +2783,8 @@ enum VideoOrderByInput {
     preview_video_url_DESC
     preview_video_duration_ASC
     preview_video_duration_DESC
-    approved_ASC
-    approved_DESC
+    deleted_ASC
+    deleted_DESC
 }
 
 type VideoPreviousValues {
@@ -2799,7 +2799,7 @@ type VideoPreviousValues {
     preview_url: String
     preview_video_url: String
     preview_video_duration: String
-    approved: Boolean!
+    deleted: Boolean!
 }
 
 input VideoScalarWhereInput {
@@ -2933,8 +2933,8 @@ input VideoScalarWhereInput {
     preview_video_duration_not_starts_with: String
     preview_video_duration_ends_with: String
     preview_video_duration_not_ends_with: String
-    approved: Boolean
-    approved_not: Boolean
+    deleted: Boolean
+    deleted_not: Boolean
     AND: [VideoScalarWhereInput!]
     OR: [VideoScalarWhereInput!]
     NOT: [VideoScalarWhereInput!]
@@ -2972,7 +2972,7 @@ input VideoUpdateDataInput {
     like_users: UserUpdateManyWithoutLiked_videosInput
     watched_users: WatchedVideoUserUpdateManyWithoutVideoInput
     tags: TagUpdateManyWithoutVideosInput
-    approved: Boolean
+    deleted: Boolean
 }
 
 input VideoUpdateInput {
@@ -2989,7 +2989,7 @@ input VideoUpdateInput {
     like_users: UserUpdateManyWithoutLiked_videosInput
     watched_users: WatchedVideoUserUpdateManyWithoutVideoInput
     tags: TagUpdateManyWithoutVideosInput
-    approved: Boolean
+    deleted: Boolean
 }
 
 input VideoUpdateManyDataInput {
@@ -3001,7 +3001,7 @@ input VideoUpdateManyDataInput {
     preview_url: String
     preview_video_url: String
     preview_video_duration: String
-    approved: Boolean
+    deleted: Boolean
 }
 
 input VideoUpdateManyMutationInput {
@@ -3013,7 +3013,7 @@ input VideoUpdateManyMutationInput {
     preview_url: String
     preview_video_url: String
     preview_video_duration: String
-    approved: Boolean
+    deleted: Boolean
 }
 
 input VideoUpdateManyWithoutAuthorInput {
@@ -3098,7 +3098,7 @@ input VideoUpdateWithoutAuthorDataInput {
     like_users: UserUpdateManyWithoutLiked_videosInput
     watched_users: WatchedVideoUserUpdateManyWithoutVideoInput
     tags: TagUpdateManyWithoutVideosInput
-    approved: Boolean
+    deleted: Boolean
 }
 
 input VideoUpdateWithoutCategoriesDataInput {
@@ -3114,7 +3114,7 @@ input VideoUpdateWithoutCategoriesDataInput {
     like_users: UserUpdateManyWithoutLiked_videosInput
     watched_users: WatchedVideoUserUpdateManyWithoutVideoInput
     tags: TagUpdateManyWithoutVideosInput
-    approved: Boolean
+    deleted: Boolean
 }
 
 input VideoUpdateWithoutLike_usersDataInput {
@@ -3130,7 +3130,7 @@ input VideoUpdateWithoutLike_usersDataInput {
     categories: CategoryUpdateManyWithoutVideosInput
     watched_users: WatchedVideoUserUpdateManyWithoutVideoInput
     tags: TagUpdateManyWithoutVideosInput
-    approved: Boolean
+    deleted: Boolean
 }
 
 input VideoUpdateWithoutTagsDataInput {
@@ -3146,7 +3146,7 @@ input VideoUpdateWithoutTagsDataInput {
     categories: CategoryUpdateManyWithoutVideosInput
     like_users: UserUpdateManyWithoutLiked_videosInput
     watched_users: WatchedVideoUserUpdateManyWithoutVideoInput
-    approved: Boolean
+    deleted: Boolean
 }
 
 input VideoUpdateWithoutWatched_usersDataInput {
@@ -3162,7 +3162,7 @@ input VideoUpdateWithoutWatched_usersDataInput {
     categories: CategoryUpdateManyWithoutVideosInput
     like_users: UserUpdateManyWithoutLiked_videosInput
     tags: TagUpdateManyWithoutVideosInput
-    approved: Boolean
+    deleted: Boolean
 }
 
 input VideoUpdateWithWhereUniqueWithoutAuthorInput {
@@ -3363,8 +3363,8 @@ input VideoWhereInput {
     tags_every: TagWhereInput
     tags_some: TagWhereInput
     tags_none: TagWhereInput
-    approved: Boolean
-    approved_not: Boolean
+    deleted: Boolean
+    deleted_not: Boolean
     AND: [VideoWhereInput!]
     OR: [VideoWhereInput!]
     NOT: [VideoWhereInput!]

@@ -85,7 +85,7 @@ type Video {
 
     tags: [Tag!]! @relation(name: "VideosTagsRel")
 
-    approved: Boolean! @default(value: "false")
+    deleted: Boolean! @default(value: "false")
 }
 
 type WatchedVideoUser {

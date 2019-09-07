@@ -31,6 +31,7 @@ const GET_MY_VIDEOS_QUERY = gql`
                     id
                     email
                 }
+                deleted
             }
             subscribed_users_count
         }
@@ -61,6 +62,7 @@ const GET_MY_VIDEOS_QUERY = gql`
                 id
                 text
             }
+            deleted
         }
     }
 `;
@@ -113,6 +115,19 @@ const UPDATE_VIDEO = gql`
                 tags: {
                     connect: $tags
                 }
+            }
+        ) {
+            id
+        }
+    }
+`;
+
+const DELETE_VIDEO = gql`
+    mutation DeleteVideo($id: ID) {
+        updateVideo(
+            where: { id: $id }
+            data: {
+                deleted: true
             }
         ) {
             id
@@ -182,6 +197,15 @@ class MyVideoPageWithoutMutations extends Component {
         return {error: false};
     };
 
+    handleDeleteVideo = async (id) => {
+        const result = await this.props.deleteVideo({
+            variables: {
+                id: id
+            }
+        });
+        return {error: false};
+    };
+
     render() {
         const id = this.props.id;
         return <Query errorPolicy={"ignore"}
@@ -200,6 +224,7 @@ class MyVideoPageWithoutMutations extends Component {
                     } else if (data.user && data.user.my_videos) {
                         videos = data.user.my_videos;
                     }
+                    videos = videos.filter(v => v.deleted == false)
 
                     return <MyUploadVideo
                         {...this.props}
@@ -215,6 +240,7 @@ class MyVideoPageWithoutMutations extends Component {
                                 tags
                             )
                         }
+                        deleteVideo={async (id) => await this.handleDeleteVideo(id)}
                         user={data.user}
                         categories={data.categories}
                         tags={data.tags}
@@ -266,6 +292,29 @@ const MyVideoPage = compose(
             onError: async errors => {
                 let errorString = "";
 
+              
+                errors.graphQLErrors.map(item => errorString = errorString + JSON.stringify(item.message) + " ");
+
+                //TODO return error to component
+                log.error(JSON.stringify(errors.graphQLErrors));
+                alert(errorString);
+            }
+        }
+    }),
+
+    graphql(DELETE_VIDEO, {
+        name: "deleteVideo",
+        options: {
+            update: async (proxy, {data}) => {
+            },
+            onCompleted: async result => {
+                if (result) {
+                    // log.trace(result);
+                    //TODO await login({user,token}) now token is null
+                }
+            },
+            onError: async errors => {
+                let errorString = "";
               
                 errors.graphQLErrors.map(item => errorString = errorString + JSON.stringify(item.message) + " ");
 
