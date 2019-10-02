@@ -191,7 +191,8 @@ const config = {
         expiresInMs: 1000 * 60 * 60, //1h
     },
     uploads: {
-        max_user_avatar_size_in_bytes: 2500 * 1024 // 2.5MB
+        max_user_avatar_size_in_bytes: 2500 * 1024, // 2.5MB
+        max_video_size_in_bytes: 5 * 1024 * 1024 * 1024 // 5GB
     },
     maintenance_mode: {
         maintenance_mode_enabled: false,

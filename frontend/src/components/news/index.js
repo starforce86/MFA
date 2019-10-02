@@ -58,13 +58,12 @@ class News extends Component {
 
     handleEditPost = (id) => {
         const post = this.props.posts.find(d => d.id == id);
-        console.log('############', post)
         this.setState({
             postId: id,
             previewImageFile: post.mainImageUrl,
             title: post.title,
             description: post.text
-        }, () => {console.log('##############', this.state)});
+        });
     }
 
     handleDeletePost = async (id) => {
