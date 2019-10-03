@@ -9,6 +9,18 @@ var models = [
     embedded: false
   },
   {
+    name: "PayoutPlan",
+    embedded: false
+  },
+  {
+    name: "PayoutTransaction",
+    embedded: false
+  },
+  {
+    name: "Settings",
+    embedded: false
+  },
+  {
     name: "ActivationCode",
     embedded: false
   },
@@ -25,6 +37,10 @@ var models = [
     embedded: false
   },
   {
+    name: "WatchedVideoUser",
+    embedded: false
+  },
+  {
     name: "Tag",
     embedded: false
   },
@@ -34,6 +50,22 @@ var models = [
   },
   {
     name: "Post",
+    embedded: false
+  },
+  {
+    name: "Curriculum",
+    embedded: false
+  },
+  {
+    name: "PlayHistory",
+    embedded: false
+  },
+  {
+    name: "ChargeHistory",
+    embedded: false
+  },
+  {
+    name: "SubscriptionHistory",
     embedded: false
   }
 ];

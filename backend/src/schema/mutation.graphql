@@ -1,5 +1,5 @@
 type Mutation {
-    sign_up(email: String!, firstname: String, lastname: String, phone: String, password: String, activation_code: String, step: SignUpStep!, role: UserRole): UserAuthResponse!
+    sign_up(email: String!, firstname: String, lastname: String, phone: String, password: String, activation_code: String, promo_code: String, step: SignUpStep!, role: UserRole): UserAuthResponse!
     sign_in(email: String!, password: String!): UserAuthResponse!
     change_password(old_password: String!, new_password: String!): UserAuthResponse!
     restore_password(email: String!, restore_code: String, new_password: String, step: RestorePasswordStep!): UserAuthResponse!
@@ -34,6 +34,18 @@ type Mutation {
     upsertCurriculum(where: CurriculumWhereUniqueInput!, create: CurriculumCreateInput!, update: CurriculumUpdateInput!): Curriculum!
     deleteCurriculum(where: CurriculumWhereUniqueInput!): Curriculum
     deleteManyCurricula(where: CurriculumWhereInput): BatchPayload!
+    createPayoutPlan(data: PayoutPlanCreateInput!): PayoutPlan!
+    updatePayoutPlan(data: PayoutPlanUpdateInput!, where: PayoutPlanWhereUniqueInput!): PayoutPlan
+    updateManyPayoutPlans(data: PayoutPlanUpdateManyMutationInput!, where: PayoutPlanWhereInput): BatchPayload!
+    upsertPayoutPlan(where: PayoutPlanWhereUniqueInput!, create: PayoutPlanCreateInput!, update: PayoutPlanUpdateInput!): PayoutPlan!
+    deletePayoutPlan(where: PayoutPlanWhereUniqueInput!): PayoutPlan
+    deleteManyPayoutPlans(where: PayoutPlanWhereInput): BatchPayload!
+    createPayoutTransaction(data: PayoutTransactionCreateInput!): PayoutTransaction!
+    updatePayoutTransaction(data: PayoutTransactionUpdateInput!, where: PayoutTransactionWhereUniqueInput!): PayoutTransaction
+    updateManyPayoutTransactions(data: PayoutTransactionUpdateManyMutationInput!, where: PayoutTransactionWhereInput): BatchPayload!
+    upsertPayoutTransaction(where: PayoutTransactionWhereUniqueInput!, create: PayoutTransactionCreateInput!, update: PayoutTransactionUpdateInput!): PayoutTransaction!
+    deletePayoutTransaction(where: PayoutTransactionWhereUniqueInput!): PayoutTransaction
+    deleteManyPayoutTransactions(where: PayoutTransactionWhereInput): BatchPayload!
     createPlayHistory(data: PlayHistoryCreateInput!): PlayHistory!
     updatePlayHistory(data: PlayHistoryUpdateInput!, where: PlayHistoryWhereUniqueInput!): PlayHistory
     updateManyPlayHistories(data: PlayHistoryUpdateManyMutationInput!, where: PlayHistoryWhereInput): BatchPayload!
@@ -52,6 +64,12 @@ type Mutation {
     upsertRestoreCode(where: RestoreCodeWhereUniqueInput!, create: RestoreCodeCreateInput!, update: RestoreCodeUpdateInput!): RestoreCode!
     deleteRestoreCode(where: RestoreCodeWhereUniqueInput!): RestoreCode
     deleteManyRestoreCodes(where: RestoreCodeWhereInput): BatchPayload!
+    createSettings(data: SettingsCreateInput!): Settings!
+    updateSettings(data: SettingsUpdateInput!, where: SettingsWhereUniqueInput!): Settings
+    updateManySettingses(data: SettingsUpdateManyMutationInput!, where: SettingsWhereInput): BatchPayload!
+    upsertSettings(where: SettingsWhereUniqueInput!, create: SettingsCreateInput!, update: SettingsUpdateInput!): Settings!
+    deleteSettings(where: SettingsWhereUniqueInput!): Settings
+    deleteManySettingses(where: SettingsWhereInput): BatchPayload!
     createSubscriptionHistory(data: SubscriptionHistoryCreateInput!): SubscriptionHistory!
     updateSubscriptionHistory(data: SubscriptionHistoryUpdateInput!, where: SubscriptionHistoryWhereUniqueInput!): SubscriptionHistory
     updateManySubscriptionHistories(data: SubscriptionHistoryUpdateManyMutationInput!, where: SubscriptionHistoryWhereInput): BatchPayload!

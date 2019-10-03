@@ -18,6 +18,15 @@ type User {
     background_image: String
     about_text: String
 
+    promo_code: String
+    payout_amount: Int
+    payout_months_total: Int
+    payout_months_left: Int
+    payout_enabled: Boolean
+
+    artist: User @relation(name: "UserArtistRel")
+    users: [User] @relation(name: "UserArtistRel")
+
     my_videos: [Video!]! @relation(name: "VideoAuthorRel")
 
     liked_videos: [Video!]! @relation(name: "VideoLikeUsersRel")
@@ -31,6 +40,44 @@ type User {
     stripe_subsciption_json: Json
 
     last_login_date: DateTime
+}
+
+type PayoutPlan {
+    id: ID! @unique
+    createdAt: DateTime!
+    updatedAt: DateTime!
+
+    artist_id: Int!
+    user_id: Int!
+    year: Int!
+    month: Int!
+    amount: Int!
+    ignore_statis: Boolean! @default(value: "false")
+    paid_status: Boolean! @default(value: "false")
+    paid_date: DateTime
+}
+
+type PayoutTransaction {
+    id: ID! @unique
+    createdAt: DateTime!
+    updatedAt: DateTime!
+
+    artist_id: Int!
+    year: Int!
+    month: Int!
+    amount: Int!
+    paid_status: Boolean! @default(value: "false")
+    paid_date: DateTime
+}
+
+type Settings {
+    id: ID! @unique
+    createdAt: DateTime!
+    updatedAt: DateTime!
+
+    name: String!
+    int_val: Int
+    str_val: String
 }
 
 type ActivationCode {

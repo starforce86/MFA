@@ -10,8 +10,8 @@ const job_scheduler = require('../helper/job_scheduler');
 const config = require('../config/config');
 const stripe = require("stripe")(config.stripe.sk_token);
 
-async function signUp(root, {email, firstname, lastname, phone, password, step, activation_code, role}, ctx, info) {
-    return userCore.signUp(email, firstname, lastname, phone, password, step, activation_code, role);
+async function signUp(root, {email, firstname, lastname, phone, password, promo_code, step, activation_code, role}, ctx, info) {
+    return userCore.signUp(email, firstname, lastname, phone, password, promo_code, step, activation_code, role);
 }
 
 async function signIn(root, {email, password}, ctx, info) {

@@ -16,11 +16,21 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
 export interface Exists {
   activationCode: (where?: ActivationCodeWhereInput) => Promise<boolean>;
   category: (where?: CategoryWhereInput) => Promise<boolean>;
+  chargeHistory: (where?: ChargeHistoryWhereInput) => Promise<boolean>;
+  curriculum: (where?: CurriculumWhereInput) => Promise<boolean>;
+  payoutPlan: (where?: PayoutPlanWhereInput) => Promise<boolean>;
+  payoutTransaction: (where?: PayoutTransactionWhereInput) => Promise<boolean>;
+  playHistory: (where?: PlayHistoryWhereInput) => Promise<boolean>;
   post: (where?: PostWhereInput) => Promise<boolean>;
   restoreCode: (where?: RestoreCodeWhereInput) => Promise<boolean>;
+  settings: (where?: SettingsWhereInput) => Promise<boolean>;
+  subscriptionHistory: (
+    where?: SubscriptionHistoryWhereInput
+  ) => Promise<boolean>;
   tag: (where?: TagWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
   video: (where?: VideoWhereInput) => Promise<boolean>;
+  watchedVideoUser: (where?: WatchedVideoUserWhereInput) => Promise<boolean>;
 }
 
 export interface Node {}
@@ -90,6 +100,123 @@ export interface Prisma {
       last?: Int;
     }
   ) => CategoryConnectionPromise;
+  chargeHistory: (where: ChargeHistoryWhereUniqueInput) => ChargeHistoryPromise;
+  chargeHistories: (
+    args?: {
+      where?: ChargeHistoryWhereInput;
+      orderBy?: ChargeHistoryOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => FragmentableArray<ChargeHistory>;
+  chargeHistoriesConnection: (
+    args?: {
+      where?: ChargeHistoryWhereInput;
+      orderBy?: ChargeHistoryOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => ChargeHistoryConnectionPromise;
+  curriculum: (where: CurriculumWhereUniqueInput) => CurriculumPromise;
+  curricula: (
+    args?: {
+      where?: CurriculumWhereInput;
+      orderBy?: CurriculumOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => FragmentableArray<Curriculum>;
+  curriculaConnection: (
+    args?: {
+      where?: CurriculumWhereInput;
+      orderBy?: CurriculumOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => CurriculumConnectionPromise;
+  payoutPlan: (where: PayoutPlanWhereUniqueInput) => PayoutPlanPromise;
+  payoutPlans: (
+    args?: {
+      where?: PayoutPlanWhereInput;
+      orderBy?: PayoutPlanOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => FragmentableArray<PayoutPlan>;
+  payoutPlansConnection: (
+    args?: {
+      where?: PayoutPlanWhereInput;
+      orderBy?: PayoutPlanOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => PayoutPlanConnectionPromise;
+  payoutTransaction: (
+    where: PayoutTransactionWhereUniqueInput
+  ) => PayoutTransactionPromise;
+  payoutTransactions: (
+    args?: {
+      where?: PayoutTransactionWhereInput;
+      orderBy?: PayoutTransactionOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => FragmentableArray<PayoutTransaction>;
+  payoutTransactionsConnection: (
+    args?: {
+      where?: PayoutTransactionWhereInput;
+      orderBy?: PayoutTransactionOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => PayoutTransactionConnectionPromise;
+  playHistory: (where: PlayHistoryWhereUniqueInput) => PlayHistoryPromise;
+  playHistories: (
+    args?: {
+      where?: PlayHistoryWhereInput;
+      orderBy?: PlayHistoryOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => FragmentableArray<PlayHistory>;
+  playHistoriesConnection: (
+    args?: {
+      where?: PlayHistoryWhereInput;
+      orderBy?: PlayHistoryOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => PlayHistoryConnectionPromise;
   post: (where: PostWhereUniqueInput) => PostPromise;
   posts: (
     args?: {
@@ -136,6 +263,54 @@ export interface Prisma {
       last?: Int;
     }
   ) => RestoreCodeConnectionPromise;
+  settings: (where: SettingsWhereUniqueInput) => SettingsPromise;
+  settingses: (
+    args?: {
+      where?: SettingsWhereInput;
+      orderBy?: SettingsOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => FragmentableArray<Settings>;
+  settingsesConnection: (
+    args?: {
+      where?: SettingsWhereInput;
+      orderBy?: SettingsOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => SettingsConnectionPromise;
+  subscriptionHistory: (
+    where: SubscriptionHistoryWhereUniqueInput
+  ) => SubscriptionHistoryPromise;
+  subscriptionHistories: (
+    args?: {
+      where?: SubscriptionHistoryWhereInput;
+      orderBy?: SubscriptionHistoryOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => FragmentableArray<SubscriptionHistory>;
+  subscriptionHistoriesConnection: (
+    args?: {
+      where?: SubscriptionHistoryWhereInput;
+      orderBy?: SubscriptionHistoryOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => SubscriptionHistoryConnectionPromise;
   tag: (where: TagWhereUniqueInput) => TagPromise;
   tags: (
     args?: {
@@ -205,6 +380,31 @@ export interface Prisma {
       last?: Int;
     }
   ) => VideoConnectionPromise;
+  watchedVideoUser: (
+    where: WatchedVideoUserWhereUniqueInput
+  ) => WatchedVideoUserPromise;
+  watchedVideoUsers: (
+    args?: {
+      where?: WatchedVideoUserWhereInput;
+      orderBy?: WatchedVideoUserOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => FragmentableArray<WatchedVideoUser>;
+  watchedVideoUsersConnection: (
+    args?: {
+      where?: WatchedVideoUserWhereInput;
+      orderBy?: WatchedVideoUserOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => WatchedVideoUserConnectionPromise;
   node: (args: { id: ID_Output }) => Node;
 
   /**
@@ -255,6 +455,119 @@ export interface Prisma {
   ) => CategoryPromise;
   deleteCategory: (where: CategoryWhereUniqueInput) => CategoryPromise;
   deleteManyCategories: (where?: CategoryWhereInput) => BatchPayloadPromise;
+  createChargeHistory: (data: ChargeHistoryCreateInput) => ChargeHistoryPromise;
+  updateChargeHistory: (
+    args: {
+      data: ChargeHistoryUpdateInput;
+      where: ChargeHistoryWhereUniqueInput;
+    }
+  ) => ChargeHistoryPromise;
+  updateManyChargeHistories: (
+    args: {
+      data: ChargeHistoryUpdateManyMutationInput;
+      where?: ChargeHistoryWhereInput;
+    }
+  ) => BatchPayloadPromise;
+  upsertChargeHistory: (
+    args: {
+      where: ChargeHistoryWhereUniqueInput;
+      create: ChargeHistoryCreateInput;
+      update: ChargeHistoryUpdateInput;
+    }
+  ) => ChargeHistoryPromise;
+  deleteChargeHistory: (
+    where: ChargeHistoryWhereUniqueInput
+  ) => ChargeHistoryPromise;
+  deleteManyChargeHistories: (
+    where?: ChargeHistoryWhereInput
+  ) => BatchPayloadPromise;
+  createCurriculum: (data: CurriculumCreateInput) => CurriculumPromise;
+  updateCurriculum: (
+    args: { data: CurriculumUpdateInput; where: CurriculumWhereUniqueInput }
+  ) => CurriculumPromise;
+  updateManyCurricula: (
+    args: {
+      data: CurriculumUpdateManyMutationInput;
+      where?: CurriculumWhereInput;
+    }
+  ) => BatchPayloadPromise;
+  upsertCurriculum: (
+    args: {
+      where: CurriculumWhereUniqueInput;
+      create: CurriculumCreateInput;
+      update: CurriculumUpdateInput;
+    }
+  ) => CurriculumPromise;
+  deleteCurriculum: (where: CurriculumWhereUniqueInput) => CurriculumPromise;
+  deleteManyCurricula: (where?: CurriculumWhereInput) => BatchPayloadPromise;
+  createPayoutPlan: (data: PayoutPlanCreateInput) => PayoutPlanPromise;
+  updatePayoutPlan: (
+    args: { data: PayoutPlanUpdateInput; where: PayoutPlanWhereUniqueInput }
+  ) => PayoutPlanPromise;
+  updateManyPayoutPlans: (
+    args: {
+      data: PayoutPlanUpdateManyMutationInput;
+      where?: PayoutPlanWhereInput;
+    }
+  ) => BatchPayloadPromise;
+  upsertPayoutPlan: (
+    args: {
+      where: PayoutPlanWhereUniqueInput;
+      create: PayoutPlanCreateInput;
+      update: PayoutPlanUpdateInput;
+    }
+  ) => PayoutPlanPromise;
+  deletePayoutPlan: (where: PayoutPlanWhereUniqueInput) => PayoutPlanPromise;
+  deleteManyPayoutPlans: (where?: PayoutPlanWhereInput) => BatchPayloadPromise;
+  createPayoutTransaction: (
+    data: PayoutTransactionCreateInput
+  ) => PayoutTransactionPromise;
+  updatePayoutTransaction: (
+    args: {
+      data: PayoutTransactionUpdateInput;
+      where: PayoutTransactionWhereUniqueInput;
+    }
+  ) => PayoutTransactionPromise;
+  updateManyPayoutTransactions: (
+    args: {
+      data: PayoutTransactionUpdateManyMutationInput;
+      where?: PayoutTransactionWhereInput;
+    }
+  ) => BatchPayloadPromise;
+  upsertPayoutTransaction: (
+    args: {
+      where: PayoutTransactionWhereUniqueInput;
+      create: PayoutTransactionCreateInput;
+      update: PayoutTransactionUpdateInput;
+    }
+  ) => PayoutTransactionPromise;
+  deletePayoutTransaction: (
+    where: PayoutTransactionWhereUniqueInput
+  ) => PayoutTransactionPromise;
+  deleteManyPayoutTransactions: (
+    where?: PayoutTransactionWhereInput
+  ) => BatchPayloadPromise;
+  createPlayHistory: (data: PlayHistoryCreateInput) => PlayHistoryPromise;
+  updatePlayHistory: (
+    args: { data: PlayHistoryUpdateInput; where: PlayHistoryWhereUniqueInput }
+  ) => PlayHistoryPromise;
+  updateManyPlayHistories: (
+    args: {
+      data: PlayHistoryUpdateManyMutationInput;
+      where?: PlayHistoryWhereInput;
+    }
+  ) => BatchPayloadPromise;
+  upsertPlayHistory: (
+    args: {
+      where: PlayHistoryWhereUniqueInput;
+      create: PlayHistoryCreateInput;
+      update: PlayHistoryUpdateInput;
+    }
+  ) => PlayHistoryPromise;
+  deletePlayHistory: (where: PlayHistoryWhereUniqueInput) => PlayHistoryPromise;
+  deleteManyPlayHistories: (
+    where?: PlayHistoryWhereInput
+  ) => BatchPayloadPromise;
   createPost: (data: PostCreateInput) => PostPromise;
   updatePost: (
     args: { data: PostUpdateInput; where: PostWhereUniqueInput }
@@ -291,6 +604,50 @@ export interface Prisma {
   deleteRestoreCode: (where: RestoreCodeWhereUniqueInput) => RestoreCodePromise;
   deleteManyRestoreCodes: (
     where?: RestoreCodeWhereInput
+  ) => BatchPayloadPromise;
+  createSettings: (data: SettingsCreateInput) => SettingsPromise;
+  updateSettings: (
+    args: { data: SettingsUpdateInput; where: SettingsWhereUniqueInput }
+  ) => SettingsPromise;
+  updateManySettingses: (
+    args: { data: SettingsUpdateManyMutationInput; where?: SettingsWhereInput }
+  ) => BatchPayloadPromise;
+  upsertSettings: (
+    args: {
+      where: SettingsWhereUniqueInput;
+      create: SettingsCreateInput;
+      update: SettingsUpdateInput;
+    }
+  ) => SettingsPromise;
+  deleteSettings: (where: SettingsWhereUniqueInput) => SettingsPromise;
+  deleteManySettingses: (where?: SettingsWhereInput) => BatchPayloadPromise;
+  createSubscriptionHistory: (
+    data: SubscriptionHistoryCreateInput
+  ) => SubscriptionHistoryPromise;
+  updateSubscriptionHistory: (
+    args: {
+      data: SubscriptionHistoryUpdateInput;
+      where: SubscriptionHistoryWhereUniqueInput;
+    }
+  ) => SubscriptionHistoryPromise;
+  updateManySubscriptionHistories: (
+    args: {
+      data: SubscriptionHistoryUpdateManyMutationInput;
+      where?: SubscriptionHistoryWhereInput;
+    }
+  ) => BatchPayloadPromise;
+  upsertSubscriptionHistory: (
+    args: {
+      where: SubscriptionHistoryWhereUniqueInput;
+      create: SubscriptionHistoryCreateInput;
+      update: SubscriptionHistoryUpdateInput;
+    }
+  ) => SubscriptionHistoryPromise;
+  deleteSubscriptionHistory: (
+    where: SubscriptionHistoryWhereUniqueInput
+  ) => SubscriptionHistoryPromise;
+  deleteManySubscriptionHistories: (
+    where?: SubscriptionHistoryWhereInput
   ) => BatchPayloadPromise;
   createTag: (data: TagCreateInput) => TagPromise;
   updateTag: (
@@ -340,6 +697,34 @@ export interface Prisma {
   ) => VideoPromise;
   deleteVideo: (where: VideoWhereUniqueInput) => VideoPromise;
   deleteManyVideos: (where?: VideoWhereInput) => BatchPayloadPromise;
+  createWatchedVideoUser: (
+    data: WatchedVideoUserCreateInput
+  ) => WatchedVideoUserPromise;
+  updateWatchedVideoUser: (
+    args: {
+      data: WatchedVideoUserUpdateInput;
+      where: WatchedVideoUserWhereUniqueInput;
+    }
+  ) => WatchedVideoUserPromise;
+  updateManyWatchedVideoUsers: (
+    args: {
+      data: WatchedVideoUserUpdateManyMutationInput;
+      where?: WatchedVideoUserWhereInput;
+    }
+  ) => BatchPayloadPromise;
+  upsertWatchedVideoUser: (
+    args: {
+      where: WatchedVideoUserWhereUniqueInput;
+      create: WatchedVideoUserCreateInput;
+      update: WatchedVideoUserUpdateInput;
+    }
+  ) => WatchedVideoUserPromise;
+  deleteWatchedVideoUser: (
+    where: WatchedVideoUserWhereUniqueInput
+  ) => WatchedVideoUserPromise;
+  deleteManyWatchedVideoUsers: (
+    where?: WatchedVideoUserWhereInput
+  ) => BatchPayloadPromise;
 
   /**
    * Subscriptions
@@ -355,12 +740,33 @@ export interface Subscription {
   category: (
     where?: CategorySubscriptionWhereInput
   ) => CategorySubscriptionPayloadSubscription;
+  chargeHistory: (
+    where?: ChargeHistorySubscriptionWhereInput
+  ) => ChargeHistorySubscriptionPayloadSubscription;
+  curriculum: (
+    where?: CurriculumSubscriptionWhereInput
+  ) => CurriculumSubscriptionPayloadSubscription;
+  payoutPlan: (
+    where?: PayoutPlanSubscriptionWhereInput
+  ) => PayoutPlanSubscriptionPayloadSubscription;
+  payoutTransaction: (
+    where?: PayoutTransactionSubscriptionWhereInput
+  ) => PayoutTransactionSubscriptionPayloadSubscription;
+  playHistory: (
+    where?: PlayHistorySubscriptionWhereInput
+  ) => PlayHistorySubscriptionPayloadSubscription;
   post: (
     where?: PostSubscriptionWhereInput
   ) => PostSubscriptionPayloadSubscription;
   restoreCode: (
     where?: RestoreCodeSubscriptionWhereInput
   ) => RestoreCodeSubscriptionPayloadSubscription;
+  settings: (
+    where?: SettingsSubscriptionWhereInput
+  ) => SettingsSubscriptionPayloadSubscription;
+  subscriptionHistory: (
+    where?: SubscriptionHistorySubscriptionWhereInput
+  ) => SubscriptionHistorySubscriptionPayloadSubscription;
   tag: (
     where?: TagSubscriptionWhereInput
   ) => TagSubscriptionPayloadSubscription;
@@ -370,6 +776,9 @@ export interface Subscription {
   video: (
     where?: VideoSubscriptionWhereInput
   ) => VideoSubscriptionPayloadSubscription;
+  watchedVideoUser: (
+    where?: WatchedVideoUserSubscriptionWhereInput
+  ) => WatchedVideoUserSubscriptionPayloadSubscription;
 }
 
 export interface ClientConstructor<T> {
@@ -379,6 +788,20 @@ export interface ClientConstructor<T> {
 /**
  * Types
  */
+
+export type ActivationCodeOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC"
+  | "email_ASC"
+  | "email_DESC"
+  | "valid_until_ASC"
+  | "valid_until_DESC"
+  | "code_ASC"
+  | "code_DESC";
 
 export type UserRole = "USER_VIEWER" | "USER_PUBLISHER" | "MODERATOR" | "ADMIN";
 
@@ -404,7 +827,9 @@ export type VideoOrderByInput =
   | "preview_video_url_ASC"
   | "preview_video_url_DESC"
   | "preview_video_duration_ASC"
-  | "preview_video_duration_DESC";
+  | "preview_video_duration_DESC"
+  | "deleted_ASC"
+  | "deleted_DESC";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -435,6 +860,16 @@ export type UserOrderByInput =
   | "background_image_DESC"
   | "about_text_ASC"
   | "about_text_DESC"
+  | "promo_code_ASC"
+  | "promo_code_DESC"
+  | "payout_amount_ASC"
+  | "payout_amount_DESC"
+  | "payout_months_total_ASC"
+  | "payout_months_total_DESC"
+  | "payout_months_left_ASC"
+  | "payout_months_left_DESC"
+  | "payout_enabled_ASC"
+  | "payout_enabled_DESC"
   | "billing_subscription_active_ASC"
   | "billing_subscription_active_DESC"
   | "stripe_customer_id_ASC"
@@ -443,6 +878,16 @@ export type UserOrderByInput =
   | "stripe_subsciption_json_DESC"
   | "last_login_date_ASC"
   | "last_login_date_DESC";
+
+export type WatchedVideoUserOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "watched_seconds_ASC"
+  | "watched_seconds_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
 
 export type CategoryOrderByInput =
   | "id_ASC"
@@ -456,20 +901,6 @@ export type CategoryOrderByInput =
   | "description_ASC"
   | "description_DESC";
 
-export type ActivationCodeOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC"
-  | "updatedAt_ASC"
-  | "updatedAt_DESC"
-  | "email_ASC"
-  | "email_DESC"
-  | "valid_until_ASC"
-  | "valid_until_DESC"
-  | "code_ASC"
-  | "code_DESC";
-
 export type TagOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -479,6 +910,88 @@ export type TagOrderByInput =
   | "updatedAt_DESC"
   | "text_ASC"
   | "text_DESC";
+
+export type ChargeHistoryOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC"
+  | "amount_ASC"
+  | "amount_DESC"
+  | "chargeDate_ASC"
+  | "chargeDate_DESC";
+
+export type CurriculumOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC"
+  | "title_ASC"
+  | "title_DESC"
+  | "text_ASC"
+  | "text_DESC"
+  | "order_ASC"
+  | "order_DESC";
+
+export type PayoutPlanOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC"
+  | "artist_id_ASC"
+  | "artist_id_DESC"
+  | "user_id_ASC"
+  | "user_id_DESC"
+  | "year_ASC"
+  | "year_DESC"
+  | "month_ASC"
+  | "month_DESC"
+  | "amount_ASC"
+  | "amount_DESC"
+  | "ignore_statis_ASC"
+  | "ignore_statis_DESC"
+  | "paid_status_ASC"
+  | "paid_status_DESC"
+  | "paid_date_ASC"
+  | "paid_date_DESC";
+
+export type PayoutTransactionOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC"
+  | "artist_id_ASC"
+  | "artist_id_DESC"
+  | "year_ASC"
+  | "year_DESC"
+  | "month_ASC"
+  | "month_DESC"
+  | "amount_ASC"
+  | "amount_DESC"
+  | "paid_status_ASC"
+  | "paid_status_DESC"
+  | "paid_date_ASC"
+  | "paid_date_DESC";
+
+export type PlayHistoryOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC"
+  | "playSeconds_ASC"
+  | "playSeconds_DESC"
+  | "realPlaySeconds_ASC"
+  | "realPlaySeconds_DESC";
 
 export type PostOrderByInput =
   | "id_ASC"
@@ -508,104 +1021,266 @@ export type RestoreCodeOrderByInput =
   | "code_ASC"
   | "code_DESC";
 
-export type MutationType = "CREATED" | "UPDATED" | "DELETED";
+export type SettingsOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC"
+  | "name_ASC"
+  | "name_DESC"
+  | "int_val_ASC"
+  | "int_val_DESC"
+  | "str_val_ASC"
+  | "str_val_DESC";
 
-export interface CategoryUpdateManyWithoutVideosInput {
-  create?:
-    | CategoryCreateWithoutVideosInput[]
-    | CategoryCreateWithoutVideosInput;
-  delete?: CategoryWhereUniqueInput[] | CategoryWhereUniqueInput;
-  connect?: CategoryWhereUniqueInput[] | CategoryWhereUniqueInput;
-  set?: CategoryWhereUniqueInput[] | CategoryWhereUniqueInput;
-  disconnect?: CategoryWhereUniqueInput[] | CategoryWhereUniqueInput;
-  update?:
-    | CategoryUpdateWithWhereUniqueWithoutVideosInput[]
-    | CategoryUpdateWithWhereUniqueWithoutVideosInput;
-  upsert?:
-    | CategoryUpsertWithWhereUniqueWithoutVideosInput[]
-    | CategoryUpsertWithWhereUniqueWithoutVideosInput;
-  deleteMany?: CategoryScalarWhereInput[] | CategoryScalarWhereInput;
-  updateMany?:
-    | CategoryUpdateManyWithWhereNestedInput[]
-    | CategoryUpdateManyWithWhereNestedInput;
-}
+export type SubscriptionHistoryOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC"
+  | "interval_ASC"
+  | "interval_DESC"
+  | "amount_ASC"
+  | "amount_DESC"
+  | "subscriptionDate_ASC"
+  | "subscriptionDate_DESC";
+
+export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
 export type ActivationCodeWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
   email?: String;
 }>;
 
-export interface UserCreateManyWithoutLiked_videosInput {
-  create?:
-    | UserCreateWithoutLiked_videosInput[]
-    | UserCreateWithoutLiked_videosInput;
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+export interface ActivationCodeWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  updatedAt?: DateTimeInput;
+  updatedAt_not?: DateTimeInput;
+  updatedAt_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_lt?: DateTimeInput;
+  updatedAt_lte?: DateTimeInput;
+  updatedAt_gt?: DateTimeInput;
+  updatedAt_gte?: DateTimeInput;
+  email?: String;
+  email_not?: String;
+  email_in?: String[] | String;
+  email_not_in?: String[] | String;
+  email_lt?: String;
+  email_lte?: String;
+  email_gt?: String;
+  email_gte?: String;
+  email_contains?: String;
+  email_not_contains?: String;
+  email_starts_with?: String;
+  email_not_starts_with?: String;
+  email_ends_with?: String;
+  email_not_ends_with?: String;
+  valid_until?: DateTimeInput;
+  valid_until_not?: DateTimeInput;
+  valid_until_in?: DateTimeInput[] | DateTimeInput;
+  valid_until_not_in?: DateTimeInput[] | DateTimeInput;
+  valid_until_lt?: DateTimeInput;
+  valid_until_lte?: DateTimeInput;
+  valid_until_gt?: DateTimeInput;
+  valid_until_gte?: DateTimeInput;
+  code?: String;
+  code_not?: String;
+  code_in?: String[] | String;
+  code_not_in?: String[] | String;
+  code_lt?: String;
+  code_lte?: String;
+  code_gt?: String;
+  code_gte?: String;
+  code_contains?: String;
+  code_not_contains?: String;
+  code_starts_with?: String;
+  code_not_starts_with?: String;
+  code_ends_with?: String;
+  code_not_ends_with?: String;
+  AND?: ActivationCodeWhereInput[] | ActivationCodeWhereInput;
+  OR?: ActivationCodeWhereInput[] | ActivationCodeWhereInput;
+  NOT?: ActivationCodeWhereInput[] | ActivationCodeWhereInput;
 }
 
-export interface VideoUpsertWithWhereUniqueWithoutLike_usersInput {
-  where: VideoWhereUniqueInput;
-  update: VideoUpdateWithoutLike_usersDataInput;
-  create: VideoCreateWithoutLike_usersInput;
-}
+export type CategoryWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
 
-export interface UserCreateWithoutLiked_videosInput {
-  firstname?: String;
-  lastname?: String;
-  username?: String;
-  email: String;
-  phone?: String;
-  role?: UserRole;
-  password_hash: String;
-  password_salt: String;
-  avatar?: String;
-  background_image?: String;
-  about_text?: String;
-  my_videos?: VideoCreateManyWithoutAuthorInput;
-  watched_videos?: VideoCreateManyWithoutWatched_usersInput;
-  my_subscription_users?: UserCreateManyWithoutSubscribed_usersInput;
-  subscribed_users?: UserCreateManyWithoutMy_subscription_usersInput;
-  billing_subscription_active?: Boolean;
-  stripe_customer_id?: String;
-  stripe_subsciption_json?: Json;
-  last_login_date?: DateTimeInput;
-}
-
-export interface CategoryUpdateManyWithWhereNestedInput {
-  where: CategoryScalarWhereInput;
-  data: CategoryUpdateManyDataInput;
-}
-
-export interface VideoCreateManyWithoutWatched_usersInput {
-  create?:
-    | VideoCreateWithoutWatched_usersInput[]
-    | VideoCreateWithoutWatched_usersInput;
-  connect?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
-}
-
-export interface VideoSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: VideoWhereInput;
-  AND?: VideoSubscriptionWhereInput[] | VideoSubscriptionWhereInput;
-  OR?: VideoSubscriptionWhereInput[] | VideoSubscriptionWhereInput;
-  NOT?: VideoSubscriptionWhereInput[] | VideoSubscriptionWhereInput;
-}
-
-export interface VideoCreateWithoutWatched_usersInput {
+export interface VideoWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  updatedAt?: DateTimeInput;
+  updatedAt_not?: DateTimeInput;
+  updatedAt_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_lt?: DateTimeInput;
+  updatedAt_lte?: DateTimeInput;
+  updatedAt_gt?: DateTimeInput;
+  updatedAt_gte?: DateTimeInput;
   title?: String;
+  title_not?: String;
+  title_in?: String[] | String;
+  title_not_in?: String[] | String;
+  title_lt?: String;
+  title_lte?: String;
+  title_gt?: String;
+  title_gte?: String;
+  title_contains?: String;
+  title_not_contains?: String;
+  title_starts_with?: String;
+  title_not_starts_with?: String;
+  title_ends_with?: String;
+  title_not_ends_with?: String;
   description?: String;
+  description_not?: String;
+  description_in?: String[] | String;
+  description_not_in?: String[] | String;
+  description_lt?: String;
+  description_lte?: String;
+  description_gt?: String;
+  description_gte?: String;
+  description_contains?: String;
+  description_not_contains?: String;
+  description_starts_with?: String;
+  description_not_starts_with?: String;
+  description_ends_with?: String;
+  description_not_ends_with?: String;
   publish_date?: DateTimeInput;
+  publish_date_not?: DateTimeInput;
+  publish_date_in?: DateTimeInput[] | DateTimeInput;
+  publish_date_not_in?: DateTimeInput[] | DateTimeInput;
+  publish_date_lt?: DateTimeInput;
+  publish_date_lte?: DateTimeInput;
+  publish_date_gt?: DateTimeInput;
+  publish_date_gte?: DateTimeInput;
   file_url?: String;
+  file_url_not?: String;
+  file_url_in?: String[] | String;
+  file_url_not_in?: String[] | String;
+  file_url_lt?: String;
+  file_url_lte?: String;
+  file_url_gt?: String;
+  file_url_gte?: String;
+  file_url_contains?: String;
+  file_url_not_contains?: String;
+  file_url_starts_with?: String;
+  file_url_not_starts_with?: String;
+  file_url_ends_with?: String;
+  file_url_not_ends_with?: String;
   video_duration?: Int;
+  video_duration_not?: Int;
+  video_duration_in?: Int[] | Int;
+  video_duration_not_in?: Int[] | Int;
+  video_duration_lt?: Int;
+  video_duration_lte?: Int;
+  video_duration_gt?: Int;
+  video_duration_gte?: Int;
   preview_url?: String;
+  preview_url_not?: String;
+  preview_url_in?: String[] | String;
+  preview_url_not_in?: String[] | String;
+  preview_url_lt?: String;
+  preview_url_lte?: String;
+  preview_url_gt?: String;
+  preview_url_gte?: String;
+  preview_url_contains?: String;
+  preview_url_not_contains?: String;
+  preview_url_starts_with?: String;
+  preview_url_not_starts_with?: String;
+  preview_url_ends_with?: String;
+  preview_url_not_ends_with?: String;
   preview_video_url?: String;
+  preview_video_url_not?: String;
+  preview_video_url_in?: String[] | String;
+  preview_video_url_not_in?: String[] | String;
+  preview_video_url_lt?: String;
+  preview_video_url_lte?: String;
+  preview_video_url_gt?: String;
+  preview_video_url_gte?: String;
+  preview_video_url_contains?: String;
+  preview_video_url_not_contains?: String;
+  preview_video_url_starts_with?: String;
+  preview_video_url_not_starts_with?: String;
+  preview_video_url_ends_with?: String;
+  preview_video_url_not_ends_with?: String;
   preview_video_duration?: String;
-  author: UserCreateOneWithoutMy_videosInput;
-  categories?: CategoryCreateManyWithoutVideosInput;
-  like_users?: UserCreateManyWithoutLiked_videosInput;
-  tags?: TagCreateManyWithoutVideosInput;
+  preview_video_duration_not?: String;
+  preview_video_duration_in?: String[] | String;
+  preview_video_duration_not_in?: String[] | String;
+  preview_video_duration_lt?: String;
+  preview_video_duration_lte?: String;
+  preview_video_duration_gt?: String;
+  preview_video_duration_gte?: String;
+  preview_video_duration_contains?: String;
+  preview_video_duration_not_contains?: String;
+  preview_video_duration_starts_with?: String;
+  preview_video_duration_not_starts_with?: String;
+  preview_video_duration_ends_with?: String;
+  preview_video_duration_not_ends_with?: String;
+  author?: UserWhereInput;
+  categories_every?: CategoryWhereInput;
+  categories_some?: CategoryWhereInput;
+  categories_none?: CategoryWhereInput;
+  like_users_every?: UserWhereInput;
+  like_users_some?: UserWhereInput;
+  like_users_none?: UserWhereInput;
+  watched_users_every?: WatchedVideoUserWhereInput;
+  watched_users_some?: WatchedVideoUserWhereInput;
+  watched_users_none?: WatchedVideoUserWhereInput;
+  tags_every?: TagWhereInput;
+  tags_some?: TagWhereInput;
+  tags_none?: TagWhereInput;
+  deleted?: Boolean;
+  deleted_not?: Boolean;
+  AND?: VideoWhereInput[] | VideoWhereInput;
+  OR?: VideoWhereInput[] | VideoWhereInput;
+  NOT?: VideoWhereInput[] | VideoWhereInput;
 }
 
 export interface UserWhereInput {
@@ -783,15 +1458,59 @@ export interface UserWhereInput {
   about_text_not_starts_with?: String;
   about_text_ends_with?: String;
   about_text_not_ends_with?: String;
+  promo_code?: String;
+  promo_code_not?: String;
+  promo_code_in?: String[] | String;
+  promo_code_not_in?: String[] | String;
+  promo_code_lt?: String;
+  promo_code_lte?: String;
+  promo_code_gt?: String;
+  promo_code_gte?: String;
+  promo_code_contains?: String;
+  promo_code_not_contains?: String;
+  promo_code_starts_with?: String;
+  promo_code_not_starts_with?: String;
+  promo_code_ends_with?: String;
+  promo_code_not_ends_with?: String;
+  payout_amount?: Int;
+  payout_amount_not?: Int;
+  payout_amount_in?: Int[] | Int;
+  payout_amount_not_in?: Int[] | Int;
+  payout_amount_lt?: Int;
+  payout_amount_lte?: Int;
+  payout_amount_gt?: Int;
+  payout_amount_gte?: Int;
+  payout_months_total?: Int;
+  payout_months_total_not?: Int;
+  payout_months_total_in?: Int[] | Int;
+  payout_months_total_not_in?: Int[] | Int;
+  payout_months_total_lt?: Int;
+  payout_months_total_lte?: Int;
+  payout_months_total_gt?: Int;
+  payout_months_total_gte?: Int;
+  payout_months_left?: Int;
+  payout_months_left_not?: Int;
+  payout_months_left_in?: Int[] | Int;
+  payout_months_left_not_in?: Int[] | Int;
+  payout_months_left_lt?: Int;
+  payout_months_left_lte?: Int;
+  payout_months_left_gt?: Int;
+  payout_months_left_gte?: Int;
+  payout_enabled?: Boolean;
+  payout_enabled_not?: Boolean;
+  artist?: UserWhereInput;
+  users_every?: UserWhereInput;
+  users_some?: UserWhereInput;
+  users_none?: UserWhereInput;
   my_videos_every?: VideoWhereInput;
   my_videos_some?: VideoWhereInput;
   my_videos_none?: VideoWhereInput;
   liked_videos_every?: VideoWhereInput;
   liked_videos_some?: VideoWhereInput;
   liked_videos_none?: VideoWhereInput;
-  watched_videos_every?: VideoWhereInput;
-  watched_videos_some?: VideoWhereInput;
-  watched_videos_none?: VideoWhereInput;
+  watched_videos_every?: WatchedVideoUserWhereInput;
+  watched_videos_some?: WatchedVideoUserWhereInput;
+  watched_videos_none?: WatchedVideoUserWhereInput;
   my_subscription_users_every?: UserWhereInput;
   my_subscription_users_some?: UserWhereInput;
   my_subscription_users_none?: UserWhereInput;
@@ -827,9 +1546,34 @@ export interface UserWhereInput {
   NOT?: UserWhereInput[] | UserWhereInput;
 }
 
-export interface TagCreateManyWithoutVideosInput {
-  create?: TagCreateWithoutVideosInput[] | TagCreateWithoutVideosInput;
-  connect?: TagWhereUniqueInput[] | TagWhereUniqueInput;
+export interface WatchedVideoUserWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  video?: VideoWhereInput;
+  user?: UserWhereInput;
+  watched_seconds?: Int;
+  watched_seconds_not?: Int;
+  watched_seconds_in?: Int[] | Int;
+  watched_seconds_not_in?: Int[] | Int;
+  watched_seconds_lt?: Int;
+  watched_seconds_lte?: Int;
+  watched_seconds_gt?: Int;
+  watched_seconds_gte?: Int;
+  AND?: WatchedVideoUserWhereInput[] | WatchedVideoUserWhereInput;
+  OR?: WatchedVideoUserWhereInput[] | WatchedVideoUserWhereInput;
+  NOT?: WatchedVideoUserWhereInput[] | WatchedVideoUserWhereInput;
 }
 
 export interface CategoryWhereInput {
@@ -899,86 +1643,7 @@ export interface CategoryWhereInput {
   NOT?: CategoryWhereInput[] | CategoryWhereInput;
 }
 
-export interface TagCreateWithoutVideosInput {
-  text: String;
-}
-
-export interface TagSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: TagWhereInput;
-  AND?: TagSubscriptionWhereInput[] | TagSubscriptionWhereInput;
-  OR?: TagSubscriptionWhereInput[] | TagSubscriptionWhereInput;
-  NOT?: TagSubscriptionWhereInput[] | TagSubscriptionWhereInput;
-}
-
-export interface UserCreateManyWithoutSubscribed_usersInput {
-  create?:
-    | UserCreateWithoutSubscribed_usersInput[]
-    | UserCreateWithoutSubscribed_usersInput;
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-}
-
-export interface PostSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: PostWhereInput;
-  AND?: PostSubscriptionWhereInput[] | PostSubscriptionWhereInput;
-  OR?: PostSubscriptionWhereInput[] | PostSubscriptionWhereInput;
-  NOT?: PostSubscriptionWhereInput[] | PostSubscriptionWhereInput;
-}
-
-export interface UserCreateWithoutSubscribed_usersInput {
-  firstname?: String;
-  lastname?: String;
-  username?: String;
-  email: String;
-  phone?: String;
-  role?: UserRole;
-  password_hash: String;
-  password_salt: String;
-  avatar?: String;
-  background_image?: String;
-  about_text?: String;
-  my_videos?: VideoCreateManyWithoutAuthorInput;
-  liked_videos?: VideoCreateManyWithoutLike_usersInput;
-  watched_videos?: VideoCreateManyWithoutWatched_usersInput;
-  my_subscription_users?: UserCreateManyWithoutSubscribed_usersInput;
-  billing_subscription_active?: Boolean;
-  stripe_customer_id?: String;
-  stripe_subsciption_json?: Json;
-  last_login_date?: DateTimeInput;
-}
-
-export interface ActivationCodeSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: ActivationCodeWhereInput;
-  AND?:
-    | ActivationCodeSubscriptionWhereInput[]
-    | ActivationCodeSubscriptionWhereInput;
-  OR?:
-    | ActivationCodeSubscriptionWhereInput[]
-    | ActivationCodeSubscriptionWhereInput;
-  NOT?:
-    | ActivationCodeSubscriptionWhereInput[]
-    | ActivationCodeSubscriptionWhereInput;
-}
-
-export interface UserCreateManyWithoutMy_subscription_usersInput {
-  create?:
-    | UserCreateWithoutMy_subscription_usersInput[]
-    | UserCreateWithoutMy_subscription_usersInput;
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-}
-
-export interface ActivationCodeWhereInput {
+export interface TagWhereInput {
   id?: ID_Input;
   id_not?: ID_Input;
   id_in?: ID_Input[] | ID_Input;
@@ -1009,204 +1674,33 @@ export interface ActivationCodeWhereInput {
   updatedAt_lte?: DateTimeInput;
   updatedAt_gt?: DateTimeInput;
   updatedAt_gte?: DateTimeInput;
-  email?: String;
-  email_not?: String;
-  email_in?: String[] | String;
-  email_not_in?: String[] | String;
-  email_lt?: String;
-  email_lte?: String;
-  email_gt?: String;
-  email_gte?: String;
-  email_contains?: String;
-  email_not_contains?: String;
-  email_starts_with?: String;
-  email_not_starts_with?: String;
-  email_ends_with?: String;
-  email_not_ends_with?: String;
-  valid_until?: DateTimeInput;
-  valid_until_not?: DateTimeInput;
-  valid_until_in?: DateTimeInput[] | DateTimeInput;
-  valid_until_not_in?: DateTimeInput[] | DateTimeInput;
-  valid_until_lt?: DateTimeInput;
-  valid_until_lte?: DateTimeInput;
-  valid_until_gt?: DateTimeInput;
-  valid_until_gte?: DateTimeInput;
-  code?: String;
-  code_not?: String;
-  code_in?: String[] | String;
-  code_not_in?: String[] | String;
-  code_lt?: String;
-  code_lte?: String;
-  code_gt?: String;
-  code_gte?: String;
-  code_contains?: String;
-  code_not_contains?: String;
-  code_starts_with?: String;
-  code_not_starts_with?: String;
-  code_ends_with?: String;
-  code_not_ends_with?: String;
-  AND?: ActivationCodeWhereInput[] | ActivationCodeWhereInput;
-  OR?: ActivationCodeWhereInput[] | ActivationCodeWhereInput;
-  NOT?: ActivationCodeWhereInput[] | ActivationCodeWhereInput;
-}
-
-export interface UserCreateWithoutMy_subscription_usersInput {
-  firstname?: String;
-  lastname?: String;
-  username?: String;
-  email: String;
-  phone?: String;
-  role?: UserRole;
-  password_hash: String;
-  password_salt: String;
-  avatar?: String;
-  background_image?: String;
-  about_text?: String;
-  my_videos?: VideoCreateManyWithoutAuthorInput;
-  liked_videos?: VideoCreateManyWithoutLike_usersInput;
-  watched_videos?: VideoCreateManyWithoutWatched_usersInput;
-  subscribed_users?: UserCreateManyWithoutMy_subscription_usersInput;
-  billing_subscription_active?: Boolean;
-  stripe_customer_id?: String;
-  stripe_subsciption_json?: Json;
-  last_login_date?: DateTimeInput;
-}
-
-export interface VideoCreateInput {
-  title?: String;
-  description?: String;
-  publish_date?: DateTimeInput;
-  file_url?: String;
-  video_duration?: Int;
-  preview_url?: String;
-  preview_video_url?: String;
-  preview_video_duration?: String;
-  author: UserCreateOneWithoutMy_videosInput;
-  categories?: CategoryCreateManyWithoutVideosInput;
-  like_users?: UserCreateManyWithoutLiked_videosInput;
-  watched_users?: UserCreateManyWithoutWatched_videosInput;
-  tags?: TagCreateManyWithoutVideosInput;
-}
-
-export interface CategoryUpdateInput {
-  title?: String;
-  description?: String;
-  videos?: VideoUpdateManyWithoutCategoriesInput;
-}
-
-export interface UserUpdateInput {
-  firstname?: String;
-  lastname?: String;
-  username?: String;
-  email?: String;
-  phone?: String;
-  role?: UserRole;
-  password_hash?: String;
-  password_salt?: String;
-  avatar?: String;
-  background_image?: String;
-  about_text?: String;
-  my_videos?: VideoUpdateManyWithoutAuthorInput;
-  liked_videos?: VideoUpdateManyWithoutLike_usersInput;
-  watched_videos?: VideoUpdateManyWithoutWatched_usersInput;
-  my_subscription_users?: UserUpdateManyWithoutSubscribed_usersInput;
-  subscribed_users?: UserUpdateManyWithoutMy_subscription_usersInput;
-  billing_subscription_active?: Boolean;
-  stripe_customer_id?: String;
-  stripe_subsciption_json?: Json;
-  last_login_date?: DateTimeInput;
-}
-
-export interface VideoUpdateManyWithoutCategoriesInput {
-  create?:
-    | VideoCreateWithoutCategoriesInput[]
-    | VideoCreateWithoutCategoriesInput;
-  delete?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
-  connect?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
-  set?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
-  disconnect?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
-  update?:
-    | VideoUpdateWithWhereUniqueWithoutCategoriesInput[]
-    | VideoUpdateWithWhereUniqueWithoutCategoriesInput;
-  upsert?:
-    | VideoUpsertWithWhereUniqueWithoutCategoriesInput[]
-    | VideoUpsertWithWhereUniqueWithoutCategoriesInput;
-  deleteMany?: VideoScalarWhereInput[] | VideoScalarWhereInput;
-  updateMany?:
-    | VideoUpdateManyWithWhereNestedInput[]
-    | VideoUpdateManyWithWhereNestedInput;
-}
-
-export interface TagUpdateManyMutationInput {
   text?: String;
+  text_not?: String;
+  text_in?: String[] | String;
+  text_not_in?: String[] | String;
+  text_lt?: String;
+  text_lte?: String;
+  text_gt?: String;
+  text_gte?: String;
+  text_contains?: String;
+  text_not_contains?: String;
+  text_starts_with?: String;
+  text_not_starts_with?: String;
+  text_ends_with?: String;
+  text_not_ends_with?: String;
+  videos_every?: VideoWhereInput;
+  videos_some?: VideoWhereInput;
+  videos_none?: VideoWhereInput;
+  AND?: TagWhereInput[] | TagWhereInput;
+  OR?: TagWhereInput[] | TagWhereInput;
+  NOT?: TagWhereInput[] | TagWhereInput;
 }
 
-export interface VideoUpdateWithWhereUniqueWithoutCategoriesInput {
-  where: VideoWhereUniqueInput;
-  data: VideoUpdateWithoutCategoriesDataInput;
-}
-
-export interface VideoUpsertWithWhereUniqueWithoutTagsInput {
-  where: VideoWhereUniqueInput;
-  update: VideoUpdateWithoutTagsDataInput;
-  create: VideoCreateWithoutTagsInput;
-}
-
-export interface VideoUpdateWithoutCategoriesDataInput {
-  title?: String;
-  description?: String;
-  publish_date?: DateTimeInput;
-  file_url?: String;
-  video_duration?: Int;
-  preview_url?: String;
-  preview_video_url?: String;
-  preview_video_duration?: String;
-  author?: UserUpdateOneRequiredWithoutMy_videosInput;
-  like_users?: UserUpdateManyWithoutLiked_videosInput;
-  watched_users?: UserUpdateManyWithoutWatched_videosInput;
-  tags?: TagUpdateManyWithoutVideosInput;
-}
-
-export interface VideoUpdateWithWhereUniqueWithoutTagsInput {
-  where: VideoWhereUniqueInput;
-  data: VideoUpdateWithoutTagsDataInput;
-}
-
-export interface UserUpdateOneRequiredWithoutMy_videosInput {
-  create?: UserCreateWithoutMy_videosInput;
-  update?: UserUpdateWithoutMy_videosDataInput;
-  upsert?: UserUpsertWithoutMy_videosInput;
-  connect?: UserWhereUniqueInput;
-}
-
-export type RestoreCodeWhereUniqueInput = AtLeastOne<{
+export type ChargeHistoryWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
-  email?: String;
 }>;
 
-export interface UserUpdateWithoutMy_videosDataInput {
-  firstname?: String;
-  lastname?: String;
-  username?: String;
-  email?: String;
-  phone?: String;
-  role?: UserRole;
-  password_hash?: String;
-  password_salt?: String;
-  avatar?: String;
-  background_image?: String;
-  about_text?: String;
-  liked_videos?: VideoUpdateManyWithoutLike_usersInput;
-  watched_videos?: VideoUpdateManyWithoutWatched_usersInput;
-  my_subscription_users?: UserUpdateManyWithoutSubscribed_usersInput;
-  subscribed_users?: UserUpdateManyWithoutMy_subscription_usersInput;
-  billing_subscription_active?: Boolean;
-  stripe_customer_id?: String;
-  stripe_subsciption_json?: Json;
-  last_login_date?: DateTimeInput;
-}
-
-export interface RestoreCodeWhereInput {
+export interface ChargeHistoryWhereInput {
   id?: ID_Input;
   id_not?: ID_Input;
   id_in?: ID_Input[] | ID_Input;
@@ -1237,152 +1731,33 @@ export interface RestoreCodeWhereInput {
   updatedAt_lte?: DateTimeInput;
   updatedAt_gt?: DateTimeInput;
   updatedAt_gte?: DateTimeInput;
-  email?: String;
-  email_not?: String;
-  email_in?: String[] | String;
-  email_not_in?: String[] | String;
-  email_lt?: String;
-  email_lte?: String;
-  email_gt?: String;
-  email_gte?: String;
-  email_contains?: String;
-  email_not_contains?: String;
-  email_starts_with?: String;
-  email_not_starts_with?: String;
-  email_ends_with?: String;
-  email_not_ends_with?: String;
-  valid_until?: DateTimeInput;
-  valid_until_not?: DateTimeInput;
-  valid_until_in?: DateTimeInput[] | DateTimeInput;
-  valid_until_not_in?: DateTimeInput[] | DateTimeInput;
-  valid_until_lt?: DateTimeInput;
-  valid_until_lte?: DateTimeInput;
-  valid_until_gt?: DateTimeInput;
-  valid_until_gte?: DateTimeInput;
-  code?: String;
-  code_not?: String;
-  code_in?: String[] | String;
-  code_not_in?: String[] | String;
-  code_lt?: String;
-  code_lte?: String;
-  code_gt?: String;
-  code_gte?: String;
-  code_contains?: String;
-  code_not_contains?: String;
-  code_starts_with?: String;
-  code_not_starts_with?: String;
-  code_ends_with?: String;
-  code_not_ends_with?: String;
-  AND?: RestoreCodeWhereInput[] | RestoreCodeWhereInput;
-  OR?: RestoreCodeWhereInput[] | RestoreCodeWhereInput;
-  NOT?: RestoreCodeWhereInput[] | RestoreCodeWhereInput;
+  user?: UserWhereInput;
+  amount?: Int;
+  amount_not?: Int;
+  amount_in?: Int[] | Int;
+  amount_not_in?: Int[] | Int;
+  amount_lt?: Int;
+  amount_lte?: Int;
+  amount_gt?: Int;
+  amount_gte?: Int;
+  chargeDate?: DateTimeInput;
+  chargeDate_not?: DateTimeInput;
+  chargeDate_in?: DateTimeInput[] | DateTimeInput;
+  chargeDate_not_in?: DateTimeInput[] | DateTimeInput;
+  chargeDate_lt?: DateTimeInput;
+  chargeDate_lte?: DateTimeInput;
+  chargeDate_gt?: DateTimeInput;
+  chargeDate_gte?: DateTimeInput;
+  AND?: ChargeHistoryWhereInput[] | ChargeHistoryWhereInput;
+  OR?: ChargeHistoryWhereInput[] | ChargeHistoryWhereInput;
+  NOT?: ChargeHistoryWhereInput[] | ChargeHistoryWhereInput;
 }
 
-export interface VideoUpdateManyWithoutLike_usersInput {
-  create?:
-    | VideoCreateWithoutLike_usersInput[]
-    | VideoCreateWithoutLike_usersInput;
-  delete?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
-  connect?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
-  set?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
-  disconnect?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
-  update?:
-    | VideoUpdateWithWhereUniqueWithoutLike_usersInput[]
-    | VideoUpdateWithWhereUniqueWithoutLike_usersInput;
-  upsert?:
-    | VideoUpsertWithWhereUniqueWithoutLike_usersInput[]
-    | VideoUpsertWithWhereUniqueWithoutLike_usersInput;
-  deleteMany?: VideoScalarWhereInput[] | VideoScalarWhereInput;
-  updateMany?:
-    | VideoUpdateManyWithWhereNestedInput[]
-    | VideoUpdateManyWithWhereNestedInput;
-}
+export type CurriculumWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
 
-export interface VideoCreateManyWithoutTagsInput {
-  create?: VideoCreateWithoutTagsInput[] | VideoCreateWithoutTagsInput;
-  connect?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
-}
-
-export interface VideoUpdateWithWhereUniqueWithoutLike_usersInput {
-  where: VideoWhereUniqueInput;
-  data: VideoUpdateWithoutLike_usersDataInput;
-}
-
-export interface RestoreCodeUpdateManyMutationInput {
-  email?: String;
-  valid_until?: DateTimeInput;
-  code?: String;
-}
-
-export interface VideoUpdateWithoutLike_usersDataInput {
-  title?: String;
-  description?: String;
-  publish_date?: DateTimeInput;
-  file_url?: String;
-  video_duration?: Int;
-  preview_url?: String;
-  preview_video_url?: String;
-  preview_video_duration?: String;
-  author?: UserUpdateOneRequiredWithoutMy_videosInput;
-  categories?: CategoryUpdateManyWithoutVideosInput;
-  watched_users?: UserUpdateManyWithoutWatched_videosInput;
-  tags?: TagUpdateManyWithoutVideosInput;
-}
-
-export interface RestoreCodeUpdateInput {
-  email?: String;
-  valid_until?: DateTimeInput;
-  code?: String;
-}
-
-export interface VideoUpsertWithWhereUniqueWithoutCategoriesInput {
-  where: VideoWhereUniqueInput;
-  update: VideoUpdateWithoutCategoriesDataInput;
-  create: VideoCreateWithoutCategoriesInput;
-}
-
-export interface PostUpdateManyMutationInput {
-  title?: String;
-  mainImageUrl?: String;
-  text?: String;
-}
-
-export interface CategoryUpdateWithWhereUniqueWithoutVideosInput {
-  where: CategoryWhereUniqueInput;
-  data: CategoryUpdateWithoutVideosDataInput;
-}
-
-export interface UserUpsertNestedInput {
-  update: UserUpdateDataInput;
-  create: UserCreateInput;
-}
-
-export interface CategoryUpdateWithoutVideosDataInput {
-  title?: String;
-  description?: String;
-}
-
-export interface UserUpdateOneRequiredInput {
-  create?: UserCreateInput;
-  update?: UserUpdateDataInput;
-  upsert?: UserUpsertNestedInput;
-  connect?: UserWhereUniqueInput;
-}
-
-export interface CategoryUpsertWithWhereUniqueWithoutVideosInput {
-  where: CategoryWhereUniqueInput;
-  update: CategoryUpdateWithoutVideosDataInput;
-  create: CategoryCreateWithoutVideosInput;
-}
-
-export interface PostUpdateInput {
-  title?: String;
-  mainImageUrl?: String;
-  text?: String;
-  author?: UserUpdateOneRequiredInput;
-}
-
-export interface CategoryScalarWhereInput {
+export interface CurriculumWhereInput {
   id?: ID_Input;
   id_not?: ID_Input;
   id_in?: ID_Input[] | ID_Input;
@@ -1427,339 +1802,269 @@ export interface CategoryScalarWhereInput {
   title_not_starts_with?: String;
   title_ends_with?: String;
   title_not_ends_with?: String;
-  description?: String;
-  description_not?: String;
-  description_in?: String[] | String;
-  description_not_in?: String[] | String;
-  description_lt?: String;
-  description_lte?: String;
-  description_gt?: String;
-  description_gte?: String;
-  description_contains?: String;
-  description_not_contains?: String;
-  description_starts_with?: String;
-  description_not_starts_with?: String;
-  description_ends_with?: String;
-  description_not_ends_with?: String;
-  AND?: CategoryScalarWhereInput[] | CategoryScalarWhereInput;
-  OR?: CategoryScalarWhereInput[] | CategoryScalarWhereInput;
-  NOT?: CategoryScalarWhereInput[] | CategoryScalarWhereInput;
+  text?: String;
+  text_not?: String;
+  text_in?: String[] | String;
+  text_not_in?: String[] | String;
+  text_lt?: String;
+  text_lte?: String;
+  text_gt?: String;
+  text_gte?: String;
+  text_contains?: String;
+  text_not_contains?: String;
+  text_starts_with?: String;
+  text_not_starts_with?: String;
+  text_ends_with?: String;
+  text_not_ends_with?: String;
+  order?: Int;
+  order_not?: Int;
+  order_in?: Int[] | Int;
+  order_not_in?: Int[] | Int;
+  order_lt?: Int;
+  order_lte?: Int;
+  order_gt?: Int;
+  order_gte?: Int;
+  author?: UserWhereInput;
+  AND?: CurriculumWhereInput[] | CurriculumWhereInput;
+  OR?: CurriculumWhereInput[] | CurriculumWhereInput;
+  NOT?: CurriculumWhereInput[] | CurriculumWhereInput;
 }
 
-export interface UserCreateOneInput {
-  create?: UserCreateInput;
-  connect?: UserWhereUniqueInput;
-}
-
-export interface UserUpsertWithoutMy_videosInput {
-  update: UserUpdateWithoutMy_videosDataInput;
-  create: UserCreateWithoutMy_videosInput;
-}
-
-export interface ActivationCodeCreateInput {
-  email: String;
-  valid_until: DateTimeInput;
-  code: String;
-}
-
-export interface CategoryUpdateManyDataInput {
-  title?: String;
-  description?: String;
-}
-
-export interface ActivationCodeUpdateManyMutationInput {
-  email?: String;
-  valid_until?: DateTimeInput;
-  code?: String;
-}
-
-export interface UserUpdateManyWithoutWatched_videosInput {
-  create?:
-    | UserCreateWithoutWatched_videosInput[]
-    | UserCreateWithoutWatched_videosInput;
-  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  set?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  update?:
-    | UserUpdateWithWhereUniqueWithoutWatched_videosInput[]
-    | UserUpdateWithWhereUniqueWithoutWatched_videosInput;
-  upsert?:
-    | UserUpsertWithWhereUniqueWithoutWatched_videosInput[]
-    | UserUpsertWithWhereUniqueWithoutWatched_videosInput;
-  deleteMany?: UserScalarWhereInput[] | UserScalarWhereInput;
-  updateMany?:
-    | UserUpdateManyWithWhereNestedInput[]
-    | UserUpdateManyWithWhereNestedInput;
-}
-
-export interface CategoryUpdateManyMutationInput {
-  title?: String;
-  description?: String;
-}
-
-export interface UserUpdateWithWhereUniqueWithoutWatched_videosInput {
-  where: UserWhereUniqueInput;
-  data: UserUpdateWithoutWatched_videosDataInput;
-}
-
-export interface VideoCreateManyWithoutCategoriesInput {
-  create?:
-    | VideoCreateWithoutCategoriesInput[]
-    | VideoCreateWithoutCategoriesInput;
-  connect?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
-}
-
-export interface UserUpdateWithoutWatched_videosDataInput {
-  firstname?: String;
-  lastname?: String;
-  username?: String;
-  email?: String;
-  phone?: String;
-  role?: UserRole;
-  password_hash?: String;
-  password_salt?: String;
-  avatar?: String;
-  background_image?: String;
-  about_text?: String;
-  my_videos?: VideoUpdateManyWithoutAuthorInput;
-  liked_videos?: VideoUpdateManyWithoutLike_usersInput;
-  my_subscription_users?: UserUpdateManyWithoutSubscribed_usersInput;
-  subscribed_users?: UserUpdateManyWithoutMy_subscription_usersInput;
-  billing_subscription_active?: Boolean;
-  stripe_customer_id?: String;
-  stripe_subsciption_json?: Json;
-  last_login_date?: DateTimeInput;
-}
-
-export interface UserCreateOneWithoutMy_videosInput {
-  create?: UserCreateWithoutMy_videosInput;
-  connect?: UserWhereUniqueInput;
-}
-
-export interface VideoUpdateManyWithoutAuthorInput {
-  create?: VideoCreateWithoutAuthorInput[] | VideoCreateWithoutAuthorInput;
-  delete?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
-  connect?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
-  set?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
-  disconnect?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
-  update?:
-    | VideoUpdateWithWhereUniqueWithoutAuthorInput[]
-    | VideoUpdateWithWhereUniqueWithoutAuthorInput;
-  upsert?:
-    | VideoUpsertWithWhereUniqueWithoutAuthorInput[]
-    | VideoUpsertWithWhereUniqueWithoutAuthorInput;
-  deleteMany?: VideoScalarWhereInput[] | VideoScalarWhereInput;
-  updateMany?:
-    | VideoUpdateManyWithWhereNestedInput[]
-    | VideoUpdateManyWithWhereNestedInput;
-}
-
-export interface VideoCreateManyWithoutLike_usersInput {
-  create?:
-    | VideoCreateWithoutLike_usersInput[]
-    | VideoCreateWithoutLike_usersInput;
-  connect?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
-}
-
-export interface VideoUpdateWithWhereUniqueWithoutAuthorInput {
-  where: VideoWhereUniqueInput;
-  data: VideoUpdateWithoutAuthorDataInput;
-}
-
-export interface CategoryCreateManyWithoutVideosInput {
-  create?:
-    | CategoryCreateWithoutVideosInput[]
-    | CategoryCreateWithoutVideosInput;
-  connect?: CategoryWhereUniqueInput[] | CategoryWhereUniqueInput;
-}
-
-export interface VideoUpdateWithoutAuthorDataInput {
-  title?: String;
-  description?: String;
-  publish_date?: DateTimeInput;
-  file_url?: String;
-  video_duration?: Int;
-  preview_url?: String;
-  preview_video_url?: String;
-  preview_video_duration?: String;
-  categories?: CategoryUpdateManyWithoutVideosInput;
-  like_users?: UserUpdateManyWithoutLiked_videosInput;
-  watched_users?: UserUpdateManyWithoutWatched_videosInput;
-  tags?: TagUpdateManyWithoutVideosInput;
-}
-
-export interface UserCreateManyWithoutWatched_videosInput {
-  create?:
-    | UserCreateWithoutWatched_videosInput[]
-    | UserCreateWithoutWatched_videosInput;
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-}
-
-export interface UserUpdateManyWithoutLiked_videosInput {
-  create?:
-    | UserCreateWithoutLiked_videosInput[]
-    | UserCreateWithoutLiked_videosInput;
-  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  set?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  update?:
-    | UserUpdateWithWhereUniqueWithoutLiked_videosInput[]
-    | UserUpdateWithWhereUniqueWithoutLiked_videosInput;
-  upsert?:
-    | UserUpsertWithWhereUniqueWithoutLiked_videosInput[]
-    | UserUpsertWithWhereUniqueWithoutLiked_videosInput;
-  deleteMany?: UserScalarWhereInput[] | UserScalarWhereInput;
-  updateMany?:
-    | UserUpdateManyWithWhereNestedInput[]
-    | UserUpdateManyWithWhereNestedInput;
-}
-
-export interface VideoCreateManyWithoutAuthorInput {
-  create?: VideoCreateWithoutAuthorInput[] | VideoCreateWithoutAuthorInput;
-  connect?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
-}
-
-export interface UserUpdateWithWhereUniqueWithoutLiked_videosInput {
-  where: UserWhereUniqueInput;
-  data: UserUpdateWithoutLiked_videosDataInput;
-}
-
-export type CategoryWhereUniqueInput = AtLeastOne<{
+export type PayoutPlanWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
 
-export interface UserUpdateWithoutLiked_videosDataInput {
-  firstname?: String;
-  lastname?: String;
-  username?: String;
-  email?: String;
-  phone?: String;
-  role?: UserRole;
-  password_hash?: String;
-  password_salt?: String;
-  avatar?: String;
-  background_image?: String;
-  about_text?: String;
-  my_videos?: VideoUpdateManyWithoutAuthorInput;
-  watched_videos?: VideoUpdateManyWithoutWatched_usersInput;
-  my_subscription_users?: UserUpdateManyWithoutSubscribed_usersInput;
-  subscribed_users?: UserUpdateManyWithoutMy_subscription_usersInput;
-  billing_subscription_active?: Boolean;
-  stripe_customer_id?: String;
-  stripe_subsciption_json?: Json;
-  last_login_date?: DateTimeInput;
+export interface PayoutPlanWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  updatedAt?: DateTimeInput;
+  updatedAt_not?: DateTimeInput;
+  updatedAt_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_lt?: DateTimeInput;
+  updatedAt_lte?: DateTimeInput;
+  updatedAt_gt?: DateTimeInput;
+  updatedAt_gte?: DateTimeInput;
+  artist_id?: Int;
+  artist_id_not?: Int;
+  artist_id_in?: Int[] | Int;
+  artist_id_not_in?: Int[] | Int;
+  artist_id_lt?: Int;
+  artist_id_lte?: Int;
+  artist_id_gt?: Int;
+  artist_id_gte?: Int;
+  user_id?: Int;
+  user_id_not?: Int;
+  user_id_in?: Int[] | Int;
+  user_id_not_in?: Int[] | Int;
+  user_id_lt?: Int;
+  user_id_lte?: Int;
+  user_id_gt?: Int;
+  user_id_gte?: Int;
+  year?: Int;
+  year_not?: Int;
+  year_in?: Int[] | Int;
+  year_not_in?: Int[] | Int;
+  year_lt?: Int;
+  year_lte?: Int;
+  year_gt?: Int;
+  year_gte?: Int;
+  month?: Int;
+  month_not?: Int;
+  month_in?: Int[] | Int;
+  month_not_in?: Int[] | Int;
+  month_lt?: Int;
+  month_lte?: Int;
+  month_gt?: Int;
+  month_gte?: Int;
+  amount?: Int;
+  amount_not?: Int;
+  amount_in?: Int[] | Int;
+  amount_not_in?: Int[] | Int;
+  amount_lt?: Int;
+  amount_lte?: Int;
+  amount_gt?: Int;
+  amount_gte?: Int;
+  ignore_statis?: Boolean;
+  ignore_statis_not?: Boolean;
+  paid_status?: Boolean;
+  paid_status_not?: Boolean;
+  paid_date?: DateTimeInput;
+  paid_date_not?: DateTimeInput;
+  paid_date_in?: DateTimeInput[] | DateTimeInput;
+  paid_date_not_in?: DateTimeInput[] | DateTimeInput;
+  paid_date_lt?: DateTimeInput;
+  paid_date_lte?: DateTimeInput;
+  paid_date_gt?: DateTimeInput;
+  paid_date_gte?: DateTimeInput;
+  AND?: PayoutPlanWhereInput[] | PayoutPlanWhereInput;
+  OR?: PayoutPlanWhereInput[] | PayoutPlanWhereInput;
+  NOT?: PayoutPlanWhereInput[] | PayoutPlanWhereInput;
 }
 
-export interface UserSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: UserWhereInput;
-  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
-  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
-  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+export type PayoutTransactionWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface PayoutTransactionWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  updatedAt?: DateTimeInput;
+  updatedAt_not?: DateTimeInput;
+  updatedAt_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_lt?: DateTimeInput;
+  updatedAt_lte?: DateTimeInput;
+  updatedAt_gt?: DateTimeInput;
+  updatedAt_gte?: DateTimeInput;
+  artist_id?: Int;
+  artist_id_not?: Int;
+  artist_id_in?: Int[] | Int;
+  artist_id_not_in?: Int[] | Int;
+  artist_id_lt?: Int;
+  artist_id_lte?: Int;
+  artist_id_gt?: Int;
+  artist_id_gte?: Int;
+  year?: Int;
+  year_not?: Int;
+  year_in?: Int[] | Int;
+  year_not_in?: Int[] | Int;
+  year_lt?: Int;
+  year_lte?: Int;
+  year_gt?: Int;
+  year_gte?: Int;
+  month?: Int;
+  month_not?: Int;
+  month_in?: Int[] | Int;
+  month_not_in?: Int[] | Int;
+  month_lt?: Int;
+  month_lte?: Int;
+  month_gt?: Int;
+  month_gte?: Int;
+  amount?: Int;
+  amount_not?: Int;
+  amount_in?: Int[] | Int;
+  amount_not_in?: Int[] | Int;
+  amount_lt?: Int;
+  amount_lte?: Int;
+  amount_gt?: Int;
+  amount_gte?: Int;
+  paid_status?: Boolean;
+  paid_status_not?: Boolean;
+  paid_date?: DateTimeInput;
+  paid_date_not?: DateTimeInput;
+  paid_date_in?: DateTimeInput[] | DateTimeInput;
+  paid_date_not_in?: DateTimeInput[] | DateTimeInput;
+  paid_date_lt?: DateTimeInput;
+  paid_date_lte?: DateTimeInput;
+  paid_date_gt?: DateTimeInput;
+  paid_date_gte?: DateTimeInput;
+  AND?: PayoutTransactionWhereInput[] | PayoutTransactionWhereInput;
+  OR?: PayoutTransactionWhereInput[] | PayoutTransactionWhereInput;
+  NOT?: PayoutTransactionWhereInput[] | PayoutTransactionWhereInput;
 }
 
-export interface VideoUpdateManyWithoutWatched_usersInput {
-  create?:
-    | VideoCreateWithoutWatched_usersInput[]
-    | VideoCreateWithoutWatched_usersInput;
-  delete?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
-  connect?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
-  set?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
-  disconnect?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
-  update?:
-    | VideoUpdateWithWhereUniqueWithoutWatched_usersInput[]
-    | VideoUpdateWithWhereUniqueWithoutWatched_usersInput;
-  upsert?:
-    | VideoUpsertWithWhereUniqueWithoutWatched_usersInput[]
-    | VideoUpsertWithWhereUniqueWithoutWatched_usersInput;
-  deleteMany?: VideoScalarWhereInput[] | VideoScalarWhereInput;
-  updateMany?:
-    | VideoUpdateManyWithWhereNestedInput[]
-    | VideoUpdateManyWithWhereNestedInput;
+export type PlayHistoryWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface PlayHistoryWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  updatedAt?: DateTimeInput;
+  updatedAt_not?: DateTimeInput;
+  updatedAt_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_lt?: DateTimeInput;
+  updatedAt_lte?: DateTimeInput;
+  updatedAt_gt?: DateTimeInput;
+  updatedAt_gte?: DateTimeInput;
+  user?: UserWhereInput;
+  video?: VideoWhereInput;
+  playSeconds?: Int;
+  playSeconds_not?: Int;
+  playSeconds_in?: Int[] | Int;
+  playSeconds_not_in?: Int[] | Int;
+  playSeconds_lt?: Int;
+  playSeconds_lte?: Int;
+  playSeconds_gt?: Int;
+  playSeconds_gte?: Int;
+  realPlaySeconds?: Int;
+  realPlaySeconds_not?: Int;
+  realPlaySeconds_in?: Int[] | Int;
+  realPlaySeconds_not_in?: Int[] | Int;
+  realPlaySeconds_lt?: Int;
+  realPlaySeconds_lte?: Int;
+  realPlaySeconds_gt?: Int;
+  realPlaySeconds_gte?: Int;
+  AND?: PlayHistoryWhereInput[] | PlayHistoryWhereInput;
+  OR?: PlayHistoryWhereInput[] | PlayHistoryWhereInput;
+  NOT?: PlayHistoryWhereInput[] | PlayHistoryWhereInput;
 }
 
-export interface RestoreCodeSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: RestoreCodeWhereInput;
-  AND?: RestoreCodeSubscriptionWhereInput[] | RestoreCodeSubscriptionWhereInput;
-  OR?: RestoreCodeSubscriptionWhereInput[] | RestoreCodeSubscriptionWhereInput;
-  NOT?: RestoreCodeSubscriptionWhereInput[] | RestoreCodeSubscriptionWhereInput;
-}
-
-export interface VideoUpdateWithWhereUniqueWithoutWatched_usersInput {
-  where: VideoWhereUniqueInput;
-  data: VideoUpdateWithoutWatched_usersDataInput;
-}
-
-export interface VideoUpdateManyMutationInput {
-  title?: String;
-  description?: String;
-  publish_date?: DateTimeInput;
-  file_url?: String;
-  video_duration?: Int;
-  preview_url?: String;
-  preview_video_url?: String;
-  preview_video_duration?: String;
-}
-
-export interface VideoUpdateWithoutWatched_usersDataInput {
-  title?: String;
-  description?: String;
-  publish_date?: DateTimeInput;
-  file_url?: String;
-  video_duration?: Int;
-  preview_url?: String;
-  preview_video_url?: String;
-  preview_video_duration?: String;
-  author?: UserUpdateOneRequiredWithoutMy_videosInput;
-  categories?: CategoryUpdateManyWithoutVideosInput;
-  like_users?: UserUpdateManyWithoutLiked_videosInput;
-  tags?: TagUpdateManyWithoutVideosInput;
-}
-
-export interface UserUpdateManyMutationInput {
-  firstname?: String;
-  lastname?: String;
-  username?: String;
-  email?: String;
-  phone?: String;
-  role?: UserRole;
-  password_hash?: String;
-  password_salt?: String;
-  avatar?: String;
-  background_image?: String;
-  about_text?: String;
-  billing_subscription_active?: Boolean;
-  stripe_customer_id?: String;
-  stripe_subsciption_json?: Json;
-  last_login_date?: DateTimeInput;
-}
-
-export interface TagUpdateManyWithoutVideosInput {
-  create?: TagCreateWithoutVideosInput[] | TagCreateWithoutVideosInput;
-  delete?: TagWhereUniqueInput[] | TagWhereUniqueInput;
-  connect?: TagWhereUniqueInput[] | TagWhereUniqueInput;
-  set?: TagWhereUniqueInput[] | TagWhereUniqueInput;
-  disconnect?: TagWhereUniqueInput[] | TagWhereUniqueInput;
-  update?:
-    | TagUpdateWithWhereUniqueWithoutVideosInput[]
-    | TagUpdateWithWhereUniqueWithoutVideosInput;
-  upsert?:
-    | TagUpsertWithWhereUniqueWithoutVideosInput[]
-    | TagUpsertWithWhereUniqueWithoutVideosInput;
-  deleteMany?: TagScalarWhereInput[] | TagScalarWhereInput;
-  updateMany?:
-    | TagUpdateManyWithWhereNestedInput[]
-    | TagUpdateManyWithWhereNestedInput;
-}
+export type PostWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
 
 export interface PostWhereInput {
   id?: ID_Input;
@@ -1840,34 +2145,595 @@ export interface PostWhereInput {
   NOT?: PostWhereInput[] | PostWhereInput;
 }
 
-export interface TagUpdateWithWhereUniqueWithoutVideosInput {
-  where: TagWhereUniqueInput;
-  data: TagUpdateWithoutVideosDataInput;
+export type RestoreCodeWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+  email?: String;
+}>;
+
+export interface RestoreCodeWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  updatedAt?: DateTimeInput;
+  updatedAt_not?: DateTimeInput;
+  updatedAt_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_lt?: DateTimeInput;
+  updatedAt_lte?: DateTimeInput;
+  updatedAt_gt?: DateTimeInput;
+  updatedAt_gte?: DateTimeInput;
+  email?: String;
+  email_not?: String;
+  email_in?: String[] | String;
+  email_not_in?: String[] | String;
+  email_lt?: String;
+  email_lte?: String;
+  email_gt?: String;
+  email_gte?: String;
+  email_contains?: String;
+  email_not_contains?: String;
+  email_starts_with?: String;
+  email_not_starts_with?: String;
+  email_ends_with?: String;
+  email_not_ends_with?: String;
+  valid_until?: DateTimeInput;
+  valid_until_not?: DateTimeInput;
+  valid_until_in?: DateTimeInput[] | DateTimeInput;
+  valid_until_not_in?: DateTimeInput[] | DateTimeInput;
+  valid_until_lt?: DateTimeInput;
+  valid_until_lte?: DateTimeInput;
+  valid_until_gt?: DateTimeInput;
+  valid_until_gte?: DateTimeInput;
+  code?: String;
+  code_not?: String;
+  code_in?: String[] | String;
+  code_not_in?: String[] | String;
+  code_lt?: String;
+  code_lte?: String;
+  code_gt?: String;
+  code_gte?: String;
+  code_contains?: String;
+  code_not_contains?: String;
+  code_starts_with?: String;
+  code_not_starts_with?: String;
+  code_ends_with?: String;
+  code_not_ends_with?: String;
+  AND?: RestoreCodeWhereInput[] | RestoreCodeWhereInput;
+  OR?: RestoreCodeWhereInput[] | RestoreCodeWhereInput;
+  NOT?: RestoreCodeWhereInput[] | RestoreCodeWhereInput;
 }
 
-export interface VideoUpdateManyWithoutTagsInput {
-  create?: VideoCreateWithoutTagsInput[] | VideoCreateWithoutTagsInput;
-  delete?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
+export type SettingsWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface SettingsWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  updatedAt?: DateTimeInput;
+  updatedAt_not?: DateTimeInput;
+  updatedAt_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_lt?: DateTimeInput;
+  updatedAt_lte?: DateTimeInput;
+  updatedAt_gt?: DateTimeInput;
+  updatedAt_gte?: DateTimeInput;
+  name?: String;
+  name_not?: String;
+  name_in?: String[] | String;
+  name_not_in?: String[] | String;
+  name_lt?: String;
+  name_lte?: String;
+  name_gt?: String;
+  name_gte?: String;
+  name_contains?: String;
+  name_not_contains?: String;
+  name_starts_with?: String;
+  name_not_starts_with?: String;
+  name_ends_with?: String;
+  name_not_ends_with?: String;
+  int_val?: Int;
+  int_val_not?: Int;
+  int_val_in?: Int[] | Int;
+  int_val_not_in?: Int[] | Int;
+  int_val_lt?: Int;
+  int_val_lte?: Int;
+  int_val_gt?: Int;
+  int_val_gte?: Int;
+  str_val?: String;
+  str_val_not?: String;
+  str_val_in?: String[] | String;
+  str_val_not_in?: String[] | String;
+  str_val_lt?: String;
+  str_val_lte?: String;
+  str_val_gt?: String;
+  str_val_gte?: String;
+  str_val_contains?: String;
+  str_val_not_contains?: String;
+  str_val_starts_with?: String;
+  str_val_not_starts_with?: String;
+  str_val_ends_with?: String;
+  str_val_not_ends_with?: String;
+  AND?: SettingsWhereInput[] | SettingsWhereInput;
+  OR?: SettingsWhereInput[] | SettingsWhereInput;
+  NOT?: SettingsWhereInput[] | SettingsWhereInput;
+}
+
+export type SubscriptionHistoryWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface SubscriptionHistoryWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  updatedAt?: DateTimeInput;
+  updatedAt_not?: DateTimeInput;
+  updatedAt_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_lt?: DateTimeInput;
+  updatedAt_lte?: DateTimeInput;
+  updatedAt_gt?: DateTimeInput;
+  updatedAt_gte?: DateTimeInput;
+  user?: UserWhereInput;
+  interval?: String;
+  interval_not?: String;
+  interval_in?: String[] | String;
+  interval_not_in?: String[] | String;
+  interval_lt?: String;
+  interval_lte?: String;
+  interval_gt?: String;
+  interval_gte?: String;
+  interval_contains?: String;
+  interval_not_contains?: String;
+  interval_starts_with?: String;
+  interval_not_starts_with?: String;
+  interval_ends_with?: String;
+  interval_not_ends_with?: String;
+  amount?: Int;
+  amount_not?: Int;
+  amount_in?: Int[] | Int;
+  amount_not_in?: Int[] | Int;
+  amount_lt?: Int;
+  amount_lte?: Int;
+  amount_gt?: Int;
+  amount_gte?: Int;
+  subscriptionDate?: DateTimeInput;
+  subscriptionDate_not?: DateTimeInput;
+  subscriptionDate_in?: DateTimeInput[] | DateTimeInput;
+  subscriptionDate_not_in?: DateTimeInput[] | DateTimeInput;
+  subscriptionDate_lt?: DateTimeInput;
+  subscriptionDate_lte?: DateTimeInput;
+  subscriptionDate_gt?: DateTimeInput;
+  subscriptionDate_gte?: DateTimeInput;
+  AND?: SubscriptionHistoryWhereInput[] | SubscriptionHistoryWhereInput;
+  OR?: SubscriptionHistoryWhereInput[] | SubscriptionHistoryWhereInput;
+  NOT?: SubscriptionHistoryWhereInput[] | SubscriptionHistoryWhereInput;
+}
+
+export type TagWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+  email?: String;
+  phone?: String;
+  password_salt?: String;
+  stripe_customer_id?: String;
+}>;
+
+export type VideoWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export type WatchedVideoUserWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface ActivationCodeCreateInput {
+  email: String;
+  valid_until: DateTimeInput;
+  code: String;
+}
+
+export interface ActivationCodeUpdateInput {
+  email?: String;
+  valid_until?: DateTimeInput;
+  code?: String;
+}
+
+export interface ActivationCodeUpdateManyMutationInput {
+  email?: String;
+  valid_until?: DateTimeInput;
+  code?: String;
+}
+
+export interface CategoryCreateInput {
+  title: String;
+  description?: String;
+  videos?: VideoCreateManyWithoutCategoriesInput;
+}
+
+export interface VideoCreateManyWithoutCategoriesInput {
+  create?:
+    | VideoCreateWithoutCategoriesInput[]
+    | VideoCreateWithoutCategoriesInput;
   connect?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
-  set?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
-  disconnect?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
-  update?:
-    | VideoUpdateWithWhereUniqueWithoutTagsInput[]
-    | VideoUpdateWithWhereUniqueWithoutTagsInput;
-  upsert?:
-    | VideoUpsertWithWhereUniqueWithoutTagsInput[]
-    | VideoUpsertWithWhereUniqueWithoutTagsInput;
-  deleteMany?: VideoScalarWhereInput[] | VideoScalarWhereInput;
-  updateMany?:
-    | VideoUpdateManyWithWhereNestedInput[]
-    | VideoUpdateManyWithWhereNestedInput;
 }
 
-export interface TagUpdateWithoutVideosDataInput {
-  text?: String;
+export interface VideoCreateWithoutCategoriesInput {
+  title?: String;
+  description?: String;
+  publish_date?: DateTimeInput;
+  file_url?: String;
+  video_duration?: Int;
+  preview_url?: String;
+  preview_video_url?: String;
+  preview_video_duration?: String;
+  author: UserCreateOneWithoutMy_videosInput;
+  like_users?: UserCreateManyWithoutLiked_videosInput;
+  watched_users?: WatchedVideoUserCreateManyWithoutVideoInput;
+  tags?: TagCreateManyWithoutVideosInput;
+  deleted?: Boolean;
 }
 
-export interface VideoCreateWithoutTagsInput {
+export interface UserCreateOneWithoutMy_videosInput {
+  create?: UserCreateWithoutMy_videosInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface UserCreateWithoutMy_videosInput {
+  firstname?: String;
+  lastname?: String;
+  username?: String;
+  email: String;
+  phone?: String;
+  role?: UserRole;
+  password_hash: String;
+  password_salt: String;
+  avatar?: String;
+  background_image?: String;
+  about_text?: String;
+  promo_code?: String;
+  payout_amount?: Int;
+  payout_months_total?: Int;
+  payout_months_left?: Int;
+  payout_enabled?: Boolean;
+  artist?: UserCreateOneWithoutUsersInput;
+  users?: UserCreateManyWithoutArtistInput;
+  liked_videos?: VideoCreateManyWithoutLike_usersInput;
+  watched_videos?: WatchedVideoUserCreateManyWithoutUserInput;
+  my_subscription_users?: UserCreateManyWithoutSubscribed_usersInput;
+  subscribed_users?: UserCreateManyWithoutMy_subscription_usersInput;
+  billing_subscription_active?: Boolean;
+  stripe_customer_id?: String;
+  stripe_subsciption_json?: Json;
+  last_login_date?: DateTimeInput;
+}
+
+export interface UserCreateOneWithoutUsersInput {
+  create?: UserCreateWithoutUsersInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface UserCreateWithoutUsersInput {
+  firstname?: String;
+  lastname?: String;
+  username?: String;
+  email: String;
+  phone?: String;
+  role?: UserRole;
+  password_hash: String;
+  password_salt: String;
+  avatar?: String;
+  background_image?: String;
+  about_text?: String;
+  promo_code?: String;
+  payout_amount?: Int;
+  payout_months_total?: Int;
+  payout_months_left?: Int;
+  payout_enabled?: Boolean;
+  artist?: UserCreateOneWithoutUsersInput;
+  my_videos?: VideoCreateManyWithoutAuthorInput;
+  liked_videos?: VideoCreateManyWithoutLike_usersInput;
+  watched_videos?: WatchedVideoUserCreateManyWithoutUserInput;
+  my_subscription_users?: UserCreateManyWithoutSubscribed_usersInput;
+  subscribed_users?: UserCreateManyWithoutMy_subscription_usersInput;
+  billing_subscription_active?: Boolean;
+  stripe_customer_id?: String;
+  stripe_subsciption_json?: Json;
+  last_login_date?: DateTimeInput;
+}
+
+export interface VideoCreateManyWithoutAuthorInput {
+  create?: VideoCreateWithoutAuthorInput[] | VideoCreateWithoutAuthorInput;
+  connect?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
+}
+
+export interface VideoCreateWithoutAuthorInput {
+  title?: String;
+  description?: String;
+  publish_date?: DateTimeInput;
+  file_url?: String;
+  video_duration?: Int;
+  preview_url?: String;
+  preview_video_url?: String;
+  preview_video_duration?: String;
+  categories?: CategoryCreateManyWithoutVideosInput;
+  like_users?: UserCreateManyWithoutLiked_videosInput;
+  watched_users?: WatchedVideoUserCreateManyWithoutVideoInput;
+  tags?: TagCreateManyWithoutVideosInput;
+  deleted?: Boolean;
+}
+
+export interface CategoryCreateManyWithoutVideosInput {
+  create?:
+    | CategoryCreateWithoutVideosInput[]
+    | CategoryCreateWithoutVideosInput;
+  connect?: CategoryWhereUniqueInput[] | CategoryWhereUniqueInput;
+}
+
+export interface CategoryCreateWithoutVideosInput {
+  title: String;
+  description?: String;
+}
+
+export interface UserCreateManyWithoutLiked_videosInput {
+  create?:
+    | UserCreateWithoutLiked_videosInput[]
+    | UserCreateWithoutLiked_videosInput;
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+}
+
+export interface UserCreateWithoutLiked_videosInput {
+  firstname?: String;
+  lastname?: String;
+  username?: String;
+  email: String;
+  phone?: String;
+  role?: UserRole;
+  password_hash: String;
+  password_salt: String;
+  avatar?: String;
+  background_image?: String;
+  about_text?: String;
+  promo_code?: String;
+  payout_amount?: Int;
+  payout_months_total?: Int;
+  payout_months_left?: Int;
+  payout_enabled?: Boolean;
+  artist?: UserCreateOneWithoutUsersInput;
+  users?: UserCreateManyWithoutArtistInput;
+  my_videos?: VideoCreateManyWithoutAuthorInput;
+  watched_videos?: WatchedVideoUserCreateManyWithoutUserInput;
+  my_subscription_users?: UserCreateManyWithoutSubscribed_usersInput;
+  subscribed_users?: UserCreateManyWithoutMy_subscription_usersInput;
+  billing_subscription_active?: Boolean;
+  stripe_customer_id?: String;
+  stripe_subsciption_json?: Json;
+  last_login_date?: DateTimeInput;
+}
+
+export interface UserCreateManyWithoutArtistInput {
+  create?: UserCreateWithoutArtistInput[] | UserCreateWithoutArtistInput;
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+}
+
+export interface UserCreateWithoutArtistInput {
+  firstname?: String;
+  lastname?: String;
+  username?: String;
+  email: String;
+  phone?: String;
+  role?: UserRole;
+  password_hash: String;
+  password_salt: String;
+  avatar?: String;
+  background_image?: String;
+  about_text?: String;
+  promo_code?: String;
+  payout_amount?: Int;
+  payout_months_total?: Int;
+  payout_months_left?: Int;
+  payout_enabled?: Boolean;
+  users?: UserCreateManyWithoutArtistInput;
+  my_videos?: VideoCreateManyWithoutAuthorInput;
+  liked_videos?: VideoCreateManyWithoutLike_usersInput;
+  watched_videos?: WatchedVideoUserCreateManyWithoutUserInput;
+  my_subscription_users?: UserCreateManyWithoutSubscribed_usersInput;
+  subscribed_users?: UserCreateManyWithoutMy_subscription_usersInput;
+  billing_subscription_active?: Boolean;
+  stripe_customer_id?: String;
+  stripe_subsciption_json?: Json;
+  last_login_date?: DateTimeInput;
+}
+
+export interface VideoCreateManyWithoutLike_usersInput {
+  create?:
+    | VideoCreateWithoutLike_usersInput[]
+    | VideoCreateWithoutLike_usersInput;
+  connect?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
+}
+
+export interface VideoCreateWithoutLike_usersInput {
+  title?: String;
+  description?: String;
+  publish_date?: DateTimeInput;
+  file_url?: String;
+  video_duration?: Int;
+  preview_url?: String;
+  preview_video_url?: String;
+  preview_video_duration?: String;
+  author: UserCreateOneWithoutMy_videosInput;
+  categories?: CategoryCreateManyWithoutVideosInput;
+  watched_users?: WatchedVideoUserCreateManyWithoutVideoInput;
+  tags?: TagCreateManyWithoutVideosInput;
+  deleted?: Boolean;
+}
+
+export interface WatchedVideoUserCreateManyWithoutVideoInput {
+  create?:
+    | WatchedVideoUserCreateWithoutVideoInput[]
+    | WatchedVideoUserCreateWithoutVideoInput;
+  connect?:
+    | WatchedVideoUserWhereUniqueInput[]
+    | WatchedVideoUserWhereUniqueInput;
+}
+
+export interface WatchedVideoUserCreateWithoutVideoInput {
+  user: UserCreateOneWithoutWatched_videosInput;
+  watched_seconds?: Int;
+}
+
+export interface UserCreateOneWithoutWatched_videosInput {
+  create?: UserCreateWithoutWatched_videosInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface UserCreateWithoutWatched_videosInput {
+  firstname?: String;
+  lastname?: String;
+  username?: String;
+  email: String;
+  phone?: String;
+  role?: UserRole;
+  password_hash: String;
+  password_salt: String;
+  avatar?: String;
+  background_image?: String;
+  about_text?: String;
+  promo_code?: String;
+  payout_amount?: Int;
+  payout_months_total?: Int;
+  payout_months_left?: Int;
+  payout_enabled?: Boolean;
+  artist?: UserCreateOneWithoutUsersInput;
+  users?: UserCreateManyWithoutArtistInput;
+  my_videos?: VideoCreateManyWithoutAuthorInput;
+  liked_videos?: VideoCreateManyWithoutLike_usersInput;
+  my_subscription_users?: UserCreateManyWithoutSubscribed_usersInput;
+  subscribed_users?: UserCreateManyWithoutMy_subscription_usersInput;
+  billing_subscription_active?: Boolean;
+  stripe_customer_id?: String;
+  stripe_subsciption_json?: Json;
+  last_login_date?: DateTimeInput;
+}
+
+export interface UserCreateManyWithoutSubscribed_usersInput {
+  create?:
+    | UserCreateWithoutSubscribed_usersInput[]
+    | UserCreateWithoutSubscribed_usersInput;
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+}
+
+export interface UserCreateWithoutSubscribed_usersInput {
+  firstname?: String;
+  lastname?: String;
+  username?: String;
+  email: String;
+  phone?: String;
+  role?: UserRole;
+  password_hash: String;
+  password_salt: String;
+  avatar?: String;
+  background_image?: String;
+  about_text?: String;
+  promo_code?: String;
+  payout_amount?: Int;
+  payout_months_total?: Int;
+  payout_months_left?: Int;
+  payout_enabled?: Boolean;
+  artist?: UserCreateOneWithoutUsersInput;
+  users?: UserCreateManyWithoutArtistInput;
+  my_videos?: VideoCreateManyWithoutAuthorInput;
+  liked_videos?: VideoCreateManyWithoutLike_usersInput;
+  watched_videos?: WatchedVideoUserCreateManyWithoutUserInput;
+  my_subscription_users?: UserCreateManyWithoutSubscribed_usersInput;
+  billing_subscription_active?: Boolean;
+  stripe_customer_id?: String;
+  stripe_subsciption_json?: Json;
+  last_login_date?: DateTimeInput;
+}
+
+export interface WatchedVideoUserCreateManyWithoutUserInput {
+  create?:
+    | WatchedVideoUserCreateWithoutUserInput[]
+    | WatchedVideoUserCreateWithoutUserInput;
+  connect?:
+    | WatchedVideoUserWhereUniqueInput[]
+    | WatchedVideoUserWhereUniqueInput;
+}
+
+export interface WatchedVideoUserCreateWithoutUserInput {
+  video?: VideoCreateOneWithoutWatched_usersInput;
+  watched_seconds?: Int;
+}
+
+export interface VideoCreateOneWithoutWatched_usersInput {
+  create?: VideoCreateWithoutWatched_usersInput;
+  connect?: VideoWhereUniqueInput;
+}
+
+export interface VideoCreateWithoutWatched_usersInput {
   title?: String;
   description?: String;
   publish_date?: DateTimeInput;
@@ -1879,7 +2745,688 @@ export interface VideoCreateWithoutTagsInput {
   author: UserCreateOneWithoutMy_videosInput;
   categories?: CategoryCreateManyWithoutVideosInput;
   like_users?: UserCreateManyWithoutLiked_videosInput;
-  watched_users?: UserCreateManyWithoutWatched_videosInput;
+  tags?: TagCreateManyWithoutVideosInput;
+  deleted?: Boolean;
+}
+
+export interface TagCreateManyWithoutVideosInput {
+  create?: TagCreateWithoutVideosInput[] | TagCreateWithoutVideosInput;
+  connect?: TagWhereUniqueInput[] | TagWhereUniqueInput;
+}
+
+export interface TagCreateWithoutVideosInput {
+  text: String;
+}
+
+export interface UserCreateManyWithoutMy_subscription_usersInput {
+  create?:
+    | UserCreateWithoutMy_subscription_usersInput[]
+    | UserCreateWithoutMy_subscription_usersInput;
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+}
+
+export interface UserCreateWithoutMy_subscription_usersInput {
+  firstname?: String;
+  lastname?: String;
+  username?: String;
+  email: String;
+  phone?: String;
+  role?: UserRole;
+  password_hash: String;
+  password_salt: String;
+  avatar?: String;
+  background_image?: String;
+  about_text?: String;
+  promo_code?: String;
+  payout_amount?: Int;
+  payout_months_total?: Int;
+  payout_months_left?: Int;
+  payout_enabled?: Boolean;
+  artist?: UserCreateOneWithoutUsersInput;
+  users?: UserCreateManyWithoutArtistInput;
+  my_videos?: VideoCreateManyWithoutAuthorInput;
+  liked_videos?: VideoCreateManyWithoutLike_usersInput;
+  watched_videos?: WatchedVideoUserCreateManyWithoutUserInput;
+  subscribed_users?: UserCreateManyWithoutMy_subscription_usersInput;
+  billing_subscription_active?: Boolean;
+  stripe_customer_id?: String;
+  stripe_subsciption_json?: Json;
+  last_login_date?: DateTimeInput;
+}
+
+export interface CategoryUpdateInput {
+  title?: String;
+  description?: String;
+  videos?: VideoUpdateManyWithoutCategoriesInput;
+}
+
+export interface VideoUpdateManyWithoutCategoriesInput {
+  create?:
+    | VideoCreateWithoutCategoriesInput[]
+    | VideoCreateWithoutCategoriesInput;
+  delete?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
+  connect?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
+  set?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
+  disconnect?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
+  update?:
+    | VideoUpdateWithWhereUniqueWithoutCategoriesInput[]
+    | VideoUpdateWithWhereUniqueWithoutCategoriesInput;
+  upsert?:
+    | VideoUpsertWithWhereUniqueWithoutCategoriesInput[]
+    | VideoUpsertWithWhereUniqueWithoutCategoriesInput;
+  deleteMany?: VideoScalarWhereInput[] | VideoScalarWhereInput;
+  updateMany?:
+    | VideoUpdateManyWithWhereNestedInput[]
+    | VideoUpdateManyWithWhereNestedInput;
+}
+
+export interface VideoUpdateWithWhereUniqueWithoutCategoriesInput {
+  where: VideoWhereUniqueInput;
+  data: VideoUpdateWithoutCategoriesDataInput;
+}
+
+export interface VideoUpdateWithoutCategoriesDataInput {
+  title?: String;
+  description?: String;
+  publish_date?: DateTimeInput;
+  file_url?: String;
+  video_duration?: Int;
+  preview_url?: String;
+  preview_video_url?: String;
+  preview_video_duration?: String;
+  author?: UserUpdateOneRequiredWithoutMy_videosInput;
+  like_users?: UserUpdateManyWithoutLiked_videosInput;
+  watched_users?: WatchedVideoUserUpdateManyWithoutVideoInput;
+  tags?: TagUpdateManyWithoutVideosInput;
+  deleted?: Boolean;
+}
+
+export interface UserUpdateOneRequiredWithoutMy_videosInput {
+  create?: UserCreateWithoutMy_videosInput;
+  update?: UserUpdateWithoutMy_videosDataInput;
+  upsert?: UserUpsertWithoutMy_videosInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface UserUpdateWithoutMy_videosDataInput {
+  firstname?: String;
+  lastname?: String;
+  username?: String;
+  email?: String;
+  phone?: String;
+  role?: UserRole;
+  password_hash?: String;
+  password_salt?: String;
+  avatar?: String;
+  background_image?: String;
+  about_text?: String;
+  promo_code?: String;
+  payout_amount?: Int;
+  payout_months_total?: Int;
+  payout_months_left?: Int;
+  payout_enabled?: Boolean;
+  artist?: UserUpdateOneWithoutUsersInput;
+  users?: UserUpdateManyWithoutArtistInput;
+  liked_videos?: VideoUpdateManyWithoutLike_usersInput;
+  watched_videos?: WatchedVideoUserUpdateManyWithoutUserInput;
+  my_subscription_users?: UserUpdateManyWithoutSubscribed_usersInput;
+  subscribed_users?: UserUpdateManyWithoutMy_subscription_usersInput;
+  billing_subscription_active?: Boolean;
+  stripe_customer_id?: String;
+  stripe_subsciption_json?: Json;
+  last_login_date?: DateTimeInput;
+}
+
+export interface UserUpdateOneWithoutUsersInput {
+  create?: UserCreateWithoutUsersInput;
+  update?: UserUpdateWithoutUsersDataInput;
+  upsert?: UserUpsertWithoutUsersInput;
+  delete?: Boolean;
+  disconnect?: Boolean;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface UserUpdateWithoutUsersDataInput {
+  firstname?: String;
+  lastname?: String;
+  username?: String;
+  email?: String;
+  phone?: String;
+  role?: UserRole;
+  password_hash?: String;
+  password_salt?: String;
+  avatar?: String;
+  background_image?: String;
+  about_text?: String;
+  promo_code?: String;
+  payout_amount?: Int;
+  payout_months_total?: Int;
+  payout_months_left?: Int;
+  payout_enabled?: Boolean;
+  artist?: UserUpdateOneWithoutUsersInput;
+  my_videos?: VideoUpdateManyWithoutAuthorInput;
+  liked_videos?: VideoUpdateManyWithoutLike_usersInput;
+  watched_videos?: WatchedVideoUserUpdateManyWithoutUserInput;
+  my_subscription_users?: UserUpdateManyWithoutSubscribed_usersInput;
+  subscribed_users?: UserUpdateManyWithoutMy_subscription_usersInput;
+  billing_subscription_active?: Boolean;
+  stripe_customer_id?: String;
+  stripe_subsciption_json?: Json;
+  last_login_date?: DateTimeInput;
+}
+
+export interface VideoUpdateManyWithoutAuthorInput {
+  create?: VideoCreateWithoutAuthorInput[] | VideoCreateWithoutAuthorInput;
+  delete?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
+  connect?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
+  set?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
+  disconnect?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
+  update?:
+    | VideoUpdateWithWhereUniqueWithoutAuthorInput[]
+    | VideoUpdateWithWhereUniqueWithoutAuthorInput;
+  upsert?:
+    | VideoUpsertWithWhereUniqueWithoutAuthorInput[]
+    | VideoUpsertWithWhereUniqueWithoutAuthorInput;
+  deleteMany?: VideoScalarWhereInput[] | VideoScalarWhereInput;
+  updateMany?:
+    | VideoUpdateManyWithWhereNestedInput[]
+    | VideoUpdateManyWithWhereNestedInput;
+}
+
+export interface VideoUpdateWithWhereUniqueWithoutAuthorInput {
+  where: VideoWhereUniqueInput;
+  data: VideoUpdateWithoutAuthorDataInput;
+}
+
+export interface VideoUpdateWithoutAuthorDataInput {
+  title?: String;
+  description?: String;
+  publish_date?: DateTimeInput;
+  file_url?: String;
+  video_duration?: Int;
+  preview_url?: String;
+  preview_video_url?: String;
+  preview_video_duration?: String;
+  categories?: CategoryUpdateManyWithoutVideosInput;
+  like_users?: UserUpdateManyWithoutLiked_videosInput;
+  watched_users?: WatchedVideoUserUpdateManyWithoutVideoInput;
+  tags?: TagUpdateManyWithoutVideosInput;
+  deleted?: Boolean;
+}
+
+export interface CategoryUpdateManyWithoutVideosInput {
+  create?:
+    | CategoryCreateWithoutVideosInput[]
+    | CategoryCreateWithoutVideosInput;
+  delete?: CategoryWhereUniqueInput[] | CategoryWhereUniqueInput;
+  connect?: CategoryWhereUniqueInput[] | CategoryWhereUniqueInput;
+  set?: CategoryWhereUniqueInput[] | CategoryWhereUniqueInput;
+  disconnect?: CategoryWhereUniqueInput[] | CategoryWhereUniqueInput;
+  update?:
+    | CategoryUpdateWithWhereUniqueWithoutVideosInput[]
+    | CategoryUpdateWithWhereUniqueWithoutVideosInput;
+  upsert?:
+    | CategoryUpsertWithWhereUniqueWithoutVideosInput[]
+    | CategoryUpsertWithWhereUniqueWithoutVideosInput;
+  deleteMany?: CategoryScalarWhereInput[] | CategoryScalarWhereInput;
+  updateMany?:
+    | CategoryUpdateManyWithWhereNestedInput[]
+    | CategoryUpdateManyWithWhereNestedInput;
+}
+
+export interface CategoryUpdateWithWhereUniqueWithoutVideosInput {
+  where: CategoryWhereUniqueInput;
+  data: CategoryUpdateWithoutVideosDataInput;
+}
+
+export interface CategoryUpdateWithoutVideosDataInput {
+  title?: String;
+  description?: String;
+}
+
+export interface CategoryUpsertWithWhereUniqueWithoutVideosInput {
+  where: CategoryWhereUniqueInput;
+  update: CategoryUpdateWithoutVideosDataInput;
+  create: CategoryCreateWithoutVideosInput;
+}
+
+export interface CategoryScalarWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  updatedAt?: DateTimeInput;
+  updatedAt_not?: DateTimeInput;
+  updatedAt_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_lt?: DateTimeInput;
+  updatedAt_lte?: DateTimeInput;
+  updatedAt_gt?: DateTimeInput;
+  updatedAt_gte?: DateTimeInput;
+  title?: String;
+  title_not?: String;
+  title_in?: String[] | String;
+  title_not_in?: String[] | String;
+  title_lt?: String;
+  title_lte?: String;
+  title_gt?: String;
+  title_gte?: String;
+  title_contains?: String;
+  title_not_contains?: String;
+  title_starts_with?: String;
+  title_not_starts_with?: String;
+  title_ends_with?: String;
+  title_not_ends_with?: String;
+  description?: String;
+  description_not?: String;
+  description_in?: String[] | String;
+  description_not_in?: String[] | String;
+  description_lt?: String;
+  description_lte?: String;
+  description_gt?: String;
+  description_gte?: String;
+  description_contains?: String;
+  description_not_contains?: String;
+  description_starts_with?: String;
+  description_not_starts_with?: String;
+  description_ends_with?: String;
+  description_not_ends_with?: String;
+  AND?: CategoryScalarWhereInput[] | CategoryScalarWhereInput;
+  OR?: CategoryScalarWhereInput[] | CategoryScalarWhereInput;
+  NOT?: CategoryScalarWhereInput[] | CategoryScalarWhereInput;
+}
+
+export interface CategoryUpdateManyWithWhereNestedInput {
+  where: CategoryScalarWhereInput;
+  data: CategoryUpdateManyDataInput;
+}
+
+export interface CategoryUpdateManyDataInput {
+  title?: String;
+  description?: String;
+}
+
+export interface UserUpdateManyWithoutLiked_videosInput {
+  create?:
+    | UserCreateWithoutLiked_videosInput[]
+    | UserCreateWithoutLiked_videosInput;
+  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  set?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  update?:
+    | UserUpdateWithWhereUniqueWithoutLiked_videosInput[]
+    | UserUpdateWithWhereUniqueWithoutLiked_videosInput;
+  upsert?:
+    | UserUpsertWithWhereUniqueWithoutLiked_videosInput[]
+    | UserUpsertWithWhereUniqueWithoutLiked_videosInput;
+  deleteMany?: UserScalarWhereInput[] | UserScalarWhereInput;
+  updateMany?:
+    | UserUpdateManyWithWhereNestedInput[]
+    | UserUpdateManyWithWhereNestedInput;
+}
+
+export interface UserUpdateWithWhereUniqueWithoutLiked_videosInput {
+  where: UserWhereUniqueInput;
+  data: UserUpdateWithoutLiked_videosDataInput;
+}
+
+export interface UserUpdateWithoutLiked_videosDataInput {
+  firstname?: String;
+  lastname?: String;
+  username?: String;
+  email?: String;
+  phone?: String;
+  role?: UserRole;
+  password_hash?: String;
+  password_salt?: String;
+  avatar?: String;
+  background_image?: String;
+  about_text?: String;
+  promo_code?: String;
+  payout_amount?: Int;
+  payout_months_total?: Int;
+  payout_months_left?: Int;
+  payout_enabled?: Boolean;
+  artist?: UserUpdateOneWithoutUsersInput;
+  users?: UserUpdateManyWithoutArtistInput;
+  my_videos?: VideoUpdateManyWithoutAuthorInput;
+  watched_videos?: WatchedVideoUserUpdateManyWithoutUserInput;
+  my_subscription_users?: UserUpdateManyWithoutSubscribed_usersInput;
+  subscribed_users?: UserUpdateManyWithoutMy_subscription_usersInput;
+  billing_subscription_active?: Boolean;
+  stripe_customer_id?: String;
+  stripe_subsciption_json?: Json;
+  last_login_date?: DateTimeInput;
+}
+
+export interface UserUpdateManyWithoutArtistInput {
+  create?: UserCreateWithoutArtistInput[] | UserCreateWithoutArtistInput;
+  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  set?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  update?:
+    | UserUpdateWithWhereUniqueWithoutArtistInput[]
+    | UserUpdateWithWhereUniqueWithoutArtistInput;
+  upsert?:
+    | UserUpsertWithWhereUniqueWithoutArtistInput[]
+    | UserUpsertWithWhereUniqueWithoutArtistInput;
+  deleteMany?: UserScalarWhereInput[] | UserScalarWhereInput;
+  updateMany?:
+    | UserUpdateManyWithWhereNestedInput[]
+    | UserUpdateManyWithWhereNestedInput;
+}
+
+export interface UserUpdateWithWhereUniqueWithoutArtistInput {
+  where: UserWhereUniqueInput;
+  data: UserUpdateWithoutArtistDataInput;
+}
+
+export interface UserUpdateWithoutArtistDataInput {
+  firstname?: String;
+  lastname?: String;
+  username?: String;
+  email?: String;
+  phone?: String;
+  role?: UserRole;
+  password_hash?: String;
+  password_salt?: String;
+  avatar?: String;
+  background_image?: String;
+  about_text?: String;
+  promo_code?: String;
+  payout_amount?: Int;
+  payout_months_total?: Int;
+  payout_months_left?: Int;
+  payout_enabled?: Boolean;
+  users?: UserUpdateManyWithoutArtistInput;
+  my_videos?: VideoUpdateManyWithoutAuthorInput;
+  liked_videos?: VideoUpdateManyWithoutLike_usersInput;
+  watched_videos?: WatchedVideoUserUpdateManyWithoutUserInput;
+  my_subscription_users?: UserUpdateManyWithoutSubscribed_usersInput;
+  subscribed_users?: UserUpdateManyWithoutMy_subscription_usersInput;
+  billing_subscription_active?: Boolean;
+  stripe_customer_id?: String;
+  stripe_subsciption_json?: Json;
+  last_login_date?: DateTimeInput;
+}
+
+export interface VideoUpdateManyWithoutLike_usersInput {
+  create?:
+    | VideoCreateWithoutLike_usersInput[]
+    | VideoCreateWithoutLike_usersInput;
+  delete?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
+  connect?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
+  set?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
+  disconnect?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
+  update?:
+    | VideoUpdateWithWhereUniqueWithoutLike_usersInput[]
+    | VideoUpdateWithWhereUniqueWithoutLike_usersInput;
+  upsert?:
+    | VideoUpsertWithWhereUniqueWithoutLike_usersInput[]
+    | VideoUpsertWithWhereUniqueWithoutLike_usersInput;
+  deleteMany?: VideoScalarWhereInput[] | VideoScalarWhereInput;
+  updateMany?:
+    | VideoUpdateManyWithWhereNestedInput[]
+    | VideoUpdateManyWithWhereNestedInput;
+}
+
+export interface VideoUpdateWithWhereUniqueWithoutLike_usersInput {
+  where: VideoWhereUniqueInput;
+  data: VideoUpdateWithoutLike_usersDataInput;
+}
+
+export interface VideoUpdateWithoutLike_usersDataInput {
+  title?: String;
+  description?: String;
+  publish_date?: DateTimeInput;
+  file_url?: String;
+  video_duration?: Int;
+  preview_url?: String;
+  preview_video_url?: String;
+  preview_video_duration?: String;
+  author?: UserUpdateOneRequiredWithoutMy_videosInput;
+  categories?: CategoryUpdateManyWithoutVideosInput;
+  watched_users?: WatchedVideoUserUpdateManyWithoutVideoInput;
+  tags?: TagUpdateManyWithoutVideosInput;
+  deleted?: Boolean;
+}
+
+export interface WatchedVideoUserUpdateManyWithoutVideoInput {
+  create?:
+    | WatchedVideoUserCreateWithoutVideoInput[]
+    | WatchedVideoUserCreateWithoutVideoInput;
+  delete?:
+    | WatchedVideoUserWhereUniqueInput[]
+    | WatchedVideoUserWhereUniqueInput;
+  connect?:
+    | WatchedVideoUserWhereUniqueInput[]
+    | WatchedVideoUserWhereUniqueInput;
+  set?: WatchedVideoUserWhereUniqueInput[] | WatchedVideoUserWhereUniqueInput;
+  disconnect?:
+    | WatchedVideoUserWhereUniqueInput[]
+    | WatchedVideoUserWhereUniqueInput;
+  update?:
+    | WatchedVideoUserUpdateWithWhereUniqueWithoutVideoInput[]
+    | WatchedVideoUserUpdateWithWhereUniqueWithoutVideoInput;
+  upsert?:
+    | WatchedVideoUserUpsertWithWhereUniqueWithoutVideoInput[]
+    | WatchedVideoUserUpsertWithWhereUniqueWithoutVideoInput;
+  deleteMany?:
+    | WatchedVideoUserScalarWhereInput[]
+    | WatchedVideoUserScalarWhereInput;
+  updateMany?:
+    | WatchedVideoUserUpdateManyWithWhereNestedInput[]
+    | WatchedVideoUserUpdateManyWithWhereNestedInput;
+}
+
+export interface WatchedVideoUserUpdateWithWhereUniqueWithoutVideoInput {
+  where: WatchedVideoUserWhereUniqueInput;
+  data: WatchedVideoUserUpdateWithoutVideoDataInput;
+}
+
+export interface WatchedVideoUserUpdateWithoutVideoDataInput {
+  user?: UserUpdateOneRequiredWithoutWatched_videosInput;
+  watched_seconds?: Int;
+}
+
+export interface UserUpdateOneRequiredWithoutWatched_videosInput {
+  create?: UserCreateWithoutWatched_videosInput;
+  update?: UserUpdateWithoutWatched_videosDataInput;
+  upsert?: UserUpsertWithoutWatched_videosInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface UserUpdateWithoutWatched_videosDataInput {
+  firstname?: String;
+  lastname?: String;
+  username?: String;
+  email?: String;
+  phone?: String;
+  role?: UserRole;
+  password_hash?: String;
+  password_salt?: String;
+  avatar?: String;
+  background_image?: String;
+  about_text?: String;
+  promo_code?: String;
+  payout_amount?: Int;
+  payout_months_total?: Int;
+  payout_months_left?: Int;
+  payout_enabled?: Boolean;
+  artist?: UserUpdateOneWithoutUsersInput;
+  users?: UserUpdateManyWithoutArtistInput;
+  my_videos?: VideoUpdateManyWithoutAuthorInput;
+  liked_videos?: VideoUpdateManyWithoutLike_usersInput;
+  my_subscription_users?: UserUpdateManyWithoutSubscribed_usersInput;
+  subscribed_users?: UserUpdateManyWithoutMy_subscription_usersInput;
+  billing_subscription_active?: Boolean;
+  stripe_customer_id?: String;
+  stripe_subsciption_json?: Json;
+  last_login_date?: DateTimeInput;
+}
+
+export interface UserUpdateManyWithoutSubscribed_usersInput {
+  create?:
+    | UserCreateWithoutSubscribed_usersInput[]
+    | UserCreateWithoutSubscribed_usersInput;
+  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  set?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  update?:
+    | UserUpdateWithWhereUniqueWithoutSubscribed_usersInput[]
+    | UserUpdateWithWhereUniqueWithoutSubscribed_usersInput;
+  upsert?:
+    | UserUpsertWithWhereUniqueWithoutSubscribed_usersInput[]
+    | UserUpsertWithWhereUniqueWithoutSubscribed_usersInput;
+  deleteMany?: UserScalarWhereInput[] | UserScalarWhereInput;
+  updateMany?:
+    | UserUpdateManyWithWhereNestedInput[]
+    | UserUpdateManyWithWhereNestedInput;
+}
+
+export interface UserUpdateWithWhereUniqueWithoutSubscribed_usersInput {
+  where: UserWhereUniqueInput;
+  data: UserUpdateWithoutSubscribed_usersDataInput;
+}
+
+export interface UserUpdateWithoutSubscribed_usersDataInput {
+  firstname?: String;
+  lastname?: String;
+  username?: String;
+  email?: String;
+  phone?: String;
+  role?: UserRole;
+  password_hash?: String;
+  password_salt?: String;
+  avatar?: String;
+  background_image?: String;
+  about_text?: String;
+  promo_code?: String;
+  payout_amount?: Int;
+  payout_months_total?: Int;
+  payout_months_left?: Int;
+  payout_enabled?: Boolean;
+  artist?: UserUpdateOneWithoutUsersInput;
+  users?: UserUpdateManyWithoutArtistInput;
+  my_videos?: VideoUpdateManyWithoutAuthorInput;
+  liked_videos?: VideoUpdateManyWithoutLike_usersInput;
+  watched_videos?: WatchedVideoUserUpdateManyWithoutUserInput;
+  my_subscription_users?: UserUpdateManyWithoutSubscribed_usersInput;
+  billing_subscription_active?: Boolean;
+  stripe_customer_id?: String;
+  stripe_subsciption_json?: Json;
+  last_login_date?: DateTimeInput;
+}
+
+export interface WatchedVideoUserUpdateManyWithoutUserInput {
+  create?:
+    | WatchedVideoUserCreateWithoutUserInput[]
+    | WatchedVideoUserCreateWithoutUserInput;
+  delete?:
+    | WatchedVideoUserWhereUniqueInput[]
+    | WatchedVideoUserWhereUniqueInput;
+  connect?:
+    | WatchedVideoUserWhereUniqueInput[]
+    | WatchedVideoUserWhereUniqueInput;
+  set?: WatchedVideoUserWhereUniqueInput[] | WatchedVideoUserWhereUniqueInput;
+  disconnect?:
+    | WatchedVideoUserWhereUniqueInput[]
+    | WatchedVideoUserWhereUniqueInput;
+  update?:
+    | WatchedVideoUserUpdateWithWhereUniqueWithoutUserInput[]
+    | WatchedVideoUserUpdateWithWhereUniqueWithoutUserInput;
+  upsert?:
+    | WatchedVideoUserUpsertWithWhereUniqueWithoutUserInput[]
+    | WatchedVideoUserUpsertWithWhereUniqueWithoutUserInput;
+  deleteMany?:
+    | WatchedVideoUserScalarWhereInput[]
+    | WatchedVideoUserScalarWhereInput;
+  updateMany?:
+    | WatchedVideoUserUpdateManyWithWhereNestedInput[]
+    | WatchedVideoUserUpdateManyWithWhereNestedInput;
+}
+
+export interface WatchedVideoUserUpdateWithWhereUniqueWithoutUserInput {
+  where: WatchedVideoUserWhereUniqueInput;
+  data: WatchedVideoUserUpdateWithoutUserDataInput;
+}
+
+export interface WatchedVideoUserUpdateWithoutUserDataInput {
+  video?: VideoUpdateOneWithoutWatched_usersInput;
+  watched_seconds?: Int;
+}
+
+export interface VideoUpdateOneWithoutWatched_usersInput {
+  create?: VideoCreateWithoutWatched_usersInput;
+  update?: VideoUpdateWithoutWatched_usersDataInput;
+  upsert?: VideoUpsertWithoutWatched_usersInput;
+  delete?: Boolean;
+  disconnect?: Boolean;
+  connect?: VideoWhereUniqueInput;
+}
+
+export interface VideoUpdateWithoutWatched_usersDataInput {
+  title?: String;
+  description?: String;
+  publish_date?: DateTimeInput;
+  file_url?: String;
+  video_duration?: Int;
+  preview_url?: String;
+  preview_video_url?: String;
+  preview_video_duration?: String;
+  author?: UserUpdateOneRequiredWithoutMy_videosInput;
+  categories?: CategoryUpdateManyWithoutVideosInput;
+  like_users?: UserUpdateManyWithoutLiked_videosInput;
+  tags?: TagUpdateManyWithoutVideosInput;
+  deleted?: Boolean;
+}
+
+export interface TagUpdateManyWithoutVideosInput {
+  create?: TagCreateWithoutVideosInput[] | TagCreateWithoutVideosInput;
+  delete?: TagWhereUniqueInput[] | TagWhereUniqueInput;
+  connect?: TagWhereUniqueInput[] | TagWhereUniqueInput;
+  set?: TagWhereUniqueInput[] | TagWhereUniqueInput;
+  disconnect?: TagWhereUniqueInput[] | TagWhereUniqueInput;
+  update?:
+    | TagUpdateWithWhereUniqueWithoutVideosInput[]
+    | TagUpdateWithWhereUniqueWithoutVideosInput;
+  upsert?:
+    | TagUpsertWithWhereUniqueWithoutVideosInput[]
+    | TagUpsertWithWhereUniqueWithoutVideosInput;
+  deleteMany?: TagScalarWhereInput[] | TagScalarWhereInput;
+  updateMany?:
+    | TagUpdateManyWithWhereNestedInput[]
+    | TagUpdateManyWithWhereNestedInput;
+}
+
+export interface TagUpdateWithWhereUniqueWithoutVideosInput {
+  where: TagWhereUniqueInput;
+  data: TagUpdateWithoutVideosDataInput;
+}
+
+export interface TagUpdateWithoutVideosDataInput {
+  text?: String;
 }
 
 export interface TagUpsertWithWhereUniqueWithoutVideosInput {
@@ -1887,10 +3434,6 @@ export interface TagUpsertWithWhereUniqueWithoutVideosInput {
   update: TagUpdateWithoutVideosDataInput;
   create: TagCreateWithoutVideosInput;
 }
-
-export type TagWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
 
 export interface TagScalarWhereInput {
   id?: ID_Input;
@@ -1942,56 +3485,27 @@ export interface TagScalarWhereInput {
   NOT?: TagScalarWhereInput[] | TagScalarWhereInput;
 }
 
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-  email?: String;
-  phone?: String;
-  password_salt?: String;
-  stripe_customer_id?: String;
-}>;
-
 export interface TagUpdateManyWithWhereNestedInput {
   where: TagScalarWhereInput;
   data: TagUpdateManyDataInput;
 }
 
-export type VideoWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
-
 export interface TagUpdateManyDataInput {
   text?: String;
 }
 
-export interface PostCreateInput {
-  title: String;
-  mainImageUrl?: String;
-  text: String;
-  author: UserCreateOneInput;
-}
-
-export interface VideoUpsertWithWhereUniqueWithoutWatched_usersInput {
-  where: VideoWhereUniqueInput;
+export interface VideoUpsertWithoutWatched_usersInput {
   update: VideoUpdateWithoutWatched_usersDataInput;
   create: VideoCreateWithoutWatched_usersInput;
 }
 
-export interface VideoCreateWithoutCategoriesInput {
-  title?: String;
-  description?: String;
-  publish_date?: DateTimeInput;
-  file_url?: String;
-  video_duration?: Int;
-  preview_url?: String;
-  preview_video_url?: String;
-  preview_video_duration?: String;
-  author: UserCreateOneWithoutMy_videosInput;
-  like_users?: UserCreateManyWithoutLiked_videosInput;
-  watched_users?: UserCreateManyWithoutWatched_videosInput;
-  tags?: TagCreateManyWithoutVideosInput;
+export interface WatchedVideoUserUpsertWithWhereUniqueWithoutUserInput {
+  where: WatchedVideoUserWhereUniqueInput;
+  update: WatchedVideoUserUpdateWithoutUserDataInput;
+  create: WatchedVideoUserCreateWithoutUserInput;
 }
 
-export interface VideoScalarWhereInput {
+export interface WatchedVideoUserScalarWhereInput {
   id?: ID_Input;
   id_not?: ID_Input;
   id_in?: ID_Input[] | ID_Input;
@@ -2006,406 +3520,32 @@ export interface VideoScalarWhereInput {
   id_not_starts_with?: ID_Input;
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
-  createdAt?: DateTimeInput;
-  createdAt_not?: DateTimeInput;
-  createdAt_in?: DateTimeInput[] | DateTimeInput;
-  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
-  createdAt_lt?: DateTimeInput;
-  createdAt_lte?: DateTimeInput;
-  createdAt_gt?: DateTimeInput;
-  createdAt_gte?: DateTimeInput;
-  updatedAt?: DateTimeInput;
-  updatedAt_not?: DateTimeInput;
-  updatedAt_in?: DateTimeInput[] | DateTimeInput;
-  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
-  updatedAt_lt?: DateTimeInput;
-  updatedAt_lte?: DateTimeInput;
-  updatedAt_gt?: DateTimeInput;
-  updatedAt_gte?: DateTimeInput;
-  title?: String;
-  title_not?: String;
-  title_in?: String[] | String;
-  title_not_in?: String[] | String;
-  title_lt?: String;
-  title_lte?: String;
-  title_gt?: String;
-  title_gte?: String;
-  title_contains?: String;
-  title_not_contains?: String;
-  title_starts_with?: String;
-  title_not_starts_with?: String;
-  title_ends_with?: String;
-  title_not_ends_with?: String;
-  description?: String;
-  description_not?: String;
-  description_in?: String[] | String;
-  description_not_in?: String[] | String;
-  description_lt?: String;
-  description_lte?: String;
-  description_gt?: String;
-  description_gte?: String;
-  description_contains?: String;
-  description_not_contains?: String;
-  description_starts_with?: String;
-  description_not_starts_with?: String;
-  description_ends_with?: String;
-  description_not_ends_with?: String;
-  publish_date?: DateTimeInput;
-  publish_date_not?: DateTimeInput;
-  publish_date_in?: DateTimeInput[] | DateTimeInput;
-  publish_date_not_in?: DateTimeInput[] | DateTimeInput;
-  publish_date_lt?: DateTimeInput;
-  publish_date_lte?: DateTimeInput;
-  publish_date_gt?: DateTimeInput;
-  publish_date_gte?: DateTimeInput;
-  file_url?: String;
-  file_url_not?: String;
-  file_url_in?: String[] | String;
-  file_url_not_in?: String[] | String;
-  file_url_lt?: String;
-  file_url_lte?: String;
-  file_url_gt?: String;
-  file_url_gte?: String;
-  file_url_contains?: String;
-  file_url_not_contains?: String;
-  file_url_starts_with?: String;
-  file_url_not_starts_with?: String;
-  file_url_ends_with?: String;
-  file_url_not_ends_with?: String;
-  video_duration?: Int;
-  video_duration_not?: Int;
-  video_duration_in?: Int[] | Int;
-  video_duration_not_in?: Int[] | Int;
-  video_duration_lt?: Int;
-  video_duration_lte?: Int;
-  video_duration_gt?: Int;
-  video_duration_gte?: Int;
-  preview_url?: String;
-  preview_url_not?: String;
-  preview_url_in?: String[] | String;
-  preview_url_not_in?: String[] | String;
-  preview_url_lt?: String;
-  preview_url_lte?: String;
-  preview_url_gt?: String;
-  preview_url_gte?: String;
-  preview_url_contains?: String;
-  preview_url_not_contains?: String;
-  preview_url_starts_with?: String;
-  preview_url_not_starts_with?: String;
-  preview_url_ends_with?: String;
-  preview_url_not_ends_with?: String;
-  preview_video_url?: String;
-  preview_video_url_not?: String;
-  preview_video_url_in?: String[] | String;
-  preview_video_url_not_in?: String[] | String;
-  preview_video_url_lt?: String;
-  preview_video_url_lte?: String;
-  preview_video_url_gt?: String;
-  preview_video_url_gte?: String;
-  preview_video_url_contains?: String;
-  preview_video_url_not_contains?: String;
-  preview_video_url_starts_with?: String;
-  preview_video_url_not_starts_with?: String;
-  preview_video_url_ends_with?: String;
-  preview_video_url_not_ends_with?: String;
-  preview_video_duration?: String;
-  preview_video_duration_not?: String;
-  preview_video_duration_in?: String[] | String;
-  preview_video_duration_not_in?: String[] | String;
-  preview_video_duration_lt?: String;
-  preview_video_duration_lte?: String;
-  preview_video_duration_gt?: String;
-  preview_video_duration_gte?: String;
-  preview_video_duration_contains?: String;
-  preview_video_duration_not_contains?: String;
-  preview_video_duration_starts_with?: String;
-  preview_video_duration_not_starts_with?: String;
-  preview_video_duration_ends_with?: String;
-  preview_video_duration_not_ends_with?: String;
-  AND?: VideoScalarWhereInput[] | VideoScalarWhereInput;
-  OR?: VideoScalarWhereInput[] | VideoScalarWhereInput;
-  NOT?: VideoScalarWhereInput[] | VideoScalarWhereInput;
+  watched_seconds?: Int;
+  watched_seconds_not?: Int;
+  watched_seconds_in?: Int[] | Int;
+  watched_seconds_not_in?: Int[] | Int;
+  watched_seconds_lt?: Int;
+  watched_seconds_lte?: Int;
+  watched_seconds_gt?: Int;
+  watched_seconds_gte?: Int;
+  AND?: WatchedVideoUserScalarWhereInput[] | WatchedVideoUserScalarWhereInput;
+  OR?: WatchedVideoUserScalarWhereInput[] | WatchedVideoUserScalarWhereInput;
+  NOT?: WatchedVideoUserScalarWhereInput[] | WatchedVideoUserScalarWhereInput;
 }
 
-export interface VideoCreateWithoutLike_usersInput {
-  title?: String;
-  description?: String;
-  publish_date?: DateTimeInput;
-  file_url?: String;
-  video_duration?: Int;
-  preview_url?: String;
-  preview_video_url?: String;
-  preview_video_duration?: String;
-  author: UserCreateOneWithoutMy_videosInput;
-  categories?: CategoryCreateManyWithoutVideosInput;
-  watched_users?: UserCreateManyWithoutWatched_videosInput;
-  tags?: TagCreateManyWithoutVideosInput;
+export interface WatchedVideoUserUpdateManyWithWhereNestedInput {
+  where: WatchedVideoUserScalarWhereInput;
+  data: WatchedVideoUserUpdateManyDataInput;
 }
 
-export interface VideoUpdateManyWithWhereNestedInput {
-  where: VideoScalarWhereInput;
-  data: VideoUpdateManyDataInput;
-}
-
-export interface UserCreateWithoutWatched_videosInput {
-  firstname?: String;
-  lastname?: String;
-  username?: String;
-  email: String;
-  phone?: String;
-  role?: UserRole;
-  password_hash: String;
-  password_salt: String;
-  avatar?: String;
-  background_image?: String;
-  about_text?: String;
-  my_videos?: VideoCreateManyWithoutAuthorInput;
-  liked_videos?: VideoCreateManyWithoutLike_usersInput;
-  my_subscription_users?: UserCreateManyWithoutSubscribed_usersInput;
-  subscribed_users?: UserCreateManyWithoutMy_subscription_usersInput;
-  billing_subscription_active?: Boolean;
-  stripe_customer_id?: String;
-  stripe_subsciption_json?: Json;
-  last_login_date?: DateTimeInput;
-}
-
-export interface VideoUpdateManyDataInput {
-  title?: String;
-  description?: String;
-  publish_date?: DateTimeInput;
-  file_url?: String;
-  video_duration?: Int;
-  preview_url?: String;
-  preview_video_url?: String;
-  preview_video_duration?: String;
-}
-
-export interface VideoWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  createdAt?: DateTimeInput;
-  createdAt_not?: DateTimeInput;
-  createdAt_in?: DateTimeInput[] | DateTimeInput;
-  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
-  createdAt_lt?: DateTimeInput;
-  createdAt_lte?: DateTimeInput;
-  createdAt_gt?: DateTimeInput;
-  createdAt_gte?: DateTimeInput;
-  updatedAt?: DateTimeInput;
-  updatedAt_not?: DateTimeInput;
-  updatedAt_in?: DateTimeInput[] | DateTimeInput;
-  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
-  updatedAt_lt?: DateTimeInput;
-  updatedAt_lte?: DateTimeInput;
-  updatedAt_gt?: DateTimeInput;
-  updatedAt_gte?: DateTimeInput;
-  title?: String;
-  title_not?: String;
-  title_in?: String[] | String;
-  title_not_in?: String[] | String;
-  title_lt?: String;
-  title_lte?: String;
-  title_gt?: String;
-  title_gte?: String;
-  title_contains?: String;
-  title_not_contains?: String;
-  title_starts_with?: String;
-  title_not_starts_with?: String;
-  title_ends_with?: String;
-  title_not_ends_with?: String;
-  description?: String;
-  description_not?: String;
-  description_in?: String[] | String;
-  description_not_in?: String[] | String;
-  description_lt?: String;
-  description_lte?: String;
-  description_gt?: String;
-  description_gte?: String;
-  description_contains?: String;
-  description_not_contains?: String;
-  description_starts_with?: String;
-  description_not_starts_with?: String;
-  description_ends_with?: String;
-  description_not_ends_with?: String;
-  publish_date?: DateTimeInput;
-  publish_date_not?: DateTimeInput;
-  publish_date_in?: DateTimeInput[] | DateTimeInput;
-  publish_date_not_in?: DateTimeInput[] | DateTimeInput;
-  publish_date_lt?: DateTimeInput;
-  publish_date_lte?: DateTimeInput;
-  publish_date_gt?: DateTimeInput;
-  publish_date_gte?: DateTimeInput;
-  file_url?: String;
-  file_url_not?: String;
-  file_url_in?: String[] | String;
-  file_url_not_in?: String[] | String;
-  file_url_lt?: String;
-  file_url_lte?: String;
-  file_url_gt?: String;
-  file_url_gte?: String;
-  file_url_contains?: String;
-  file_url_not_contains?: String;
-  file_url_starts_with?: String;
-  file_url_not_starts_with?: String;
-  file_url_ends_with?: String;
-  file_url_not_ends_with?: String;
-  video_duration?: Int;
-  video_duration_not?: Int;
-  video_duration_in?: Int[] | Int;
-  video_duration_not_in?: Int[] | Int;
-  video_duration_lt?: Int;
-  video_duration_lte?: Int;
-  video_duration_gt?: Int;
-  video_duration_gte?: Int;
-  preview_url?: String;
-  preview_url_not?: String;
-  preview_url_in?: String[] | String;
-  preview_url_not_in?: String[] | String;
-  preview_url_lt?: String;
-  preview_url_lte?: String;
-  preview_url_gt?: String;
-  preview_url_gte?: String;
-  preview_url_contains?: String;
-  preview_url_not_contains?: String;
-  preview_url_starts_with?: String;
-  preview_url_not_starts_with?: String;
-  preview_url_ends_with?: String;
-  preview_url_not_ends_with?: String;
-  preview_video_url?: String;
-  preview_video_url_not?: String;
-  preview_video_url_in?: String[] | String;
-  preview_video_url_not_in?: String[] | String;
-  preview_video_url_lt?: String;
-  preview_video_url_lte?: String;
-  preview_video_url_gt?: String;
-  preview_video_url_gte?: String;
-  preview_video_url_contains?: String;
-  preview_video_url_not_contains?: String;
-  preview_video_url_starts_with?: String;
-  preview_video_url_not_starts_with?: String;
-  preview_video_url_ends_with?: String;
-  preview_video_url_not_ends_with?: String;
-  preview_video_duration?: String;
-  preview_video_duration_not?: String;
-  preview_video_duration_in?: String[] | String;
-  preview_video_duration_not_in?: String[] | String;
-  preview_video_duration_lt?: String;
-  preview_video_duration_lte?: String;
-  preview_video_duration_gt?: String;
-  preview_video_duration_gte?: String;
-  preview_video_duration_contains?: String;
-  preview_video_duration_not_contains?: String;
-  preview_video_duration_starts_with?: String;
-  preview_video_duration_not_starts_with?: String;
-  preview_video_duration_ends_with?: String;
-  preview_video_duration_not_ends_with?: String;
-  author?: UserWhereInput;
-  categories_every?: CategoryWhereInput;
-  categories_some?: CategoryWhereInput;
-  categories_none?: CategoryWhereInput;
-  like_users_every?: UserWhereInput;
-  like_users_some?: UserWhereInput;
-  like_users_none?: UserWhereInput;
-  watched_users_every?: UserWhereInput;
-  watched_users_some?: UserWhereInput;
-  watched_users_none?: UserWhereInput;
-  tags_every?: TagWhereInput;
-  tags_some?: TagWhereInput;
-  tags_none?: TagWhereInput;
-  AND?: VideoWhereInput[] | VideoWhereInput;
-  OR?: VideoWhereInput[] | VideoWhereInput;
-  NOT?: VideoWhereInput[] | VideoWhereInput;
-}
-
-export interface UserUpdateManyWithoutSubscribed_usersInput {
-  create?:
-    | UserCreateWithoutSubscribed_usersInput[]
-    | UserCreateWithoutSubscribed_usersInput;
-  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  set?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  update?:
-    | UserUpdateWithWhereUniqueWithoutSubscribed_usersInput[]
-    | UserUpdateWithWhereUniqueWithoutSubscribed_usersInput;
-  upsert?:
-    | UserUpsertWithWhereUniqueWithoutSubscribed_usersInput[]
-    | UserUpsertWithWhereUniqueWithoutSubscribed_usersInput;
-  deleteMany?: UserScalarWhereInput[] | UserScalarWhereInput;
-  updateMany?:
-    | UserUpdateManyWithWhereNestedInput[]
-    | UserUpdateManyWithWhereNestedInput;
-}
-
-export interface CategorySubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: CategoryWhereInput;
-  AND?: CategorySubscriptionWhereInput[] | CategorySubscriptionWhereInput;
-  OR?: CategorySubscriptionWhereInput[] | CategorySubscriptionWhereInput;
-  NOT?: CategorySubscriptionWhereInput[] | CategorySubscriptionWhereInput;
-}
-
-export interface UserUpdateWithWhereUniqueWithoutSubscribed_usersInput {
-  where: UserWhereUniqueInput;
-  data: UserUpdateWithoutSubscribed_usersDataInput;
-}
-
-export type PostWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
-
-export interface UserUpdateWithoutSubscribed_usersDataInput {
-  firstname?: String;
-  lastname?: String;
-  username?: String;
-  email?: String;
-  phone?: String;
-  role?: UserRole;
-  password_hash?: String;
-  password_salt?: String;
-  avatar?: String;
-  background_image?: String;
-  about_text?: String;
-  my_videos?: VideoUpdateManyWithoutAuthorInput;
-  liked_videos?: VideoUpdateManyWithoutLike_usersInput;
-  watched_videos?: VideoUpdateManyWithoutWatched_usersInput;
-  my_subscription_users?: UserUpdateManyWithoutSubscribed_usersInput;
-  billing_subscription_active?: Boolean;
-  stripe_customer_id?: String;
-  stripe_subsciption_json?: Json;
-  last_login_date?: DateTimeInput;
-}
-
-export interface TagUpdateInput {
-  text?: String;
-  videos?: VideoUpdateManyWithoutTagsInput;
+export interface WatchedVideoUserUpdateManyDataInput {
+  watched_seconds?: Int;
 }
 
 export interface UserUpsertWithWhereUniqueWithoutSubscribed_usersInput {
   where: UserWhereUniqueInput;
   update: UserUpdateWithoutSubscribed_usersDataInput;
   create: UserCreateWithoutSubscribed_usersInput;
-}
-
-export interface RestoreCodeCreateInput {
-  email: String;
-  valid_until: DateTimeInput;
-  code: String;
 }
 
 export interface UserScalarWhereInput {
@@ -2583,6 +3723,46 @@ export interface UserScalarWhereInput {
   about_text_not_starts_with?: String;
   about_text_ends_with?: String;
   about_text_not_ends_with?: String;
+  promo_code?: String;
+  promo_code_not?: String;
+  promo_code_in?: String[] | String;
+  promo_code_not_in?: String[] | String;
+  promo_code_lt?: String;
+  promo_code_lte?: String;
+  promo_code_gt?: String;
+  promo_code_gte?: String;
+  promo_code_contains?: String;
+  promo_code_not_contains?: String;
+  promo_code_starts_with?: String;
+  promo_code_not_starts_with?: String;
+  promo_code_ends_with?: String;
+  promo_code_not_ends_with?: String;
+  payout_amount?: Int;
+  payout_amount_not?: Int;
+  payout_amount_in?: Int[] | Int;
+  payout_amount_not_in?: Int[] | Int;
+  payout_amount_lt?: Int;
+  payout_amount_lte?: Int;
+  payout_amount_gt?: Int;
+  payout_amount_gte?: Int;
+  payout_months_total?: Int;
+  payout_months_total_not?: Int;
+  payout_months_total_in?: Int[] | Int;
+  payout_months_total_not_in?: Int[] | Int;
+  payout_months_total_lt?: Int;
+  payout_months_total_lte?: Int;
+  payout_months_total_gt?: Int;
+  payout_months_total_gte?: Int;
+  payout_months_left?: Int;
+  payout_months_left_not?: Int;
+  payout_months_left_in?: Int[] | Int;
+  payout_months_left_not_in?: Int[] | Int;
+  payout_months_left_lt?: Int;
+  payout_months_left_lte?: Int;
+  payout_months_left_gt?: Int;
+  payout_months_left_gte?: Int;
+  payout_enabled?: Boolean;
+  payout_enabled_not?: Boolean;
   billing_subscription_active?: Boolean;
   billing_subscription_active_not?: Boolean;
   stripe_customer_id?: String;
@@ -2612,38 +3792,9 @@ export interface UserScalarWhereInput {
   NOT?: UserScalarWhereInput[] | UserScalarWhereInput;
 }
 
-export interface UserCreateInput {
-  firstname?: String;
-  lastname?: String;
-  username?: String;
-  email: String;
-  phone?: String;
-  role?: UserRole;
-  password_hash: String;
-  password_salt: String;
-  avatar?: String;
-  background_image?: String;
-  about_text?: String;
-  my_videos?: VideoCreateManyWithoutAuthorInput;
-  liked_videos?: VideoCreateManyWithoutLike_usersInput;
-  watched_videos?: VideoCreateManyWithoutWatched_usersInput;
-  my_subscription_users?: UserCreateManyWithoutSubscribed_usersInput;
-  subscribed_users?: UserCreateManyWithoutMy_subscription_usersInput;
-  billing_subscription_active?: Boolean;
-  stripe_customer_id?: String;
-  stripe_subsciption_json?: Json;
-  last_login_date?: DateTimeInput;
-}
-
 export interface UserUpdateManyWithWhereNestedInput {
   where: UserScalarWhereInput;
   data: UserUpdateManyDataInput;
-}
-
-export interface CategoryCreateInput {
-  title: String;
-  description?: String;
-  videos?: VideoCreateManyWithoutCategoriesInput;
 }
 
 export interface UserUpdateManyDataInput {
@@ -2658,15 +3809,15 @@ export interface UserUpdateManyDataInput {
   avatar?: String;
   background_image?: String;
   about_text?: String;
+  promo_code?: String;
+  payout_amount?: Int;
+  payout_months_total?: Int;
+  payout_months_left?: Int;
+  payout_enabled?: Boolean;
   billing_subscription_active?: Boolean;
   stripe_customer_id?: String;
   stripe_subsciption_json?: Json;
   last_login_date?: DateTimeInput;
-}
-
-export interface CategoryCreateWithoutVideosInput {
-  title: String;
-  description?: String;
 }
 
 export interface UserUpdateManyWithoutMy_subscription_usersInput {
@@ -2689,7 +3840,64 @@ export interface UserUpdateManyWithoutMy_subscription_usersInput {
     | UserUpdateManyWithWhereNestedInput;
 }
 
-export interface TagWhereInput {
+export interface UserUpdateWithWhereUniqueWithoutMy_subscription_usersInput {
+  where: UserWhereUniqueInput;
+  data: UserUpdateWithoutMy_subscription_usersDataInput;
+}
+
+export interface UserUpdateWithoutMy_subscription_usersDataInput {
+  firstname?: String;
+  lastname?: String;
+  username?: String;
+  email?: String;
+  phone?: String;
+  role?: UserRole;
+  password_hash?: String;
+  password_salt?: String;
+  avatar?: String;
+  background_image?: String;
+  about_text?: String;
+  promo_code?: String;
+  payout_amount?: Int;
+  payout_months_total?: Int;
+  payout_months_left?: Int;
+  payout_enabled?: Boolean;
+  artist?: UserUpdateOneWithoutUsersInput;
+  users?: UserUpdateManyWithoutArtistInput;
+  my_videos?: VideoUpdateManyWithoutAuthorInput;
+  liked_videos?: VideoUpdateManyWithoutLike_usersInput;
+  watched_videos?: WatchedVideoUserUpdateManyWithoutUserInput;
+  subscribed_users?: UserUpdateManyWithoutMy_subscription_usersInput;
+  billing_subscription_active?: Boolean;
+  stripe_customer_id?: String;
+  stripe_subsciption_json?: Json;
+  last_login_date?: DateTimeInput;
+}
+
+export interface UserUpsertWithWhereUniqueWithoutMy_subscription_usersInput {
+  where: UserWhereUniqueInput;
+  update: UserUpdateWithoutMy_subscription_usersDataInput;
+  create: UserCreateWithoutMy_subscription_usersInput;
+}
+
+export interface UserUpsertWithoutWatched_videosInput {
+  update: UserUpdateWithoutWatched_videosDataInput;
+  create: UserCreateWithoutWatched_videosInput;
+}
+
+export interface WatchedVideoUserUpsertWithWhereUniqueWithoutVideoInput {
+  where: WatchedVideoUserWhereUniqueInput;
+  update: WatchedVideoUserUpdateWithoutVideoDataInput;
+  create: WatchedVideoUserCreateWithoutVideoInput;
+}
+
+export interface VideoUpsertWithWhereUniqueWithoutLike_usersInput {
+  where: VideoWhereUniqueInput;
+  update: VideoUpdateWithoutLike_usersDataInput;
+  create: VideoCreateWithoutLike_usersInput;
+}
+
+export interface VideoScalarWhereInput {
   id?: ID_Input;
   id_not?: ID_Input;
   id_in?: ID_Input[] | ID_Input;
@@ -2720,34 +3928,119 @@ export interface TagWhereInput {
   updatedAt_lte?: DateTimeInput;
   updatedAt_gt?: DateTimeInput;
   updatedAt_gte?: DateTimeInput;
-  text?: String;
-  text_not?: String;
-  text_in?: String[] | String;
-  text_not_in?: String[] | String;
-  text_lt?: String;
-  text_lte?: String;
-  text_gt?: String;
-  text_gte?: String;
-  text_contains?: String;
-  text_not_contains?: String;
-  text_starts_with?: String;
-  text_not_starts_with?: String;
-  text_ends_with?: String;
-  text_not_ends_with?: String;
-  videos_every?: VideoWhereInput;
-  videos_some?: VideoWhereInput;
-  videos_none?: VideoWhereInput;
-  AND?: TagWhereInput[] | TagWhereInput;
-  OR?: TagWhereInput[] | TagWhereInput;
-  NOT?: TagWhereInput[] | TagWhereInput;
+  title?: String;
+  title_not?: String;
+  title_in?: String[] | String;
+  title_not_in?: String[] | String;
+  title_lt?: String;
+  title_lte?: String;
+  title_gt?: String;
+  title_gte?: String;
+  title_contains?: String;
+  title_not_contains?: String;
+  title_starts_with?: String;
+  title_not_starts_with?: String;
+  title_ends_with?: String;
+  title_not_ends_with?: String;
+  description?: String;
+  description_not?: String;
+  description_in?: String[] | String;
+  description_not_in?: String[] | String;
+  description_lt?: String;
+  description_lte?: String;
+  description_gt?: String;
+  description_gte?: String;
+  description_contains?: String;
+  description_not_contains?: String;
+  description_starts_with?: String;
+  description_not_starts_with?: String;
+  description_ends_with?: String;
+  description_not_ends_with?: String;
+  publish_date?: DateTimeInput;
+  publish_date_not?: DateTimeInput;
+  publish_date_in?: DateTimeInput[] | DateTimeInput;
+  publish_date_not_in?: DateTimeInput[] | DateTimeInput;
+  publish_date_lt?: DateTimeInput;
+  publish_date_lte?: DateTimeInput;
+  publish_date_gt?: DateTimeInput;
+  publish_date_gte?: DateTimeInput;
+  file_url?: String;
+  file_url_not?: String;
+  file_url_in?: String[] | String;
+  file_url_not_in?: String[] | String;
+  file_url_lt?: String;
+  file_url_lte?: String;
+  file_url_gt?: String;
+  file_url_gte?: String;
+  file_url_contains?: String;
+  file_url_not_contains?: String;
+  file_url_starts_with?: String;
+  file_url_not_starts_with?: String;
+  file_url_ends_with?: String;
+  file_url_not_ends_with?: String;
+  video_duration?: Int;
+  video_duration_not?: Int;
+  video_duration_in?: Int[] | Int;
+  video_duration_not_in?: Int[] | Int;
+  video_duration_lt?: Int;
+  video_duration_lte?: Int;
+  video_duration_gt?: Int;
+  video_duration_gte?: Int;
+  preview_url?: String;
+  preview_url_not?: String;
+  preview_url_in?: String[] | String;
+  preview_url_not_in?: String[] | String;
+  preview_url_lt?: String;
+  preview_url_lte?: String;
+  preview_url_gt?: String;
+  preview_url_gte?: String;
+  preview_url_contains?: String;
+  preview_url_not_contains?: String;
+  preview_url_starts_with?: String;
+  preview_url_not_starts_with?: String;
+  preview_url_ends_with?: String;
+  preview_url_not_ends_with?: String;
+  preview_video_url?: String;
+  preview_video_url_not?: String;
+  preview_video_url_in?: String[] | String;
+  preview_video_url_not_in?: String[] | String;
+  preview_video_url_lt?: String;
+  preview_video_url_lte?: String;
+  preview_video_url_gt?: String;
+  preview_video_url_gte?: String;
+  preview_video_url_contains?: String;
+  preview_video_url_not_contains?: String;
+  preview_video_url_starts_with?: String;
+  preview_video_url_not_starts_with?: String;
+  preview_video_url_ends_with?: String;
+  preview_video_url_not_ends_with?: String;
+  preview_video_duration?: String;
+  preview_video_duration_not?: String;
+  preview_video_duration_in?: String[] | String;
+  preview_video_duration_not_in?: String[] | String;
+  preview_video_duration_lt?: String;
+  preview_video_duration_lte?: String;
+  preview_video_duration_gt?: String;
+  preview_video_duration_gte?: String;
+  preview_video_duration_contains?: String;
+  preview_video_duration_not_contains?: String;
+  preview_video_duration_starts_with?: String;
+  preview_video_duration_not_starts_with?: String;
+  preview_video_duration_ends_with?: String;
+  preview_video_duration_not_ends_with?: String;
+  deleted?: Boolean;
+  deleted_not?: Boolean;
+  AND?: VideoScalarWhereInput[] | VideoScalarWhereInput;
+  OR?: VideoScalarWhereInput[] | VideoScalarWhereInput;
+  NOT?: VideoScalarWhereInput[] | VideoScalarWhereInput;
 }
 
-export interface UserUpdateWithWhereUniqueWithoutMy_subscription_usersInput {
-  where: UserWhereUniqueInput;
-  data: UserUpdateWithoutMy_subscription_usersDataInput;
+export interface VideoUpdateManyWithWhereNestedInput {
+  where: VideoScalarWhereInput;
+  data: VideoUpdateManyDataInput;
 }
 
-export interface VideoUpdateWithoutTagsDataInput {
+export interface VideoUpdateManyDataInput {
   title?: String;
   description?: String;
   publish_date?: DateTimeInput;
@@ -2756,32 +4049,100 @@ export interface VideoUpdateWithoutTagsDataInput {
   preview_url?: String;
   preview_video_url?: String;
   preview_video_duration?: String;
-  author?: UserUpdateOneRequiredWithoutMy_videosInput;
-  categories?: CategoryUpdateManyWithoutVideosInput;
-  like_users?: UserUpdateManyWithoutLiked_videosInput;
-  watched_users?: UserUpdateManyWithoutWatched_videosInput;
+  deleted?: Boolean;
 }
 
-export interface UserUpdateWithoutMy_subscription_usersDataInput {
+export interface UserUpsertWithWhereUniqueWithoutArtistInput {
+  where: UserWhereUniqueInput;
+  update: UserUpdateWithoutArtistDataInput;
+  create: UserCreateWithoutArtistInput;
+}
+
+export interface UserUpsertWithWhereUniqueWithoutLiked_videosInput {
+  where: UserWhereUniqueInput;
+  update: UserUpdateWithoutLiked_videosDataInput;
+  create: UserCreateWithoutLiked_videosInput;
+}
+
+export interface VideoUpsertWithWhereUniqueWithoutAuthorInput {
+  where: VideoWhereUniqueInput;
+  update: VideoUpdateWithoutAuthorDataInput;
+  create: VideoCreateWithoutAuthorInput;
+}
+
+export interface UserUpsertWithoutUsersInput {
+  update: UserUpdateWithoutUsersDataInput;
+  create: UserCreateWithoutUsersInput;
+}
+
+export interface UserUpsertWithoutMy_videosInput {
+  update: UserUpdateWithoutMy_videosDataInput;
+  create: UserCreateWithoutMy_videosInput;
+}
+
+export interface VideoUpsertWithWhereUniqueWithoutCategoriesInput {
+  where: VideoWhereUniqueInput;
+  update: VideoUpdateWithoutCategoriesDataInput;
+  create: VideoCreateWithoutCategoriesInput;
+}
+
+export interface CategoryUpdateManyMutationInput {
+  title?: String;
+  description?: String;
+}
+
+export interface ChargeHistoryCreateInput {
+  user: UserCreateOneInput;
+  amount: Int;
+  chargeDate?: DateTimeInput;
+}
+
+export interface UserCreateOneInput {
+  create?: UserCreateInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface UserCreateInput {
   firstname?: String;
   lastname?: String;
   username?: String;
-  email?: String;
+  email: String;
   phone?: String;
   role?: UserRole;
-  password_hash?: String;
-  password_salt?: String;
+  password_hash: String;
+  password_salt: String;
   avatar?: String;
   background_image?: String;
   about_text?: String;
-  my_videos?: VideoUpdateManyWithoutAuthorInput;
-  liked_videos?: VideoUpdateManyWithoutLike_usersInput;
-  watched_videos?: VideoUpdateManyWithoutWatched_usersInput;
-  subscribed_users?: UserUpdateManyWithoutMy_subscription_usersInput;
+  promo_code?: String;
+  payout_amount?: Int;
+  payout_months_total?: Int;
+  payout_months_left?: Int;
+  payout_enabled?: Boolean;
+  artist?: UserCreateOneWithoutUsersInput;
+  users?: UserCreateManyWithoutArtistInput;
+  my_videos?: VideoCreateManyWithoutAuthorInput;
+  liked_videos?: VideoCreateManyWithoutLike_usersInput;
+  watched_videos?: WatchedVideoUserCreateManyWithoutUserInput;
+  my_subscription_users?: UserCreateManyWithoutSubscribed_usersInput;
+  subscribed_users?: UserCreateManyWithoutMy_subscription_usersInput;
   billing_subscription_active?: Boolean;
   stripe_customer_id?: String;
   stripe_subsciption_json?: Json;
   last_login_date?: DateTimeInput;
+}
+
+export interface ChargeHistoryUpdateInput {
+  user?: UserUpdateOneRequiredInput;
+  amount?: Int;
+  chargeDate?: DateTimeInput;
+}
+
+export interface UserUpdateOneRequiredInput {
+  create?: UserCreateInput;
+  update?: UserUpdateDataInput;
+  upsert?: UserUpsertNestedInput;
+  connect?: UserWhereUniqueInput;
 }
 
 export interface UserUpdateDataInput {
@@ -2796,9 +4157,16 @@ export interface UserUpdateDataInput {
   avatar?: String;
   background_image?: String;
   about_text?: String;
+  promo_code?: String;
+  payout_amount?: Int;
+  payout_months_total?: Int;
+  payout_months_left?: Int;
+  payout_enabled?: Boolean;
+  artist?: UserUpdateOneWithoutUsersInput;
+  users?: UserUpdateManyWithoutArtistInput;
   my_videos?: VideoUpdateManyWithoutAuthorInput;
   liked_videos?: VideoUpdateManyWithoutLike_usersInput;
-  watched_videos?: VideoUpdateManyWithoutWatched_usersInput;
+  watched_videos?: WatchedVideoUserUpdateManyWithoutUserInput;
   my_subscription_users?: UserUpdateManyWithoutSubscribed_usersInput;
   subscribed_users?: UserUpdateManyWithoutMy_subscription_usersInput;
   billing_subscription_active?: Boolean;
@@ -2807,39 +4175,373 @@ export interface UserUpdateDataInput {
   last_login_date?: DateTimeInput;
 }
 
-export interface UserUpsertWithWhereUniqueWithoutWatched_videosInput {
-  where: UserWhereUniqueInput;
-  update: UserUpdateWithoutWatched_videosDataInput;
-  create: UserCreateWithoutWatched_videosInput;
+export interface UserUpsertNestedInput {
+  update: UserUpdateDataInput;
+  create: UserCreateInput;
 }
 
-export interface VideoUpsertWithWhereUniqueWithoutAuthorInput {
-  where: VideoWhereUniqueInput;
-  update: VideoUpdateWithoutAuthorDataInput;
-  create: VideoCreateWithoutAuthorInput;
+export interface ChargeHistoryUpdateManyMutationInput {
+  amount?: Int;
+  chargeDate?: DateTimeInput;
 }
 
-export interface UserUpsertWithWhereUniqueWithoutLiked_videosInput {
-  where: UserWhereUniqueInput;
-  update: UserUpdateWithoutLiked_videosDataInput;
-  create: UserCreateWithoutLiked_videosInput;
+export interface CurriculumCreateInput {
+  title: String;
+  text: String;
+  order?: Int;
+  author: UserCreateOneInput;
 }
 
-export interface UserUpsertWithWhereUniqueWithoutMy_subscription_usersInput {
-  where: UserWhereUniqueInput;
-  update: UserUpdateWithoutMy_subscription_usersDataInput;
-  create: UserCreateWithoutMy_subscription_usersInput;
+export interface CurriculumUpdateInput {
+  title?: String;
+  text?: String;
+  order?: Int;
+  author?: UserUpdateOneRequiredInput;
 }
 
-export interface ActivationCodeUpdateInput {
+export interface CurriculumUpdateManyMutationInput {
+  title?: String;
+  text?: String;
+  order?: Int;
+}
+
+export interface PayoutPlanCreateInput {
+  artist_id: Int;
+  user_id: Int;
+  year: Int;
+  month: Int;
+  amount: Int;
+  ignore_statis?: Boolean;
+  paid_status?: Boolean;
+  paid_date?: DateTimeInput;
+}
+
+export interface PayoutPlanUpdateInput {
+  artist_id?: Int;
+  user_id?: Int;
+  year?: Int;
+  month?: Int;
+  amount?: Int;
+  ignore_statis?: Boolean;
+  paid_status?: Boolean;
+  paid_date?: DateTimeInput;
+}
+
+export interface PayoutPlanUpdateManyMutationInput {
+  artist_id?: Int;
+  user_id?: Int;
+  year?: Int;
+  month?: Int;
+  amount?: Int;
+  ignore_statis?: Boolean;
+  paid_status?: Boolean;
+  paid_date?: DateTimeInput;
+}
+
+export interface PayoutTransactionCreateInput {
+  artist_id: Int;
+  year: Int;
+  month: Int;
+  amount: Int;
+  paid_status?: Boolean;
+  paid_date?: DateTimeInput;
+}
+
+export interface PayoutTransactionUpdateInput {
+  artist_id?: Int;
+  year?: Int;
+  month?: Int;
+  amount?: Int;
+  paid_status?: Boolean;
+  paid_date?: DateTimeInput;
+}
+
+export interface PayoutTransactionUpdateManyMutationInput {
+  artist_id?: Int;
+  year?: Int;
+  month?: Int;
+  amount?: Int;
+  paid_status?: Boolean;
+  paid_date?: DateTimeInput;
+}
+
+export interface PlayHistoryCreateInput {
+  user: UserCreateOneInput;
+  video: VideoCreateOneInput;
+  playSeconds: Int;
+  realPlaySeconds: Int;
+}
+
+export interface VideoCreateOneInput {
+  create?: VideoCreateInput;
+  connect?: VideoWhereUniqueInput;
+}
+
+export interface VideoCreateInput {
+  title?: String;
+  description?: String;
+  publish_date?: DateTimeInput;
+  file_url?: String;
+  video_duration?: Int;
+  preview_url?: String;
+  preview_video_url?: String;
+  preview_video_duration?: String;
+  author: UserCreateOneWithoutMy_videosInput;
+  categories?: CategoryCreateManyWithoutVideosInput;
+  like_users?: UserCreateManyWithoutLiked_videosInput;
+  watched_users?: WatchedVideoUserCreateManyWithoutVideoInput;
+  tags?: TagCreateManyWithoutVideosInput;
+  deleted?: Boolean;
+}
+
+export interface PlayHistoryUpdateInput {
+  user?: UserUpdateOneRequiredInput;
+  video?: VideoUpdateOneRequiredInput;
+  playSeconds?: Int;
+  realPlaySeconds?: Int;
+}
+
+export interface VideoUpdateOneRequiredInput {
+  create?: VideoCreateInput;
+  update?: VideoUpdateDataInput;
+  upsert?: VideoUpsertNestedInput;
+  connect?: VideoWhereUniqueInput;
+}
+
+export interface VideoUpdateDataInput {
+  title?: String;
+  description?: String;
+  publish_date?: DateTimeInput;
+  file_url?: String;
+  video_duration?: Int;
+  preview_url?: String;
+  preview_video_url?: String;
+  preview_video_duration?: String;
+  author?: UserUpdateOneRequiredWithoutMy_videosInput;
+  categories?: CategoryUpdateManyWithoutVideosInput;
+  like_users?: UserUpdateManyWithoutLiked_videosInput;
+  watched_users?: WatchedVideoUserUpdateManyWithoutVideoInput;
+  tags?: TagUpdateManyWithoutVideosInput;
+  deleted?: Boolean;
+}
+
+export interface VideoUpsertNestedInput {
+  update: VideoUpdateDataInput;
+  create: VideoCreateInput;
+}
+
+export interface PlayHistoryUpdateManyMutationInput {
+  playSeconds?: Int;
+  realPlaySeconds?: Int;
+}
+
+export interface PostCreateInput {
+  title: String;
+  mainImageUrl?: String;
+  text: String;
+  author: UserCreateOneInput;
+}
+
+export interface PostUpdateInput {
+  title?: String;
+  mainImageUrl?: String;
+  text?: String;
+  author?: UserUpdateOneRequiredInput;
+}
+
+export interface PostUpdateManyMutationInput {
+  title?: String;
+  mainImageUrl?: String;
+  text?: String;
+}
+
+export interface RestoreCodeCreateInput {
+  email: String;
+  valid_until: DateTimeInput;
+  code: String;
+}
+
+export interface RestoreCodeUpdateInput {
   email?: String;
   valid_until?: DateTimeInput;
   code?: String;
 }
 
+export interface RestoreCodeUpdateManyMutationInput {
+  email?: String;
+  valid_until?: DateTimeInput;
+  code?: String;
+}
+
+export interface SettingsCreateInput {
+  name: String;
+  int_val?: Int;
+  str_val?: String;
+}
+
+export interface SettingsUpdateInput {
+  name?: String;
+  int_val?: Int;
+  str_val?: String;
+}
+
+export interface SettingsUpdateManyMutationInput {
+  name?: String;
+  int_val?: Int;
+  str_val?: String;
+}
+
+export interface SubscriptionHistoryCreateInput {
+  user: UserCreateOneInput;
+  interval: String;
+  amount: Int;
+  subscriptionDate?: DateTimeInput;
+}
+
+export interface SubscriptionHistoryUpdateInput {
+  user?: UserUpdateOneRequiredInput;
+  interval?: String;
+  amount?: Int;
+  subscriptionDate?: DateTimeInput;
+}
+
+export interface SubscriptionHistoryUpdateManyMutationInput {
+  interval?: String;
+  amount?: Int;
+  subscriptionDate?: DateTimeInput;
+}
+
 export interface TagCreateInput {
   text: String;
   videos?: VideoCreateManyWithoutTagsInput;
+}
+
+export interface VideoCreateManyWithoutTagsInput {
+  create?: VideoCreateWithoutTagsInput[] | VideoCreateWithoutTagsInput;
+  connect?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
+}
+
+export interface VideoCreateWithoutTagsInput {
+  title?: String;
+  description?: String;
+  publish_date?: DateTimeInput;
+  file_url?: String;
+  video_duration?: Int;
+  preview_url?: String;
+  preview_video_url?: String;
+  preview_video_duration?: String;
+  author: UserCreateOneWithoutMy_videosInput;
+  categories?: CategoryCreateManyWithoutVideosInput;
+  like_users?: UserCreateManyWithoutLiked_videosInput;
+  watched_users?: WatchedVideoUserCreateManyWithoutVideoInput;
+  deleted?: Boolean;
+}
+
+export interface TagUpdateInput {
+  text?: String;
+  videos?: VideoUpdateManyWithoutTagsInput;
+}
+
+export interface VideoUpdateManyWithoutTagsInput {
+  create?: VideoCreateWithoutTagsInput[] | VideoCreateWithoutTagsInput;
+  delete?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
+  connect?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
+  set?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
+  disconnect?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
+  update?:
+    | VideoUpdateWithWhereUniqueWithoutTagsInput[]
+    | VideoUpdateWithWhereUniqueWithoutTagsInput;
+  upsert?:
+    | VideoUpsertWithWhereUniqueWithoutTagsInput[]
+    | VideoUpsertWithWhereUniqueWithoutTagsInput;
+  deleteMany?: VideoScalarWhereInput[] | VideoScalarWhereInput;
+  updateMany?:
+    | VideoUpdateManyWithWhereNestedInput[]
+    | VideoUpdateManyWithWhereNestedInput;
+}
+
+export interface VideoUpdateWithWhereUniqueWithoutTagsInput {
+  where: VideoWhereUniqueInput;
+  data: VideoUpdateWithoutTagsDataInput;
+}
+
+export interface VideoUpdateWithoutTagsDataInput {
+  title?: String;
+  description?: String;
+  publish_date?: DateTimeInput;
+  file_url?: String;
+  video_duration?: Int;
+  preview_url?: String;
+  preview_video_url?: String;
+  preview_video_duration?: String;
+  author?: UserUpdateOneRequiredWithoutMy_videosInput;
+  categories?: CategoryUpdateManyWithoutVideosInput;
+  like_users?: UserUpdateManyWithoutLiked_videosInput;
+  watched_users?: WatchedVideoUserUpdateManyWithoutVideoInput;
+  deleted?: Boolean;
+}
+
+export interface VideoUpsertWithWhereUniqueWithoutTagsInput {
+  where: VideoWhereUniqueInput;
+  update: VideoUpdateWithoutTagsDataInput;
+  create: VideoCreateWithoutTagsInput;
+}
+
+export interface TagUpdateManyMutationInput {
+  text?: String;
+}
+
+export interface UserUpdateInput {
+  firstname?: String;
+  lastname?: String;
+  username?: String;
+  email?: String;
+  phone?: String;
+  role?: UserRole;
+  password_hash?: String;
+  password_salt?: String;
+  avatar?: String;
+  background_image?: String;
+  about_text?: String;
+  promo_code?: String;
+  payout_amount?: Int;
+  payout_months_total?: Int;
+  payout_months_left?: Int;
+  payout_enabled?: Boolean;
+  artist?: UserUpdateOneWithoutUsersInput;
+  users?: UserUpdateManyWithoutArtistInput;
+  my_videos?: VideoUpdateManyWithoutAuthorInput;
+  liked_videos?: VideoUpdateManyWithoutLike_usersInput;
+  watched_videos?: WatchedVideoUserUpdateManyWithoutUserInput;
+  my_subscription_users?: UserUpdateManyWithoutSubscribed_usersInput;
+  subscribed_users?: UserUpdateManyWithoutMy_subscription_usersInput;
+  billing_subscription_active?: Boolean;
+  stripe_customer_id?: String;
+  stripe_subsciption_json?: Json;
+  last_login_date?: DateTimeInput;
+}
+
+export interface UserUpdateManyMutationInput {
+  firstname?: String;
+  lastname?: String;
+  username?: String;
+  email?: String;
+  phone?: String;
+  role?: UserRole;
+  password_hash?: String;
+  password_salt?: String;
+  avatar?: String;
+  background_image?: String;
+  about_text?: String;
+  promo_code?: String;
+  payout_amount?: Int;
+  payout_months_total?: Int;
+  payout_months_left?: Int;
+  payout_enabled?: Boolean;
+  billing_subscription_active?: Boolean;
+  stripe_customer_id?: String;
+  stripe_subsciption_json?: Json;
+  last_login_date?: DateTimeInput;
 }
 
 export interface VideoUpdateInput {
@@ -2854,11 +4556,12 @@ export interface VideoUpdateInput {
   author?: UserUpdateOneRequiredWithoutMy_videosInput;
   categories?: CategoryUpdateManyWithoutVideosInput;
   like_users?: UserUpdateManyWithoutLiked_videosInput;
-  watched_users?: UserUpdateManyWithoutWatched_videosInput;
+  watched_users?: WatchedVideoUserUpdateManyWithoutVideoInput;
   tags?: TagUpdateManyWithoutVideosInput;
+  deleted?: Boolean;
 }
 
-export interface VideoCreateWithoutAuthorInput {
+export interface VideoUpdateManyMutationInput {
   title?: String;
   description?: String;
   publish_date?: DateTimeInput;
@@ -2867,103 +4570,297 @@ export interface VideoCreateWithoutAuthorInput {
   preview_url?: String;
   preview_video_url?: String;
   preview_video_duration?: String;
-  categories?: CategoryCreateManyWithoutVideosInput;
-  like_users?: UserCreateManyWithoutLiked_videosInput;
-  watched_users?: UserCreateManyWithoutWatched_videosInput;
-  tags?: TagCreateManyWithoutVideosInput;
+  deleted?: Boolean;
 }
 
-export interface UserCreateWithoutMy_videosInput {
-  firstname?: String;
-  lastname?: String;
-  username?: String;
-  email: String;
-  phone?: String;
-  role?: UserRole;
-  password_hash: String;
-  password_salt: String;
-  avatar?: String;
-  background_image?: String;
-  about_text?: String;
-  liked_videos?: VideoCreateManyWithoutLike_usersInput;
-  watched_videos?: VideoCreateManyWithoutWatched_usersInput;
-  my_subscription_users?: UserCreateManyWithoutSubscribed_usersInput;
-  subscribed_users?: UserCreateManyWithoutMy_subscription_usersInput;
-  billing_subscription_active?: Boolean;
-  stripe_customer_id?: String;
-  stripe_subsciption_json?: Json;
-  last_login_date?: DateTimeInput;
+export interface WatchedVideoUserCreateInput {
+  video?: VideoCreateOneWithoutWatched_usersInput;
+  user: UserCreateOneWithoutWatched_videosInput;
+  watched_seconds?: Int;
+}
+
+export interface WatchedVideoUserUpdateInput {
+  video?: VideoUpdateOneWithoutWatched_usersInput;
+  user?: UserUpdateOneRequiredWithoutWatched_videosInput;
+  watched_seconds?: Int;
+}
+
+export interface WatchedVideoUserUpdateManyMutationInput {
+  watched_seconds?: Int;
+}
+
+export interface ActivationCodeSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: ActivationCodeWhereInput;
+  AND?:
+    | ActivationCodeSubscriptionWhereInput[]
+    | ActivationCodeSubscriptionWhereInput;
+  OR?:
+    | ActivationCodeSubscriptionWhereInput[]
+    | ActivationCodeSubscriptionWhereInput;
+  NOT?:
+    | ActivationCodeSubscriptionWhereInput[]
+    | ActivationCodeSubscriptionWhereInput;
+}
+
+export interface CategorySubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: CategoryWhereInput;
+  AND?: CategorySubscriptionWhereInput[] | CategorySubscriptionWhereInput;
+  OR?: CategorySubscriptionWhereInput[] | CategorySubscriptionWhereInput;
+  NOT?: CategorySubscriptionWhereInput[] | CategorySubscriptionWhereInput;
+}
+
+export interface ChargeHistorySubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: ChargeHistoryWhereInput;
+  AND?:
+    | ChargeHistorySubscriptionWhereInput[]
+    | ChargeHistorySubscriptionWhereInput;
+  OR?:
+    | ChargeHistorySubscriptionWhereInput[]
+    | ChargeHistorySubscriptionWhereInput;
+  NOT?:
+    | ChargeHistorySubscriptionWhereInput[]
+    | ChargeHistorySubscriptionWhereInput;
+}
+
+export interface CurriculumSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: CurriculumWhereInput;
+  AND?: CurriculumSubscriptionWhereInput[] | CurriculumSubscriptionWhereInput;
+  OR?: CurriculumSubscriptionWhereInput[] | CurriculumSubscriptionWhereInput;
+  NOT?: CurriculumSubscriptionWhereInput[] | CurriculumSubscriptionWhereInput;
+}
+
+export interface PayoutPlanSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: PayoutPlanWhereInput;
+  AND?: PayoutPlanSubscriptionWhereInput[] | PayoutPlanSubscriptionWhereInput;
+  OR?: PayoutPlanSubscriptionWhereInput[] | PayoutPlanSubscriptionWhereInput;
+  NOT?: PayoutPlanSubscriptionWhereInput[] | PayoutPlanSubscriptionWhereInput;
+}
+
+export interface PayoutTransactionSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: PayoutTransactionWhereInput;
+  AND?:
+    | PayoutTransactionSubscriptionWhereInput[]
+    | PayoutTransactionSubscriptionWhereInput;
+  OR?:
+    | PayoutTransactionSubscriptionWhereInput[]
+    | PayoutTransactionSubscriptionWhereInput;
+  NOT?:
+    | PayoutTransactionSubscriptionWhereInput[]
+    | PayoutTransactionSubscriptionWhereInput;
+}
+
+export interface PlayHistorySubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: PlayHistoryWhereInput;
+  AND?: PlayHistorySubscriptionWhereInput[] | PlayHistorySubscriptionWhereInput;
+  OR?: PlayHistorySubscriptionWhereInput[] | PlayHistorySubscriptionWhereInput;
+  NOT?: PlayHistorySubscriptionWhereInput[] | PlayHistorySubscriptionWhereInput;
+}
+
+export interface PostSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: PostWhereInput;
+  AND?: PostSubscriptionWhereInput[] | PostSubscriptionWhereInput;
+  OR?: PostSubscriptionWhereInput[] | PostSubscriptionWhereInput;
+  NOT?: PostSubscriptionWhereInput[] | PostSubscriptionWhereInput;
+}
+
+export interface RestoreCodeSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: RestoreCodeWhereInput;
+  AND?: RestoreCodeSubscriptionWhereInput[] | RestoreCodeSubscriptionWhereInput;
+  OR?: RestoreCodeSubscriptionWhereInput[] | RestoreCodeSubscriptionWhereInput;
+  NOT?: RestoreCodeSubscriptionWhereInput[] | RestoreCodeSubscriptionWhereInput;
+}
+
+export interface SettingsSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: SettingsWhereInput;
+  AND?: SettingsSubscriptionWhereInput[] | SettingsSubscriptionWhereInput;
+  OR?: SettingsSubscriptionWhereInput[] | SettingsSubscriptionWhereInput;
+  NOT?: SettingsSubscriptionWhereInput[] | SettingsSubscriptionWhereInput;
+}
+
+export interface SubscriptionHistorySubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: SubscriptionHistoryWhereInput;
+  AND?:
+    | SubscriptionHistorySubscriptionWhereInput[]
+    | SubscriptionHistorySubscriptionWhereInput;
+  OR?:
+    | SubscriptionHistorySubscriptionWhereInput[]
+    | SubscriptionHistorySubscriptionWhereInput;
+  NOT?:
+    | SubscriptionHistorySubscriptionWhereInput[]
+    | SubscriptionHistorySubscriptionWhereInput;
+}
+
+export interface TagSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: TagWhereInput;
+  AND?: TagSubscriptionWhereInput[] | TagSubscriptionWhereInput;
+  OR?: TagSubscriptionWhereInput[] | TagSubscriptionWhereInput;
+  NOT?: TagSubscriptionWhereInput[] | TagSubscriptionWhereInput;
+}
+
+export interface UserSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: UserWhereInput;
+  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+}
+
+export interface VideoSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: VideoWhereInput;
+  AND?: VideoSubscriptionWhereInput[] | VideoSubscriptionWhereInput;
+  OR?: VideoSubscriptionWhereInput[] | VideoSubscriptionWhereInput;
+  NOT?: VideoSubscriptionWhereInput[] | VideoSubscriptionWhereInput;
+}
+
+export interface WatchedVideoUserSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: WatchedVideoUserWhereInput;
+  AND?:
+    | WatchedVideoUserSubscriptionWhereInput[]
+    | WatchedVideoUserSubscriptionWhereInput;
+  OR?:
+    | WatchedVideoUserSubscriptionWhereInput[]
+    | WatchedVideoUserSubscriptionWhereInput;
+  NOT?:
+    | WatchedVideoUserSubscriptionWhereInput[]
+    | WatchedVideoUserSubscriptionWhereInput;
 }
 
 export interface NodeNode {
   id: ID_Output;
 }
 
-export interface VideoPreviousValues {
+export interface ActivationCode {
   id: ID_Output;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
-  title?: String;
-  description?: String;
-  publish_date?: DateTimeOutput;
-  file_url?: String;
-  video_duration?: Int;
-  preview_url?: String;
-  preview_video_url?: String;
-  preview_video_duration?: String;
+  email: String;
+  valid_until: DateTimeOutput;
+  code: String;
 }
 
-export interface VideoPreviousValuesPromise
-  extends Promise<VideoPreviousValues>,
+export interface ActivationCodePromise
+  extends Promise<ActivationCode>,
     Fragmentable {
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
-  title: () => Promise<String>;
-  description: () => Promise<String>;
-  publish_date: () => Promise<DateTimeOutput>;
-  file_url: () => Promise<String>;
-  video_duration: () => Promise<Int>;
-  preview_url: () => Promise<String>;
-  preview_video_url: () => Promise<String>;
-  preview_video_duration: () => Promise<String>;
+  email: () => Promise<String>;
+  valid_until: () => Promise<DateTimeOutput>;
+  code: () => Promise<String>;
 }
 
-export interface VideoPreviousValuesSubscription
-  extends Promise<AsyncIterator<VideoPreviousValues>>,
+export interface ActivationCodeSubscription
+  extends Promise<AsyncIterator<ActivationCode>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  title: () => Promise<AsyncIterator<String>>;
-  description: () => Promise<AsyncIterator<String>>;
-  publish_date: () => Promise<AsyncIterator<DateTimeOutput>>;
-  file_url: () => Promise<AsyncIterator<String>>;
-  video_duration: () => Promise<AsyncIterator<Int>>;
-  preview_url: () => Promise<AsyncIterator<String>>;
-  preview_video_url: () => Promise<AsyncIterator<String>>;
-  preview_video_duration: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  valid_until: () => Promise<AsyncIterator<DateTimeOutput>>;
+  code: () => Promise<AsyncIterator<String>>;
 }
 
-export interface CategoryConnection {
+export interface ActivationCodeConnection {
   pageInfo: PageInfo;
-  edges: CategoryEdge[];
+  edges: ActivationCodeEdge[];
 }
 
-export interface CategoryConnectionPromise
-  extends Promise<CategoryConnection>,
+export interface ActivationCodeConnectionPromise
+  extends Promise<ActivationCodeConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<CategoryEdge>>() => T;
-  aggregate: <T = AggregateCategoryPromise>() => T;
+  edges: <T = FragmentableArray<ActivationCodeEdge>>() => T;
+  aggregate: <T = AggregateActivationCodePromise>() => T;
 }
 
-export interface CategoryConnectionSubscription
-  extends Promise<AsyncIterator<CategoryConnection>>,
+export interface ActivationCodeConnectionSubscription
+  extends Promise<AsyncIterator<ActivationCodeConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<CategoryEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateCategorySubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ActivationCodeEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateActivationCodeSubscription>() => T;
+}
+
+export interface PageInfo {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
+}
+
+export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
+}
+
+export interface PageInfoSubscription
+  extends Promise<AsyncIterator<PageInfo>>,
+    Fragmentable {
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface ActivationCodeEdge {
@@ -2985,51 +4882,6 @@ export interface ActivationCodeEdgeSubscription
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface Tag {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  text: String;
-}
-
-export interface TagPromise extends Promise<Tag>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  text: () => Promise<String>;
-  videos: <T = FragmentableArray<Video>>(
-    args?: {
-      where?: VideoWhereInput;
-      orderBy?: VideoOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-}
-
-export interface TagSubscription
-  extends Promise<AsyncIterator<Tag>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  text: () => Promise<AsyncIterator<String>>;
-  videos: <T = Promise<AsyncIterator<VideoSubscription>>>(
-    args?: {
-      where?: VideoWhereInput;
-      orderBy?: VideoOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-}
-
 export interface AggregateActivationCode {
   count: Int;
 }
@@ -3044,50 +4896,6 @@ export interface AggregateActivationCodeSubscription
   extends Promise<AsyncIterator<AggregateActivationCode>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface CategoryEdge {
-  node: Category;
-  cursor: String;
-}
-
-export interface CategoryEdgePromise
-  extends Promise<CategoryEdge>,
-    Fragmentable {
-  node: <T = CategoryPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface CategoryEdgeSubscription
-  extends Promise<AsyncIterator<CategoryEdge>>,
-    Fragmentable {
-  node: <T = CategorySubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface TagPreviousValues {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  text: String;
-}
-
-export interface TagPreviousValuesPromise
-  extends Promise<TagPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  text: () => Promise<String>;
-}
-
-export interface TagPreviousValuesSubscription
-  extends Promise<AsyncIterator<TagPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  text: () => Promise<AsyncIterator<String>>;
 }
 
 export interface Category {
@@ -3138,453 +4946,141 @@ export interface CategorySubscription
   ) => T;
 }
 
-export interface AggregateVideo {
-  count: Int;
-}
-
-export interface AggregateVideoPromise
-  extends Promise<AggregateVideo>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateVideoSubscription
-  extends Promise<AsyncIterator<AggregateVideo>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface BatchPayload {
-  count: Long;
-}
-
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
-    Fragmentable {
-  count: () => Promise<Long>;
-}
-
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
-}
-
-export interface AggregateUser {
-  count: Int;
-}
-
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface VideoEdge {
-  node: Video;
-  cursor: String;
-}
-
-export interface VideoEdgePromise extends Promise<VideoEdge>, Fragmentable {
-  node: <T = VideoPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface VideoEdgeSubscription
-  extends Promise<AsyncIterator<VideoEdge>>,
-    Fragmentable {
-  node: <T = VideoSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface UserConnection {
-  pageInfo: PageInfo;
-  edges: UserEdge[];
-}
-
-export interface UserConnectionPromise
-  extends Promise<UserConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<UserEdge>>() => T;
-  aggregate: <T = AggregateUserPromise>() => T;
-}
-
-export interface UserConnectionSubscription
-  extends Promise<AsyncIterator<UserConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateUserSubscription>() => T;
-}
-
-export interface UserPreviousValues {
+export interface Video {
   id: ID_Output;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
-  firstname?: String;
-  lastname?: String;
-  username?: String;
-  email: String;
-  phone?: String;
-  role: UserRole;
-  password_hash: String;
-  password_salt: String;
-  avatar?: String;
-  background_image?: String;
-  about_text?: String;
-  billing_subscription_active: Boolean;
-  stripe_customer_id?: String;
-  stripe_subsciption_json?: Json;
-  last_login_date?: DateTimeOutput;
-}
-
-export interface UserPreviousValuesPromise
-  extends Promise<UserPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  firstname: () => Promise<String>;
-  lastname: () => Promise<String>;
-  username: () => Promise<String>;
-  email: () => Promise<String>;
-  phone: () => Promise<String>;
-  role: () => Promise<UserRole>;
-  password_hash: () => Promise<String>;
-  password_salt: () => Promise<String>;
-  avatar: () => Promise<String>;
-  background_image: () => Promise<String>;
-  about_text: () => Promise<String>;
-  billing_subscription_active: () => Promise<Boolean>;
-  stripe_customer_id: () => Promise<String>;
-  stripe_subsciption_json: () => Promise<Json>;
-  last_login_date: () => Promise<DateTimeOutput>;
-}
-
-export interface UserPreviousValuesSubscription
-  extends Promise<AsyncIterator<UserPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  firstname: () => Promise<AsyncIterator<String>>;
-  lastname: () => Promise<AsyncIterator<String>>;
-  username: () => Promise<AsyncIterator<String>>;
-  email: () => Promise<AsyncIterator<String>>;
-  phone: () => Promise<AsyncIterator<String>>;
-  role: () => Promise<AsyncIterator<UserRole>>;
-  password_hash: () => Promise<AsyncIterator<String>>;
-  password_salt: () => Promise<AsyncIterator<String>>;
-  avatar: () => Promise<AsyncIterator<String>>;
-  background_image: () => Promise<AsyncIterator<String>>;
-  about_text: () => Promise<AsyncIterator<String>>;
-  billing_subscription_active: () => Promise<AsyncIterator<Boolean>>;
-  stripe_customer_id: () => Promise<AsyncIterator<String>>;
-  stripe_subsciption_json: () => Promise<AsyncIterator<Json>>;
-  last_login_date: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface TagEdge {
-  node: Tag;
-  cursor: String;
-}
-
-export interface TagEdgePromise extends Promise<TagEdge>, Fragmentable {
-  node: <T = TagPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface TagEdgeSubscription
-  extends Promise<AsyncIterator<TagEdge>>,
-    Fragmentable {
-  node: <T = TagSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface UserSubscriptionPayload {
-  mutation: MutationType;
-  node: User;
-  updatedFields: String[];
-  previousValues: UserPreviousValues;
-}
-
-export interface UserSubscriptionPayloadPromise
-  extends Promise<UserSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = UserPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = UserPreviousValuesPromise>() => T;
-}
-
-export interface UserSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = UserSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = UserPreviousValuesSubscription>() => T;
-}
-
-export interface AggregateRestoreCode {
-  count: Int;
-}
-
-export interface AggregateRestoreCodePromise
-  extends Promise<AggregateRestoreCode>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateRestoreCodeSubscription
-  extends Promise<AsyncIterator<AggregateRestoreCode>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface ActivationCodeSubscriptionPayload {
-  mutation: MutationType;
-  node: ActivationCode;
-  updatedFields: String[];
-  previousValues: ActivationCodePreviousValues;
-}
-
-export interface ActivationCodeSubscriptionPayloadPromise
-  extends Promise<ActivationCodeSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = ActivationCodePromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = ActivationCodePreviousValuesPromise>() => T;
-}
-
-export interface ActivationCodeSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<ActivationCodeSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = ActivationCodeSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = ActivationCodePreviousValuesSubscription>() => T;
-}
-
-export interface RestoreCodeConnection {
-  pageInfo: PageInfo;
-  edges: RestoreCodeEdge[];
-}
-
-export interface RestoreCodeConnectionPromise
-  extends Promise<RestoreCodeConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<RestoreCodeEdge>>() => T;
-  aggregate: <T = AggregateRestoreCodePromise>() => T;
-}
-
-export interface RestoreCodeConnectionSubscription
-  extends Promise<AsyncIterator<RestoreCodeConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<RestoreCodeEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateRestoreCodeSubscription>() => T;
-}
-
-export interface ActivationCodePreviousValues {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  email: String;
-  valid_until: DateTimeOutput;
-  code: String;
-}
-
-export interface ActivationCodePreviousValuesPromise
-  extends Promise<ActivationCodePreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  email: () => Promise<String>;
-  valid_until: () => Promise<DateTimeOutput>;
-  code: () => Promise<String>;
-}
-
-export interface ActivationCodePreviousValuesSubscription
-  extends Promise<AsyncIterator<ActivationCodePreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  email: () => Promise<AsyncIterator<String>>;
-  valid_until: () => Promise<AsyncIterator<DateTimeOutput>>;
-  code: () => Promise<AsyncIterator<String>>;
-}
-
-export interface RestoreCode {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  email: String;
-  valid_until: DateTimeOutput;
-  code: String;
-}
-
-export interface RestoreCodePromise extends Promise<RestoreCode>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  email: () => Promise<String>;
-  valid_until: () => Promise<DateTimeOutput>;
-  code: () => Promise<String>;
-}
-
-export interface RestoreCodeSubscription
-  extends Promise<AsyncIterator<RestoreCode>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  email: () => Promise<AsyncIterator<String>>;
-  valid_until: () => Promise<AsyncIterator<DateTimeOutput>>;
-  code: () => Promise<AsyncIterator<String>>;
-}
-
-export interface ActivationCodeConnection {
-  pageInfo: PageInfo;
-  edges: ActivationCodeEdge[];
-}
-
-export interface ActivationCodeConnectionPromise
-  extends Promise<ActivationCodeConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<ActivationCodeEdge>>() => T;
-  aggregate: <T = AggregateActivationCodePromise>() => T;
-}
-
-export interface ActivationCodeConnectionSubscription
-  extends Promise<AsyncIterator<ActivationCodeConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<ActivationCodeEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateActivationCodeSubscription>() => T;
-}
-
-export interface PostEdge {
-  node: Post;
-  cursor: String;
-}
-
-export interface PostEdgePromise extends Promise<PostEdge>, Fragmentable {
-  node: <T = PostPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface PostEdgeSubscription
-  extends Promise<AsyncIterator<PostEdge>>,
-    Fragmentable {
-  node: <T = PostSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface CategorySubscriptionPayload {
-  mutation: MutationType;
-  node: Category;
-  updatedFields: String[];
-  previousValues: CategoryPreviousValues;
-}
-
-export interface CategorySubscriptionPayloadPromise
-  extends Promise<CategorySubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = CategoryPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = CategoryPreviousValuesPromise>() => T;
-}
-
-export interface CategorySubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<CategorySubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = CategorySubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = CategoryPreviousValuesSubscription>() => T;
-}
-
-export interface VideoSubscriptionPayload {
-  mutation: MutationType;
-  node: Video;
-  updatedFields: String[];
-  previousValues: VideoPreviousValues;
-}
-
-export interface VideoSubscriptionPayloadPromise
-  extends Promise<VideoSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = VideoPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = VideoPreviousValuesPromise>() => T;
-}
-
-export interface VideoSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<VideoSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = VideoSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = VideoPreviousValuesSubscription>() => T;
-}
-
-export interface CategoryPreviousValues {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  title: String;
+  title?: String;
   description?: String;
+  publish_date?: DateTimeOutput;
+  file_url?: String;
+  video_duration?: Int;
+  preview_url?: String;
+  preview_video_url?: String;
+  preview_video_duration?: String;
+  deleted: Boolean;
 }
 
-export interface CategoryPreviousValuesPromise
-  extends Promise<CategoryPreviousValues>,
-    Fragmentable {
+export interface VideoPromise extends Promise<Video>, Fragmentable {
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
   title: () => Promise<String>;
   description: () => Promise<String>;
+  publish_date: () => Promise<DateTimeOutput>;
+  file_url: () => Promise<String>;
+  video_duration: () => Promise<Int>;
+  preview_url: () => Promise<String>;
+  preview_video_url: () => Promise<String>;
+  preview_video_duration: () => Promise<String>;
+  author: <T = UserPromise>() => T;
+  categories: <T = FragmentableArray<Category>>(
+    args?: {
+      where?: CategoryWhereInput;
+      orderBy?: CategoryOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  like_users: <T = FragmentableArray<User>>(
+    args?: {
+      where?: UserWhereInput;
+      orderBy?: UserOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  watched_users: <T = FragmentableArray<WatchedVideoUser>>(
+    args?: {
+      where?: WatchedVideoUserWhereInput;
+      orderBy?: WatchedVideoUserOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  tags: <T = FragmentableArray<Tag>>(
+    args?: {
+      where?: TagWhereInput;
+      orderBy?: TagOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  deleted: () => Promise<Boolean>;
 }
 
-export interface CategoryPreviousValuesSubscription
-  extends Promise<AsyncIterator<CategoryPreviousValues>>,
+export interface VideoSubscription
+  extends Promise<AsyncIterator<Video>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   title: () => Promise<AsyncIterator<String>>;
   description: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateCategory {
-  count: Int;
-}
-
-export interface AggregateCategoryPromise
-  extends Promise<AggregateCategory>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateCategorySubscription
-  extends Promise<AsyncIterator<AggregateCategory>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  publish_date: () => Promise<AsyncIterator<DateTimeOutput>>;
+  file_url: () => Promise<AsyncIterator<String>>;
+  video_duration: () => Promise<AsyncIterator<Int>>;
+  preview_url: () => Promise<AsyncIterator<String>>;
+  preview_video_url: () => Promise<AsyncIterator<String>>;
+  preview_video_duration: () => Promise<AsyncIterator<String>>;
+  author: <T = UserSubscription>() => T;
+  categories: <T = Promise<AsyncIterator<CategorySubscription>>>(
+    args?: {
+      where?: CategoryWhereInput;
+      orderBy?: CategoryOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  like_users: <T = Promise<AsyncIterator<UserSubscription>>>(
+    args?: {
+      where?: UserWhereInput;
+      orderBy?: UserOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  watched_users: <T = Promise<AsyncIterator<WatchedVideoUserSubscription>>>(
+    args?: {
+      where?: WatchedVideoUserWhereInput;
+      orderBy?: WatchedVideoUserOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  tags: <T = Promise<AsyncIterator<TagSubscription>>>(
+    args?: {
+      where?: TagWhereInput;
+      orderBy?: TagOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  deleted: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface User {
@@ -3602,6 +5098,11 @@ export interface User {
   avatar?: String;
   background_image?: String;
   about_text?: String;
+  promo_code?: String;
+  payout_amount?: Int;
+  payout_months_total?: Int;
+  payout_months_left?: Int;
+  payout_enabled?: Boolean;
   billing_subscription_active: Boolean;
   stripe_customer_id?: String;
   stripe_subsciption_json?: Json;
@@ -3623,6 +5124,23 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   avatar: () => Promise<String>;
   background_image: () => Promise<String>;
   about_text: () => Promise<String>;
+  promo_code: () => Promise<String>;
+  payout_amount: () => Promise<Int>;
+  payout_months_total: () => Promise<Int>;
+  payout_months_left: () => Promise<Int>;
+  payout_enabled: () => Promise<Boolean>;
+  artist: <T = UserPromise>() => T;
+  users: <T = FragmentableArray<User>>(
+    args?: {
+      where?: UserWhereInput;
+      orderBy?: UserOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
   my_videos: <T = FragmentableArray<Video>>(
     args?: {
       where?: VideoWhereInput;
@@ -3645,10 +5163,10 @@ export interface UserPromise extends Promise<User>, Fragmentable {
       last?: Int;
     }
   ) => T;
-  watched_videos: <T = FragmentableArray<Video>>(
+  watched_videos: <T = FragmentableArray<WatchedVideoUser>>(
     args?: {
-      where?: VideoWhereInput;
-      orderBy?: VideoOrderByInput;
+      where?: WatchedVideoUserWhereInput;
+      orderBy?: WatchedVideoUserOrderByInput;
       skip?: Int;
       after?: String;
       before?: String;
@@ -3701,6 +5219,23 @@ export interface UserSubscription
   avatar: () => Promise<AsyncIterator<String>>;
   background_image: () => Promise<AsyncIterator<String>>;
   about_text: () => Promise<AsyncIterator<String>>;
+  promo_code: () => Promise<AsyncIterator<String>>;
+  payout_amount: () => Promise<AsyncIterator<Int>>;
+  payout_months_total: () => Promise<AsyncIterator<Int>>;
+  payout_months_left: () => Promise<AsyncIterator<Int>>;
+  payout_enabled: () => Promise<AsyncIterator<Boolean>>;
+  artist: <T = UserSubscription>() => T;
+  users: <T = Promise<AsyncIterator<UserSubscription>>>(
+    args?: {
+      where?: UserWhereInput;
+      orderBy?: UserOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
   my_videos: <T = Promise<AsyncIterator<VideoSubscription>>>(
     args?: {
       where?: VideoWhereInput;
@@ -3723,10 +5258,10 @@ export interface UserSubscription
       last?: Int;
     }
   ) => T;
-  watched_videos: <T = Promise<AsyncIterator<VideoSubscription>>>(
+  watched_videos: <T = Promise<AsyncIterator<WatchedVideoUserSubscription>>>(
     args?: {
-      where?: VideoWhereInput;
-      orderBy?: VideoOrderByInput;
+      where?: WatchedVideoUserWhereInput;
+      orderBy?: WatchedVideoUserOrderByInput;
       skip?: Int;
       after?: String;
       before?: String;
@@ -3762,195 +5297,65 @@ export interface UserSubscription
   last_login_date: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
-export interface UserEdge {
-  node: User;
-  cursor: String;
+export interface WatchedVideoUser {
+  id: ID_Output;
+  watched_seconds: Int;
 }
 
-export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
-  node: <T = UserPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface UserEdgeSubscription
-  extends Promise<AsyncIterator<UserEdge>>,
+export interface WatchedVideoUserPromise
+  extends Promise<WatchedVideoUser>,
     Fragmentable {
-  node: <T = UserSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  id: () => Promise<ID_Output>;
+  video: <T = VideoPromise>() => T;
+  user: <T = UserPromise>() => T;
+  watched_seconds: () => Promise<Int>;
 }
 
-export interface PostSubscriptionPayload {
-  mutation: MutationType;
-  node: Post;
-  updatedFields: String[];
-  previousValues: PostPreviousValues;
-}
-
-export interface PostSubscriptionPayloadPromise
-  extends Promise<PostSubscriptionPayload>,
+export interface WatchedVideoUserSubscription
+  extends Promise<AsyncIterator<WatchedVideoUser>>,
     Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = PostPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = PostPreviousValuesPromise>() => T;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  video: <T = VideoSubscription>() => T;
+  user: <T = UserSubscription>() => T;
+  watched_seconds: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface PostSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<PostSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = PostSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = PostPreviousValuesSubscription>() => T;
-}
-
-export interface TagConnection {
-  pageInfo: PageInfo;
-  edges: TagEdge[];
-}
-
-export interface TagConnectionPromise
-  extends Promise<TagConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<TagEdge>>() => T;
-  aggregate: <T = AggregateTagPromise>() => T;
-}
-
-export interface TagConnectionSubscription
-  extends Promise<AsyncIterator<TagConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<TagEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateTagSubscription>() => T;
-}
-
-export interface PostPreviousValues {
+export interface Tag {
   id: ID_Output;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
-  title: String;
-  mainImageUrl?: String;
   text: String;
 }
 
-export interface PostPreviousValuesPromise
-  extends Promise<PostPreviousValues>,
-    Fragmentable {
+export interface TagPromise extends Promise<Tag>, Fragmentable {
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
-  title: () => Promise<String>;
-  mainImageUrl: () => Promise<String>;
   text: () => Promise<String>;
+  videos: <T = FragmentableArray<Video>>(
+    args?: {
+      where?: VideoWhereInput;
+      orderBy?: VideoOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
 }
 
-export interface PostPreviousValuesSubscription
-  extends Promise<AsyncIterator<PostPreviousValues>>,
+export interface TagSubscription
+  extends Promise<AsyncIterator<Tag>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  title: () => Promise<AsyncIterator<String>>;
-  mainImageUrl: () => Promise<AsyncIterator<String>>;
   text: () => Promise<AsyncIterator<String>>;
-}
-
-export interface ActivationCode {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  email: String;
-  valid_until: DateTimeOutput;
-  code: String;
-}
-
-export interface ActivationCodePromise
-  extends Promise<ActivationCode>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  email: () => Promise<String>;
-  valid_until: () => Promise<DateTimeOutput>;
-  code: () => Promise<String>;
-}
-
-export interface ActivationCodeSubscription
-  extends Promise<AsyncIterator<ActivationCode>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  email: () => Promise<AsyncIterator<String>>;
-  valid_until: () => Promise<AsyncIterator<DateTimeOutput>>;
-  code: () => Promise<AsyncIterator<String>>;
-}
-
-export interface Video {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  title?: String;
-  description?: String;
-  publish_date?: DateTimeOutput;
-  file_url?: String;
-  video_duration?: Int;
-  preview_url?: String;
-  preview_video_url?: String;
-  preview_video_duration?: String;
-}
-
-export interface VideoPromise extends Promise<Video>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  title: () => Promise<String>;
-  description: () => Promise<String>;
-  publish_date: () => Promise<DateTimeOutput>;
-  file_url: () => Promise<String>;
-  video_duration: () => Promise<Int>;
-  preview_url: () => Promise<String>;
-  preview_video_url: () => Promise<String>;
-  preview_video_duration: () => Promise<String>;
-  author: <T = UserPromise>() => T;
-  categories: <T = FragmentableArray<Category>>(
+  videos: <T = Promise<AsyncIterator<VideoSubscription>>>(
     args?: {
-      where?: CategoryWhereInput;
-      orderBy?: CategoryOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-  like_users: <T = FragmentableArray<User>>(
-    args?: {
-      where?: UserWhereInput;
-      orderBy?: UserOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-  watched_users: <T = FragmentableArray<User>>(
-    args?: {
-      where?: UserWhereInput;
-      orderBy?: UserOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-  tags: <T = FragmentableArray<Tag>>(
-    args?: {
-      where?: TagWhereInput;
-      orderBy?: TagOrderByInput;
+      where?: VideoWhereInput;
+      orderBy?: VideoOrderByInput;
       skip?: Int;
       after?: String;
       before?: String;
@@ -3960,225 +5365,513 @@ export interface VideoPromise extends Promise<Video>, Fragmentable {
   ) => T;
 }
 
-export interface VideoSubscription
-  extends Promise<AsyncIterator<Video>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  title: () => Promise<AsyncIterator<String>>;
-  description: () => Promise<AsyncIterator<String>>;
-  publish_date: () => Promise<AsyncIterator<DateTimeOutput>>;
-  file_url: () => Promise<AsyncIterator<String>>;
-  video_duration: () => Promise<AsyncIterator<Int>>;
-  preview_url: () => Promise<AsyncIterator<String>>;
-  preview_video_url: () => Promise<AsyncIterator<String>>;
-  preview_video_duration: () => Promise<AsyncIterator<String>>;
-  author: <T = UserSubscription>() => T;
-  categories: <T = Promise<AsyncIterator<CategorySubscription>>>(
-    args?: {
-      where?: CategoryWhereInput;
-      orderBy?: CategoryOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-  like_users: <T = Promise<AsyncIterator<UserSubscription>>>(
-    args?: {
-      where?: UserWhereInput;
-      orderBy?: UserOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-  watched_users: <T = Promise<AsyncIterator<UserSubscription>>>(
-    args?: {
-      where?: UserWhereInput;
-      orderBy?: UserOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-  tags: <T = Promise<AsyncIterator<TagSubscription>>>(
-    args?: {
-      where?: TagWhereInput;
-      orderBy?: TagOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-}
-
-export interface PostConnection {
+export interface CategoryConnection {
   pageInfo: PageInfo;
-  edges: PostEdge[];
+  edges: CategoryEdge[];
 }
 
-export interface PostConnectionPromise
-  extends Promise<PostConnection>,
+export interface CategoryConnectionPromise
+  extends Promise<CategoryConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<PostEdge>>() => T;
-  aggregate: <T = AggregatePostPromise>() => T;
+  edges: <T = FragmentableArray<CategoryEdge>>() => T;
+  aggregate: <T = AggregateCategoryPromise>() => T;
 }
 
-export interface PostConnectionSubscription
-  extends Promise<AsyncIterator<PostConnection>>,
+export interface CategoryConnectionSubscription
+  extends Promise<AsyncIterator<CategoryConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<PostEdgeSubscription>>>() => T;
-  aggregate: <T = AggregatePostSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<CategoryEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateCategorySubscription>() => T;
 }
 
-export interface VideoConnection {
-  pageInfo: PageInfo;
-  edges: VideoEdge[];
+export interface CategoryEdge {
+  node: Category;
+  cursor: String;
 }
 
-export interface VideoConnectionPromise
-  extends Promise<VideoConnection>,
+export interface CategoryEdgePromise
+  extends Promise<CategoryEdge>,
     Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<VideoEdge>>() => T;
-  aggregate: <T = AggregateVideoPromise>() => T;
+  node: <T = CategoryPromise>() => T;
+  cursor: () => Promise<String>;
 }
 
-export interface VideoConnectionSubscription
-  extends Promise<AsyncIterator<VideoConnection>>,
+export interface CategoryEdgeSubscription
+  extends Promise<AsyncIterator<CategoryEdge>>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<VideoEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateVideoSubscription>() => T;
+  node: <T = CategorySubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface TagSubscriptionPayload {
-  mutation: MutationType;
-  node: Tag;
-  updatedFields: String[];
-  previousValues: TagPreviousValues;
-}
-
-export interface TagSubscriptionPayloadPromise
-  extends Promise<TagSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = TagPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = TagPreviousValuesPromise>() => T;
-}
-
-export interface TagSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<TagSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = TagSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = TagPreviousValuesSubscription>() => T;
-}
-
-export interface PageInfo {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
-}
-
-export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
-}
-
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfo>>,
-    Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface RestoreCodePreviousValues {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  email: String;
-  valid_until: DateTimeOutput;
-  code: String;
-}
-
-export interface RestoreCodePreviousValuesPromise
-  extends Promise<RestoreCodePreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  email: () => Promise<String>;
-  valid_until: () => Promise<DateTimeOutput>;
-  code: () => Promise<String>;
-}
-
-export interface RestoreCodePreviousValuesSubscription
-  extends Promise<AsyncIterator<RestoreCodePreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  email: () => Promise<AsyncIterator<String>>;
-  valid_until: () => Promise<AsyncIterator<DateTimeOutput>>;
-  code: () => Promise<AsyncIterator<String>>;
-}
-
-export interface RestoreCodeSubscriptionPayload {
-  mutation: MutationType;
-  node: RestoreCode;
-  updatedFields: String[];
-  previousValues: RestoreCodePreviousValues;
-}
-
-export interface RestoreCodeSubscriptionPayloadPromise
-  extends Promise<RestoreCodeSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = RestoreCodePromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = RestoreCodePreviousValuesPromise>() => T;
-}
-
-export interface RestoreCodeSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<RestoreCodeSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = RestoreCodeSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = RestoreCodePreviousValuesSubscription>() => T;
-}
-
-export interface AggregateTag {
+export interface AggregateCategory {
   count: Int;
 }
 
-export interface AggregateTagPromise
-  extends Promise<AggregateTag>,
+export interface AggregateCategoryPromise
+  extends Promise<AggregateCategory>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateTagSubscription
-  extends Promise<AsyncIterator<AggregateTag>>,
+export interface AggregateCategorySubscription
+  extends Promise<AsyncIterator<AggregateCategory>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface ChargeHistory {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  amount: Int;
+  chargeDate?: DateTimeOutput;
+}
+
+export interface ChargeHistoryPromise
+  extends Promise<ChargeHistory>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  user: <T = UserPromise>() => T;
+  amount: () => Promise<Int>;
+  chargeDate: () => Promise<DateTimeOutput>;
+}
+
+export interface ChargeHistorySubscription
+  extends Promise<AsyncIterator<ChargeHistory>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  user: <T = UserSubscription>() => T;
+  amount: () => Promise<AsyncIterator<Int>>;
+  chargeDate: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface ChargeHistoryConnection {
+  pageInfo: PageInfo;
+  edges: ChargeHistoryEdge[];
+}
+
+export interface ChargeHistoryConnectionPromise
+  extends Promise<ChargeHistoryConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ChargeHistoryEdge>>() => T;
+  aggregate: <T = AggregateChargeHistoryPromise>() => T;
+}
+
+export interface ChargeHistoryConnectionSubscription
+  extends Promise<AsyncIterator<ChargeHistoryConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ChargeHistoryEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateChargeHistorySubscription>() => T;
+}
+
+export interface ChargeHistoryEdge {
+  node: ChargeHistory;
+  cursor: String;
+}
+
+export interface ChargeHistoryEdgePromise
+  extends Promise<ChargeHistoryEdge>,
+    Fragmentable {
+  node: <T = ChargeHistoryPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface ChargeHistoryEdgeSubscription
+  extends Promise<AsyncIterator<ChargeHistoryEdge>>,
+    Fragmentable {
+  node: <T = ChargeHistorySubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateChargeHistory {
+  count: Int;
+}
+
+export interface AggregateChargeHistoryPromise
+  extends Promise<AggregateChargeHistory>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateChargeHistorySubscription
+  extends Promise<AsyncIterator<AggregateChargeHistory>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface Curriculum {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  title: String;
+  text: String;
+  order?: Int;
+}
+
+export interface CurriculumPromise extends Promise<Curriculum>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  title: () => Promise<String>;
+  text: () => Promise<String>;
+  order: () => Promise<Int>;
+  author: <T = UserPromise>() => T;
+}
+
+export interface CurriculumSubscription
+  extends Promise<AsyncIterator<Curriculum>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  title: () => Promise<AsyncIterator<String>>;
+  text: () => Promise<AsyncIterator<String>>;
+  order: () => Promise<AsyncIterator<Int>>;
+  author: <T = UserSubscription>() => T;
+}
+
+export interface CurriculumConnection {
+  pageInfo: PageInfo;
+  edges: CurriculumEdge[];
+}
+
+export interface CurriculumConnectionPromise
+  extends Promise<CurriculumConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<CurriculumEdge>>() => T;
+  aggregate: <T = AggregateCurriculumPromise>() => T;
+}
+
+export interface CurriculumConnectionSubscription
+  extends Promise<AsyncIterator<CurriculumConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<CurriculumEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateCurriculumSubscription>() => T;
+}
+
+export interface CurriculumEdge {
+  node: Curriculum;
+  cursor: String;
+}
+
+export interface CurriculumEdgePromise
+  extends Promise<CurriculumEdge>,
+    Fragmentable {
+  node: <T = CurriculumPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface CurriculumEdgeSubscription
+  extends Promise<AsyncIterator<CurriculumEdge>>,
+    Fragmentable {
+  node: <T = CurriculumSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateCurriculum {
+  count: Int;
+}
+
+export interface AggregateCurriculumPromise
+  extends Promise<AggregateCurriculum>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateCurriculumSubscription
+  extends Promise<AsyncIterator<AggregateCurriculum>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface PayoutPlan {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  artist_id: Int;
+  user_id: Int;
+  year: Int;
+  month: Int;
+  amount: Int;
+  ignore_statis: Boolean;
+  paid_status: Boolean;
+  paid_date?: DateTimeOutput;
+}
+
+export interface PayoutPlanPromise extends Promise<PayoutPlan>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  artist_id: () => Promise<Int>;
+  user_id: () => Promise<Int>;
+  year: () => Promise<Int>;
+  month: () => Promise<Int>;
+  amount: () => Promise<Int>;
+  ignore_statis: () => Promise<Boolean>;
+  paid_status: () => Promise<Boolean>;
+  paid_date: () => Promise<DateTimeOutput>;
+}
+
+export interface PayoutPlanSubscription
+  extends Promise<AsyncIterator<PayoutPlan>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  artist_id: () => Promise<AsyncIterator<Int>>;
+  user_id: () => Promise<AsyncIterator<Int>>;
+  year: () => Promise<AsyncIterator<Int>>;
+  month: () => Promise<AsyncIterator<Int>>;
+  amount: () => Promise<AsyncIterator<Int>>;
+  ignore_statis: () => Promise<AsyncIterator<Boolean>>;
+  paid_status: () => Promise<AsyncIterator<Boolean>>;
+  paid_date: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface PayoutPlanConnection {
+  pageInfo: PageInfo;
+  edges: PayoutPlanEdge[];
+}
+
+export interface PayoutPlanConnectionPromise
+  extends Promise<PayoutPlanConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<PayoutPlanEdge>>() => T;
+  aggregate: <T = AggregatePayoutPlanPromise>() => T;
+}
+
+export interface PayoutPlanConnectionSubscription
+  extends Promise<AsyncIterator<PayoutPlanConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<PayoutPlanEdgeSubscription>>>() => T;
+  aggregate: <T = AggregatePayoutPlanSubscription>() => T;
+}
+
+export interface PayoutPlanEdge {
+  node: PayoutPlan;
+  cursor: String;
+}
+
+export interface PayoutPlanEdgePromise
+  extends Promise<PayoutPlanEdge>,
+    Fragmentable {
+  node: <T = PayoutPlanPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface PayoutPlanEdgeSubscription
+  extends Promise<AsyncIterator<PayoutPlanEdge>>,
+    Fragmentable {
+  node: <T = PayoutPlanSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregatePayoutPlan {
+  count: Int;
+}
+
+export interface AggregatePayoutPlanPromise
+  extends Promise<AggregatePayoutPlan>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregatePayoutPlanSubscription
+  extends Promise<AsyncIterator<AggregatePayoutPlan>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface PayoutTransaction {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  artist_id: Int;
+  year: Int;
+  month: Int;
+  amount: Int;
+  paid_status: Boolean;
+  paid_date?: DateTimeOutput;
+}
+
+export interface PayoutTransactionPromise
+  extends Promise<PayoutTransaction>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  artist_id: () => Promise<Int>;
+  year: () => Promise<Int>;
+  month: () => Promise<Int>;
+  amount: () => Promise<Int>;
+  paid_status: () => Promise<Boolean>;
+  paid_date: () => Promise<DateTimeOutput>;
+}
+
+export interface PayoutTransactionSubscription
+  extends Promise<AsyncIterator<PayoutTransaction>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  artist_id: () => Promise<AsyncIterator<Int>>;
+  year: () => Promise<AsyncIterator<Int>>;
+  month: () => Promise<AsyncIterator<Int>>;
+  amount: () => Promise<AsyncIterator<Int>>;
+  paid_status: () => Promise<AsyncIterator<Boolean>>;
+  paid_date: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface PayoutTransactionConnection {
+  pageInfo: PageInfo;
+  edges: PayoutTransactionEdge[];
+}
+
+export interface PayoutTransactionConnectionPromise
+  extends Promise<PayoutTransactionConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<PayoutTransactionEdge>>() => T;
+  aggregate: <T = AggregatePayoutTransactionPromise>() => T;
+}
+
+export interface PayoutTransactionConnectionSubscription
+  extends Promise<AsyncIterator<PayoutTransactionConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<PayoutTransactionEdgeSubscription>>>() => T;
+  aggregate: <T = AggregatePayoutTransactionSubscription>() => T;
+}
+
+export interface PayoutTransactionEdge {
+  node: PayoutTransaction;
+  cursor: String;
+}
+
+export interface PayoutTransactionEdgePromise
+  extends Promise<PayoutTransactionEdge>,
+    Fragmentable {
+  node: <T = PayoutTransactionPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface PayoutTransactionEdgeSubscription
+  extends Promise<AsyncIterator<PayoutTransactionEdge>>,
+    Fragmentable {
+  node: <T = PayoutTransactionSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregatePayoutTransaction {
+  count: Int;
+}
+
+export interface AggregatePayoutTransactionPromise
+  extends Promise<AggregatePayoutTransaction>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregatePayoutTransactionSubscription
+  extends Promise<AsyncIterator<AggregatePayoutTransaction>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface PlayHistory {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  playSeconds: Int;
+  realPlaySeconds: Int;
+}
+
+export interface PlayHistoryPromise extends Promise<PlayHistory>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  user: <T = UserPromise>() => T;
+  video: <T = VideoPromise>() => T;
+  playSeconds: () => Promise<Int>;
+  realPlaySeconds: () => Promise<Int>;
+}
+
+export interface PlayHistorySubscription
+  extends Promise<AsyncIterator<PlayHistory>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  user: <T = UserSubscription>() => T;
+  video: <T = VideoSubscription>() => T;
+  playSeconds: () => Promise<AsyncIterator<Int>>;
+  realPlaySeconds: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface PlayHistoryConnection {
+  pageInfo: PageInfo;
+  edges: PlayHistoryEdge[];
+}
+
+export interface PlayHistoryConnectionPromise
+  extends Promise<PlayHistoryConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<PlayHistoryEdge>>() => T;
+  aggregate: <T = AggregatePlayHistoryPromise>() => T;
+}
+
+export interface PlayHistoryConnectionSubscription
+  extends Promise<AsyncIterator<PlayHistoryConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<PlayHistoryEdgeSubscription>>>() => T;
+  aggregate: <T = AggregatePlayHistorySubscription>() => T;
+}
+
+export interface PlayHistoryEdge {
+  node: PlayHistory;
+  cursor: String;
+}
+
+export interface PlayHistoryEdgePromise
+  extends Promise<PlayHistoryEdge>,
+    Fragmentable {
+  node: <T = PlayHistoryPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface PlayHistoryEdgeSubscription
+  extends Promise<AsyncIterator<PlayHistoryEdge>>,
+    Fragmentable {
+  node: <T = PlayHistorySubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregatePlayHistory {
+  count: Int;
+}
+
+export interface AggregatePlayHistoryPromise
+  extends Promise<AggregatePlayHistory>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregatePlayHistorySubscription
+  extends Promise<AsyncIterator<AggregatePlayHistory>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
@@ -4214,6 +5907,44 @@ export interface PostSubscription
   author: <T = UserSubscription>() => T;
 }
 
+export interface PostConnection {
+  pageInfo: PageInfo;
+  edges: PostEdge[];
+}
+
+export interface PostConnectionPromise
+  extends Promise<PostConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<PostEdge>>() => T;
+  aggregate: <T = AggregatePostPromise>() => T;
+}
+
+export interface PostConnectionSubscription
+  extends Promise<AsyncIterator<PostConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<PostEdgeSubscription>>>() => T;
+  aggregate: <T = AggregatePostSubscription>() => T;
+}
+
+export interface PostEdge {
+  node: Post;
+  cursor: String;
+}
+
+export interface PostEdgePromise extends Promise<PostEdge>, Fragmentable {
+  node: <T = PostPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface PostEdgeSubscription
+  extends Promise<AsyncIterator<PostEdge>>,
+    Fragmentable {
+  node: <T = PostSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
 export interface AggregatePost {
   count: Int;
 }
@@ -4228,6 +5959,56 @@ export interface AggregatePostSubscription
   extends Promise<AsyncIterator<AggregatePost>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface RestoreCode {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  email: String;
+  valid_until: DateTimeOutput;
+  code: String;
+}
+
+export interface RestoreCodePromise extends Promise<RestoreCode>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  email: () => Promise<String>;
+  valid_until: () => Promise<DateTimeOutput>;
+  code: () => Promise<String>;
+}
+
+export interface RestoreCodeSubscription
+  extends Promise<AsyncIterator<RestoreCode>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  email: () => Promise<AsyncIterator<String>>;
+  valid_until: () => Promise<AsyncIterator<DateTimeOutput>>;
+  code: () => Promise<AsyncIterator<String>>;
+}
+
+export interface RestoreCodeConnection {
+  pageInfo: PageInfo;
+  edges: RestoreCodeEdge[];
+}
+
+export interface RestoreCodeConnectionPromise
+  extends Promise<RestoreCodeConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<RestoreCodeEdge>>() => T;
+  aggregate: <T = AggregateRestoreCodePromise>() => T;
+}
+
+export interface RestoreCodeConnectionSubscription
+  extends Promise<AsyncIterator<RestoreCodeConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<RestoreCodeEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateRestoreCodeSubscription>() => T;
 }
 
 export interface RestoreCodeEdge {
@@ -4249,12 +6030,1348 @@ export interface RestoreCodeEdgeSubscription
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-/*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
-*/
-export type Int = number;
+export interface AggregateRestoreCode {
+  count: Int;
+}
 
-export type Long = string;
+export interface AggregateRestoreCodePromise
+  extends Promise<AggregateRestoreCode>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateRestoreCodeSubscription
+  extends Promise<AsyncIterator<AggregateRestoreCode>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface Settings {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  name: String;
+  int_val?: Int;
+  str_val?: String;
+}
+
+export interface SettingsPromise extends Promise<Settings>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  name: () => Promise<String>;
+  int_val: () => Promise<Int>;
+  str_val: () => Promise<String>;
+}
+
+export interface SettingsSubscription
+  extends Promise<AsyncIterator<Settings>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  name: () => Promise<AsyncIterator<String>>;
+  int_val: () => Promise<AsyncIterator<Int>>;
+  str_val: () => Promise<AsyncIterator<String>>;
+}
+
+export interface SettingsConnection {
+  pageInfo: PageInfo;
+  edges: SettingsEdge[];
+}
+
+export interface SettingsConnectionPromise
+  extends Promise<SettingsConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<SettingsEdge>>() => T;
+  aggregate: <T = AggregateSettingsPromise>() => T;
+}
+
+export interface SettingsConnectionSubscription
+  extends Promise<AsyncIterator<SettingsConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<SettingsEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateSettingsSubscription>() => T;
+}
+
+export interface SettingsEdge {
+  node: Settings;
+  cursor: String;
+}
+
+export interface SettingsEdgePromise
+  extends Promise<SettingsEdge>,
+    Fragmentable {
+  node: <T = SettingsPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface SettingsEdgeSubscription
+  extends Promise<AsyncIterator<SettingsEdge>>,
+    Fragmentable {
+  node: <T = SettingsSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateSettings {
+  count: Int;
+}
+
+export interface AggregateSettingsPromise
+  extends Promise<AggregateSettings>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateSettingsSubscription
+  extends Promise<AsyncIterator<AggregateSettings>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface SubscriptionHistory {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  interval: String;
+  amount: Int;
+  subscriptionDate?: DateTimeOutput;
+}
+
+export interface SubscriptionHistoryPromise
+  extends Promise<SubscriptionHistory>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  user: <T = UserPromise>() => T;
+  interval: () => Promise<String>;
+  amount: () => Promise<Int>;
+  subscriptionDate: () => Promise<DateTimeOutput>;
+}
+
+export interface SubscriptionHistorySubscription
+  extends Promise<AsyncIterator<SubscriptionHistory>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  user: <T = UserSubscription>() => T;
+  interval: () => Promise<AsyncIterator<String>>;
+  amount: () => Promise<AsyncIterator<Int>>;
+  subscriptionDate: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface SubscriptionHistoryConnection {
+  pageInfo: PageInfo;
+  edges: SubscriptionHistoryEdge[];
+}
+
+export interface SubscriptionHistoryConnectionPromise
+  extends Promise<SubscriptionHistoryConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<SubscriptionHistoryEdge>>() => T;
+  aggregate: <T = AggregateSubscriptionHistoryPromise>() => T;
+}
+
+export interface SubscriptionHistoryConnectionSubscription
+  extends Promise<AsyncIterator<SubscriptionHistoryConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <
+    T = Promise<AsyncIterator<SubscriptionHistoryEdgeSubscription>>
+  >() => T;
+  aggregate: <T = AggregateSubscriptionHistorySubscription>() => T;
+}
+
+export interface SubscriptionHistoryEdge {
+  node: SubscriptionHistory;
+  cursor: String;
+}
+
+export interface SubscriptionHistoryEdgePromise
+  extends Promise<SubscriptionHistoryEdge>,
+    Fragmentable {
+  node: <T = SubscriptionHistoryPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface SubscriptionHistoryEdgeSubscription
+  extends Promise<AsyncIterator<SubscriptionHistoryEdge>>,
+    Fragmentable {
+  node: <T = SubscriptionHistorySubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateSubscriptionHistory {
+  count: Int;
+}
+
+export interface AggregateSubscriptionHistoryPromise
+  extends Promise<AggregateSubscriptionHistory>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateSubscriptionHistorySubscription
+  extends Promise<AsyncIterator<AggregateSubscriptionHistory>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface TagConnection {
+  pageInfo: PageInfo;
+  edges: TagEdge[];
+}
+
+export interface TagConnectionPromise
+  extends Promise<TagConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<TagEdge>>() => T;
+  aggregate: <T = AggregateTagPromise>() => T;
+}
+
+export interface TagConnectionSubscription
+  extends Promise<AsyncIterator<TagConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<TagEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateTagSubscription>() => T;
+}
+
+export interface TagEdge {
+  node: Tag;
+  cursor: String;
+}
+
+export interface TagEdgePromise extends Promise<TagEdge>, Fragmentable {
+  node: <T = TagPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface TagEdgeSubscription
+  extends Promise<AsyncIterator<TagEdge>>,
+    Fragmentable {
+  node: <T = TagSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateTag {
+  count: Int;
+}
+
+export interface AggregateTagPromise
+  extends Promise<AggregateTag>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateTagSubscription
+  extends Promise<AsyncIterator<AggregateTag>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface UserConnection {
+  pageInfo: PageInfo;
+  edges: UserEdge[];
+}
+
+export interface UserConnectionPromise
+  extends Promise<UserConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<UserEdge>>() => T;
+  aggregate: <T = AggregateUserPromise>() => T;
+}
+
+export interface UserConnectionSubscription
+  extends Promise<AsyncIterator<UserConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateUserSubscription>() => T;
+}
+
+export interface UserEdge {
+  node: User;
+  cursor: String;
+}
+
+export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
+  node: <T = UserPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface UserEdgeSubscription
+  extends Promise<AsyncIterator<UserEdge>>,
+    Fragmentable {
+  node: <T = UserSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateUser {
+  count: Int;
+}
+
+export interface AggregateUserPromise
+  extends Promise<AggregateUser>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUser>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface VideoConnection {
+  pageInfo: PageInfo;
+  edges: VideoEdge[];
+}
+
+export interface VideoConnectionPromise
+  extends Promise<VideoConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<VideoEdge>>() => T;
+  aggregate: <T = AggregateVideoPromise>() => T;
+}
+
+export interface VideoConnectionSubscription
+  extends Promise<AsyncIterator<VideoConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<VideoEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateVideoSubscription>() => T;
+}
+
+export interface VideoEdge {
+  node: Video;
+  cursor: String;
+}
+
+export interface VideoEdgePromise extends Promise<VideoEdge>, Fragmentable {
+  node: <T = VideoPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface VideoEdgeSubscription
+  extends Promise<AsyncIterator<VideoEdge>>,
+    Fragmentable {
+  node: <T = VideoSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateVideo {
+  count: Int;
+}
+
+export interface AggregateVideoPromise
+  extends Promise<AggregateVideo>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateVideoSubscription
+  extends Promise<AsyncIterator<AggregateVideo>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface WatchedVideoUserConnection {
+  pageInfo: PageInfo;
+  edges: WatchedVideoUserEdge[];
+}
+
+export interface WatchedVideoUserConnectionPromise
+  extends Promise<WatchedVideoUserConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<WatchedVideoUserEdge>>() => T;
+  aggregate: <T = AggregateWatchedVideoUserPromise>() => T;
+}
+
+export interface WatchedVideoUserConnectionSubscription
+  extends Promise<AsyncIterator<WatchedVideoUserConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<WatchedVideoUserEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateWatchedVideoUserSubscription>() => T;
+}
+
+export interface WatchedVideoUserEdge {
+  node: WatchedVideoUser;
+  cursor: String;
+}
+
+export interface WatchedVideoUserEdgePromise
+  extends Promise<WatchedVideoUserEdge>,
+    Fragmentable {
+  node: <T = WatchedVideoUserPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface WatchedVideoUserEdgeSubscription
+  extends Promise<AsyncIterator<WatchedVideoUserEdge>>,
+    Fragmentable {
+  node: <T = WatchedVideoUserSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateWatchedVideoUser {
+  count: Int;
+}
+
+export interface AggregateWatchedVideoUserPromise
+  extends Promise<AggregateWatchedVideoUser>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateWatchedVideoUserSubscription
+  extends Promise<AsyncIterator<AggregateWatchedVideoUser>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface BatchPayload {
+  count: Long;
+}
+
+export interface BatchPayloadPromise
+  extends Promise<BatchPayload>,
+    Fragmentable {
+  count: () => Promise<Long>;
+}
+
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayload>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Long>>;
+}
+
+export interface ActivationCodeSubscriptionPayload {
+  mutation: MutationType;
+  node: ActivationCode;
+  updatedFields: String[];
+  previousValues: ActivationCodePreviousValues;
+}
+
+export interface ActivationCodeSubscriptionPayloadPromise
+  extends Promise<ActivationCodeSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = ActivationCodePromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = ActivationCodePreviousValuesPromise>() => T;
+}
+
+export interface ActivationCodeSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<ActivationCodeSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = ActivationCodeSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = ActivationCodePreviousValuesSubscription>() => T;
+}
+
+export interface ActivationCodePreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  email: String;
+  valid_until: DateTimeOutput;
+  code: String;
+}
+
+export interface ActivationCodePreviousValuesPromise
+  extends Promise<ActivationCodePreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  email: () => Promise<String>;
+  valid_until: () => Promise<DateTimeOutput>;
+  code: () => Promise<String>;
+}
+
+export interface ActivationCodePreviousValuesSubscription
+  extends Promise<AsyncIterator<ActivationCodePreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  email: () => Promise<AsyncIterator<String>>;
+  valid_until: () => Promise<AsyncIterator<DateTimeOutput>>;
+  code: () => Promise<AsyncIterator<String>>;
+}
+
+export interface CategorySubscriptionPayload {
+  mutation: MutationType;
+  node: Category;
+  updatedFields: String[];
+  previousValues: CategoryPreviousValues;
+}
+
+export interface CategorySubscriptionPayloadPromise
+  extends Promise<CategorySubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = CategoryPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = CategoryPreviousValuesPromise>() => T;
+}
+
+export interface CategorySubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<CategorySubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = CategorySubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = CategoryPreviousValuesSubscription>() => T;
+}
+
+export interface CategoryPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  title: String;
+  description?: String;
+}
+
+export interface CategoryPreviousValuesPromise
+  extends Promise<CategoryPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  title: () => Promise<String>;
+  description: () => Promise<String>;
+}
+
+export interface CategoryPreviousValuesSubscription
+  extends Promise<AsyncIterator<CategoryPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  title: () => Promise<AsyncIterator<String>>;
+  description: () => Promise<AsyncIterator<String>>;
+}
+
+export interface ChargeHistorySubscriptionPayload {
+  mutation: MutationType;
+  node: ChargeHistory;
+  updatedFields: String[];
+  previousValues: ChargeHistoryPreviousValues;
+}
+
+export interface ChargeHistorySubscriptionPayloadPromise
+  extends Promise<ChargeHistorySubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = ChargeHistoryPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = ChargeHistoryPreviousValuesPromise>() => T;
+}
+
+export interface ChargeHistorySubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<ChargeHistorySubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = ChargeHistorySubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = ChargeHistoryPreviousValuesSubscription>() => T;
+}
+
+export interface ChargeHistoryPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  amount: Int;
+  chargeDate?: DateTimeOutput;
+}
+
+export interface ChargeHistoryPreviousValuesPromise
+  extends Promise<ChargeHistoryPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  amount: () => Promise<Int>;
+  chargeDate: () => Promise<DateTimeOutput>;
+}
+
+export interface ChargeHistoryPreviousValuesSubscription
+  extends Promise<AsyncIterator<ChargeHistoryPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  amount: () => Promise<AsyncIterator<Int>>;
+  chargeDate: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface CurriculumSubscriptionPayload {
+  mutation: MutationType;
+  node: Curriculum;
+  updatedFields: String[];
+  previousValues: CurriculumPreviousValues;
+}
+
+export interface CurriculumSubscriptionPayloadPromise
+  extends Promise<CurriculumSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = CurriculumPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = CurriculumPreviousValuesPromise>() => T;
+}
+
+export interface CurriculumSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<CurriculumSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = CurriculumSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = CurriculumPreviousValuesSubscription>() => T;
+}
+
+export interface CurriculumPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  title: String;
+  text: String;
+  order?: Int;
+}
+
+export interface CurriculumPreviousValuesPromise
+  extends Promise<CurriculumPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  title: () => Promise<String>;
+  text: () => Promise<String>;
+  order: () => Promise<Int>;
+}
+
+export interface CurriculumPreviousValuesSubscription
+  extends Promise<AsyncIterator<CurriculumPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  title: () => Promise<AsyncIterator<String>>;
+  text: () => Promise<AsyncIterator<String>>;
+  order: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface PayoutPlanSubscriptionPayload {
+  mutation: MutationType;
+  node: PayoutPlan;
+  updatedFields: String[];
+  previousValues: PayoutPlanPreviousValues;
+}
+
+export interface PayoutPlanSubscriptionPayloadPromise
+  extends Promise<PayoutPlanSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = PayoutPlanPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = PayoutPlanPreviousValuesPromise>() => T;
+}
+
+export interface PayoutPlanSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<PayoutPlanSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = PayoutPlanSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = PayoutPlanPreviousValuesSubscription>() => T;
+}
+
+export interface PayoutPlanPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  artist_id: Int;
+  user_id: Int;
+  year: Int;
+  month: Int;
+  amount: Int;
+  ignore_statis: Boolean;
+  paid_status: Boolean;
+  paid_date?: DateTimeOutput;
+}
+
+export interface PayoutPlanPreviousValuesPromise
+  extends Promise<PayoutPlanPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  artist_id: () => Promise<Int>;
+  user_id: () => Promise<Int>;
+  year: () => Promise<Int>;
+  month: () => Promise<Int>;
+  amount: () => Promise<Int>;
+  ignore_statis: () => Promise<Boolean>;
+  paid_status: () => Promise<Boolean>;
+  paid_date: () => Promise<DateTimeOutput>;
+}
+
+export interface PayoutPlanPreviousValuesSubscription
+  extends Promise<AsyncIterator<PayoutPlanPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  artist_id: () => Promise<AsyncIterator<Int>>;
+  user_id: () => Promise<AsyncIterator<Int>>;
+  year: () => Promise<AsyncIterator<Int>>;
+  month: () => Promise<AsyncIterator<Int>>;
+  amount: () => Promise<AsyncIterator<Int>>;
+  ignore_statis: () => Promise<AsyncIterator<Boolean>>;
+  paid_status: () => Promise<AsyncIterator<Boolean>>;
+  paid_date: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface PayoutTransactionSubscriptionPayload {
+  mutation: MutationType;
+  node: PayoutTransaction;
+  updatedFields: String[];
+  previousValues: PayoutTransactionPreviousValues;
+}
+
+export interface PayoutTransactionSubscriptionPayloadPromise
+  extends Promise<PayoutTransactionSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = PayoutTransactionPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = PayoutTransactionPreviousValuesPromise>() => T;
+}
+
+export interface PayoutTransactionSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<PayoutTransactionSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = PayoutTransactionSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = PayoutTransactionPreviousValuesSubscription>() => T;
+}
+
+export interface PayoutTransactionPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  artist_id: Int;
+  year: Int;
+  month: Int;
+  amount: Int;
+  paid_status: Boolean;
+  paid_date?: DateTimeOutput;
+}
+
+export interface PayoutTransactionPreviousValuesPromise
+  extends Promise<PayoutTransactionPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  artist_id: () => Promise<Int>;
+  year: () => Promise<Int>;
+  month: () => Promise<Int>;
+  amount: () => Promise<Int>;
+  paid_status: () => Promise<Boolean>;
+  paid_date: () => Promise<DateTimeOutput>;
+}
+
+export interface PayoutTransactionPreviousValuesSubscription
+  extends Promise<AsyncIterator<PayoutTransactionPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  artist_id: () => Promise<AsyncIterator<Int>>;
+  year: () => Promise<AsyncIterator<Int>>;
+  month: () => Promise<AsyncIterator<Int>>;
+  amount: () => Promise<AsyncIterator<Int>>;
+  paid_status: () => Promise<AsyncIterator<Boolean>>;
+  paid_date: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface PlayHistorySubscriptionPayload {
+  mutation: MutationType;
+  node: PlayHistory;
+  updatedFields: String[];
+  previousValues: PlayHistoryPreviousValues;
+}
+
+export interface PlayHistorySubscriptionPayloadPromise
+  extends Promise<PlayHistorySubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = PlayHistoryPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = PlayHistoryPreviousValuesPromise>() => T;
+}
+
+export interface PlayHistorySubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<PlayHistorySubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = PlayHistorySubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = PlayHistoryPreviousValuesSubscription>() => T;
+}
+
+export interface PlayHistoryPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  playSeconds: Int;
+  realPlaySeconds: Int;
+}
+
+export interface PlayHistoryPreviousValuesPromise
+  extends Promise<PlayHistoryPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  playSeconds: () => Promise<Int>;
+  realPlaySeconds: () => Promise<Int>;
+}
+
+export interface PlayHistoryPreviousValuesSubscription
+  extends Promise<AsyncIterator<PlayHistoryPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  playSeconds: () => Promise<AsyncIterator<Int>>;
+  realPlaySeconds: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface PostSubscriptionPayload {
+  mutation: MutationType;
+  node: Post;
+  updatedFields: String[];
+  previousValues: PostPreviousValues;
+}
+
+export interface PostSubscriptionPayloadPromise
+  extends Promise<PostSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = PostPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = PostPreviousValuesPromise>() => T;
+}
+
+export interface PostSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<PostSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = PostSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = PostPreviousValuesSubscription>() => T;
+}
+
+export interface PostPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  title: String;
+  mainImageUrl?: String;
+  text: String;
+}
+
+export interface PostPreviousValuesPromise
+  extends Promise<PostPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  title: () => Promise<String>;
+  mainImageUrl: () => Promise<String>;
+  text: () => Promise<String>;
+}
+
+export interface PostPreviousValuesSubscription
+  extends Promise<AsyncIterator<PostPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  title: () => Promise<AsyncIterator<String>>;
+  mainImageUrl: () => Promise<AsyncIterator<String>>;
+  text: () => Promise<AsyncIterator<String>>;
+}
+
+export interface RestoreCodeSubscriptionPayload {
+  mutation: MutationType;
+  node: RestoreCode;
+  updatedFields: String[];
+  previousValues: RestoreCodePreviousValues;
+}
+
+export interface RestoreCodeSubscriptionPayloadPromise
+  extends Promise<RestoreCodeSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = RestoreCodePromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = RestoreCodePreviousValuesPromise>() => T;
+}
+
+export interface RestoreCodeSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<RestoreCodeSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = RestoreCodeSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = RestoreCodePreviousValuesSubscription>() => T;
+}
+
+export interface RestoreCodePreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  email: String;
+  valid_until: DateTimeOutput;
+  code: String;
+}
+
+export interface RestoreCodePreviousValuesPromise
+  extends Promise<RestoreCodePreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  email: () => Promise<String>;
+  valid_until: () => Promise<DateTimeOutput>;
+  code: () => Promise<String>;
+}
+
+export interface RestoreCodePreviousValuesSubscription
+  extends Promise<AsyncIterator<RestoreCodePreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  email: () => Promise<AsyncIterator<String>>;
+  valid_until: () => Promise<AsyncIterator<DateTimeOutput>>;
+  code: () => Promise<AsyncIterator<String>>;
+}
+
+export interface SettingsSubscriptionPayload {
+  mutation: MutationType;
+  node: Settings;
+  updatedFields: String[];
+  previousValues: SettingsPreviousValues;
+}
+
+export interface SettingsSubscriptionPayloadPromise
+  extends Promise<SettingsSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = SettingsPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = SettingsPreviousValuesPromise>() => T;
+}
+
+export interface SettingsSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<SettingsSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = SettingsSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = SettingsPreviousValuesSubscription>() => T;
+}
+
+export interface SettingsPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  name: String;
+  int_val?: Int;
+  str_val?: String;
+}
+
+export interface SettingsPreviousValuesPromise
+  extends Promise<SettingsPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  name: () => Promise<String>;
+  int_val: () => Promise<Int>;
+  str_val: () => Promise<String>;
+}
+
+export interface SettingsPreviousValuesSubscription
+  extends Promise<AsyncIterator<SettingsPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  name: () => Promise<AsyncIterator<String>>;
+  int_val: () => Promise<AsyncIterator<Int>>;
+  str_val: () => Promise<AsyncIterator<String>>;
+}
+
+export interface SubscriptionHistorySubscriptionPayload {
+  mutation: MutationType;
+  node: SubscriptionHistory;
+  updatedFields: String[];
+  previousValues: SubscriptionHistoryPreviousValues;
+}
+
+export interface SubscriptionHistorySubscriptionPayloadPromise
+  extends Promise<SubscriptionHistorySubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = SubscriptionHistoryPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = SubscriptionHistoryPreviousValuesPromise>() => T;
+}
+
+export interface SubscriptionHistorySubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<SubscriptionHistorySubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = SubscriptionHistorySubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = SubscriptionHistoryPreviousValuesSubscription>() => T;
+}
+
+export interface SubscriptionHistoryPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  interval: String;
+  amount: Int;
+  subscriptionDate?: DateTimeOutput;
+}
+
+export interface SubscriptionHistoryPreviousValuesPromise
+  extends Promise<SubscriptionHistoryPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  interval: () => Promise<String>;
+  amount: () => Promise<Int>;
+  subscriptionDate: () => Promise<DateTimeOutput>;
+}
+
+export interface SubscriptionHistoryPreviousValuesSubscription
+  extends Promise<AsyncIterator<SubscriptionHistoryPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  interval: () => Promise<AsyncIterator<String>>;
+  amount: () => Promise<AsyncIterator<Int>>;
+  subscriptionDate: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface TagSubscriptionPayload {
+  mutation: MutationType;
+  node: Tag;
+  updatedFields: String[];
+  previousValues: TagPreviousValues;
+}
+
+export interface TagSubscriptionPayloadPromise
+  extends Promise<TagSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = TagPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = TagPreviousValuesPromise>() => T;
+}
+
+export interface TagSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<TagSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = TagSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = TagPreviousValuesSubscription>() => T;
+}
+
+export interface TagPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  text: String;
+}
+
+export interface TagPreviousValuesPromise
+  extends Promise<TagPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  text: () => Promise<String>;
+}
+
+export interface TagPreviousValuesSubscription
+  extends Promise<AsyncIterator<TagPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  text: () => Promise<AsyncIterator<String>>;
+}
+
+export interface UserSubscriptionPayload {
+  mutation: MutationType;
+  node: User;
+  updatedFields: String[];
+  previousValues: UserPreviousValues;
+}
+
+export interface UserSubscriptionPayloadPromise
+  extends Promise<UserSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = UserPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = UserPreviousValuesPromise>() => T;
+}
+
+export interface UserSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = UserSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = UserPreviousValuesSubscription>() => T;
+}
+
+export interface UserPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  firstname?: String;
+  lastname?: String;
+  username?: String;
+  email: String;
+  phone?: String;
+  role: UserRole;
+  password_hash: String;
+  password_salt: String;
+  avatar?: String;
+  background_image?: String;
+  about_text?: String;
+  promo_code?: String;
+  payout_amount?: Int;
+  payout_months_total?: Int;
+  payout_months_left?: Int;
+  payout_enabled?: Boolean;
+  billing_subscription_active: Boolean;
+  stripe_customer_id?: String;
+  stripe_subsciption_json?: Json;
+  last_login_date?: DateTimeOutput;
+}
+
+export interface UserPreviousValuesPromise
+  extends Promise<UserPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  firstname: () => Promise<String>;
+  lastname: () => Promise<String>;
+  username: () => Promise<String>;
+  email: () => Promise<String>;
+  phone: () => Promise<String>;
+  role: () => Promise<UserRole>;
+  password_hash: () => Promise<String>;
+  password_salt: () => Promise<String>;
+  avatar: () => Promise<String>;
+  background_image: () => Promise<String>;
+  about_text: () => Promise<String>;
+  promo_code: () => Promise<String>;
+  payout_amount: () => Promise<Int>;
+  payout_months_total: () => Promise<Int>;
+  payout_months_left: () => Promise<Int>;
+  payout_enabled: () => Promise<Boolean>;
+  billing_subscription_active: () => Promise<Boolean>;
+  stripe_customer_id: () => Promise<String>;
+  stripe_subsciption_json: () => Promise<Json>;
+  last_login_date: () => Promise<DateTimeOutput>;
+}
+
+export interface UserPreviousValuesSubscription
+  extends Promise<AsyncIterator<UserPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  firstname: () => Promise<AsyncIterator<String>>;
+  lastname: () => Promise<AsyncIterator<String>>;
+  username: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  phone: () => Promise<AsyncIterator<String>>;
+  role: () => Promise<AsyncIterator<UserRole>>;
+  password_hash: () => Promise<AsyncIterator<String>>;
+  password_salt: () => Promise<AsyncIterator<String>>;
+  avatar: () => Promise<AsyncIterator<String>>;
+  background_image: () => Promise<AsyncIterator<String>>;
+  about_text: () => Promise<AsyncIterator<String>>;
+  promo_code: () => Promise<AsyncIterator<String>>;
+  payout_amount: () => Promise<AsyncIterator<Int>>;
+  payout_months_total: () => Promise<AsyncIterator<Int>>;
+  payout_months_left: () => Promise<AsyncIterator<Int>>;
+  payout_enabled: () => Promise<AsyncIterator<Boolean>>;
+  billing_subscription_active: () => Promise<AsyncIterator<Boolean>>;
+  stripe_customer_id: () => Promise<AsyncIterator<String>>;
+  stripe_subsciption_json: () => Promise<AsyncIterator<Json>>;
+  last_login_date: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface VideoSubscriptionPayload {
+  mutation: MutationType;
+  node: Video;
+  updatedFields: String[];
+  previousValues: VideoPreviousValues;
+}
+
+export interface VideoSubscriptionPayloadPromise
+  extends Promise<VideoSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = VideoPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = VideoPreviousValuesPromise>() => T;
+}
+
+export interface VideoSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<VideoSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = VideoSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = VideoPreviousValuesSubscription>() => T;
+}
+
+export interface VideoPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  title?: String;
+  description?: String;
+  publish_date?: DateTimeOutput;
+  file_url?: String;
+  video_duration?: Int;
+  preview_url?: String;
+  preview_video_url?: String;
+  preview_video_duration?: String;
+  deleted: Boolean;
+}
+
+export interface VideoPreviousValuesPromise
+  extends Promise<VideoPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  title: () => Promise<String>;
+  description: () => Promise<String>;
+  publish_date: () => Promise<DateTimeOutput>;
+  file_url: () => Promise<String>;
+  video_duration: () => Promise<Int>;
+  preview_url: () => Promise<String>;
+  preview_video_url: () => Promise<String>;
+  preview_video_duration: () => Promise<String>;
+  deleted: () => Promise<Boolean>;
+}
+
+export interface VideoPreviousValuesSubscription
+  extends Promise<AsyncIterator<VideoPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  title: () => Promise<AsyncIterator<String>>;
+  description: () => Promise<AsyncIterator<String>>;
+  publish_date: () => Promise<AsyncIterator<DateTimeOutput>>;
+  file_url: () => Promise<AsyncIterator<String>>;
+  video_duration: () => Promise<AsyncIterator<Int>>;
+  preview_url: () => Promise<AsyncIterator<String>>;
+  preview_video_url: () => Promise<AsyncIterator<String>>;
+  preview_video_duration: () => Promise<AsyncIterator<String>>;
+  deleted: () => Promise<AsyncIterator<Boolean>>;
+}
+
+export interface WatchedVideoUserSubscriptionPayload {
+  mutation: MutationType;
+  node: WatchedVideoUser;
+  updatedFields: String[];
+  previousValues: WatchedVideoUserPreviousValues;
+}
+
+export interface WatchedVideoUserSubscriptionPayloadPromise
+  extends Promise<WatchedVideoUserSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = WatchedVideoUserPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = WatchedVideoUserPreviousValuesPromise>() => T;
+}
+
+export interface WatchedVideoUserSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<WatchedVideoUserSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = WatchedVideoUserSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = WatchedVideoUserPreviousValuesSubscription>() => T;
+}
+
+export interface WatchedVideoUserPreviousValues {
+  id: ID_Output;
+  watched_seconds: Int;
+}
+
+export interface WatchedVideoUserPreviousValuesPromise
+  extends Promise<WatchedVideoUserPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  watched_seconds: () => Promise<Int>;
+}
+
+export interface WatchedVideoUserPreviousValuesSubscription
+  extends Promise<AsyncIterator<WatchedVideoUserPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  watched_seconds: () => Promise<AsyncIterator<Int>>;
+}
+
+/*
+The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
+*/
+export type ID_Input = string | number;
+export type ID_Output = string;
+
+/*
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+*/
+export type String = string;
 
 /*
 DateTime scalar input type, allowing Date
@@ -4267,22 +7384,18 @@ DateTime scalar output type, which is always a string
 export type DateTimeOutput = string;
 
 /*
-The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
 */
-export type ID_Input = string | number;
-export type ID_Output = string;
-
-export type Json = any;
-
-/*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
-*/
-export type String = string;
+export type Int = number;
 
 /*
 The `Boolean` scalar type represents `true` or `false`.
 */
 export type Boolean = boolean;
+
+export type Json = any;
+
+export type Long = string;
 
 /**
  * Model Metadata
@@ -4291,6 +7404,18 @@ export type Boolean = boolean;
 export const models: Model[] = [
   {
     name: "User",
+    embedded: false
+  },
+  {
+    name: "PayoutPlan",
+    embedded: false
+  },
+  {
+    name: "PayoutTransaction",
+    embedded: false
+  },
+  {
+    name: "Settings",
     embedded: false
   },
   {
@@ -4310,6 +7435,10 @@ export const models: Model[] = [
     embedded: false
   },
   {
+    name: "WatchedVideoUser",
+    embedded: false
+  },
+  {
     name: "Tag",
     embedded: false
   },
@@ -4319,6 +7448,22 @@ export const models: Model[] = [
   },
   {
     name: "Post",
+    embedded: false
+  },
+  {
+    name: "Curriculum",
+    embedded: false
+  },
+  {
+    name: "PlayHistory",
+    embedded: false
+  },
+  {
+    name: "ChargeHistory",
+    embedded: false
+  },
+  {
+    name: "SubscriptionHistory",
     embedded: false
   }
 ];

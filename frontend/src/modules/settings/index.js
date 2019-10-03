@@ -25,6 +25,7 @@ const PROFILE_QUERY = gql`
             avatar
             background_image
             about_text
+            promo_code
 
             billing_subscription_active
             stripe_customer_id

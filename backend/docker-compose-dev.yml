@@ -23,7 +23,7 @@ services:
             - '27017:27017'
         networks:
             - uxbackend_network_debug
-        command: 'mongod --smallfiles --logpath=/dev/null'
+        command: 'mongod --logpath=/dev/null'
     pgadmin:
         image: fenglc/pgadmin4
         links:

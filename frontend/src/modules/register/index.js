@@ -1,6 +1,8 @@
 import React from "react";
 import {Formik} from "formik";
 import * as Yup from "yup";
+import { notification } from 'antd';
+import 'antd/dist/antd.css';
 import {register} from "../../util/auth";
 import Register from "./Register";
 import {Mutation, withApollo} from "react-apollo";
@@ -18,7 +20,9 @@ const emptyForm = {
     lastname: "",
     phone: "",
     email: "",
-    confirmPassword: ""
+    confirmPassword: "",
+    role: "USER_VIEWER",
+    promo_code: ""
 };
 
 const formInputs = {
@@ -53,13 +57,13 @@ const validationSchema = Yup.object().shape({
     [formInputs.confirmPassword]: Yup.string()
         .min(3, "Name must be at least 3 characters.")
         .required("This field is required.")
-        .oneOf([Yup.ref('password'), null], "Password should be identical"),
-    [formInputs.token]: Yup.string().required("Token is required")
+        .oneOf([Yup.ref('password'), null], "Password should be identical")
+    // [formInputs.token]: Yup.string().required("Token is required")
 });
 
 const SIGN_UP = gql`
-    mutation AuthSignUpFormMutation($email: String!, $firstname: String!, $lastname: String!, $phone: String!, $password: String!) {
-        sign_up(email: $email, firstname: $firstname, lastname: $lastname, phone: $phone, password: $password, step: CHECK_ACTIVATION_CODE) {
+    mutation AuthSignUpFormMutation($email: String!, $firstname: String!, $lastname: String!, $phone: String!, $password: String!, $role: UserRole, $promo_code: String) {
+        sign_up(email: $email, firstname: $firstname, lastname: $lastname, phone: $phone, password: $password, role: $role, promo_code: $promo_code, step: CHECK_ACTIVATION_CODE) {
             status
             user {
                 id
@@ -111,7 +115,9 @@ class RegisterPage extends React.Component {
                                         firstname: values.firstname,
                                         lastname: values.lastname,
                                         phone: values.phone,
-                                        password: values.password
+                                        password: values.password,
+                                        role: values.role,
+                                        promo_code: values.promo_code
                                     }
                                 });
                                 if (!result.data) {
@@ -126,23 +132,34 @@ class RegisterPage extends React.Component {
                                 return false;
                             }
 
-                            try {
-                                const purchaseResult = await this.props.client.mutate({
-                                    mutation: PURCHASE,
-                                    variables: {token: values.token, plan: values.plan}
-                                });
-
-                                if (purchaseResult.errors) {
+                            if (values.role === "USER_VIEWER") {
+                                try {
+                                    const purchaseResult = await this.props.client.mutate({
+                                        mutation: PURCHASE,
+                                        variables: {token: values.token, plan: values.plan}
+                                    });
+    
+                                    if (purchaseResult.errors) {
+                                        log.trace({purchaseResult});
+                                        // alert(JSON.stringify(purchaseResult));
+                                        notification['error']({
+                                            message: 'Error!',
+                                            description: JSON.stringify(purchaseResult),
+                                        });
+                                        return false;
+                                    }
                                     log.trace({purchaseResult});
-                                    alert(JSON.stringify(purchaseResult));
+                                } catch (error) {
+                                    log.trace(error);
+                                    // alert(JSON.stringify(error));
+                                    notification['error']({
+                                        message: 'Error!',
+                                        description: JSON.stringify(error),
+                                    });
                                     return false;
                                 }
-                                log.trace({purchaseResult});
-                            } catch (error) {
-                                log.trace(error);
-                                alert(JSON.stringify(error));
-                                return false;
                             }
+                            
                         }}
                         render={formikProps => (
                             <StripeProvider stripe={this.state.stripe}>

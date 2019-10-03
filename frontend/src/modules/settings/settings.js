@@ -354,6 +354,27 @@ class Settings extends PureComponent {
                                     </p>
                                 </div>
 
+                                {this.props.user.role == "USER_PUBLISHER" && (
+                                    <React.Fragment>
+                                        <h6>Promo Code</h6>
+                                        <div className="row">
+                                            <div className="col-sm-6">
+                                                <div className="form-group">
+                                                    <input
+                                                        className="form-control border-form-control"
+                                                        placeholder=""
+                                                        type="text"
+                                                        disabled
+                                                        value={this.props.user.promo_code}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </React.Fragment>
+                                )}
+
+                                
+
                                 <h6>Subscription</h6>
                                 <div className="row mb15">
                                     <div className="col-sm-6">

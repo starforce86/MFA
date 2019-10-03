@@ -49,7 +49,7 @@ services:
             - './data/mongodb:/data/db'
         #ports:
         #- '27017:27017'
-        command: 'mongod --smallfiles --logpath=/dev/null'
+        command: 'mongod --logpath=/dev/null'
     postgres:
         image: 'postgres:latest'
         environment:

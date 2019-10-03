@@ -168,11 +168,39 @@ type AggregateCategory {
   count: Int!
 }
 
+type AggregateChargeHistory {
+  count: Int!
+}
+
+type AggregateCurriculum {
+  count: Int!
+}
+
+type AggregatePayoutPlan {
+  count: Int!
+}
+
+type AggregatePayoutTransaction {
+  count: Int!
+}
+
+type AggregatePlayHistory {
+  count: Int!
+}
+
 type AggregatePost {
   count: Int!
 }
 
 type AggregateRestoreCode {
+  count: Int!
+}
+
+type AggregateSettings {
+  count: Int!
+}
+
+type AggregateSubscriptionHistory {
   count: Int!
 }
 
@@ -185,6 +213,10 @@ type AggregateUser {
 }
 
 type AggregateVideo {
+  count: Int!
+}
+
+type AggregateWatchedVideoUser {
   count: Int!
 }
 
@@ -451,6 +483,299 @@ input CategoryWhereUniqueInput {
   id: ID
 }
 
+type ChargeHistory {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  user: User!
+  amount: Int!
+  chargeDate: DateTime
+}
+
+type ChargeHistoryConnection {
+  pageInfo: PageInfo!
+  edges: [ChargeHistoryEdge]!
+  aggregate: AggregateChargeHistory!
+}
+
+input ChargeHistoryCreateInput {
+  user: UserCreateOneInput!
+  amount: Int!
+  chargeDate: DateTime
+}
+
+type ChargeHistoryEdge {
+  node: ChargeHistory!
+  cursor: String!
+}
+
+enum ChargeHistoryOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  amount_ASC
+  amount_DESC
+  chargeDate_ASC
+  chargeDate_DESC
+}
+
+type ChargeHistoryPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  amount: Int!
+  chargeDate: DateTime
+}
+
+type ChargeHistorySubscriptionPayload {
+  mutation: MutationType!
+  node: ChargeHistory
+  updatedFields: [String!]
+  previousValues: ChargeHistoryPreviousValues
+}
+
+input ChargeHistorySubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ChargeHistoryWhereInput
+  AND: [ChargeHistorySubscriptionWhereInput!]
+  OR: [ChargeHistorySubscriptionWhereInput!]
+  NOT: [ChargeHistorySubscriptionWhereInput!]
+}
+
+input ChargeHistoryUpdateInput {
+  user: UserUpdateOneRequiredInput
+  amount: Int
+  chargeDate: DateTime
+}
+
+input ChargeHistoryUpdateManyMutationInput {
+  amount: Int
+  chargeDate: DateTime
+}
+
+input ChargeHistoryWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  user: UserWhereInput
+  amount: Int
+  amount_not: Int
+  amount_in: [Int!]
+  amount_not_in: [Int!]
+  amount_lt: Int
+  amount_lte: Int
+  amount_gt: Int
+  amount_gte: Int
+  chargeDate: DateTime
+  chargeDate_not: DateTime
+  chargeDate_in: [DateTime!]
+  chargeDate_not_in: [DateTime!]
+  chargeDate_lt: DateTime
+  chargeDate_lte: DateTime
+  chargeDate_gt: DateTime
+  chargeDate_gte: DateTime
+  AND: [ChargeHistoryWhereInput!]
+  OR: [ChargeHistoryWhereInput!]
+  NOT: [ChargeHistoryWhereInput!]
+}
+
+input ChargeHistoryWhereUniqueInput {
+  id: ID
+}
+
+type Curriculum {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  title: String!
+  text: String!
+  order: Int
+  author: User!
+}
+
+type CurriculumConnection {
+  pageInfo: PageInfo!
+  edges: [CurriculumEdge]!
+  aggregate: AggregateCurriculum!
+}
+
+input CurriculumCreateInput {
+  title: String!
+  text: String!
+  order: Int
+  author: UserCreateOneInput!
+}
+
+type CurriculumEdge {
+  node: Curriculum!
+  cursor: String!
+}
+
+enum CurriculumOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  title_ASC
+  title_DESC
+  text_ASC
+  text_DESC
+  order_ASC
+  order_DESC
+}
+
+type CurriculumPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  title: String!
+  text: String!
+  order: Int
+}
+
+type CurriculumSubscriptionPayload {
+  mutation: MutationType!
+  node: Curriculum
+  updatedFields: [String!]
+  previousValues: CurriculumPreviousValues
+}
+
+input CurriculumSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: CurriculumWhereInput
+  AND: [CurriculumSubscriptionWhereInput!]
+  OR: [CurriculumSubscriptionWhereInput!]
+  NOT: [CurriculumSubscriptionWhereInput!]
+}
+
+input CurriculumUpdateInput {
+  title: String
+  text: String
+  order: Int
+  author: UserUpdateOneRequiredInput
+}
+
+input CurriculumUpdateManyMutationInput {
+  title: String
+  text: String
+  order: Int
+}
+
+input CurriculumWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  text: String
+  text_not: String
+  text_in: [String!]
+  text_not_in: [String!]
+  text_lt: String
+  text_lte: String
+  text_gt: String
+  text_gte: String
+  text_contains: String
+  text_not_contains: String
+  text_starts_with: String
+  text_not_starts_with: String
+  text_ends_with: String
+  text_not_ends_with: String
+  order: Int
+  order_not: Int
+  order_in: [Int!]
+  order_not_in: [Int!]
+  order_lt: Int
+  order_lte: Int
+  order_gt: Int
+  order_gte: Int
+  author: UserWhereInput
+  AND: [CurriculumWhereInput!]
+  OR: [CurriculumWhereInput!]
+  NOT: [CurriculumWhereInput!]
+}
+
+input CurriculumWhereUniqueInput {
+  id: ID
+}
+
 scalar DateTime
 
 scalar Json
@@ -470,6 +795,36 @@ type Mutation {
   upsertCategory(where: CategoryWhereUniqueInput!, create: CategoryCreateInput!, update: CategoryUpdateInput!): Category!
   deleteCategory(where: CategoryWhereUniqueInput!): Category
   deleteManyCategories(where: CategoryWhereInput): BatchPayload!
+  createChargeHistory(data: ChargeHistoryCreateInput!): ChargeHistory!
+  updateChargeHistory(data: ChargeHistoryUpdateInput!, where: ChargeHistoryWhereUniqueInput!): ChargeHistory
+  updateManyChargeHistories(data: ChargeHistoryUpdateManyMutationInput!, where: ChargeHistoryWhereInput): BatchPayload!
+  upsertChargeHistory(where: ChargeHistoryWhereUniqueInput!, create: ChargeHistoryCreateInput!, update: ChargeHistoryUpdateInput!): ChargeHistory!
+  deleteChargeHistory(where: ChargeHistoryWhereUniqueInput!): ChargeHistory
+  deleteManyChargeHistories(where: ChargeHistoryWhereInput): BatchPayload!
+  createCurriculum(data: CurriculumCreateInput!): Curriculum!
+  updateCurriculum(data: CurriculumUpdateInput!, where: CurriculumWhereUniqueInput!): Curriculum
+  updateManyCurricula(data: CurriculumUpdateManyMutationInput!, where: CurriculumWhereInput): BatchPayload!
+  upsertCurriculum(where: CurriculumWhereUniqueInput!, create: CurriculumCreateInput!, update: CurriculumUpdateInput!): Curriculum!
+  deleteCurriculum(where: CurriculumWhereUniqueInput!): Curriculum
+  deleteManyCurricula(where: CurriculumWhereInput): BatchPayload!
+  createPayoutPlan(data: PayoutPlanCreateInput!): PayoutPlan!
+  updatePayoutPlan(data: PayoutPlanUpdateInput!, where: PayoutPlanWhereUniqueInput!): PayoutPlan
+  updateManyPayoutPlans(data: PayoutPlanUpdateManyMutationInput!, where: PayoutPlanWhereInput): BatchPayload!
+  upsertPayoutPlan(where: PayoutPlanWhereUniqueInput!, create: PayoutPlanCreateInput!, update: PayoutPlanUpdateInput!): PayoutPlan!
+  deletePayoutPlan(where: PayoutPlanWhereUniqueInput!): PayoutPlan
+  deleteManyPayoutPlans(where: PayoutPlanWhereInput): BatchPayload!
+  createPayoutTransaction(data: PayoutTransactionCreateInput!): PayoutTransaction!
+  updatePayoutTransaction(data: PayoutTransactionUpdateInput!, where: PayoutTransactionWhereUniqueInput!): PayoutTransaction
+  updateManyPayoutTransactions(data: PayoutTransactionUpdateManyMutationInput!, where: PayoutTransactionWhereInput): BatchPayload!
+  upsertPayoutTransaction(where: PayoutTransactionWhereUniqueInput!, create: PayoutTransactionCreateInput!, update: PayoutTransactionUpdateInput!): PayoutTransaction!
+  deletePayoutTransaction(where: PayoutTransactionWhereUniqueInput!): PayoutTransaction
+  deleteManyPayoutTransactions(where: PayoutTransactionWhereInput): BatchPayload!
+  createPlayHistory(data: PlayHistoryCreateInput!): PlayHistory!
+  updatePlayHistory(data: PlayHistoryUpdateInput!, where: PlayHistoryWhereUniqueInput!): PlayHistory
+  updateManyPlayHistories(data: PlayHistoryUpdateManyMutationInput!, where: PlayHistoryWhereInput): BatchPayload!
+  upsertPlayHistory(where: PlayHistoryWhereUniqueInput!, create: PlayHistoryCreateInput!, update: PlayHistoryUpdateInput!): PlayHistory!
+  deletePlayHistory(where: PlayHistoryWhereUniqueInput!): PlayHistory
+  deleteManyPlayHistories(where: PlayHistoryWhereInput): BatchPayload!
   createPost(data: PostCreateInput!): Post!
   updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
   updateManyPosts(data: PostUpdateManyMutationInput!, where: PostWhereInput): BatchPayload!
@@ -482,6 +837,18 @@ type Mutation {
   upsertRestoreCode(where: RestoreCodeWhereUniqueInput!, create: RestoreCodeCreateInput!, update: RestoreCodeUpdateInput!): RestoreCode!
   deleteRestoreCode(where: RestoreCodeWhereUniqueInput!): RestoreCode
   deleteManyRestoreCodes(where: RestoreCodeWhereInput): BatchPayload!
+  createSettings(data: SettingsCreateInput!): Settings!
+  updateSettings(data: SettingsUpdateInput!, where: SettingsWhereUniqueInput!): Settings
+  updateManySettingses(data: SettingsUpdateManyMutationInput!, where: SettingsWhereInput): BatchPayload!
+  upsertSettings(where: SettingsWhereUniqueInput!, create: SettingsCreateInput!, update: SettingsUpdateInput!): Settings!
+  deleteSettings(where: SettingsWhereUniqueInput!): Settings
+  deleteManySettingses(where: SettingsWhereInput): BatchPayload!
+  createSubscriptionHistory(data: SubscriptionHistoryCreateInput!): SubscriptionHistory!
+  updateSubscriptionHistory(data: SubscriptionHistoryUpdateInput!, where: SubscriptionHistoryWhereUniqueInput!): SubscriptionHistory
+  updateManySubscriptionHistories(data: SubscriptionHistoryUpdateManyMutationInput!, where: SubscriptionHistoryWhereInput): BatchPayload!
+  upsertSubscriptionHistory(where: SubscriptionHistoryWhereUniqueInput!, create: SubscriptionHistoryCreateInput!, update: SubscriptionHistoryUpdateInput!): SubscriptionHistory!
+  deleteSubscriptionHistory(where: SubscriptionHistoryWhereUniqueInput!): SubscriptionHistory
+  deleteManySubscriptionHistories(where: SubscriptionHistoryWhereInput): BatchPayload!
   createTag(data: TagCreateInput!): Tag!
   updateTag(data: TagUpdateInput!, where: TagWhereUniqueInput!): Tag
   updateManyTags(data: TagUpdateManyMutationInput!, where: TagWhereInput): BatchPayload!
@@ -500,6 +867,12 @@ type Mutation {
   upsertVideo(where: VideoWhereUniqueInput!, create: VideoCreateInput!, update: VideoUpdateInput!): Video!
   deleteVideo(where: VideoWhereUniqueInput!): Video
   deleteManyVideos(where: VideoWhereInput): BatchPayload!
+  createWatchedVideoUser(data: WatchedVideoUserCreateInput!): WatchedVideoUser!
+  updateWatchedVideoUser(data: WatchedVideoUserUpdateInput!, where: WatchedVideoUserWhereUniqueInput!): WatchedVideoUser
+  updateManyWatchedVideoUsers(data: WatchedVideoUserUpdateManyMutationInput!, where: WatchedVideoUserWhereInput): BatchPayload!
+  upsertWatchedVideoUser(where: WatchedVideoUserWhereUniqueInput!, create: WatchedVideoUserCreateInput!, update: WatchedVideoUserUpdateInput!): WatchedVideoUser!
+  deleteWatchedVideoUser(where: WatchedVideoUserWhereUniqueInput!): WatchedVideoUser
+  deleteManyWatchedVideoUsers(where: WatchedVideoUserWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -517,6 +890,533 @@ type PageInfo {
   hasPreviousPage: Boolean!
   startCursor: String
   endCursor: String
+}
+
+type PayoutPlan {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  artist_id: Int!
+  user_id: Int!
+  year: Int!
+  month: Int!
+  amount: Int!
+  ignore_statis: Boolean!
+  paid_status: Boolean!
+  paid_date: DateTime
+}
+
+type PayoutPlanConnection {
+  pageInfo: PageInfo!
+  edges: [PayoutPlanEdge]!
+  aggregate: AggregatePayoutPlan!
+}
+
+input PayoutPlanCreateInput {
+  artist_id: Int!
+  user_id: Int!
+  year: Int!
+  month: Int!
+  amount: Int!
+  ignore_statis: Boolean
+  paid_status: Boolean
+  paid_date: DateTime
+}
+
+type PayoutPlanEdge {
+  node: PayoutPlan!
+  cursor: String!
+}
+
+enum PayoutPlanOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  artist_id_ASC
+  artist_id_DESC
+  user_id_ASC
+  user_id_DESC
+  year_ASC
+  year_DESC
+  month_ASC
+  month_DESC
+  amount_ASC
+  amount_DESC
+  ignore_statis_ASC
+  ignore_statis_DESC
+  paid_status_ASC
+  paid_status_DESC
+  paid_date_ASC
+  paid_date_DESC
+}
+
+type PayoutPlanPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  artist_id: Int!
+  user_id: Int!
+  year: Int!
+  month: Int!
+  amount: Int!
+  ignore_statis: Boolean!
+  paid_status: Boolean!
+  paid_date: DateTime
+}
+
+type PayoutPlanSubscriptionPayload {
+  mutation: MutationType!
+  node: PayoutPlan
+  updatedFields: [String!]
+  previousValues: PayoutPlanPreviousValues
+}
+
+input PayoutPlanSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: PayoutPlanWhereInput
+  AND: [PayoutPlanSubscriptionWhereInput!]
+  OR: [PayoutPlanSubscriptionWhereInput!]
+  NOT: [PayoutPlanSubscriptionWhereInput!]
+}
+
+input PayoutPlanUpdateInput {
+  artist_id: Int
+  user_id: Int
+  year: Int
+  month: Int
+  amount: Int
+  ignore_statis: Boolean
+  paid_status: Boolean
+  paid_date: DateTime
+}
+
+input PayoutPlanUpdateManyMutationInput {
+  artist_id: Int
+  user_id: Int
+  year: Int
+  month: Int
+  amount: Int
+  ignore_statis: Boolean
+  paid_status: Boolean
+  paid_date: DateTime
+}
+
+input PayoutPlanWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  artist_id: Int
+  artist_id_not: Int
+  artist_id_in: [Int!]
+  artist_id_not_in: [Int!]
+  artist_id_lt: Int
+  artist_id_lte: Int
+  artist_id_gt: Int
+  artist_id_gte: Int
+  user_id: Int
+  user_id_not: Int
+  user_id_in: [Int!]
+  user_id_not_in: [Int!]
+  user_id_lt: Int
+  user_id_lte: Int
+  user_id_gt: Int
+  user_id_gte: Int
+  year: Int
+  year_not: Int
+  year_in: [Int!]
+  year_not_in: [Int!]
+  year_lt: Int
+  year_lte: Int
+  year_gt: Int
+  year_gte: Int
+  month: Int
+  month_not: Int
+  month_in: [Int!]
+  month_not_in: [Int!]
+  month_lt: Int
+  month_lte: Int
+  month_gt: Int
+  month_gte: Int
+  amount: Int
+  amount_not: Int
+  amount_in: [Int!]
+  amount_not_in: [Int!]
+  amount_lt: Int
+  amount_lte: Int
+  amount_gt: Int
+  amount_gte: Int
+  ignore_statis: Boolean
+  ignore_statis_not: Boolean
+  paid_status: Boolean
+  paid_status_not: Boolean
+  paid_date: DateTime
+  paid_date_not: DateTime
+  paid_date_in: [DateTime!]
+  paid_date_not_in: [DateTime!]
+  paid_date_lt: DateTime
+  paid_date_lte: DateTime
+  paid_date_gt: DateTime
+  paid_date_gte: DateTime
+  AND: [PayoutPlanWhereInput!]
+  OR: [PayoutPlanWhereInput!]
+  NOT: [PayoutPlanWhereInput!]
+}
+
+input PayoutPlanWhereUniqueInput {
+  id: ID
+}
+
+type PayoutTransaction {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  artist_id: Int!
+  year: Int!
+  month: Int!
+  amount: Int!
+  paid_status: Boolean!
+  paid_date: DateTime
+}
+
+type PayoutTransactionConnection {
+  pageInfo: PageInfo!
+  edges: [PayoutTransactionEdge]!
+  aggregate: AggregatePayoutTransaction!
+}
+
+input PayoutTransactionCreateInput {
+  artist_id: Int!
+  year: Int!
+  month: Int!
+  amount: Int!
+  paid_status: Boolean
+  paid_date: DateTime
+}
+
+type PayoutTransactionEdge {
+  node: PayoutTransaction!
+  cursor: String!
+}
+
+enum PayoutTransactionOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  artist_id_ASC
+  artist_id_DESC
+  year_ASC
+  year_DESC
+  month_ASC
+  month_DESC
+  amount_ASC
+  amount_DESC
+  paid_status_ASC
+  paid_status_DESC
+  paid_date_ASC
+  paid_date_DESC
+}
+
+type PayoutTransactionPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  artist_id: Int!
+  year: Int!
+  month: Int!
+  amount: Int!
+  paid_status: Boolean!
+  paid_date: DateTime
+}
+
+type PayoutTransactionSubscriptionPayload {
+  mutation: MutationType!
+  node: PayoutTransaction
+  updatedFields: [String!]
+  previousValues: PayoutTransactionPreviousValues
+}
+
+input PayoutTransactionSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: PayoutTransactionWhereInput
+  AND: [PayoutTransactionSubscriptionWhereInput!]
+  OR: [PayoutTransactionSubscriptionWhereInput!]
+  NOT: [PayoutTransactionSubscriptionWhereInput!]
+}
+
+input PayoutTransactionUpdateInput {
+  artist_id: Int
+  year: Int
+  month: Int
+  amount: Int
+  paid_status: Boolean
+  paid_date: DateTime
+}
+
+input PayoutTransactionUpdateManyMutationInput {
+  artist_id: Int
+  year: Int
+  month: Int
+  amount: Int
+  paid_status: Boolean
+  paid_date: DateTime
+}
+
+input PayoutTransactionWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  artist_id: Int
+  artist_id_not: Int
+  artist_id_in: [Int!]
+  artist_id_not_in: [Int!]
+  artist_id_lt: Int
+  artist_id_lte: Int
+  artist_id_gt: Int
+  artist_id_gte: Int
+  year: Int
+  year_not: Int
+  year_in: [Int!]
+  year_not_in: [Int!]
+  year_lt: Int
+  year_lte: Int
+  year_gt: Int
+  year_gte: Int
+  month: Int
+  month_not: Int
+  month_in: [Int!]
+  month_not_in: [Int!]
+  month_lt: Int
+  month_lte: Int
+  month_gt: Int
+  month_gte: Int
+  amount: Int
+  amount_not: Int
+  amount_in: [Int!]
+  amount_not_in: [Int!]
+  amount_lt: Int
+  amount_lte: Int
+  amount_gt: Int
+  amount_gte: Int
+  paid_status: Boolean
+  paid_status_not: Boolean
+  paid_date: DateTime
+  paid_date_not: DateTime
+  paid_date_in: [DateTime!]
+  paid_date_not_in: [DateTime!]
+  paid_date_lt: DateTime
+  paid_date_lte: DateTime
+  paid_date_gt: DateTime
+  paid_date_gte: DateTime
+  AND: [PayoutTransactionWhereInput!]
+  OR: [PayoutTransactionWhereInput!]
+  NOT: [PayoutTransactionWhereInput!]
+}
+
+input PayoutTransactionWhereUniqueInput {
+  id: ID
+}
+
+type PlayHistory {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  user: User!
+  video: Video!
+  playSeconds: Int!
+  realPlaySeconds: Int!
+}
+
+type PlayHistoryConnection {
+  pageInfo: PageInfo!
+  edges: [PlayHistoryEdge]!
+  aggregate: AggregatePlayHistory!
+}
+
+input PlayHistoryCreateInput {
+  user: UserCreateOneInput!
+  video: VideoCreateOneInput!
+  playSeconds: Int!
+  realPlaySeconds: Int!
+}
+
+type PlayHistoryEdge {
+  node: PlayHistory!
+  cursor: String!
+}
+
+enum PlayHistoryOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  playSeconds_ASC
+  playSeconds_DESC
+  realPlaySeconds_ASC
+  realPlaySeconds_DESC
+}
+
+type PlayHistoryPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  playSeconds: Int!
+  realPlaySeconds: Int!
+}
+
+type PlayHistorySubscriptionPayload {
+  mutation: MutationType!
+  node: PlayHistory
+  updatedFields: [String!]
+  previousValues: PlayHistoryPreviousValues
+}
+
+input PlayHistorySubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: PlayHistoryWhereInput
+  AND: [PlayHistorySubscriptionWhereInput!]
+  OR: [PlayHistorySubscriptionWhereInput!]
+  NOT: [PlayHistorySubscriptionWhereInput!]
+}
+
+input PlayHistoryUpdateInput {
+  user: UserUpdateOneRequiredInput
+  video: VideoUpdateOneRequiredInput
+  playSeconds: Int
+  realPlaySeconds: Int
+}
+
+input PlayHistoryUpdateManyMutationInput {
+  playSeconds: Int
+  realPlaySeconds: Int
+}
+
+input PlayHistoryWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  user: UserWhereInput
+  video: VideoWhereInput
+  playSeconds: Int
+  playSeconds_not: Int
+  playSeconds_in: [Int!]
+  playSeconds_not_in: [Int!]
+  playSeconds_lt: Int
+  playSeconds_lte: Int
+  playSeconds_gt: Int
+  playSeconds_gte: Int
+  realPlaySeconds: Int
+  realPlaySeconds_not: Int
+  realPlaySeconds_in: [Int!]
+  realPlaySeconds_not_in: [Int!]
+  realPlaySeconds_lt: Int
+  realPlaySeconds_lte: Int
+  realPlaySeconds_gt: Int
+  realPlaySeconds_gte: Int
+  AND: [PlayHistoryWhereInput!]
+  OR: [PlayHistoryWhereInput!]
+  NOT: [PlayHistoryWhereInput!]
+}
+
+input PlayHistoryWhereUniqueInput {
+  id: ID
 }
 
 type Post {
@@ -692,12 +1592,33 @@ type Query {
   category(where: CategoryWhereUniqueInput!): Category
   categories(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Category]!
   categoriesConnection(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CategoryConnection!
+  chargeHistory(where: ChargeHistoryWhereUniqueInput!): ChargeHistory
+  chargeHistories(where: ChargeHistoryWhereInput, orderBy: ChargeHistoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ChargeHistory]!
+  chargeHistoriesConnection(where: ChargeHistoryWhereInput, orderBy: ChargeHistoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ChargeHistoryConnection!
+  curriculum(where: CurriculumWhereUniqueInput!): Curriculum
+  curricula(where: CurriculumWhereInput, orderBy: CurriculumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Curriculum]!
+  curriculaConnection(where: CurriculumWhereInput, orderBy: CurriculumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CurriculumConnection!
+  payoutPlan(where: PayoutPlanWhereUniqueInput!): PayoutPlan
+  payoutPlans(where: PayoutPlanWhereInput, orderBy: PayoutPlanOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PayoutPlan]!
+  payoutPlansConnection(where: PayoutPlanWhereInput, orderBy: PayoutPlanOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PayoutPlanConnection!
+  payoutTransaction(where: PayoutTransactionWhereUniqueInput!): PayoutTransaction
+  payoutTransactions(where: PayoutTransactionWhereInput, orderBy: PayoutTransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PayoutTransaction]!
+  payoutTransactionsConnection(where: PayoutTransactionWhereInput, orderBy: PayoutTransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PayoutTransactionConnection!
+  playHistory(where: PlayHistoryWhereUniqueInput!): PlayHistory
+  playHistories(where: PlayHistoryWhereInput, orderBy: PlayHistoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PlayHistory]!
+  playHistoriesConnection(where: PlayHistoryWhereInput, orderBy: PlayHistoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PlayHistoryConnection!
   post(where: PostWhereUniqueInput!): Post
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
   restoreCode(where: RestoreCodeWhereUniqueInput!): RestoreCode
   restoreCodes(where: RestoreCodeWhereInput, orderBy: RestoreCodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RestoreCode]!
   restoreCodesConnection(where: RestoreCodeWhereInput, orderBy: RestoreCodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RestoreCodeConnection!
+  settings(where: SettingsWhereUniqueInput!): Settings
+  settingses(where: SettingsWhereInput, orderBy: SettingsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Settings]!
+  settingsesConnection(where: SettingsWhereInput, orderBy: SettingsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SettingsConnection!
+  subscriptionHistory(where: SubscriptionHistoryWhereUniqueInput!): SubscriptionHistory
+  subscriptionHistories(where: SubscriptionHistoryWhereInput, orderBy: SubscriptionHistoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SubscriptionHistory]!
+  subscriptionHistoriesConnection(where: SubscriptionHistoryWhereInput, orderBy: SubscriptionHistoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SubscriptionHistoryConnection!
   tag(where: TagWhereUniqueInput!): Tag
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag]!
   tagsConnection(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TagConnection!
@@ -707,6 +1628,9 @@ type Query {
   video(where: VideoWhereUniqueInput!): Video
   videos(where: VideoWhereInput, orderBy: VideoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Video]!
   videosConnection(where: VideoWhereInput, orderBy: VideoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): VideoConnection!
+  watchedVideoUser(where: WatchedVideoUserWhereUniqueInput!): WatchedVideoUser
+  watchedVideoUsers(where: WatchedVideoUserWhereInput, orderBy: WatchedVideoUserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [WatchedVideoUser]!
+  watchedVideoUsersConnection(where: WatchedVideoUserWhereInput, orderBy: WatchedVideoUserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): WatchedVideoUserConnection!
   node(id: ID!): Node
 }
 
@@ -867,14 +1791,332 @@ input RestoreCodeWhereUniqueInput {
   email: String
 }
 
+type Settings {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  int_val: Int
+  str_val: String
+}
+
+type SettingsConnection {
+  pageInfo: PageInfo!
+  edges: [SettingsEdge]!
+  aggregate: AggregateSettings!
+}
+
+input SettingsCreateInput {
+  name: String!
+  int_val: Int
+  str_val: String
+}
+
+type SettingsEdge {
+  node: Settings!
+  cursor: String!
+}
+
+enum SettingsOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  name_ASC
+  name_DESC
+  int_val_ASC
+  int_val_DESC
+  str_val_ASC
+  str_val_DESC
+}
+
+type SettingsPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  int_val: Int
+  str_val: String
+}
+
+type SettingsSubscriptionPayload {
+  mutation: MutationType!
+  node: Settings
+  updatedFields: [String!]
+  previousValues: SettingsPreviousValues
+}
+
+input SettingsSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: SettingsWhereInput
+  AND: [SettingsSubscriptionWhereInput!]
+  OR: [SettingsSubscriptionWhereInput!]
+  NOT: [SettingsSubscriptionWhereInput!]
+}
+
+input SettingsUpdateInput {
+  name: String
+  int_val: Int
+  str_val: String
+}
+
+input SettingsUpdateManyMutationInput {
+  name: String
+  int_val: Int
+  str_val: String
+}
+
+input SettingsWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  int_val: Int
+  int_val_not: Int
+  int_val_in: [Int!]
+  int_val_not_in: [Int!]
+  int_val_lt: Int
+  int_val_lte: Int
+  int_val_gt: Int
+  int_val_gte: Int
+  str_val: String
+  str_val_not: String
+  str_val_in: [String!]
+  str_val_not_in: [String!]
+  str_val_lt: String
+  str_val_lte: String
+  str_val_gt: String
+  str_val_gte: String
+  str_val_contains: String
+  str_val_not_contains: String
+  str_val_starts_with: String
+  str_val_not_starts_with: String
+  str_val_ends_with: String
+  str_val_not_ends_with: String
+  AND: [SettingsWhereInput!]
+  OR: [SettingsWhereInput!]
+  NOT: [SettingsWhereInput!]
+}
+
+input SettingsWhereUniqueInput {
+  id: ID
+}
+
 type Subscription {
   activationCode(where: ActivationCodeSubscriptionWhereInput): ActivationCodeSubscriptionPayload
   category(where: CategorySubscriptionWhereInput): CategorySubscriptionPayload
+  chargeHistory(where: ChargeHistorySubscriptionWhereInput): ChargeHistorySubscriptionPayload
+  curriculum(where: CurriculumSubscriptionWhereInput): CurriculumSubscriptionPayload
+  payoutPlan(where: PayoutPlanSubscriptionWhereInput): PayoutPlanSubscriptionPayload
+  payoutTransaction(where: PayoutTransactionSubscriptionWhereInput): PayoutTransactionSubscriptionPayload
+  playHistory(where: PlayHistorySubscriptionWhereInput): PlayHistorySubscriptionPayload
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   restoreCode(where: RestoreCodeSubscriptionWhereInput): RestoreCodeSubscriptionPayload
+  settings(where: SettingsSubscriptionWhereInput): SettingsSubscriptionPayload
+  subscriptionHistory(where: SubscriptionHistorySubscriptionWhereInput): SubscriptionHistorySubscriptionPayload
   tag(where: TagSubscriptionWhereInput): TagSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   video(where: VideoSubscriptionWhereInput): VideoSubscriptionPayload
+  watchedVideoUser(where: WatchedVideoUserSubscriptionWhereInput): WatchedVideoUserSubscriptionPayload
+}
+
+type SubscriptionHistory {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  user: User!
+  interval: String!
+  amount: Int!
+  subscriptionDate: DateTime
+}
+
+type SubscriptionHistoryConnection {
+  pageInfo: PageInfo!
+  edges: [SubscriptionHistoryEdge]!
+  aggregate: AggregateSubscriptionHistory!
+}
+
+input SubscriptionHistoryCreateInput {
+  user: UserCreateOneInput!
+  interval: String!
+  amount: Int!
+  subscriptionDate: DateTime
+}
+
+type SubscriptionHistoryEdge {
+  node: SubscriptionHistory!
+  cursor: String!
+}
+
+enum SubscriptionHistoryOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  interval_ASC
+  interval_DESC
+  amount_ASC
+  amount_DESC
+  subscriptionDate_ASC
+  subscriptionDate_DESC
+}
+
+type SubscriptionHistoryPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  interval: String!
+  amount: Int!
+  subscriptionDate: DateTime
+}
+
+type SubscriptionHistorySubscriptionPayload {
+  mutation: MutationType!
+  node: SubscriptionHistory
+  updatedFields: [String!]
+  previousValues: SubscriptionHistoryPreviousValues
+}
+
+input SubscriptionHistorySubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: SubscriptionHistoryWhereInput
+  AND: [SubscriptionHistorySubscriptionWhereInput!]
+  OR: [SubscriptionHistorySubscriptionWhereInput!]
+  NOT: [SubscriptionHistorySubscriptionWhereInput!]
+}
+
+input SubscriptionHistoryUpdateInput {
+  user: UserUpdateOneRequiredInput
+  interval: String
+  amount: Int
+  subscriptionDate: DateTime
+}
+
+input SubscriptionHistoryUpdateManyMutationInput {
+  interval: String
+  amount: Int
+  subscriptionDate: DateTime
+}
+
+input SubscriptionHistoryWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  user: UserWhereInput
+  interval: String
+  interval_not: String
+  interval_in: [String!]
+  interval_not_in: [String!]
+  interval_lt: String
+  interval_lte: String
+  interval_gt: String
+  interval_gte: String
+  interval_contains: String
+  interval_not_contains: String
+  interval_starts_with: String
+  interval_not_starts_with: String
+  interval_ends_with: String
+  interval_not_ends_with: String
+  amount: Int
+  amount_not: Int
+  amount_in: [Int!]
+  amount_not_in: [Int!]
+  amount_lt: Int
+  amount_lte: Int
+  amount_gt: Int
+  amount_gte: Int
+  subscriptionDate: DateTime
+  subscriptionDate_not: DateTime
+  subscriptionDate_in: [DateTime!]
+  subscriptionDate_not_in: [DateTime!]
+  subscriptionDate_lt: DateTime
+  subscriptionDate_lte: DateTime
+  subscriptionDate_gt: DateTime
+  subscriptionDate_gte: DateTime
+  AND: [SubscriptionHistoryWhereInput!]
+  OR: [SubscriptionHistoryWhereInput!]
+  NOT: [SubscriptionHistoryWhereInput!]
+}
+
+input SubscriptionHistoryWhereUniqueInput {
+  id: ID
 }
 
 type Tag {
@@ -1113,9 +2355,16 @@ type User {
   avatar: String
   background_image: String
   about_text: String
+  promo_code: String
+  payout_amount: Int
+  payout_months_total: Int
+  payout_months_left: Int
+  payout_enabled: Boolean
+  artist: User
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   my_videos(where: VideoWhereInput, orderBy: VideoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Video!]
   liked_videos(where: VideoWhereInput, orderBy: VideoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Video!]
-  watched_videos(where: VideoWhereInput, orderBy: VideoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Video!]
+  watched_videos(where: WatchedVideoUserWhereInput, orderBy: WatchedVideoUserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [WatchedVideoUser!]
   my_subscription_users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   subscribed_users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   billing_subscription_active: Boolean!
@@ -1142,15 +2391,27 @@ input UserCreateInput {
   avatar: String
   background_image: String
   about_text: String
+  promo_code: String
+  payout_amount: Int
+  payout_months_total: Int
+  payout_months_left: Int
+  payout_enabled: Boolean
+  artist: UserCreateOneWithoutUsersInput
+  users: UserCreateManyWithoutArtistInput
   my_videos: VideoCreateManyWithoutAuthorInput
   liked_videos: VideoCreateManyWithoutLike_usersInput
-  watched_videos: VideoCreateManyWithoutWatched_usersInput
+  watched_videos: WatchedVideoUserCreateManyWithoutUserInput
   my_subscription_users: UserCreateManyWithoutSubscribed_usersInput
   subscribed_users: UserCreateManyWithoutMy_subscription_usersInput
   billing_subscription_active: Boolean
   stripe_customer_id: String
   stripe_subsciption_json: Json
   last_login_date: DateTime
+}
+
+input UserCreateManyWithoutArtistInput {
+  create: [UserCreateWithoutArtistInput!]
+  connect: [UserWhereUniqueInput!]
 }
 
 input UserCreateManyWithoutLiked_videosInput {
@@ -1168,11 +2429,6 @@ input UserCreateManyWithoutSubscribed_usersInput {
   connect: [UserWhereUniqueInput!]
 }
 
-input UserCreateManyWithoutWatched_videosInput {
-  create: [UserCreateWithoutWatched_videosInput!]
-  connect: [UserWhereUniqueInput!]
-}
-
 input UserCreateOneInput {
   create: UserCreateInput
   connect: UserWhereUniqueInput
@@ -1181,6 +2437,45 @@ input UserCreateOneInput {
 input UserCreateOneWithoutMy_videosInput {
   create: UserCreateWithoutMy_videosInput
   connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutUsersInput {
+  create: UserCreateWithoutUsersInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutWatched_videosInput {
+  create: UserCreateWithoutWatched_videosInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutArtistInput {
+  firstname: String
+  lastname: String
+  username: String
+  email: String!
+  phone: String
+  role: UserRole
+  password_hash: String!
+  password_salt: String!
+  avatar: String
+  background_image: String
+  about_text: String
+  promo_code: String
+  payout_amount: Int
+  payout_months_total: Int
+  payout_months_left: Int
+  payout_enabled: Boolean
+  users: UserCreateManyWithoutArtistInput
+  my_videos: VideoCreateManyWithoutAuthorInput
+  liked_videos: VideoCreateManyWithoutLike_usersInput
+  watched_videos: WatchedVideoUserCreateManyWithoutUserInput
+  my_subscription_users: UserCreateManyWithoutSubscribed_usersInput
+  subscribed_users: UserCreateManyWithoutMy_subscription_usersInput
+  billing_subscription_active: Boolean
+  stripe_customer_id: String
+  stripe_subsciption_json: Json
+  last_login_date: DateTime
 }
 
 input UserCreateWithoutLiked_videosInput {
@@ -1195,8 +2490,15 @@ input UserCreateWithoutLiked_videosInput {
   avatar: String
   background_image: String
   about_text: String
+  promo_code: String
+  payout_amount: Int
+  payout_months_total: Int
+  payout_months_left: Int
+  payout_enabled: Boolean
+  artist: UserCreateOneWithoutUsersInput
+  users: UserCreateManyWithoutArtistInput
   my_videos: VideoCreateManyWithoutAuthorInput
-  watched_videos: VideoCreateManyWithoutWatched_usersInput
+  watched_videos: WatchedVideoUserCreateManyWithoutUserInput
   my_subscription_users: UserCreateManyWithoutSubscribed_usersInput
   subscribed_users: UserCreateManyWithoutMy_subscription_usersInput
   billing_subscription_active: Boolean
@@ -1217,9 +2519,16 @@ input UserCreateWithoutMy_subscription_usersInput {
   avatar: String
   background_image: String
   about_text: String
+  promo_code: String
+  payout_amount: Int
+  payout_months_total: Int
+  payout_months_left: Int
+  payout_enabled: Boolean
+  artist: UserCreateOneWithoutUsersInput
+  users: UserCreateManyWithoutArtistInput
   my_videos: VideoCreateManyWithoutAuthorInput
   liked_videos: VideoCreateManyWithoutLike_usersInput
-  watched_videos: VideoCreateManyWithoutWatched_usersInput
+  watched_videos: WatchedVideoUserCreateManyWithoutUserInput
   subscribed_users: UserCreateManyWithoutMy_subscription_usersInput
   billing_subscription_active: Boolean
   stripe_customer_id: String
@@ -1239,8 +2548,15 @@ input UserCreateWithoutMy_videosInput {
   avatar: String
   background_image: String
   about_text: String
+  promo_code: String
+  payout_amount: Int
+  payout_months_total: Int
+  payout_months_left: Int
+  payout_enabled: Boolean
+  artist: UserCreateOneWithoutUsersInput
+  users: UserCreateManyWithoutArtistInput
   liked_videos: VideoCreateManyWithoutLike_usersInput
-  watched_videos: VideoCreateManyWithoutWatched_usersInput
+  watched_videos: WatchedVideoUserCreateManyWithoutUserInput
   my_subscription_users: UserCreateManyWithoutSubscribed_usersInput
   subscribed_users: UserCreateManyWithoutMy_subscription_usersInput
   billing_subscription_active: Boolean
@@ -1261,10 +2577,46 @@ input UserCreateWithoutSubscribed_usersInput {
   avatar: String
   background_image: String
   about_text: String
+  promo_code: String
+  payout_amount: Int
+  payout_months_total: Int
+  payout_months_left: Int
+  payout_enabled: Boolean
+  artist: UserCreateOneWithoutUsersInput
+  users: UserCreateManyWithoutArtistInput
   my_videos: VideoCreateManyWithoutAuthorInput
   liked_videos: VideoCreateManyWithoutLike_usersInput
-  watched_videos: VideoCreateManyWithoutWatched_usersInput
+  watched_videos: WatchedVideoUserCreateManyWithoutUserInput
   my_subscription_users: UserCreateManyWithoutSubscribed_usersInput
+  billing_subscription_active: Boolean
+  stripe_customer_id: String
+  stripe_subsciption_json: Json
+  last_login_date: DateTime
+}
+
+input UserCreateWithoutUsersInput {
+  firstname: String
+  lastname: String
+  username: String
+  email: String!
+  phone: String
+  role: UserRole
+  password_hash: String!
+  password_salt: String!
+  avatar: String
+  background_image: String
+  about_text: String
+  promo_code: String
+  payout_amount: Int
+  payout_months_total: Int
+  payout_months_left: Int
+  payout_enabled: Boolean
+  artist: UserCreateOneWithoutUsersInput
+  my_videos: VideoCreateManyWithoutAuthorInput
+  liked_videos: VideoCreateManyWithoutLike_usersInput
+  watched_videos: WatchedVideoUserCreateManyWithoutUserInput
+  my_subscription_users: UserCreateManyWithoutSubscribed_usersInput
+  subscribed_users: UserCreateManyWithoutMy_subscription_usersInput
   billing_subscription_active: Boolean
   stripe_customer_id: String
   stripe_subsciption_json: Json
@@ -1283,6 +2635,13 @@ input UserCreateWithoutWatched_videosInput {
   avatar: String
   background_image: String
   about_text: String
+  promo_code: String
+  payout_amount: Int
+  payout_months_total: Int
+  payout_months_left: Int
+  payout_enabled: Boolean
+  artist: UserCreateOneWithoutUsersInput
+  users: UserCreateManyWithoutArtistInput
   my_videos: VideoCreateManyWithoutAuthorInput
   liked_videos: VideoCreateManyWithoutLike_usersInput
   my_subscription_users: UserCreateManyWithoutSubscribed_usersInput
@@ -1327,6 +2686,16 @@ enum UserOrderByInput {
   background_image_DESC
   about_text_ASC
   about_text_DESC
+  promo_code_ASC
+  promo_code_DESC
+  payout_amount_ASC
+  payout_amount_DESC
+  payout_months_total_ASC
+  payout_months_total_DESC
+  payout_months_left_ASC
+  payout_months_left_DESC
+  payout_enabled_ASC
+  payout_enabled_DESC
   billing_subscription_active_ASC
   billing_subscription_active_DESC
   stripe_customer_id_ASC
@@ -1352,6 +2721,11 @@ type UserPreviousValues {
   avatar: String
   background_image: String
   about_text: String
+  promo_code: String
+  payout_amount: Int
+  payout_months_total: Int
+  payout_months_left: Int
+  payout_enabled: Boolean
   billing_subscription_active: Boolean!
   stripe_customer_id: String
   stripe_subsciption_json: Json
@@ -1540,6 +2914,46 @@ input UserScalarWhereInput {
   about_text_not_starts_with: String
   about_text_ends_with: String
   about_text_not_ends_with: String
+  promo_code: String
+  promo_code_not: String
+  promo_code_in: [String!]
+  promo_code_not_in: [String!]
+  promo_code_lt: String
+  promo_code_lte: String
+  promo_code_gt: String
+  promo_code_gte: String
+  promo_code_contains: String
+  promo_code_not_contains: String
+  promo_code_starts_with: String
+  promo_code_not_starts_with: String
+  promo_code_ends_with: String
+  promo_code_not_ends_with: String
+  payout_amount: Int
+  payout_amount_not: Int
+  payout_amount_in: [Int!]
+  payout_amount_not_in: [Int!]
+  payout_amount_lt: Int
+  payout_amount_lte: Int
+  payout_amount_gt: Int
+  payout_amount_gte: Int
+  payout_months_total: Int
+  payout_months_total_not: Int
+  payout_months_total_in: [Int!]
+  payout_months_total_not_in: [Int!]
+  payout_months_total_lt: Int
+  payout_months_total_lte: Int
+  payout_months_total_gt: Int
+  payout_months_total_gte: Int
+  payout_months_left: Int
+  payout_months_left_not: Int
+  payout_months_left_in: [Int!]
+  payout_months_left_not_in: [Int!]
+  payout_months_left_lt: Int
+  payout_months_left_lte: Int
+  payout_months_left_gt: Int
+  payout_months_left_gte: Int
+  payout_enabled: Boolean
+  payout_enabled_not: Boolean
   billing_subscription_active: Boolean
   billing_subscription_active_not: Boolean
   stripe_customer_id: String
@@ -1599,9 +3013,16 @@ input UserUpdateDataInput {
   avatar: String
   background_image: String
   about_text: String
+  promo_code: String
+  payout_amount: Int
+  payout_months_total: Int
+  payout_months_left: Int
+  payout_enabled: Boolean
+  artist: UserUpdateOneWithoutUsersInput
+  users: UserUpdateManyWithoutArtistInput
   my_videos: VideoUpdateManyWithoutAuthorInput
   liked_videos: VideoUpdateManyWithoutLike_usersInput
-  watched_videos: VideoUpdateManyWithoutWatched_usersInput
+  watched_videos: WatchedVideoUserUpdateManyWithoutUserInput
   my_subscription_users: UserUpdateManyWithoutSubscribed_usersInput
   subscribed_users: UserUpdateManyWithoutMy_subscription_usersInput
   billing_subscription_active: Boolean
@@ -1622,9 +3043,16 @@ input UserUpdateInput {
   avatar: String
   background_image: String
   about_text: String
+  promo_code: String
+  payout_amount: Int
+  payout_months_total: Int
+  payout_months_left: Int
+  payout_enabled: Boolean
+  artist: UserUpdateOneWithoutUsersInput
+  users: UserUpdateManyWithoutArtistInput
   my_videos: VideoUpdateManyWithoutAuthorInput
   liked_videos: VideoUpdateManyWithoutLike_usersInput
-  watched_videos: VideoUpdateManyWithoutWatched_usersInput
+  watched_videos: WatchedVideoUserUpdateManyWithoutUserInput
   my_subscription_users: UserUpdateManyWithoutSubscribed_usersInput
   subscribed_users: UserUpdateManyWithoutMy_subscription_usersInput
   billing_subscription_active: Boolean
@@ -1645,6 +3073,11 @@ input UserUpdateManyDataInput {
   avatar: String
   background_image: String
   about_text: String
+  promo_code: String
+  payout_amount: Int
+  payout_months_total: Int
+  payout_months_left: Int
+  payout_enabled: Boolean
   billing_subscription_active: Boolean
   stripe_customer_id: String
   stripe_subsciption_json: Json
@@ -1663,10 +3096,27 @@ input UserUpdateManyMutationInput {
   avatar: String
   background_image: String
   about_text: String
+  promo_code: String
+  payout_amount: Int
+  payout_months_total: Int
+  payout_months_left: Int
+  payout_enabled: Boolean
   billing_subscription_active: Boolean
   stripe_customer_id: String
   stripe_subsciption_json: Json
   last_login_date: DateTime
+}
+
+input UserUpdateManyWithoutArtistInput {
+  create: [UserCreateWithoutArtistInput!]
+  delete: [UserWhereUniqueInput!]
+  connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutArtistInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutArtistInput!]
+  deleteMany: [UserScalarWhereInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
 }
 
 input UserUpdateManyWithoutLiked_videosInput {
@@ -1705,18 +3155,6 @@ input UserUpdateManyWithoutSubscribed_usersInput {
   updateMany: [UserUpdateManyWithWhereNestedInput!]
 }
 
-input UserUpdateManyWithoutWatched_videosInput {
-  create: [UserCreateWithoutWatched_videosInput!]
-  delete: [UserWhereUniqueInput!]
-  connect: [UserWhereUniqueInput!]
-  set: [UserWhereUniqueInput!]
-  disconnect: [UserWhereUniqueInput!]
-  update: [UserUpdateWithWhereUniqueWithoutWatched_videosInput!]
-  upsert: [UserUpsertWithWhereUniqueWithoutWatched_videosInput!]
-  deleteMany: [UserScalarWhereInput!]
-  updateMany: [UserUpdateManyWithWhereNestedInput!]
-}
-
 input UserUpdateManyWithWhereNestedInput {
   where: UserScalarWhereInput!
   data: UserUpdateManyDataInput!
@@ -1736,6 +3174,51 @@ input UserUpdateOneRequiredWithoutMy_videosInput {
   connect: UserWhereUniqueInput
 }
 
+input UserUpdateOneRequiredWithoutWatched_videosInput {
+  create: UserCreateWithoutWatched_videosInput
+  update: UserUpdateWithoutWatched_videosDataInput
+  upsert: UserUpsertWithoutWatched_videosInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateOneWithoutUsersInput {
+  create: UserCreateWithoutUsersInput
+  update: UserUpdateWithoutUsersDataInput
+  upsert: UserUpsertWithoutUsersInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateWithoutArtistDataInput {
+  firstname: String
+  lastname: String
+  username: String
+  email: String
+  phone: String
+  role: UserRole
+  password_hash: String
+  password_salt: String
+  avatar: String
+  background_image: String
+  about_text: String
+  promo_code: String
+  payout_amount: Int
+  payout_months_total: Int
+  payout_months_left: Int
+  payout_enabled: Boolean
+  users: UserUpdateManyWithoutArtistInput
+  my_videos: VideoUpdateManyWithoutAuthorInput
+  liked_videos: VideoUpdateManyWithoutLike_usersInput
+  watched_videos: WatchedVideoUserUpdateManyWithoutUserInput
+  my_subscription_users: UserUpdateManyWithoutSubscribed_usersInput
+  subscribed_users: UserUpdateManyWithoutMy_subscription_usersInput
+  billing_subscription_active: Boolean
+  stripe_customer_id: String
+  stripe_subsciption_json: Json
+  last_login_date: DateTime
+}
+
 input UserUpdateWithoutLiked_videosDataInput {
   firstname: String
   lastname: String
@@ -1748,8 +3231,15 @@ input UserUpdateWithoutLiked_videosDataInput {
   avatar: String
   background_image: String
   about_text: String
+  promo_code: String
+  payout_amount: Int
+  payout_months_total: Int
+  payout_months_left: Int
+  payout_enabled: Boolean
+  artist: UserUpdateOneWithoutUsersInput
+  users: UserUpdateManyWithoutArtistInput
   my_videos: VideoUpdateManyWithoutAuthorInput
-  watched_videos: VideoUpdateManyWithoutWatched_usersInput
+  watched_videos: WatchedVideoUserUpdateManyWithoutUserInput
   my_subscription_users: UserUpdateManyWithoutSubscribed_usersInput
   subscribed_users: UserUpdateManyWithoutMy_subscription_usersInput
   billing_subscription_active: Boolean
@@ -1770,9 +3260,16 @@ input UserUpdateWithoutMy_subscription_usersDataInput {
   avatar: String
   background_image: String
   about_text: String
+  promo_code: String
+  payout_amount: Int
+  payout_months_total: Int
+  payout_months_left: Int
+  payout_enabled: Boolean
+  artist: UserUpdateOneWithoutUsersInput
+  users: UserUpdateManyWithoutArtistInput
   my_videos: VideoUpdateManyWithoutAuthorInput
   liked_videos: VideoUpdateManyWithoutLike_usersInput
-  watched_videos: VideoUpdateManyWithoutWatched_usersInput
+  watched_videos: WatchedVideoUserUpdateManyWithoutUserInput
   subscribed_users: UserUpdateManyWithoutMy_subscription_usersInput
   billing_subscription_active: Boolean
   stripe_customer_id: String
@@ -1792,8 +3289,15 @@ input UserUpdateWithoutMy_videosDataInput {
   avatar: String
   background_image: String
   about_text: String
+  promo_code: String
+  payout_amount: Int
+  payout_months_total: Int
+  payout_months_left: Int
+  payout_enabled: Boolean
+  artist: UserUpdateOneWithoutUsersInput
+  users: UserUpdateManyWithoutArtistInput
   liked_videos: VideoUpdateManyWithoutLike_usersInput
-  watched_videos: VideoUpdateManyWithoutWatched_usersInput
+  watched_videos: WatchedVideoUserUpdateManyWithoutUserInput
   my_subscription_users: UserUpdateManyWithoutSubscribed_usersInput
   subscribed_users: UserUpdateManyWithoutMy_subscription_usersInput
   billing_subscription_active: Boolean
@@ -1814,10 +3318,46 @@ input UserUpdateWithoutSubscribed_usersDataInput {
   avatar: String
   background_image: String
   about_text: String
+  promo_code: String
+  payout_amount: Int
+  payout_months_total: Int
+  payout_months_left: Int
+  payout_enabled: Boolean
+  artist: UserUpdateOneWithoutUsersInput
+  users: UserUpdateManyWithoutArtistInput
   my_videos: VideoUpdateManyWithoutAuthorInput
   liked_videos: VideoUpdateManyWithoutLike_usersInput
-  watched_videos: VideoUpdateManyWithoutWatched_usersInput
+  watched_videos: WatchedVideoUserUpdateManyWithoutUserInput
   my_subscription_users: UserUpdateManyWithoutSubscribed_usersInput
+  billing_subscription_active: Boolean
+  stripe_customer_id: String
+  stripe_subsciption_json: Json
+  last_login_date: DateTime
+}
+
+input UserUpdateWithoutUsersDataInput {
+  firstname: String
+  lastname: String
+  username: String
+  email: String
+  phone: String
+  role: UserRole
+  password_hash: String
+  password_salt: String
+  avatar: String
+  background_image: String
+  about_text: String
+  promo_code: String
+  payout_amount: Int
+  payout_months_total: Int
+  payout_months_left: Int
+  payout_enabled: Boolean
+  artist: UserUpdateOneWithoutUsersInput
+  my_videos: VideoUpdateManyWithoutAuthorInput
+  liked_videos: VideoUpdateManyWithoutLike_usersInput
+  watched_videos: WatchedVideoUserUpdateManyWithoutUserInput
+  my_subscription_users: UserUpdateManyWithoutSubscribed_usersInput
+  subscribed_users: UserUpdateManyWithoutMy_subscription_usersInput
   billing_subscription_active: Boolean
   stripe_customer_id: String
   stripe_subsciption_json: Json
@@ -1836,6 +3376,13 @@ input UserUpdateWithoutWatched_videosDataInput {
   avatar: String
   background_image: String
   about_text: String
+  promo_code: String
+  payout_amount: Int
+  payout_months_total: Int
+  payout_months_left: Int
+  payout_enabled: Boolean
+  artist: UserUpdateOneWithoutUsersInput
+  users: UserUpdateManyWithoutArtistInput
   my_videos: VideoUpdateManyWithoutAuthorInput
   liked_videos: VideoUpdateManyWithoutLike_usersInput
   my_subscription_users: UserUpdateManyWithoutSubscribed_usersInput
@@ -1844,6 +3391,11 @@ input UserUpdateWithoutWatched_videosDataInput {
   stripe_customer_id: String
   stripe_subsciption_json: Json
   last_login_date: DateTime
+}
+
+input UserUpdateWithWhereUniqueWithoutArtistInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutArtistDataInput!
 }
 
 input UserUpdateWithWhereUniqueWithoutLiked_videosInput {
@@ -1861,11 +3413,6 @@ input UserUpdateWithWhereUniqueWithoutSubscribed_usersInput {
   data: UserUpdateWithoutSubscribed_usersDataInput!
 }
 
-input UserUpdateWithWhereUniqueWithoutWatched_videosInput {
-  where: UserWhereUniqueInput!
-  data: UserUpdateWithoutWatched_videosDataInput!
-}
-
 input UserUpsertNestedInput {
   update: UserUpdateDataInput!
   create: UserCreateInput!
@@ -1874,6 +3421,22 @@ input UserUpsertNestedInput {
 input UserUpsertWithoutMy_videosInput {
   update: UserUpdateWithoutMy_videosDataInput!
   create: UserCreateWithoutMy_videosInput!
+}
+
+input UserUpsertWithoutUsersInput {
+  update: UserUpdateWithoutUsersDataInput!
+  create: UserCreateWithoutUsersInput!
+}
+
+input UserUpsertWithoutWatched_videosInput {
+  update: UserUpdateWithoutWatched_videosDataInput!
+  create: UserCreateWithoutWatched_videosInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutArtistInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutArtistDataInput!
+  create: UserCreateWithoutArtistInput!
 }
 
 input UserUpsertWithWhereUniqueWithoutLiked_videosInput {
@@ -1892,12 +3455,6 @@ input UserUpsertWithWhereUniqueWithoutSubscribed_usersInput {
   where: UserWhereUniqueInput!
   update: UserUpdateWithoutSubscribed_usersDataInput!
   create: UserCreateWithoutSubscribed_usersInput!
-}
-
-input UserUpsertWithWhereUniqueWithoutWatched_videosInput {
-  where: UserWhereUniqueInput!
-  update: UserUpdateWithoutWatched_videosDataInput!
-  create: UserCreateWithoutWatched_videosInput!
 }
 
 input UserWhereInput {
@@ -2075,15 +3632,59 @@ input UserWhereInput {
   about_text_not_starts_with: String
   about_text_ends_with: String
   about_text_not_ends_with: String
+  promo_code: String
+  promo_code_not: String
+  promo_code_in: [String!]
+  promo_code_not_in: [String!]
+  promo_code_lt: String
+  promo_code_lte: String
+  promo_code_gt: String
+  promo_code_gte: String
+  promo_code_contains: String
+  promo_code_not_contains: String
+  promo_code_starts_with: String
+  promo_code_not_starts_with: String
+  promo_code_ends_with: String
+  promo_code_not_ends_with: String
+  payout_amount: Int
+  payout_amount_not: Int
+  payout_amount_in: [Int!]
+  payout_amount_not_in: [Int!]
+  payout_amount_lt: Int
+  payout_amount_lte: Int
+  payout_amount_gt: Int
+  payout_amount_gte: Int
+  payout_months_total: Int
+  payout_months_total_not: Int
+  payout_months_total_in: [Int!]
+  payout_months_total_not_in: [Int!]
+  payout_months_total_lt: Int
+  payout_months_total_lte: Int
+  payout_months_total_gt: Int
+  payout_months_total_gte: Int
+  payout_months_left: Int
+  payout_months_left_not: Int
+  payout_months_left_in: [Int!]
+  payout_months_left_not_in: [Int!]
+  payout_months_left_lt: Int
+  payout_months_left_lte: Int
+  payout_months_left_gt: Int
+  payout_months_left_gte: Int
+  payout_enabled: Boolean
+  payout_enabled_not: Boolean
+  artist: UserWhereInput
+  users_every: UserWhereInput
+  users_some: UserWhereInput
+  users_none: UserWhereInput
   my_videos_every: VideoWhereInput
   my_videos_some: VideoWhereInput
   my_videos_none: VideoWhereInput
   liked_videos_every: VideoWhereInput
   liked_videos_some: VideoWhereInput
   liked_videos_none: VideoWhereInput
-  watched_videos_every: VideoWhereInput
-  watched_videos_some: VideoWhereInput
-  watched_videos_none: VideoWhereInput
+  watched_videos_every: WatchedVideoUserWhereInput
+  watched_videos_some: WatchedVideoUserWhereInput
+  watched_videos_none: WatchedVideoUserWhereInput
   my_subscription_users_every: UserWhereInput
   my_subscription_users_some: UserWhereInput
   my_subscription_users_none: UserWhereInput
@@ -2142,8 +3743,9 @@ type Video {
   author: User!
   categories(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Category!]
   like_users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
-  watched_users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  watched_users(where: WatchedVideoUserWhereInput, orderBy: WatchedVideoUserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [WatchedVideoUser!]
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
+  deleted: Boolean!
 }
 
 type VideoConnection {
@@ -2164,8 +3766,9 @@ input VideoCreateInput {
   author: UserCreateOneWithoutMy_videosInput!
   categories: CategoryCreateManyWithoutVideosInput
   like_users: UserCreateManyWithoutLiked_videosInput
-  watched_users: UserCreateManyWithoutWatched_videosInput
+  watched_users: WatchedVideoUserCreateManyWithoutVideoInput
   tags: TagCreateManyWithoutVideosInput
+  deleted: Boolean
 }
 
 input VideoCreateManyWithoutAuthorInput {
@@ -2188,9 +3791,14 @@ input VideoCreateManyWithoutTagsInput {
   connect: [VideoWhereUniqueInput!]
 }
 
-input VideoCreateManyWithoutWatched_usersInput {
-  create: [VideoCreateWithoutWatched_usersInput!]
-  connect: [VideoWhereUniqueInput!]
+input VideoCreateOneInput {
+  create: VideoCreateInput
+  connect: VideoWhereUniqueInput
+}
+
+input VideoCreateOneWithoutWatched_usersInput {
+  create: VideoCreateWithoutWatched_usersInput
+  connect: VideoWhereUniqueInput
 }
 
 input VideoCreateWithoutAuthorInput {
@@ -2204,8 +3812,9 @@ input VideoCreateWithoutAuthorInput {
   preview_video_duration: String
   categories: CategoryCreateManyWithoutVideosInput
   like_users: UserCreateManyWithoutLiked_videosInput
-  watched_users: UserCreateManyWithoutWatched_videosInput
+  watched_users: WatchedVideoUserCreateManyWithoutVideoInput
   tags: TagCreateManyWithoutVideosInput
+  deleted: Boolean
 }
 
 input VideoCreateWithoutCategoriesInput {
@@ -2219,8 +3828,9 @@ input VideoCreateWithoutCategoriesInput {
   preview_video_duration: String
   author: UserCreateOneWithoutMy_videosInput!
   like_users: UserCreateManyWithoutLiked_videosInput
-  watched_users: UserCreateManyWithoutWatched_videosInput
+  watched_users: WatchedVideoUserCreateManyWithoutVideoInput
   tags: TagCreateManyWithoutVideosInput
+  deleted: Boolean
 }
 
 input VideoCreateWithoutLike_usersInput {
@@ -2234,8 +3844,9 @@ input VideoCreateWithoutLike_usersInput {
   preview_video_duration: String
   author: UserCreateOneWithoutMy_videosInput!
   categories: CategoryCreateManyWithoutVideosInput
-  watched_users: UserCreateManyWithoutWatched_videosInput
+  watched_users: WatchedVideoUserCreateManyWithoutVideoInput
   tags: TagCreateManyWithoutVideosInput
+  deleted: Boolean
 }
 
 input VideoCreateWithoutTagsInput {
@@ -2250,7 +3861,8 @@ input VideoCreateWithoutTagsInput {
   author: UserCreateOneWithoutMy_videosInput!
   categories: CategoryCreateManyWithoutVideosInput
   like_users: UserCreateManyWithoutLiked_videosInput
-  watched_users: UserCreateManyWithoutWatched_videosInput
+  watched_users: WatchedVideoUserCreateManyWithoutVideoInput
+  deleted: Boolean
 }
 
 input VideoCreateWithoutWatched_usersInput {
@@ -2266,6 +3878,7 @@ input VideoCreateWithoutWatched_usersInput {
   categories: CategoryCreateManyWithoutVideosInput
   like_users: UserCreateManyWithoutLiked_videosInput
   tags: TagCreateManyWithoutVideosInput
+  deleted: Boolean
 }
 
 type VideoEdge {
@@ -2296,6 +3909,8 @@ enum VideoOrderByInput {
   preview_video_url_DESC
   preview_video_duration_ASC
   preview_video_duration_DESC
+  deleted_ASC
+  deleted_DESC
 }
 
 type VideoPreviousValues {
@@ -2310,6 +3925,7 @@ type VideoPreviousValues {
   preview_url: String
   preview_video_url: String
   preview_video_duration: String
+  deleted: Boolean!
 }
 
 input VideoScalarWhereInput {
@@ -2443,6 +4059,8 @@ input VideoScalarWhereInput {
   preview_video_duration_not_starts_with: String
   preview_video_duration_ends_with: String
   preview_video_duration_not_ends_with: String
+  deleted: Boolean
+  deleted_not: Boolean
   AND: [VideoScalarWhereInput!]
   OR: [VideoScalarWhereInput!]
   NOT: [VideoScalarWhereInput!]
@@ -2466,6 +4084,23 @@ input VideoSubscriptionWhereInput {
   NOT: [VideoSubscriptionWhereInput!]
 }
 
+input VideoUpdateDataInput {
+  title: String
+  description: String
+  publish_date: DateTime
+  file_url: String
+  video_duration: Int
+  preview_url: String
+  preview_video_url: String
+  preview_video_duration: String
+  author: UserUpdateOneRequiredWithoutMy_videosInput
+  categories: CategoryUpdateManyWithoutVideosInput
+  like_users: UserUpdateManyWithoutLiked_videosInput
+  watched_users: WatchedVideoUserUpdateManyWithoutVideoInput
+  tags: TagUpdateManyWithoutVideosInput
+  deleted: Boolean
+}
+
 input VideoUpdateInput {
   title: String
   description: String
@@ -2478,8 +4113,9 @@ input VideoUpdateInput {
   author: UserUpdateOneRequiredWithoutMy_videosInput
   categories: CategoryUpdateManyWithoutVideosInput
   like_users: UserUpdateManyWithoutLiked_videosInput
-  watched_users: UserUpdateManyWithoutWatched_videosInput
+  watched_users: WatchedVideoUserUpdateManyWithoutVideoInput
   tags: TagUpdateManyWithoutVideosInput
+  deleted: Boolean
 }
 
 input VideoUpdateManyDataInput {
@@ -2491,6 +4127,7 @@ input VideoUpdateManyDataInput {
   preview_url: String
   preview_video_url: String
   preview_video_duration: String
+  deleted: Boolean
 }
 
 input VideoUpdateManyMutationInput {
@@ -2502,6 +4139,7 @@ input VideoUpdateManyMutationInput {
   preview_url: String
   preview_video_url: String
   preview_video_duration: String
+  deleted: Boolean
 }
 
 input VideoUpdateManyWithoutAuthorInput {
@@ -2552,21 +4190,25 @@ input VideoUpdateManyWithoutTagsInput {
   updateMany: [VideoUpdateManyWithWhereNestedInput!]
 }
 
-input VideoUpdateManyWithoutWatched_usersInput {
-  create: [VideoCreateWithoutWatched_usersInput!]
-  delete: [VideoWhereUniqueInput!]
-  connect: [VideoWhereUniqueInput!]
-  set: [VideoWhereUniqueInput!]
-  disconnect: [VideoWhereUniqueInput!]
-  update: [VideoUpdateWithWhereUniqueWithoutWatched_usersInput!]
-  upsert: [VideoUpsertWithWhereUniqueWithoutWatched_usersInput!]
-  deleteMany: [VideoScalarWhereInput!]
-  updateMany: [VideoUpdateManyWithWhereNestedInput!]
-}
-
 input VideoUpdateManyWithWhereNestedInput {
   where: VideoScalarWhereInput!
   data: VideoUpdateManyDataInput!
+}
+
+input VideoUpdateOneRequiredInput {
+  create: VideoCreateInput
+  update: VideoUpdateDataInput
+  upsert: VideoUpsertNestedInput
+  connect: VideoWhereUniqueInput
+}
+
+input VideoUpdateOneWithoutWatched_usersInput {
+  create: VideoCreateWithoutWatched_usersInput
+  update: VideoUpdateWithoutWatched_usersDataInput
+  upsert: VideoUpsertWithoutWatched_usersInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: VideoWhereUniqueInput
 }
 
 input VideoUpdateWithoutAuthorDataInput {
@@ -2580,8 +4222,9 @@ input VideoUpdateWithoutAuthorDataInput {
   preview_video_duration: String
   categories: CategoryUpdateManyWithoutVideosInput
   like_users: UserUpdateManyWithoutLiked_videosInput
-  watched_users: UserUpdateManyWithoutWatched_videosInput
+  watched_users: WatchedVideoUserUpdateManyWithoutVideoInput
   tags: TagUpdateManyWithoutVideosInput
+  deleted: Boolean
 }
 
 input VideoUpdateWithoutCategoriesDataInput {
@@ -2595,8 +4238,9 @@ input VideoUpdateWithoutCategoriesDataInput {
   preview_video_duration: String
   author: UserUpdateOneRequiredWithoutMy_videosInput
   like_users: UserUpdateManyWithoutLiked_videosInput
-  watched_users: UserUpdateManyWithoutWatched_videosInput
+  watched_users: WatchedVideoUserUpdateManyWithoutVideoInput
   tags: TagUpdateManyWithoutVideosInput
+  deleted: Boolean
 }
 
 input VideoUpdateWithoutLike_usersDataInput {
@@ -2610,8 +4254,9 @@ input VideoUpdateWithoutLike_usersDataInput {
   preview_video_duration: String
   author: UserUpdateOneRequiredWithoutMy_videosInput
   categories: CategoryUpdateManyWithoutVideosInput
-  watched_users: UserUpdateManyWithoutWatched_videosInput
+  watched_users: WatchedVideoUserUpdateManyWithoutVideoInput
   tags: TagUpdateManyWithoutVideosInput
+  deleted: Boolean
 }
 
 input VideoUpdateWithoutTagsDataInput {
@@ -2626,7 +4271,8 @@ input VideoUpdateWithoutTagsDataInput {
   author: UserUpdateOneRequiredWithoutMy_videosInput
   categories: CategoryUpdateManyWithoutVideosInput
   like_users: UserUpdateManyWithoutLiked_videosInput
-  watched_users: UserUpdateManyWithoutWatched_videosInput
+  watched_users: WatchedVideoUserUpdateManyWithoutVideoInput
+  deleted: Boolean
 }
 
 input VideoUpdateWithoutWatched_usersDataInput {
@@ -2642,6 +4288,7 @@ input VideoUpdateWithoutWatched_usersDataInput {
   categories: CategoryUpdateManyWithoutVideosInput
   like_users: UserUpdateManyWithoutLiked_videosInput
   tags: TagUpdateManyWithoutVideosInput
+  deleted: Boolean
 }
 
 input VideoUpdateWithWhereUniqueWithoutAuthorInput {
@@ -2664,9 +4311,14 @@ input VideoUpdateWithWhereUniqueWithoutTagsInput {
   data: VideoUpdateWithoutTagsDataInput!
 }
 
-input VideoUpdateWithWhereUniqueWithoutWatched_usersInput {
-  where: VideoWhereUniqueInput!
-  data: VideoUpdateWithoutWatched_usersDataInput!
+input VideoUpsertNestedInput {
+  update: VideoUpdateDataInput!
+  create: VideoCreateInput!
+}
+
+input VideoUpsertWithoutWatched_usersInput {
+  update: VideoUpdateWithoutWatched_usersDataInput!
+  create: VideoCreateWithoutWatched_usersInput!
 }
 
 input VideoUpsertWithWhereUniqueWithoutAuthorInput {
@@ -2691,12 +4343,6 @@ input VideoUpsertWithWhereUniqueWithoutTagsInput {
   where: VideoWhereUniqueInput!
   update: VideoUpdateWithoutTagsDataInput!
   create: VideoCreateWithoutTagsInput!
-}
-
-input VideoUpsertWithWhereUniqueWithoutWatched_usersInput {
-  where: VideoWhereUniqueInput!
-  update: VideoUpdateWithoutWatched_usersDataInput!
-  create: VideoCreateWithoutWatched_usersInput!
 }
 
 input VideoWhereInput {
@@ -2837,18 +4483,235 @@ input VideoWhereInput {
   like_users_every: UserWhereInput
   like_users_some: UserWhereInput
   like_users_none: UserWhereInput
-  watched_users_every: UserWhereInput
-  watched_users_some: UserWhereInput
-  watched_users_none: UserWhereInput
+  watched_users_every: WatchedVideoUserWhereInput
+  watched_users_some: WatchedVideoUserWhereInput
+  watched_users_none: WatchedVideoUserWhereInput
   tags_every: TagWhereInput
   tags_some: TagWhereInput
   tags_none: TagWhereInput
+  deleted: Boolean
+  deleted_not: Boolean
   AND: [VideoWhereInput!]
   OR: [VideoWhereInput!]
   NOT: [VideoWhereInput!]
 }
 
 input VideoWhereUniqueInput {
+  id: ID
+}
+
+type WatchedVideoUser {
+  id: ID!
+  video: Video
+  user: User!
+  watched_seconds: Int!
+}
+
+type WatchedVideoUserConnection {
+  pageInfo: PageInfo!
+  edges: [WatchedVideoUserEdge]!
+  aggregate: AggregateWatchedVideoUser!
+}
+
+input WatchedVideoUserCreateInput {
+  video: VideoCreateOneWithoutWatched_usersInput
+  user: UserCreateOneWithoutWatched_videosInput!
+  watched_seconds: Int
+}
+
+input WatchedVideoUserCreateManyWithoutUserInput {
+  create: [WatchedVideoUserCreateWithoutUserInput!]
+  connect: [WatchedVideoUserWhereUniqueInput!]
+}
+
+input WatchedVideoUserCreateManyWithoutVideoInput {
+  create: [WatchedVideoUserCreateWithoutVideoInput!]
+  connect: [WatchedVideoUserWhereUniqueInput!]
+}
+
+input WatchedVideoUserCreateWithoutUserInput {
+  video: VideoCreateOneWithoutWatched_usersInput
+  watched_seconds: Int
+}
+
+input WatchedVideoUserCreateWithoutVideoInput {
+  user: UserCreateOneWithoutWatched_videosInput!
+  watched_seconds: Int
+}
+
+type WatchedVideoUserEdge {
+  node: WatchedVideoUser!
+  cursor: String!
+}
+
+enum WatchedVideoUserOrderByInput {
+  id_ASC
+  id_DESC
+  watched_seconds_ASC
+  watched_seconds_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type WatchedVideoUserPreviousValues {
+  id: ID!
+  watched_seconds: Int!
+}
+
+input WatchedVideoUserScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  watched_seconds: Int
+  watched_seconds_not: Int
+  watched_seconds_in: [Int!]
+  watched_seconds_not_in: [Int!]
+  watched_seconds_lt: Int
+  watched_seconds_lte: Int
+  watched_seconds_gt: Int
+  watched_seconds_gte: Int
+  AND: [WatchedVideoUserScalarWhereInput!]
+  OR: [WatchedVideoUserScalarWhereInput!]
+  NOT: [WatchedVideoUserScalarWhereInput!]
+}
+
+type WatchedVideoUserSubscriptionPayload {
+  mutation: MutationType!
+  node: WatchedVideoUser
+  updatedFields: [String!]
+  previousValues: WatchedVideoUserPreviousValues
+}
+
+input WatchedVideoUserSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: WatchedVideoUserWhereInput
+  AND: [WatchedVideoUserSubscriptionWhereInput!]
+  OR: [WatchedVideoUserSubscriptionWhereInput!]
+  NOT: [WatchedVideoUserSubscriptionWhereInput!]
+}
+
+input WatchedVideoUserUpdateInput {
+  video: VideoUpdateOneWithoutWatched_usersInput
+  user: UserUpdateOneRequiredWithoutWatched_videosInput
+  watched_seconds: Int
+}
+
+input WatchedVideoUserUpdateManyDataInput {
+  watched_seconds: Int
+}
+
+input WatchedVideoUserUpdateManyMutationInput {
+  watched_seconds: Int
+}
+
+input WatchedVideoUserUpdateManyWithoutUserInput {
+  create: [WatchedVideoUserCreateWithoutUserInput!]
+  delete: [WatchedVideoUserWhereUniqueInput!]
+  connect: [WatchedVideoUserWhereUniqueInput!]
+  set: [WatchedVideoUserWhereUniqueInput!]
+  disconnect: [WatchedVideoUserWhereUniqueInput!]
+  update: [WatchedVideoUserUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [WatchedVideoUserUpsertWithWhereUniqueWithoutUserInput!]
+  deleteMany: [WatchedVideoUserScalarWhereInput!]
+  updateMany: [WatchedVideoUserUpdateManyWithWhereNestedInput!]
+}
+
+input WatchedVideoUserUpdateManyWithoutVideoInput {
+  create: [WatchedVideoUserCreateWithoutVideoInput!]
+  delete: [WatchedVideoUserWhereUniqueInput!]
+  connect: [WatchedVideoUserWhereUniqueInput!]
+  set: [WatchedVideoUserWhereUniqueInput!]
+  disconnect: [WatchedVideoUserWhereUniqueInput!]
+  update: [WatchedVideoUserUpdateWithWhereUniqueWithoutVideoInput!]
+  upsert: [WatchedVideoUserUpsertWithWhereUniqueWithoutVideoInput!]
+  deleteMany: [WatchedVideoUserScalarWhereInput!]
+  updateMany: [WatchedVideoUserUpdateManyWithWhereNestedInput!]
+}
+
+input WatchedVideoUserUpdateManyWithWhereNestedInput {
+  where: WatchedVideoUserScalarWhereInput!
+  data: WatchedVideoUserUpdateManyDataInput!
+}
+
+input WatchedVideoUserUpdateWithoutUserDataInput {
+  video: VideoUpdateOneWithoutWatched_usersInput
+  watched_seconds: Int
+}
+
+input WatchedVideoUserUpdateWithoutVideoDataInput {
+  user: UserUpdateOneRequiredWithoutWatched_videosInput
+  watched_seconds: Int
+}
+
+input WatchedVideoUserUpdateWithWhereUniqueWithoutUserInput {
+  where: WatchedVideoUserWhereUniqueInput!
+  data: WatchedVideoUserUpdateWithoutUserDataInput!
+}
+
+input WatchedVideoUserUpdateWithWhereUniqueWithoutVideoInput {
+  where: WatchedVideoUserWhereUniqueInput!
+  data: WatchedVideoUserUpdateWithoutVideoDataInput!
+}
+
+input WatchedVideoUserUpsertWithWhereUniqueWithoutUserInput {
+  where: WatchedVideoUserWhereUniqueInput!
+  update: WatchedVideoUserUpdateWithoutUserDataInput!
+  create: WatchedVideoUserCreateWithoutUserInput!
+}
+
+input WatchedVideoUserUpsertWithWhereUniqueWithoutVideoInput {
+  where: WatchedVideoUserWhereUniqueInput!
+  update: WatchedVideoUserUpdateWithoutVideoDataInput!
+  create: WatchedVideoUserCreateWithoutVideoInput!
+}
+
+input WatchedVideoUserWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  video: VideoWhereInput
+  user: UserWhereInput
+  watched_seconds: Int
+  watched_seconds_not: Int
+  watched_seconds_in: [Int!]
+  watched_seconds_not_in: [Int!]
+  watched_seconds_lt: Int
+  watched_seconds_lte: Int
+  watched_seconds_gt: Int
+  watched_seconds_gte: Int
+  AND: [WatchedVideoUserWhereInput!]
+  OR: [WatchedVideoUserWhereInput!]
+  NOT: [WatchedVideoUserWhereInput!]
+}
+
+input WatchedVideoUserWhereUniqueInput {
   id: ID
 }
 `

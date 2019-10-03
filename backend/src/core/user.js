@@ -15,7 +15,17 @@ function safeUser(userObject) {
     return newUser;
 }
 
-async function signUp(email, firstname, lastname, phone, password, step, activation_code, role) {
+function makeRandStr(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+       result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+ }
+
+async function signUp(email, firstname, lastname, phone, password, promo_code, step, activation_code, role) {
     if (!email) {
         throw new GQLError({message: 'Email is required', code: 400});
     }
@@ -48,6 +58,7 @@ async function signUp(email, firstname, lastname, phone, password, step, activat
         }
 
         const result = true; //todo, hardcode  // await emailHelper.verityActivationCode(email, activation_code);
+        const promo_code_len = 6;
 
         if (!result) {
             throw new GQLError({message: 'Wrong activation code', code: 403});
@@ -61,18 +72,47 @@ async function signUp(email, firstname, lastname, phone, password, step, activat
             const userRole = role === 'USER_PUBLISHER' ? 'USER_PUBLISHER' : 'USER_VIEWER';
 
             try {
-                newUser = await prisma.createUser({
+                let newUserData = {
                     email: email,
                     firstname: firstname,
                     lastname: lastname,
                     phone: phone,
                     password_hash: password_hash,
                     password_salt: salt,
-                    role: userRole
-                });
+                    role: userRole,
+                }
+                if (userRole === 'USER_VIEWER' && promo_code) {
+                    const artists = await prisma.users({
+                        where: {
+                            promo_code: promo_code
+                        }
+                    });
+                    if(artists.length == 0) {
+                        throw new GQLError({message: `No such promo code with '${promo_code}'`, code: 410});
+                    }
+
+                    newUserData.artist = {
+                        connect: { id: artists[0].id }
+                    };
+                }
+                if (userRole === 'USER_PUBLISHER') {
+                    const promo_codes = (await prisma.users({
+                        where: {
+                            role: "USER_PUBLISHER"
+                        }
+                    })).map(d => d.promo_code);
+        
+                    let new_promo_code = makeRandStr(promo_code_len);
+                    while(promo_codes.includes(new_promo_code)) {
+                        new_promo_code = makeRandStr(promo_code_len);
+                    }
+
+                    newUserData.promo_code = new_promo_code;
+                }
+                newUser = await prisma.createUser(newUserData);
             } catch (e) {
                 log.trace(e);
-                throw new GQLError({message: `User '${email}' already exists`, code: 409});
+                throw new GQLError({message: e.message, code: 409});
             }
 
             log.trace('User created: ', newUser.email);
