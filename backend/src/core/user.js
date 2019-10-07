@@ -107,12 +107,30 @@ async function signUp(email, firstname, lastname, phone, password, promo_code, s
                         new_promo_code = makeRandStr(promo_code_len);
                     }
 
+                    const payout_amount = await prisma.settings({
+                        name: 'payout_amount'
+                    });
+
+                    const payout_months = await prisma.settings({
+                        name: 'payout_months'
+                    });
+
                     newUserData.promo_code = new_promo_code;
+                    newUserData.payout_amount = payout_amount.int_val;
+                    newUserData.payout_months_total = payout_months.int_val;
+                    newUserData.payout_months_left = payout_months.int_val;
+                    newUserData.payout_enabled = true;
                 }
                 newUser = await prisma.createUser(newUserData);
             } catch (e) {
                 log.trace(e);
-                throw new GQLError({message: e.message, code: 409});
+                let err_msg;
+                if (typeof e.message === 'object') {
+                    err_msg = e.message.message;
+                } else {
+                    err_msg = e.message;
+                }
+                throw new GQLError({message: err_msg, code: 409});
             }
 
             log.trace('User created: ', newUser.email);

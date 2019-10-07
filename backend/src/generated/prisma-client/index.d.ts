@@ -944,10 +944,6 @@ export type PayoutPlanOrderByInput =
   | "createdAt_DESC"
   | "updatedAt_ASC"
   | "updatedAt_DESC"
-  | "artist_id_ASC"
-  | "artist_id_DESC"
-  | "user_id_ASC"
-  | "user_id_DESC"
   | "year_ASC"
   | "year_DESC"
   | "month_ASC"
@@ -968,8 +964,6 @@ export type PayoutTransactionOrderByInput =
   | "createdAt_DESC"
   | "updatedAt_ASC"
   | "updatedAt_DESC"
-  | "artist_id_ASC"
-  | "artist_id_DESC"
   | "year_ASC"
   | "year_DESC"
   | "month_ASC"
@@ -1865,22 +1859,8 @@ export interface PayoutPlanWhereInput {
   updatedAt_lte?: DateTimeInput;
   updatedAt_gt?: DateTimeInput;
   updatedAt_gte?: DateTimeInput;
-  artist_id?: Int;
-  artist_id_not?: Int;
-  artist_id_in?: Int[] | Int;
-  artist_id_not_in?: Int[] | Int;
-  artist_id_lt?: Int;
-  artist_id_lte?: Int;
-  artist_id_gt?: Int;
-  artist_id_gte?: Int;
-  user_id?: Int;
-  user_id_not?: Int;
-  user_id_in?: Int[] | Int;
-  user_id_not_in?: Int[] | Int;
-  user_id_lt?: Int;
-  user_id_lte?: Int;
-  user_id_gt?: Int;
-  user_id_gte?: Int;
+  artist?: UserWhereInput;
+  subscriber?: UserWhereInput;
   year?: Int;
   year_not?: Int;
   year_in?: Int[] | Int;
@@ -1957,14 +1937,7 @@ export interface PayoutTransactionWhereInput {
   updatedAt_lte?: DateTimeInput;
   updatedAt_gt?: DateTimeInput;
   updatedAt_gte?: DateTimeInput;
-  artist_id?: Int;
-  artist_id_not?: Int;
-  artist_id_in?: Int[] | Int;
-  artist_id_not_in?: Int[] | Int;
-  artist_id_lt?: Int;
-  artist_id_lte?: Int;
-  artist_id_gt?: Int;
-  artist_id_gte?: Int;
+  artist?: UserWhereInput;
   year?: Int;
   year_not?: Int;
   year_in?: Int[] | Int;
@@ -2224,6 +2197,7 @@ export interface RestoreCodeWhereInput {
 
 export type SettingsWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
+  name?: String;
 }>;
 
 export interface SettingsWhereInput {
@@ -4206,8 +4180,8 @@ export interface CurriculumUpdateManyMutationInput {
 }
 
 export interface PayoutPlanCreateInput {
-  artist_id: Int;
-  user_id: Int;
+  artist: UserCreateOneInput;
+  subscriber: UserCreateOneInput;
   year: Int;
   month: Int;
   amount: Int;
@@ -4217,8 +4191,8 @@ export interface PayoutPlanCreateInput {
 }
 
 export interface PayoutPlanUpdateInput {
-  artist_id?: Int;
-  user_id?: Int;
+  artist?: UserUpdateOneRequiredInput;
+  subscriber?: UserUpdateOneRequiredInput;
   year?: Int;
   month?: Int;
   amount?: Int;
@@ -4228,8 +4202,6 @@ export interface PayoutPlanUpdateInput {
 }
 
 export interface PayoutPlanUpdateManyMutationInput {
-  artist_id?: Int;
-  user_id?: Int;
   year?: Int;
   month?: Int;
   amount?: Int;
@@ -4239,7 +4211,7 @@ export interface PayoutPlanUpdateManyMutationInput {
 }
 
 export interface PayoutTransactionCreateInput {
-  artist_id: Int;
+  artist: UserCreateOneInput;
   year: Int;
   month: Int;
   amount: Int;
@@ -4248,7 +4220,7 @@ export interface PayoutTransactionCreateInput {
 }
 
 export interface PayoutTransactionUpdateInput {
-  artist_id?: Int;
+  artist?: UserUpdateOneRequiredInput;
   year?: Int;
   month?: Int;
   amount?: Int;
@@ -4257,7 +4229,6 @@ export interface PayoutTransactionUpdateInput {
 }
 
 export interface PayoutTransactionUpdateManyMutationInput {
-  artist_id?: Int;
   year?: Int;
   month?: Int;
   amount?: Int;
@@ -5598,8 +5569,6 @@ export interface PayoutPlan {
   id: ID_Output;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
-  artist_id: Int;
-  user_id: Int;
   year: Int;
   month: Int;
   amount: Int;
@@ -5612,8 +5581,8 @@ export interface PayoutPlanPromise extends Promise<PayoutPlan>, Fragmentable {
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
-  artist_id: () => Promise<Int>;
-  user_id: () => Promise<Int>;
+  artist: <T = UserPromise>() => T;
+  subscriber: <T = UserPromise>() => T;
   year: () => Promise<Int>;
   month: () => Promise<Int>;
   amount: () => Promise<Int>;
@@ -5628,8 +5597,8 @@ export interface PayoutPlanSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  artist_id: () => Promise<AsyncIterator<Int>>;
-  user_id: () => Promise<AsyncIterator<Int>>;
+  artist: <T = UserSubscription>() => T;
+  subscriber: <T = UserSubscription>() => T;
   year: () => Promise<AsyncIterator<Int>>;
   month: () => Promise<AsyncIterator<Int>>;
   amount: () => Promise<AsyncIterator<Int>>;
@@ -5698,7 +5667,6 @@ export interface PayoutTransaction {
   id: ID_Output;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
-  artist_id: Int;
   year: Int;
   month: Int;
   amount: Int;
@@ -5712,7 +5680,7 @@ export interface PayoutTransactionPromise
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
-  artist_id: () => Promise<Int>;
+  artist: <T = UserPromise>() => T;
   year: () => Promise<Int>;
   month: () => Promise<Int>;
   amount: () => Promise<Int>;
@@ -5726,7 +5694,7 @@ export interface PayoutTransactionSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  artist_id: () => Promise<AsyncIterator<Int>>;
+  artist: <T = UserSubscription>() => T;
   year: () => Promise<AsyncIterator<Int>>;
   month: () => Promise<AsyncIterator<Int>>;
   amount: () => Promise<AsyncIterator<Int>>;
@@ -6703,8 +6671,6 @@ export interface PayoutPlanPreviousValues {
   id: ID_Output;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
-  artist_id: Int;
-  user_id: Int;
   year: Int;
   month: Int;
   amount: Int;
@@ -6719,8 +6685,6 @@ export interface PayoutPlanPreviousValuesPromise
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
-  artist_id: () => Promise<Int>;
-  user_id: () => Promise<Int>;
   year: () => Promise<Int>;
   month: () => Promise<Int>;
   amount: () => Promise<Int>;
@@ -6735,8 +6699,6 @@ export interface PayoutPlanPreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  artist_id: () => Promise<AsyncIterator<Int>>;
-  user_id: () => Promise<AsyncIterator<Int>>;
   year: () => Promise<AsyncIterator<Int>>;
   month: () => Promise<AsyncIterator<Int>>;
   amount: () => Promise<AsyncIterator<Int>>;
@@ -6774,7 +6736,6 @@ export interface PayoutTransactionPreviousValues {
   id: ID_Output;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
-  artist_id: Int;
   year: Int;
   month: Int;
   amount: Int;
@@ -6788,7 +6749,6 @@ export interface PayoutTransactionPreviousValuesPromise
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
-  artist_id: () => Promise<Int>;
   year: () => Promise<Int>;
   month: () => Promise<Int>;
   amount: () => Promise<Int>;
@@ -6802,7 +6762,6 @@ export interface PayoutTransactionPreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  artist_id: () => Promise<AsyncIterator<Int>>;
   year: () => Promise<AsyncIterator<Int>>;
   month: () => Promise<AsyncIterator<Int>>;
   amount: () => Promise<AsyncIterator<Int>>;

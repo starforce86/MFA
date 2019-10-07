@@ -896,8 +896,8 @@ type PayoutPlan {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  artist_id: Int!
-  user_id: Int!
+  artist: User!
+  subscriber: User!
   year: Int!
   month: Int!
   amount: Int!
@@ -913,8 +913,8 @@ type PayoutPlanConnection {
 }
 
 input PayoutPlanCreateInput {
-  artist_id: Int!
-  user_id: Int!
+  artist: UserCreateOneInput!
+  subscriber: UserCreateOneInput!
   year: Int!
   month: Int!
   amount: Int!
@@ -935,10 +935,6 @@ enum PayoutPlanOrderByInput {
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
-  artist_id_ASC
-  artist_id_DESC
-  user_id_ASC
-  user_id_DESC
   year_ASC
   year_DESC
   month_ASC
@@ -957,8 +953,6 @@ type PayoutPlanPreviousValues {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  artist_id: Int!
-  user_id: Int!
   year: Int!
   month: Int!
   amount: Int!
@@ -986,8 +980,8 @@ input PayoutPlanSubscriptionWhereInput {
 }
 
 input PayoutPlanUpdateInput {
-  artist_id: Int
-  user_id: Int
+  artist: UserUpdateOneRequiredInput
+  subscriber: UserUpdateOneRequiredInput
   year: Int
   month: Int
   amount: Int
@@ -997,8 +991,6 @@ input PayoutPlanUpdateInput {
 }
 
 input PayoutPlanUpdateManyMutationInput {
-  artist_id: Int
-  user_id: Int
   year: Int
   month: Int
   amount: Int
@@ -1038,22 +1030,8 @@ input PayoutPlanWhereInput {
   updatedAt_lte: DateTime
   updatedAt_gt: DateTime
   updatedAt_gte: DateTime
-  artist_id: Int
-  artist_id_not: Int
-  artist_id_in: [Int!]
-  artist_id_not_in: [Int!]
-  artist_id_lt: Int
-  artist_id_lte: Int
-  artist_id_gt: Int
-  artist_id_gte: Int
-  user_id: Int
-  user_id_not: Int
-  user_id_in: [Int!]
-  user_id_not_in: [Int!]
-  user_id_lt: Int
-  user_id_lte: Int
-  user_id_gt: Int
-  user_id_gte: Int
+  artist: UserWhereInput
+  subscriber: UserWhereInput
   year: Int
   year_not: Int
   year_in: [Int!]
@@ -1103,7 +1081,7 @@ type PayoutTransaction {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  artist_id: Int!
+  artist: User!
   year: Int!
   month: Int!
   amount: Int!
@@ -1118,7 +1096,7 @@ type PayoutTransactionConnection {
 }
 
 input PayoutTransactionCreateInput {
-  artist_id: Int!
+  artist: UserCreateOneInput!
   year: Int!
   month: Int!
   amount: Int!
@@ -1138,8 +1116,6 @@ enum PayoutTransactionOrderByInput {
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
-  artist_id_ASC
-  artist_id_DESC
   year_ASC
   year_DESC
   month_ASC
@@ -1156,7 +1132,6 @@ type PayoutTransactionPreviousValues {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  artist_id: Int!
   year: Int!
   month: Int!
   amount: Int!
@@ -1183,7 +1158,7 @@ input PayoutTransactionSubscriptionWhereInput {
 }
 
 input PayoutTransactionUpdateInput {
-  artist_id: Int
+  artist: UserUpdateOneRequiredInput
   year: Int
   month: Int
   amount: Int
@@ -1192,7 +1167,6 @@ input PayoutTransactionUpdateInput {
 }
 
 input PayoutTransactionUpdateManyMutationInput {
-  artist_id: Int
   year: Int
   month: Int
   amount: Int
@@ -1231,14 +1205,7 @@ input PayoutTransactionWhereInput {
   updatedAt_lte: DateTime
   updatedAt_gt: DateTime
   updatedAt_gte: DateTime
-  artist_id: Int
-  artist_id_not: Int
-  artist_id_in: [Int!]
-  artist_id_not_in: [Int!]
-  artist_id_lt: Int
-  artist_id_lte: Int
-  artist_id_gt: Int
-  artist_id_gte: Int
+  artist: UserWhereInput
   year: Int
   year_not: Int
   year_in: [Int!]
@@ -1945,6 +1912,7 @@ input SettingsWhereInput {
 
 input SettingsWhereUniqueInput {
   id: ID
+  name: String
 }
 
 type Subscription {

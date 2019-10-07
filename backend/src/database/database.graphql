@@ -47,8 +47,8 @@ type PayoutPlan {
     createdAt: DateTime!
     updatedAt: DateTime!
 
-    artist_id: Int!
-    user_id: Int!
+    artist: User! @relation(name: "PayoutPlanArtistRel")
+    subscriber: User! @relation(name: "PayoutPlanSubscriberRel")
     year: Int!
     month: Int!
     amount: Int!
@@ -62,7 +62,7 @@ type PayoutTransaction {
     createdAt: DateTime!
     updatedAt: DateTime!
 
-    artist_id: Int!
+    artist: User! @relation(name: "PayoutTransactionArtistRel")
     year: Int!
     month: Int!
     amount: Int!
@@ -75,7 +75,7 @@ type Settings {
     createdAt: DateTime!
     updatedAt: DateTime!
 
-    name: String!
+    name: String! @unique
     int_val: Int
     str_val: String
 }
