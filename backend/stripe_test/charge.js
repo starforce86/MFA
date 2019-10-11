@@ -1,4 +1,4 @@
-const stripe = require("stripe")("sk_test_32950IcpD4TkM7p7xZskKMmA00Bvx5Yzum");
+const stripe = require("stripe")("sk_test_1RyzI0wW9CdUAiWuTte7jE4v");
 
 const token = 'tok_1EKolHHKXDvt1ZT0byCvayLb';
 

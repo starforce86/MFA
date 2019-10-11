@@ -9,11 +9,11 @@ var models = [
     embedded: false
   },
   {
-    name: "PayoutPlan",
+    name: "TransferPlan",
     embedded: false
   },
   {
-    name: "PayoutTransaction",
+    name: "TransferTransaction",
     embedded: false
   },
   {

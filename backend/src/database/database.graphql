@@ -42,13 +42,13 @@ type User {
     last_login_date: DateTime
 }
 
-type PayoutPlan {
+type TransferPlan {
     id: ID! @unique
     createdAt: DateTime!
     updatedAt: DateTime!
 
-    artist: User! @relation(name: "PayoutPlanArtistRel")
-    subscriber: User! @relation(name: "PayoutPlanSubscriberRel")
+    artist: User! @relation(name: "TransferPlanArtistRel")
+    subscriber: User! @relation(name: "TransferPlanSubscriberRel")
     year: Int!
     month: Int!
     amount: Int!
@@ -57,12 +57,12 @@ type PayoutPlan {
     paid_date: DateTime
 }
 
-type PayoutTransaction {
+type TransferTransaction {
     id: ID! @unique
     createdAt: DateTime!
     updatedAt: DateTime!
 
-    artist: User! @relation(name: "PayoutTransactionArtistRel")
+    artist: User! @relation(name: "TransferTransactionArtistRel")
     year: Int!
     month: Int!
     amount: Int!

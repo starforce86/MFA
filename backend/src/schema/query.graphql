@@ -32,12 +32,6 @@ type Query {
     curriculum(where: CurriculumWhereUniqueInput!): Curriculum
     curricula(where: CurriculumWhereInput, orderBy: CurriculumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Curriculum]!
     curriculaConnection(where: CurriculumWhereInput, orderBy: CurriculumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CurriculumConnection!
-    payoutPlan(where: PayoutPlanWhereUniqueInput!): PayoutPlan
-    payoutPlans(where: PayoutPlanWhereInput, orderBy: PayoutPlanOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PayoutPlan]!
-    payoutPlansConnection(where: PayoutPlanWhereInput, orderBy: PayoutPlanOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PayoutPlanConnection!
-    payoutTransaction(where: PayoutTransactionWhereUniqueInput!): PayoutTransaction
-    payoutTransactions(where: PayoutTransactionWhereInput, orderBy: PayoutTransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PayoutTransaction]!
-    payoutTransactionsConnection(where: PayoutTransactionWhereInput, orderBy: PayoutTransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PayoutTransactionConnection!
     playHistory(where: PlayHistoryWhereUniqueInput!): PlayHistory
     playHistories(where: PlayHistoryWhereInput, orderBy: PlayHistoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PlayHistory]!
     playHistoriesConnection(where: PlayHistoryWhereInput, orderBy: PlayHistoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PlayHistoryConnection!
@@ -56,6 +50,12 @@ type Query {
     tag(where: TagWhereUniqueInput!): Tag
     tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag]!
     tagsConnection(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TagConnection!
+    transferPlan(where: TransferPlanWhereUniqueInput!): TransferPlan
+    transferPlans(where: TransferPlanWhereInput, orderBy: TransferPlanOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TransferPlan]!
+    transferPlansConnection(where: TransferPlanWhereInput, orderBy: TransferPlanOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TransferPlanConnection!
+    transferTransaction(where: TransferTransactionWhereUniqueInput!): TransferTransaction
+    transferTransactions(where: TransferTransactionWhereInput, orderBy: TransferTransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TransferTransaction]!
+    transferTransactionsConnection(where: TransferTransactionWhereInput, orderBy: TransferTransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TransferTransactionConnection!
     user(where: UserWhereUniqueInput!): User
     users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
     usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!

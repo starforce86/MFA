@@ -18,8 +18,6 @@ export interface Exists {
   category: (where?: CategoryWhereInput) => Promise<boolean>;
   chargeHistory: (where?: ChargeHistoryWhereInput) => Promise<boolean>;
   curriculum: (where?: CurriculumWhereInput) => Promise<boolean>;
-  payoutPlan: (where?: PayoutPlanWhereInput) => Promise<boolean>;
-  payoutTransaction: (where?: PayoutTransactionWhereInput) => Promise<boolean>;
   playHistory: (where?: PlayHistoryWhereInput) => Promise<boolean>;
   post: (where?: PostWhereInput) => Promise<boolean>;
   restoreCode: (where?: RestoreCodeWhereInput) => Promise<boolean>;
@@ -28,6 +26,10 @@ export interface Exists {
     where?: SubscriptionHistoryWhereInput
   ) => Promise<boolean>;
   tag: (where?: TagWhereInput) => Promise<boolean>;
+  transferPlan: (where?: TransferPlanWhereInput) => Promise<boolean>;
+  transferTransaction: (
+    where?: TransferTransactionWhereInput
+  ) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
   video: (where?: VideoWhereInput) => Promise<boolean>;
   watchedVideoUser: (where?: WatchedVideoUserWhereInput) => Promise<boolean>;
@@ -146,54 +148,6 @@ export interface Prisma {
       last?: Int;
     }
   ) => CurriculumConnectionPromise;
-  payoutPlan: (where: PayoutPlanWhereUniqueInput) => PayoutPlanPromise;
-  payoutPlans: (
-    args?: {
-      where?: PayoutPlanWhereInput;
-      orderBy?: PayoutPlanOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => FragmentableArray<PayoutPlan>;
-  payoutPlansConnection: (
-    args?: {
-      where?: PayoutPlanWhereInput;
-      orderBy?: PayoutPlanOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => PayoutPlanConnectionPromise;
-  payoutTransaction: (
-    where: PayoutTransactionWhereUniqueInput
-  ) => PayoutTransactionPromise;
-  payoutTransactions: (
-    args?: {
-      where?: PayoutTransactionWhereInput;
-      orderBy?: PayoutTransactionOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => FragmentableArray<PayoutTransaction>;
-  payoutTransactionsConnection: (
-    args?: {
-      where?: PayoutTransactionWhereInput;
-      orderBy?: PayoutTransactionOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => PayoutTransactionConnectionPromise;
   playHistory: (where: PlayHistoryWhereUniqueInput) => PlayHistoryPromise;
   playHistories: (
     args?: {
@@ -334,6 +288,54 @@ export interface Prisma {
       last?: Int;
     }
   ) => TagConnectionPromise;
+  transferPlan: (where: TransferPlanWhereUniqueInput) => TransferPlanPromise;
+  transferPlans: (
+    args?: {
+      where?: TransferPlanWhereInput;
+      orderBy?: TransferPlanOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => FragmentableArray<TransferPlan>;
+  transferPlansConnection: (
+    args?: {
+      where?: TransferPlanWhereInput;
+      orderBy?: TransferPlanOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => TransferPlanConnectionPromise;
+  transferTransaction: (
+    where: TransferTransactionWhereUniqueInput
+  ) => TransferTransactionPromise;
+  transferTransactions: (
+    args?: {
+      where?: TransferTransactionWhereInput;
+      orderBy?: TransferTransactionOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => FragmentableArray<TransferTransaction>;
+  transferTransactionsConnection: (
+    args?: {
+      where?: TransferTransactionWhereInput;
+      orderBy?: TransferTransactionOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => TransferTransactionConnectionPromise;
   user: (where: UserWhereUniqueInput) => UserPromise;
   users: (
     args?: {
@@ -500,53 +502,6 @@ export interface Prisma {
   ) => CurriculumPromise;
   deleteCurriculum: (where: CurriculumWhereUniqueInput) => CurriculumPromise;
   deleteManyCurricula: (where?: CurriculumWhereInput) => BatchPayloadPromise;
-  createPayoutPlan: (data: PayoutPlanCreateInput) => PayoutPlanPromise;
-  updatePayoutPlan: (
-    args: { data: PayoutPlanUpdateInput; where: PayoutPlanWhereUniqueInput }
-  ) => PayoutPlanPromise;
-  updateManyPayoutPlans: (
-    args: {
-      data: PayoutPlanUpdateManyMutationInput;
-      where?: PayoutPlanWhereInput;
-    }
-  ) => BatchPayloadPromise;
-  upsertPayoutPlan: (
-    args: {
-      where: PayoutPlanWhereUniqueInput;
-      create: PayoutPlanCreateInput;
-      update: PayoutPlanUpdateInput;
-    }
-  ) => PayoutPlanPromise;
-  deletePayoutPlan: (where: PayoutPlanWhereUniqueInput) => PayoutPlanPromise;
-  deleteManyPayoutPlans: (where?: PayoutPlanWhereInput) => BatchPayloadPromise;
-  createPayoutTransaction: (
-    data: PayoutTransactionCreateInput
-  ) => PayoutTransactionPromise;
-  updatePayoutTransaction: (
-    args: {
-      data: PayoutTransactionUpdateInput;
-      where: PayoutTransactionWhereUniqueInput;
-    }
-  ) => PayoutTransactionPromise;
-  updateManyPayoutTransactions: (
-    args: {
-      data: PayoutTransactionUpdateManyMutationInput;
-      where?: PayoutTransactionWhereInput;
-    }
-  ) => BatchPayloadPromise;
-  upsertPayoutTransaction: (
-    args: {
-      where: PayoutTransactionWhereUniqueInput;
-      create: PayoutTransactionCreateInput;
-      update: PayoutTransactionUpdateInput;
-    }
-  ) => PayoutTransactionPromise;
-  deletePayoutTransaction: (
-    where: PayoutTransactionWhereUniqueInput
-  ) => PayoutTransactionPromise;
-  deleteManyPayoutTransactions: (
-    where?: PayoutTransactionWhereInput
-  ) => BatchPayloadPromise;
   createPlayHistory: (data: PlayHistoryCreateInput) => PlayHistoryPromise;
   updatePlayHistory: (
     args: { data: PlayHistoryUpdateInput; where: PlayHistoryWhereUniqueInput }
@@ -665,6 +620,57 @@ export interface Prisma {
   ) => TagPromise;
   deleteTag: (where: TagWhereUniqueInput) => TagPromise;
   deleteManyTags: (where?: TagWhereInput) => BatchPayloadPromise;
+  createTransferPlan: (data: TransferPlanCreateInput) => TransferPlanPromise;
+  updateTransferPlan: (
+    args: { data: TransferPlanUpdateInput; where: TransferPlanWhereUniqueInput }
+  ) => TransferPlanPromise;
+  updateManyTransferPlans: (
+    args: {
+      data: TransferPlanUpdateManyMutationInput;
+      where?: TransferPlanWhereInput;
+    }
+  ) => BatchPayloadPromise;
+  upsertTransferPlan: (
+    args: {
+      where: TransferPlanWhereUniqueInput;
+      create: TransferPlanCreateInput;
+      update: TransferPlanUpdateInput;
+    }
+  ) => TransferPlanPromise;
+  deleteTransferPlan: (
+    where: TransferPlanWhereUniqueInput
+  ) => TransferPlanPromise;
+  deleteManyTransferPlans: (
+    where?: TransferPlanWhereInput
+  ) => BatchPayloadPromise;
+  createTransferTransaction: (
+    data: TransferTransactionCreateInput
+  ) => TransferTransactionPromise;
+  updateTransferTransaction: (
+    args: {
+      data: TransferTransactionUpdateInput;
+      where: TransferTransactionWhereUniqueInput;
+    }
+  ) => TransferTransactionPromise;
+  updateManyTransferTransactions: (
+    args: {
+      data: TransferTransactionUpdateManyMutationInput;
+      where?: TransferTransactionWhereInput;
+    }
+  ) => BatchPayloadPromise;
+  upsertTransferTransaction: (
+    args: {
+      where: TransferTransactionWhereUniqueInput;
+      create: TransferTransactionCreateInput;
+      update: TransferTransactionUpdateInput;
+    }
+  ) => TransferTransactionPromise;
+  deleteTransferTransaction: (
+    where: TransferTransactionWhereUniqueInput
+  ) => TransferTransactionPromise;
+  deleteManyTransferTransactions: (
+    where?: TransferTransactionWhereInput
+  ) => BatchPayloadPromise;
   createUser: (data: UserCreateInput) => UserPromise;
   updateUser: (
     args: { data: UserUpdateInput; where: UserWhereUniqueInput }
@@ -746,12 +752,6 @@ export interface Subscription {
   curriculum: (
     where?: CurriculumSubscriptionWhereInput
   ) => CurriculumSubscriptionPayloadSubscription;
-  payoutPlan: (
-    where?: PayoutPlanSubscriptionWhereInput
-  ) => PayoutPlanSubscriptionPayloadSubscription;
-  payoutTransaction: (
-    where?: PayoutTransactionSubscriptionWhereInput
-  ) => PayoutTransactionSubscriptionPayloadSubscription;
   playHistory: (
     where?: PlayHistorySubscriptionWhereInput
   ) => PlayHistorySubscriptionPayloadSubscription;
@@ -770,6 +770,12 @@ export interface Subscription {
   tag: (
     where?: TagSubscriptionWhereInput
   ) => TagSubscriptionPayloadSubscription;
+  transferPlan: (
+    where?: TransferPlanSubscriptionWhereInput
+  ) => TransferPlanSubscriptionPayloadSubscription;
+  transferTransaction: (
+    where?: TransferTransactionSubscriptionWhereInput
+  ) => TransferTransactionSubscriptionPayloadSubscription;
   user: (
     where?: UserSubscriptionWhereInput
   ) => UserSubscriptionPayloadSubscription;
@@ -937,44 +943,6 @@ export type CurriculumOrderByInput =
   | "order_ASC"
   | "order_DESC";
 
-export type PayoutPlanOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC"
-  | "updatedAt_ASC"
-  | "updatedAt_DESC"
-  | "year_ASC"
-  | "year_DESC"
-  | "month_ASC"
-  | "month_DESC"
-  | "amount_ASC"
-  | "amount_DESC"
-  | "ignore_statis_ASC"
-  | "ignore_statis_DESC"
-  | "paid_status_ASC"
-  | "paid_status_DESC"
-  | "paid_date_ASC"
-  | "paid_date_DESC";
-
-export type PayoutTransactionOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC"
-  | "updatedAt_ASC"
-  | "updatedAt_DESC"
-  | "year_ASC"
-  | "year_DESC"
-  | "month_ASC"
-  | "month_DESC"
-  | "amount_ASC"
-  | "amount_DESC"
-  | "paid_status_ASC"
-  | "paid_status_DESC"
-  | "paid_date_ASC"
-  | "paid_date_DESC";
-
 export type PlayHistoryOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -1042,6 +1010,44 @@ export type SubscriptionHistoryOrderByInput =
   | "amount_DESC"
   | "subscriptionDate_ASC"
   | "subscriptionDate_DESC";
+
+export type TransferPlanOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC"
+  | "year_ASC"
+  | "year_DESC"
+  | "month_ASC"
+  | "month_DESC"
+  | "amount_ASC"
+  | "amount_DESC"
+  | "ignore_statis_ASC"
+  | "ignore_statis_DESC"
+  | "paid_status_ASC"
+  | "paid_status_DESC"
+  | "paid_date_ASC"
+  | "paid_date_DESC";
+
+export type TransferTransactionOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC"
+  | "year_ASC"
+  | "year_DESC"
+  | "month_ASC"
+  | "month_DESC"
+  | "amount_ASC"
+  | "amount_DESC"
+  | "paid_status_ASC"
+  | "paid_status_DESC"
+  | "paid_date_ASC"
+  | "paid_date_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
@@ -1824,159 +1830,6 @@ export interface CurriculumWhereInput {
   NOT?: CurriculumWhereInput[] | CurriculumWhereInput;
 }
 
-export type PayoutPlanWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
-
-export interface PayoutPlanWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  createdAt?: DateTimeInput;
-  createdAt_not?: DateTimeInput;
-  createdAt_in?: DateTimeInput[] | DateTimeInput;
-  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
-  createdAt_lt?: DateTimeInput;
-  createdAt_lte?: DateTimeInput;
-  createdAt_gt?: DateTimeInput;
-  createdAt_gte?: DateTimeInput;
-  updatedAt?: DateTimeInput;
-  updatedAt_not?: DateTimeInput;
-  updatedAt_in?: DateTimeInput[] | DateTimeInput;
-  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
-  updatedAt_lt?: DateTimeInput;
-  updatedAt_lte?: DateTimeInput;
-  updatedAt_gt?: DateTimeInput;
-  updatedAt_gte?: DateTimeInput;
-  artist?: UserWhereInput;
-  subscriber?: UserWhereInput;
-  year?: Int;
-  year_not?: Int;
-  year_in?: Int[] | Int;
-  year_not_in?: Int[] | Int;
-  year_lt?: Int;
-  year_lte?: Int;
-  year_gt?: Int;
-  year_gte?: Int;
-  month?: Int;
-  month_not?: Int;
-  month_in?: Int[] | Int;
-  month_not_in?: Int[] | Int;
-  month_lt?: Int;
-  month_lte?: Int;
-  month_gt?: Int;
-  month_gte?: Int;
-  amount?: Int;
-  amount_not?: Int;
-  amount_in?: Int[] | Int;
-  amount_not_in?: Int[] | Int;
-  amount_lt?: Int;
-  amount_lte?: Int;
-  amount_gt?: Int;
-  amount_gte?: Int;
-  ignore_statis?: Boolean;
-  ignore_statis_not?: Boolean;
-  paid_status?: Boolean;
-  paid_status_not?: Boolean;
-  paid_date?: DateTimeInput;
-  paid_date_not?: DateTimeInput;
-  paid_date_in?: DateTimeInput[] | DateTimeInput;
-  paid_date_not_in?: DateTimeInput[] | DateTimeInput;
-  paid_date_lt?: DateTimeInput;
-  paid_date_lte?: DateTimeInput;
-  paid_date_gt?: DateTimeInput;
-  paid_date_gte?: DateTimeInput;
-  AND?: PayoutPlanWhereInput[] | PayoutPlanWhereInput;
-  OR?: PayoutPlanWhereInput[] | PayoutPlanWhereInput;
-  NOT?: PayoutPlanWhereInput[] | PayoutPlanWhereInput;
-}
-
-export type PayoutTransactionWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
-
-export interface PayoutTransactionWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  createdAt?: DateTimeInput;
-  createdAt_not?: DateTimeInput;
-  createdAt_in?: DateTimeInput[] | DateTimeInput;
-  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
-  createdAt_lt?: DateTimeInput;
-  createdAt_lte?: DateTimeInput;
-  createdAt_gt?: DateTimeInput;
-  createdAt_gte?: DateTimeInput;
-  updatedAt?: DateTimeInput;
-  updatedAt_not?: DateTimeInput;
-  updatedAt_in?: DateTimeInput[] | DateTimeInput;
-  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
-  updatedAt_lt?: DateTimeInput;
-  updatedAt_lte?: DateTimeInput;
-  updatedAt_gt?: DateTimeInput;
-  updatedAt_gte?: DateTimeInput;
-  artist?: UserWhereInput;
-  year?: Int;
-  year_not?: Int;
-  year_in?: Int[] | Int;
-  year_not_in?: Int[] | Int;
-  year_lt?: Int;
-  year_lte?: Int;
-  year_gt?: Int;
-  year_gte?: Int;
-  month?: Int;
-  month_not?: Int;
-  month_in?: Int[] | Int;
-  month_not_in?: Int[] | Int;
-  month_lt?: Int;
-  month_lte?: Int;
-  month_gt?: Int;
-  month_gte?: Int;
-  amount?: Int;
-  amount_not?: Int;
-  amount_in?: Int[] | Int;
-  amount_not_in?: Int[] | Int;
-  amount_lt?: Int;
-  amount_lte?: Int;
-  amount_gt?: Int;
-  amount_gte?: Int;
-  paid_status?: Boolean;
-  paid_status_not?: Boolean;
-  paid_date?: DateTimeInput;
-  paid_date_not?: DateTimeInput;
-  paid_date_in?: DateTimeInput[] | DateTimeInput;
-  paid_date_not_in?: DateTimeInput[] | DateTimeInput;
-  paid_date_lt?: DateTimeInput;
-  paid_date_lte?: DateTimeInput;
-  paid_date_gt?: DateTimeInput;
-  paid_date_gte?: DateTimeInput;
-  AND?: PayoutTransactionWhereInput[] | PayoutTransactionWhereInput;
-  OR?: PayoutTransactionWhereInput[] | PayoutTransactionWhereInput;
-  NOT?: PayoutTransactionWhereInput[] | PayoutTransactionWhereInput;
-}
-
 export type PlayHistoryWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
@@ -2346,6 +2199,159 @@ export interface SubscriptionHistoryWhereInput {
 export type TagWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
+
+export type TransferPlanWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface TransferPlanWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  updatedAt?: DateTimeInput;
+  updatedAt_not?: DateTimeInput;
+  updatedAt_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_lt?: DateTimeInput;
+  updatedAt_lte?: DateTimeInput;
+  updatedAt_gt?: DateTimeInput;
+  updatedAt_gte?: DateTimeInput;
+  artist?: UserWhereInput;
+  subscriber?: UserWhereInput;
+  year?: Int;
+  year_not?: Int;
+  year_in?: Int[] | Int;
+  year_not_in?: Int[] | Int;
+  year_lt?: Int;
+  year_lte?: Int;
+  year_gt?: Int;
+  year_gte?: Int;
+  month?: Int;
+  month_not?: Int;
+  month_in?: Int[] | Int;
+  month_not_in?: Int[] | Int;
+  month_lt?: Int;
+  month_lte?: Int;
+  month_gt?: Int;
+  month_gte?: Int;
+  amount?: Int;
+  amount_not?: Int;
+  amount_in?: Int[] | Int;
+  amount_not_in?: Int[] | Int;
+  amount_lt?: Int;
+  amount_lte?: Int;
+  amount_gt?: Int;
+  amount_gte?: Int;
+  ignore_statis?: Boolean;
+  ignore_statis_not?: Boolean;
+  paid_status?: Boolean;
+  paid_status_not?: Boolean;
+  paid_date?: DateTimeInput;
+  paid_date_not?: DateTimeInput;
+  paid_date_in?: DateTimeInput[] | DateTimeInput;
+  paid_date_not_in?: DateTimeInput[] | DateTimeInput;
+  paid_date_lt?: DateTimeInput;
+  paid_date_lte?: DateTimeInput;
+  paid_date_gt?: DateTimeInput;
+  paid_date_gte?: DateTimeInput;
+  AND?: TransferPlanWhereInput[] | TransferPlanWhereInput;
+  OR?: TransferPlanWhereInput[] | TransferPlanWhereInput;
+  NOT?: TransferPlanWhereInput[] | TransferPlanWhereInput;
+}
+
+export type TransferTransactionWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface TransferTransactionWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  updatedAt?: DateTimeInput;
+  updatedAt_not?: DateTimeInput;
+  updatedAt_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_lt?: DateTimeInput;
+  updatedAt_lte?: DateTimeInput;
+  updatedAt_gt?: DateTimeInput;
+  updatedAt_gte?: DateTimeInput;
+  artist?: UserWhereInput;
+  year?: Int;
+  year_not?: Int;
+  year_in?: Int[] | Int;
+  year_not_in?: Int[] | Int;
+  year_lt?: Int;
+  year_lte?: Int;
+  year_gt?: Int;
+  year_gte?: Int;
+  month?: Int;
+  month_not?: Int;
+  month_in?: Int[] | Int;
+  month_not_in?: Int[] | Int;
+  month_lt?: Int;
+  month_lte?: Int;
+  month_gt?: Int;
+  month_gte?: Int;
+  amount?: Int;
+  amount_not?: Int;
+  amount_in?: Int[] | Int;
+  amount_not_in?: Int[] | Int;
+  amount_lt?: Int;
+  amount_lte?: Int;
+  amount_gt?: Int;
+  amount_gte?: Int;
+  paid_status?: Boolean;
+  paid_status_not?: Boolean;
+  paid_date?: DateTimeInput;
+  paid_date_not?: DateTimeInput;
+  paid_date_in?: DateTimeInput[] | DateTimeInput;
+  paid_date_not_in?: DateTimeInput[] | DateTimeInput;
+  paid_date_lt?: DateTimeInput;
+  paid_date_lte?: DateTimeInput;
+  paid_date_gt?: DateTimeInput;
+  paid_date_gte?: DateTimeInput;
+  AND?: TransferTransactionWhereInput[] | TransferTransactionWhereInput;
+  OR?: TransferTransactionWhereInput[] | TransferTransactionWhereInput;
+  NOT?: TransferTransactionWhereInput[] | TransferTransactionWhereInput;
+}
 
 export type UserWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
@@ -4179,63 +4185,6 @@ export interface CurriculumUpdateManyMutationInput {
   order?: Int;
 }
 
-export interface PayoutPlanCreateInput {
-  artist: UserCreateOneInput;
-  subscriber: UserCreateOneInput;
-  year: Int;
-  month: Int;
-  amount: Int;
-  ignore_statis?: Boolean;
-  paid_status?: Boolean;
-  paid_date?: DateTimeInput;
-}
-
-export interface PayoutPlanUpdateInput {
-  artist?: UserUpdateOneRequiredInput;
-  subscriber?: UserUpdateOneRequiredInput;
-  year?: Int;
-  month?: Int;
-  amount?: Int;
-  ignore_statis?: Boolean;
-  paid_status?: Boolean;
-  paid_date?: DateTimeInput;
-}
-
-export interface PayoutPlanUpdateManyMutationInput {
-  year?: Int;
-  month?: Int;
-  amount?: Int;
-  ignore_statis?: Boolean;
-  paid_status?: Boolean;
-  paid_date?: DateTimeInput;
-}
-
-export interface PayoutTransactionCreateInput {
-  artist: UserCreateOneInput;
-  year: Int;
-  month: Int;
-  amount: Int;
-  paid_status?: Boolean;
-  paid_date?: DateTimeInput;
-}
-
-export interface PayoutTransactionUpdateInput {
-  artist?: UserUpdateOneRequiredInput;
-  year?: Int;
-  month?: Int;
-  amount?: Int;
-  paid_status?: Boolean;
-  paid_date?: DateTimeInput;
-}
-
-export interface PayoutTransactionUpdateManyMutationInput {
-  year?: Int;
-  month?: Int;
-  amount?: Int;
-  paid_status?: Boolean;
-  paid_date?: DateTimeInput;
-}
-
 export interface PlayHistoryCreateInput {
   user: UserCreateOneInput;
   video: VideoCreateOneInput;
@@ -4462,6 +4411,63 @@ export interface TagUpdateManyMutationInput {
   text?: String;
 }
 
+export interface TransferPlanCreateInput {
+  artist: UserCreateOneInput;
+  subscriber: UserCreateOneInput;
+  year: Int;
+  month: Int;
+  amount: Int;
+  ignore_statis?: Boolean;
+  paid_status?: Boolean;
+  paid_date?: DateTimeInput;
+}
+
+export interface TransferPlanUpdateInput {
+  artist?: UserUpdateOneRequiredInput;
+  subscriber?: UserUpdateOneRequiredInput;
+  year?: Int;
+  month?: Int;
+  amount?: Int;
+  ignore_statis?: Boolean;
+  paid_status?: Boolean;
+  paid_date?: DateTimeInput;
+}
+
+export interface TransferPlanUpdateManyMutationInput {
+  year?: Int;
+  month?: Int;
+  amount?: Int;
+  ignore_statis?: Boolean;
+  paid_status?: Boolean;
+  paid_date?: DateTimeInput;
+}
+
+export interface TransferTransactionCreateInput {
+  artist: UserCreateOneInput;
+  year: Int;
+  month: Int;
+  amount: Int;
+  paid_status?: Boolean;
+  paid_date?: DateTimeInput;
+}
+
+export interface TransferTransactionUpdateInput {
+  artist?: UserUpdateOneRequiredInput;
+  year?: Int;
+  month?: Int;
+  amount?: Int;
+  paid_status?: Boolean;
+  paid_date?: DateTimeInput;
+}
+
+export interface TransferTransactionUpdateManyMutationInput {
+  year?: Int;
+  month?: Int;
+  amount?: Int;
+  paid_status?: Boolean;
+  paid_date?: DateTimeInput;
+}
+
 export interface UserUpdateInput {
   firstname?: String;
   lastname?: String;
@@ -4616,34 +4622,6 @@ export interface CurriculumSubscriptionWhereInput {
   NOT?: CurriculumSubscriptionWhereInput[] | CurriculumSubscriptionWhereInput;
 }
 
-export interface PayoutPlanSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: PayoutPlanWhereInput;
-  AND?: PayoutPlanSubscriptionWhereInput[] | PayoutPlanSubscriptionWhereInput;
-  OR?: PayoutPlanSubscriptionWhereInput[] | PayoutPlanSubscriptionWhereInput;
-  NOT?: PayoutPlanSubscriptionWhereInput[] | PayoutPlanSubscriptionWhereInput;
-}
-
-export interface PayoutTransactionSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: PayoutTransactionWhereInput;
-  AND?:
-    | PayoutTransactionSubscriptionWhereInput[]
-    | PayoutTransactionSubscriptionWhereInput;
-  OR?:
-    | PayoutTransactionSubscriptionWhereInput[]
-    | PayoutTransactionSubscriptionWhereInput;
-  NOT?:
-    | PayoutTransactionSubscriptionWhereInput[]
-    | PayoutTransactionSubscriptionWhereInput;
-}
-
 export interface PlayHistorySubscriptionWhereInput {
   mutation_in?: MutationType[] | MutationType;
   updatedFields_contains?: String;
@@ -4714,6 +4692,40 @@ export interface TagSubscriptionWhereInput {
   AND?: TagSubscriptionWhereInput[] | TagSubscriptionWhereInput;
   OR?: TagSubscriptionWhereInput[] | TagSubscriptionWhereInput;
   NOT?: TagSubscriptionWhereInput[] | TagSubscriptionWhereInput;
+}
+
+export interface TransferPlanSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: TransferPlanWhereInput;
+  AND?:
+    | TransferPlanSubscriptionWhereInput[]
+    | TransferPlanSubscriptionWhereInput;
+  OR?:
+    | TransferPlanSubscriptionWhereInput[]
+    | TransferPlanSubscriptionWhereInput;
+  NOT?:
+    | TransferPlanSubscriptionWhereInput[]
+    | TransferPlanSubscriptionWhereInput;
+}
+
+export interface TransferTransactionSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: TransferTransactionWhereInput;
+  AND?:
+    | TransferTransactionSubscriptionWhereInput[]
+    | TransferTransactionSubscriptionWhereInput;
+  OR?:
+    | TransferTransactionSubscriptionWhereInput[]
+    | TransferTransactionSubscriptionWhereInput;
+  NOT?:
+    | TransferTransactionSubscriptionWhereInput[]
+    | TransferTransactionSubscriptionWhereInput;
 }
 
 export interface UserSubscriptionWhereInput {
@@ -5565,199 +5577,6 @@ export interface AggregateCurriculumSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface PayoutPlan {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  year: Int;
-  month: Int;
-  amount: Int;
-  ignore_statis: Boolean;
-  paid_status: Boolean;
-  paid_date?: DateTimeOutput;
-}
-
-export interface PayoutPlanPromise extends Promise<PayoutPlan>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  artist: <T = UserPromise>() => T;
-  subscriber: <T = UserPromise>() => T;
-  year: () => Promise<Int>;
-  month: () => Promise<Int>;
-  amount: () => Promise<Int>;
-  ignore_statis: () => Promise<Boolean>;
-  paid_status: () => Promise<Boolean>;
-  paid_date: () => Promise<DateTimeOutput>;
-}
-
-export interface PayoutPlanSubscription
-  extends Promise<AsyncIterator<PayoutPlan>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  artist: <T = UserSubscription>() => T;
-  subscriber: <T = UserSubscription>() => T;
-  year: () => Promise<AsyncIterator<Int>>;
-  month: () => Promise<AsyncIterator<Int>>;
-  amount: () => Promise<AsyncIterator<Int>>;
-  ignore_statis: () => Promise<AsyncIterator<Boolean>>;
-  paid_status: () => Promise<AsyncIterator<Boolean>>;
-  paid_date: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface PayoutPlanConnection {
-  pageInfo: PageInfo;
-  edges: PayoutPlanEdge[];
-}
-
-export interface PayoutPlanConnectionPromise
-  extends Promise<PayoutPlanConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<PayoutPlanEdge>>() => T;
-  aggregate: <T = AggregatePayoutPlanPromise>() => T;
-}
-
-export interface PayoutPlanConnectionSubscription
-  extends Promise<AsyncIterator<PayoutPlanConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<PayoutPlanEdgeSubscription>>>() => T;
-  aggregate: <T = AggregatePayoutPlanSubscription>() => T;
-}
-
-export interface PayoutPlanEdge {
-  node: PayoutPlan;
-  cursor: String;
-}
-
-export interface PayoutPlanEdgePromise
-  extends Promise<PayoutPlanEdge>,
-    Fragmentable {
-  node: <T = PayoutPlanPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface PayoutPlanEdgeSubscription
-  extends Promise<AsyncIterator<PayoutPlanEdge>>,
-    Fragmentable {
-  node: <T = PayoutPlanSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregatePayoutPlan {
-  count: Int;
-}
-
-export interface AggregatePayoutPlanPromise
-  extends Promise<AggregatePayoutPlan>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregatePayoutPlanSubscription
-  extends Promise<AsyncIterator<AggregatePayoutPlan>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface PayoutTransaction {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  year: Int;
-  month: Int;
-  amount: Int;
-  paid_status: Boolean;
-  paid_date?: DateTimeOutput;
-}
-
-export interface PayoutTransactionPromise
-  extends Promise<PayoutTransaction>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  artist: <T = UserPromise>() => T;
-  year: () => Promise<Int>;
-  month: () => Promise<Int>;
-  amount: () => Promise<Int>;
-  paid_status: () => Promise<Boolean>;
-  paid_date: () => Promise<DateTimeOutput>;
-}
-
-export interface PayoutTransactionSubscription
-  extends Promise<AsyncIterator<PayoutTransaction>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  artist: <T = UserSubscription>() => T;
-  year: () => Promise<AsyncIterator<Int>>;
-  month: () => Promise<AsyncIterator<Int>>;
-  amount: () => Promise<AsyncIterator<Int>>;
-  paid_status: () => Promise<AsyncIterator<Boolean>>;
-  paid_date: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface PayoutTransactionConnection {
-  pageInfo: PageInfo;
-  edges: PayoutTransactionEdge[];
-}
-
-export interface PayoutTransactionConnectionPromise
-  extends Promise<PayoutTransactionConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<PayoutTransactionEdge>>() => T;
-  aggregate: <T = AggregatePayoutTransactionPromise>() => T;
-}
-
-export interface PayoutTransactionConnectionSubscription
-  extends Promise<AsyncIterator<PayoutTransactionConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<PayoutTransactionEdgeSubscription>>>() => T;
-  aggregate: <T = AggregatePayoutTransactionSubscription>() => T;
-}
-
-export interface PayoutTransactionEdge {
-  node: PayoutTransaction;
-  cursor: String;
-}
-
-export interface PayoutTransactionEdgePromise
-  extends Promise<PayoutTransactionEdge>,
-    Fragmentable {
-  node: <T = PayoutTransactionPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface PayoutTransactionEdgeSubscription
-  extends Promise<AsyncIterator<PayoutTransactionEdge>>,
-    Fragmentable {
-  node: <T = PayoutTransactionSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregatePayoutTransaction {
-  count: Int;
-}
-
-export interface AggregatePayoutTransactionPromise
-  extends Promise<AggregatePayoutTransaction>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregatePayoutTransactionSubscription
-  extends Promise<AsyncIterator<AggregatePayoutTransaction>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
 export interface PlayHistory {
   id: ID_Output;
   createdAt: DateTimeOutput;
@@ -6244,6 +6063,203 @@ export interface AggregateTagSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
+export interface TransferPlan {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  year: Int;
+  month: Int;
+  amount: Int;
+  ignore_statis: Boolean;
+  paid_status: Boolean;
+  paid_date?: DateTimeOutput;
+}
+
+export interface TransferPlanPromise
+  extends Promise<TransferPlan>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  artist: <T = UserPromise>() => T;
+  subscriber: <T = UserPromise>() => T;
+  year: () => Promise<Int>;
+  month: () => Promise<Int>;
+  amount: () => Promise<Int>;
+  ignore_statis: () => Promise<Boolean>;
+  paid_status: () => Promise<Boolean>;
+  paid_date: () => Promise<DateTimeOutput>;
+}
+
+export interface TransferPlanSubscription
+  extends Promise<AsyncIterator<TransferPlan>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  artist: <T = UserSubscription>() => T;
+  subscriber: <T = UserSubscription>() => T;
+  year: () => Promise<AsyncIterator<Int>>;
+  month: () => Promise<AsyncIterator<Int>>;
+  amount: () => Promise<AsyncIterator<Int>>;
+  ignore_statis: () => Promise<AsyncIterator<Boolean>>;
+  paid_status: () => Promise<AsyncIterator<Boolean>>;
+  paid_date: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface TransferPlanConnection {
+  pageInfo: PageInfo;
+  edges: TransferPlanEdge[];
+}
+
+export interface TransferPlanConnectionPromise
+  extends Promise<TransferPlanConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<TransferPlanEdge>>() => T;
+  aggregate: <T = AggregateTransferPlanPromise>() => T;
+}
+
+export interface TransferPlanConnectionSubscription
+  extends Promise<AsyncIterator<TransferPlanConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<TransferPlanEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateTransferPlanSubscription>() => T;
+}
+
+export interface TransferPlanEdge {
+  node: TransferPlan;
+  cursor: String;
+}
+
+export interface TransferPlanEdgePromise
+  extends Promise<TransferPlanEdge>,
+    Fragmentable {
+  node: <T = TransferPlanPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface TransferPlanEdgeSubscription
+  extends Promise<AsyncIterator<TransferPlanEdge>>,
+    Fragmentable {
+  node: <T = TransferPlanSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateTransferPlan {
+  count: Int;
+}
+
+export interface AggregateTransferPlanPromise
+  extends Promise<AggregateTransferPlan>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateTransferPlanSubscription
+  extends Promise<AsyncIterator<AggregateTransferPlan>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface TransferTransaction {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  year: Int;
+  month: Int;
+  amount: Int;
+  paid_status: Boolean;
+  paid_date?: DateTimeOutput;
+}
+
+export interface TransferTransactionPromise
+  extends Promise<TransferTransaction>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  artist: <T = UserPromise>() => T;
+  year: () => Promise<Int>;
+  month: () => Promise<Int>;
+  amount: () => Promise<Int>;
+  paid_status: () => Promise<Boolean>;
+  paid_date: () => Promise<DateTimeOutput>;
+}
+
+export interface TransferTransactionSubscription
+  extends Promise<AsyncIterator<TransferTransaction>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  artist: <T = UserSubscription>() => T;
+  year: () => Promise<AsyncIterator<Int>>;
+  month: () => Promise<AsyncIterator<Int>>;
+  amount: () => Promise<AsyncIterator<Int>>;
+  paid_status: () => Promise<AsyncIterator<Boolean>>;
+  paid_date: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface TransferTransactionConnection {
+  pageInfo: PageInfo;
+  edges: TransferTransactionEdge[];
+}
+
+export interface TransferTransactionConnectionPromise
+  extends Promise<TransferTransactionConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<TransferTransactionEdge>>() => T;
+  aggregate: <T = AggregateTransferTransactionPromise>() => T;
+}
+
+export interface TransferTransactionConnectionSubscription
+  extends Promise<AsyncIterator<TransferTransactionConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <
+    T = Promise<AsyncIterator<TransferTransactionEdgeSubscription>>
+  >() => T;
+  aggregate: <T = AggregateTransferTransactionSubscription>() => T;
+}
+
+export interface TransferTransactionEdge {
+  node: TransferTransaction;
+  cursor: String;
+}
+
+export interface TransferTransactionEdgePromise
+  extends Promise<TransferTransactionEdge>,
+    Fragmentable {
+  node: <T = TransferTransactionPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface TransferTransactionEdgeSubscription
+  extends Promise<AsyncIterator<TransferTransactionEdge>>,
+    Fragmentable {
+  node: <T = TransferTransactionSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateTransferTransaction {
+  count: Int;
+}
+
+export interface AggregateTransferTransactionPromise
+  extends Promise<AggregateTransferTransaction>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateTransferTransactionSubscription
+  extends Promise<AsyncIterator<AggregateTransferTransaction>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
 export interface UserConnection {
   pageInfo: PageInfo;
   edges: UserEdge[];
@@ -6642,133 +6658,6 @@ export interface CurriculumPreviousValuesSubscription
   order: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface PayoutPlanSubscriptionPayload {
-  mutation: MutationType;
-  node: PayoutPlan;
-  updatedFields: String[];
-  previousValues: PayoutPlanPreviousValues;
-}
-
-export interface PayoutPlanSubscriptionPayloadPromise
-  extends Promise<PayoutPlanSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = PayoutPlanPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = PayoutPlanPreviousValuesPromise>() => T;
-}
-
-export interface PayoutPlanSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<PayoutPlanSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = PayoutPlanSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = PayoutPlanPreviousValuesSubscription>() => T;
-}
-
-export interface PayoutPlanPreviousValues {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  year: Int;
-  month: Int;
-  amount: Int;
-  ignore_statis: Boolean;
-  paid_status: Boolean;
-  paid_date?: DateTimeOutput;
-}
-
-export interface PayoutPlanPreviousValuesPromise
-  extends Promise<PayoutPlanPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  year: () => Promise<Int>;
-  month: () => Promise<Int>;
-  amount: () => Promise<Int>;
-  ignore_statis: () => Promise<Boolean>;
-  paid_status: () => Promise<Boolean>;
-  paid_date: () => Promise<DateTimeOutput>;
-}
-
-export interface PayoutPlanPreviousValuesSubscription
-  extends Promise<AsyncIterator<PayoutPlanPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  year: () => Promise<AsyncIterator<Int>>;
-  month: () => Promise<AsyncIterator<Int>>;
-  amount: () => Promise<AsyncIterator<Int>>;
-  ignore_statis: () => Promise<AsyncIterator<Boolean>>;
-  paid_status: () => Promise<AsyncIterator<Boolean>>;
-  paid_date: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface PayoutTransactionSubscriptionPayload {
-  mutation: MutationType;
-  node: PayoutTransaction;
-  updatedFields: String[];
-  previousValues: PayoutTransactionPreviousValues;
-}
-
-export interface PayoutTransactionSubscriptionPayloadPromise
-  extends Promise<PayoutTransactionSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = PayoutTransactionPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = PayoutTransactionPreviousValuesPromise>() => T;
-}
-
-export interface PayoutTransactionSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<PayoutTransactionSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = PayoutTransactionSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = PayoutTransactionPreviousValuesSubscription>() => T;
-}
-
-export interface PayoutTransactionPreviousValues {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  year: Int;
-  month: Int;
-  amount: Int;
-  paid_status: Boolean;
-  paid_date?: DateTimeOutput;
-}
-
-export interface PayoutTransactionPreviousValuesPromise
-  extends Promise<PayoutTransactionPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  year: () => Promise<Int>;
-  month: () => Promise<Int>;
-  amount: () => Promise<Int>;
-  paid_status: () => Promise<Boolean>;
-  paid_date: () => Promise<DateTimeOutput>;
-}
-
-export interface PayoutTransactionPreviousValuesSubscription
-  extends Promise<AsyncIterator<PayoutTransactionPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  year: () => Promise<AsyncIterator<Int>>;
-  month: () => Promise<AsyncIterator<Int>>;
-  amount: () => Promise<AsyncIterator<Int>>;
-  paid_status: () => Promise<AsyncIterator<Boolean>>;
-  paid_date: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
 export interface PlayHistorySubscriptionPayload {
   mutation: MutationType;
   node: PlayHistory;
@@ -7096,6 +6985,133 @@ export interface TagPreviousValuesSubscription
   text: () => Promise<AsyncIterator<String>>;
 }
 
+export interface TransferPlanSubscriptionPayload {
+  mutation: MutationType;
+  node: TransferPlan;
+  updatedFields: String[];
+  previousValues: TransferPlanPreviousValues;
+}
+
+export interface TransferPlanSubscriptionPayloadPromise
+  extends Promise<TransferPlanSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = TransferPlanPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = TransferPlanPreviousValuesPromise>() => T;
+}
+
+export interface TransferPlanSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<TransferPlanSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = TransferPlanSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = TransferPlanPreviousValuesSubscription>() => T;
+}
+
+export interface TransferPlanPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  year: Int;
+  month: Int;
+  amount: Int;
+  ignore_statis: Boolean;
+  paid_status: Boolean;
+  paid_date?: DateTimeOutput;
+}
+
+export interface TransferPlanPreviousValuesPromise
+  extends Promise<TransferPlanPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  year: () => Promise<Int>;
+  month: () => Promise<Int>;
+  amount: () => Promise<Int>;
+  ignore_statis: () => Promise<Boolean>;
+  paid_status: () => Promise<Boolean>;
+  paid_date: () => Promise<DateTimeOutput>;
+}
+
+export interface TransferPlanPreviousValuesSubscription
+  extends Promise<AsyncIterator<TransferPlanPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  year: () => Promise<AsyncIterator<Int>>;
+  month: () => Promise<AsyncIterator<Int>>;
+  amount: () => Promise<AsyncIterator<Int>>;
+  ignore_statis: () => Promise<AsyncIterator<Boolean>>;
+  paid_status: () => Promise<AsyncIterator<Boolean>>;
+  paid_date: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface TransferTransactionSubscriptionPayload {
+  mutation: MutationType;
+  node: TransferTransaction;
+  updatedFields: String[];
+  previousValues: TransferTransactionPreviousValues;
+}
+
+export interface TransferTransactionSubscriptionPayloadPromise
+  extends Promise<TransferTransactionSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = TransferTransactionPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = TransferTransactionPreviousValuesPromise>() => T;
+}
+
+export interface TransferTransactionSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<TransferTransactionSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = TransferTransactionSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = TransferTransactionPreviousValuesSubscription>() => T;
+}
+
+export interface TransferTransactionPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  year: Int;
+  month: Int;
+  amount: Int;
+  paid_status: Boolean;
+  paid_date?: DateTimeOutput;
+}
+
+export interface TransferTransactionPreviousValuesPromise
+  extends Promise<TransferTransactionPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  year: () => Promise<Int>;
+  month: () => Promise<Int>;
+  amount: () => Promise<Int>;
+  paid_status: () => Promise<Boolean>;
+  paid_date: () => Promise<DateTimeOutput>;
+}
+
+export interface TransferTransactionPreviousValuesSubscription
+  extends Promise<AsyncIterator<TransferTransactionPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  year: () => Promise<AsyncIterator<Int>>;
+  month: () => Promise<AsyncIterator<Int>>;
+  amount: () => Promise<AsyncIterator<Int>>;
+  paid_status: () => Promise<AsyncIterator<Boolean>>;
+  paid_date: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
 export interface UserSubscriptionPayload {
   mutation: MutationType;
   node: User;
@@ -7366,11 +7382,11 @@ export const models: Model[] = [
     embedded: false
   },
   {
-    name: "PayoutPlan",
+    name: "TransferPlan",
     embedded: false
   },
   {
-    name: "PayoutTransaction",
+    name: "TransferTransaction",
     embedded: false
   },
   {

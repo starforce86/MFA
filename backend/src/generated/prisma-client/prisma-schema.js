@@ -176,14 +176,6 @@ type AggregateCurriculum {
   count: Int!
 }
 
-type AggregatePayoutPlan {
-  count: Int!
-}
-
-type AggregatePayoutTransaction {
-  count: Int!
-}
-
 type AggregatePlayHistory {
   count: Int!
 }
@@ -205,6 +197,14 @@ type AggregateSubscriptionHistory {
 }
 
 type AggregateTag {
+  count: Int!
+}
+
+type AggregateTransferPlan {
+  count: Int!
+}
+
+type AggregateTransferTransaction {
   count: Int!
 }
 
@@ -807,18 +807,6 @@ type Mutation {
   upsertCurriculum(where: CurriculumWhereUniqueInput!, create: CurriculumCreateInput!, update: CurriculumUpdateInput!): Curriculum!
   deleteCurriculum(where: CurriculumWhereUniqueInput!): Curriculum
   deleteManyCurricula(where: CurriculumWhereInput): BatchPayload!
-  createPayoutPlan(data: PayoutPlanCreateInput!): PayoutPlan!
-  updatePayoutPlan(data: PayoutPlanUpdateInput!, where: PayoutPlanWhereUniqueInput!): PayoutPlan
-  updateManyPayoutPlans(data: PayoutPlanUpdateManyMutationInput!, where: PayoutPlanWhereInput): BatchPayload!
-  upsertPayoutPlan(where: PayoutPlanWhereUniqueInput!, create: PayoutPlanCreateInput!, update: PayoutPlanUpdateInput!): PayoutPlan!
-  deletePayoutPlan(where: PayoutPlanWhereUniqueInput!): PayoutPlan
-  deleteManyPayoutPlans(where: PayoutPlanWhereInput): BatchPayload!
-  createPayoutTransaction(data: PayoutTransactionCreateInput!): PayoutTransaction!
-  updatePayoutTransaction(data: PayoutTransactionUpdateInput!, where: PayoutTransactionWhereUniqueInput!): PayoutTransaction
-  updateManyPayoutTransactions(data: PayoutTransactionUpdateManyMutationInput!, where: PayoutTransactionWhereInput): BatchPayload!
-  upsertPayoutTransaction(where: PayoutTransactionWhereUniqueInput!, create: PayoutTransactionCreateInput!, update: PayoutTransactionUpdateInput!): PayoutTransaction!
-  deletePayoutTransaction(where: PayoutTransactionWhereUniqueInput!): PayoutTransaction
-  deleteManyPayoutTransactions(where: PayoutTransactionWhereInput): BatchPayload!
   createPlayHistory(data: PlayHistoryCreateInput!): PlayHistory!
   updatePlayHistory(data: PlayHistoryUpdateInput!, where: PlayHistoryWhereUniqueInput!): PlayHistory
   updateManyPlayHistories(data: PlayHistoryUpdateManyMutationInput!, where: PlayHistoryWhereInput): BatchPayload!
@@ -855,6 +843,18 @@ type Mutation {
   upsertTag(where: TagWhereUniqueInput!, create: TagCreateInput!, update: TagUpdateInput!): Tag!
   deleteTag(where: TagWhereUniqueInput!): Tag
   deleteManyTags(where: TagWhereInput): BatchPayload!
+  createTransferPlan(data: TransferPlanCreateInput!): TransferPlan!
+  updateTransferPlan(data: TransferPlanUpdateInput!, where: TransferPlanWhereUniqueInput!): TransferPlan
+  updateManyTransferPlans(data: TransferPlanUpdateManyMutationInput!, where: TransferPlanWhereInput): BatchPayload!
+  upsertTransferPlan(where: TransferPlanWhereUniqueInput!, create: TransferPlanCreateInput!, update: TransferPlanUpdateInput!): TransferPlan!
+  deleteTransferPlan(where: TransferPlanWhereUniqueInput!): TransferPlan
+  deleteManyTransferPlans(where: TransferPlanWhereInput): BatchPayload!
+  createTransferTransaction(data: TransferTransactionCreateInput!): TransferTransaction!
+  updateTransferTransaction(data: TransferTransactionUpdateInput!, where: TransferTransactionWhereUniqueInput!): TransferTransaction
+  updateManyTransferTransactions(data: TransferTransactionUpdateManyMutationInput!, where: TransferTransactionWhereInput): BatchPayload!
+  upsertTransferTransaction(where: TransferTransactionWhereUniqueInput!, create: TransferTransactionCreateInput!, update: TransferTransactionUpdateInput!): TransferTransaction!
+  deleteTransferTransaction(where: TransferTransactionWhereUniqueInput!): TransferTransaction
+  deleteManyTransferTransactions(where: TransferTransactionWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -890,363 +890,6 @@ type PageInfo {
   hasPreviousPage: Boolean!
   startCursor: String
   endCursor: String
-}
-
-type PayoutPlan {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  artist: User!
-  subscriber: User!
-  year: Int!
-  month: Int!
-  amount: Int!
-  ignore_statis: Boolean!
-  paid_status: Boolean!
-  paid_date: DateTime
-}
-
-type PayoutPlanConnection {
-  pageInfo: PageInfo!
-  edges: [PayoutPlanEdge]!
-  aggregate: AggregatePayoutPlan!
-}
-
-input PayoutPlanCreateInput {
-  artist: UserCreateOneInput!
-  subscriber: UserCreateOneInput!
-  year: Int!
-  month: Int!
-  amount: Int!
-  ignore_statis: Boolean
-  paid_status: Boolean
-  paid_date: DateTime
-}
-
-type PayoutPlanEdge {
-  node: PayoutPlan!
-  cursor: String!
-}
-
-enum PayoutPlanOrderByInput {
-  id_ASC
-  id_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  year_ASC
-  year_DESC
-  month_ASC
-  month_DESC
-  amount_ASC
-  amount_DESC
-  ignore_statis_ASC
-  ignore_statis_DESC
-  paid_status_ASC
-  paid_status_DESC
-  paid_date_ASC
-  paid_date_DESC
-}
-
-type PayoutPlanPreviousValues {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  year: Int!
-  month: Int!
-  amount: Int!
-  ignore_statis: Boolean!
-  paid_status: Boolean!
-  paid_date: DateTime
-}
-
-type PayoutPlanSubscriptionPayload {
-  mutation: MutationType!
-  node: PayoutPlan
-  updatedFields: [String!]
-  previousValues: PayoutPlanPreviousValues
-}
-
-input PayoutPlanSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: PayoutPlanWhereInput
-  AND: [PayoutPlanSubscriptionWhereInput!]
-  OR: [PayoutPlanSubscriptionWhereInput!]
-  NOT: [PayoutPlanSubscriptionWhereInput!]
-}
-
-input PayoutPlanUpdateInput {
-  artist: UserUpdateOneRequiredInput
-  subscriber: UserUpdateOneRequiredInput
-  year: Int
-  month: Int
-  amount: Int
-  ignore_statis: Boolean
-  paid_status: Boolean
-  paid_date: DateTime
-}
-
-input PayoutPlanUpdateManyMutationInput {
-  year: Int
-  month: Int
-  amount: Int
-  ignore_statis: Boolean
-  paid_status: Boolean
-  paid_date: DateTime
-}
-
-input PayoutPlanWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  artist: UserWhereInput
-  subscriber: UserWhereInput
-  year: Int
-  year_not: Int
-  year_in: [Int!]
-  year_not_in: [Int!]
-  year_lt: Int
-  year_lte: Int
-  year_gt: Int
-  year_gte: Int
-  month: Int
-  month_not: Int
-  month_in: [Int!]
-  month_not_in: [Int!]
-  month_lt: Int
-  month_lte: Int
-  month_gt: Int
-  month_gte: Int
-  amount: Int
-  amount_not: Int
-  amount_in: [Int!]
-  amount_not_in: [Int!]
-  amount_lt: Int
-  amount_lte: Int
-  amount_gt: Int
-  amount_gte: Int
-  ignore_statis: Boolean
-  ignore_statis_not: Boolean
-  paid_status: Boolean
-  paid_status_not: Boolean
-  paid_date: DateTime
-  paid_date_not: DateTime
-  paid_date_in: [DateTime!]
-  paid_date_not_in: [DateTime!]
-  paid_date_lt: DateTime
-  paid_date_lte: DateTime
-  paid_date_gt: DateTime
-  paid_date_gte: DateTime
-  AND: [PayoutPlanWhereInput!]
-  OR: [PayoutPlanWhereInput!]
-  NOT: [PayoutPlanWhereInput!]
-}
-
-input PayoutPlanWhereUniqueInput {
-  id: ID
-}
-
-type PayoutTransaction {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  artist: User!
-  year: Int!
-  month: Int!
-  amount: Int!
-  paid_status: Boolean!
-  paid_date: DateTime
-}
-
-type PayoutTransactionConnection {
-  pageInfo: PageInfo!
-  edges: [PayoutTransactionEdge]!
-  aggregate: AggregatePayoutTransaction!
-}
-
-input PayoutTransactionCreateInput {
-  artist: UserCreateOneInput!
-  year: Int!
-  month: Int!
-  amount: Int!
-  paid_status: Boolean
-  paid_date: DateTime
-}
-
-type PayoutTransactionEdge {
-  node: PayoutTransaction!
-  cursor: String!
-}
-
-enum PayoutTransactionOrderByInput {
-  id_ASC
-  id_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  year_ASC
-  year_DESC
-  month_ASC
-  month_DESC
-  amount_ASC
-  amount_DESC
-  paid_status_ASC
-  paid_status_DESC
-  paid_date_ASC
-  paid_date_DESC
-}
-
-type PayoutTransactionPreviousValues {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  year: Int!
-  month: Int!
-  amount: Int!
-  paid_status: Boolean!
-  paid_date: DateTime
-}
-
-type PayoutTransactionSubscriptionPayload {
-  mutation: MutationType!
-  node: PayoutTransaction
-  updatedFields: [String!]
-  previousValues: PayoutTransactionPreviousValues
-}
-
-input PayoutTransactionSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: PayoutTransactionWhereInput
-  AND: [PayoutTransactionSubscriptionWhereInput!]
-  OR: [PayoutTransactionSubscriptionWhereInput!]
-  NOT: [PayoutTransactionSubscriptionWhereInput!]
-}
-
-input PayoutTransactionUpdateInput {
-  artist: UserUpdateOneRequiredInput
-  year: Int
-  month: Int
-  amount: Int
-  paid_status: Boolean
-  paid_date: DateTime
-}
-
-input PayoutTransactionUpdateManyMutationInput {
-  year: Int
-  month: Int
-  amount: Int
-  paid_status: Boolean
-  paid_date: DateTime
-}
-
-input PayoutTransactionWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  artist: UserWhereInput
-  year: Int
-  year_not: Int
-  year_in: [Int!]
-  year_not_in: [Int!]
-  year_lt: Int
-  year_lte: Int
-  year_gt: Int
-  year_gte: Int
-  month: Int
-  month_not: Int
-  month_in: [Int!]
-  month_not_in: [Int!]
-  month_lt: Int
-  month_lte: Int
-  month_gt: Int
-  month_gte: Int
-  amount: Int
-  amount_not: Int
-  amount_in: [Int!]
-  amount_not_in: [Int!]
-  amount_lt: Int
-  amount_lte: Int
-  amount_gt: Int
-  amount_gte: Int
-  paid_status: Boolean
-  paid_status_not: Boolean
-  paid_date: DateTime
-  paid_date_not: DateTime
-  paid_date_in: [DateTime!]
-  paid_date_not_in: [DateTime!]
-  paid_date_lt: DateTime
-  paid_date_lte: DateTime
-  paid_date_gt: DateTime
-  paid_date_gte: DateTime
-  AND: [PayoutTransactionWhereInput!]
-  OR: [PayoutTransactionWhereInput!]
-  NOT: [PayoutTransactionWhereInput!]
-}
-
-input PayoutTransactionWhereUniqueInput {
-  id: ID
 }
 
 type PlayHistory {
@@ -1565,12 +1208,6 @@ type Query {
   curriculum(where: CurriculumWhereUniqueInput!): Curriculum
   curricula(where: CurriculumWhereInput, orderBy: CurriculumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Curriculum]!
   curriculaConnection(where: CurriculumWhereInput, orderBy: CurriculumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CurriculumConnection!
-  payoutPlan(where: PayoutPlanWhereUniqueInput!): PayoutPlan
-  payoutPlans(where: PayoutPlanWhereInput, orderBy: PayoutPlanOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PayoutPlan]!
-  payoutPlansConnection(where: PayoutPlanWhereInput, orderBy: PayoutPlanOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PayoutPlanConnection!
-  payoutTransaction(where: PayoutTransactionWhereUniqueInput!): PayoutTransaction
-  payoutTransactions(where: PayoutTransactionWhereInput, orderBy: PayoutTransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PayoutTransaction]!
-  payoutTransactionsConnection(where: PayoutTransactionWhereInput, orderBy: PayoutTransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PayoutTransactionConnection!
   playHistory(where: PlayHistoryWhereUniqueInput!): PlayHistory
   playHistories(where: PlayHistoryWhereInput, orderBy: PlayHistoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PlayHistory]!
   playHistoriesConnection(where: PlayHistoryWhereInput, orderBy: PlayHistoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PlayHistoryConnection!
@@ -1589,6 +1226,12 @@ type Query {
   tag(where: TagWhereUniqueInput!): Tag
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag]!
   tagsConnection(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TagConnection!
+  transferPlan(where: TransferPlanWhereUniqueInput!): TransferPlan
+  transferPlans(where: TransferPlanWhereInput, orderBy: TransferPlanOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TransferPlan]!
+  transferPlansConnection(where: TransferPlanWhereInput, orderBy: TransferPlanOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TransferPlanConnection!
+  transferTransaction(where: TransferTransactionWhereUniqueInput!): TransferTransaction
+  transferTransactions(where: TransferTransactionWhereInput, orderBy: TransferTransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TransferTransaction]!
+  transferTransactionsConnection(where: TransferTransactionWhereInput, orderBy: TransferTransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TransferTransactionConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -1920,14 +1563,14 @@ type Subscription {
   category(where: CategorySubscriptionWhereInput): CategorySubscriptionPayload
   chargeHistory(where: ChargeHistorySubscriptionWhereInput): ChargeHistorySubscriptionPayload
   curriculum(where: CurriculumSubscriptionWhereInput): CurriculumSubscriptionPayload
-  payoutPlan(where: PayoutPlanSubscriptionWhereInput): PayoutPlanSubscriptionPayload
-  payoutTransaction(where: PayoutTransactionSubscriptionWhereInput): PayoutTransactionSubscriptionPayload
   playHistory(where: PlayHistorySubscriptionWhereInput): PlayHistorySubscriptionPayload
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   restoreCode(where: RestoreCodeSubscriptionWhereInput): RestoreCodeSubscriptionPayload
   settings(where: SettingsSubscriptionWhereInput): SettingsSubscriptionPayload
   subscriptionHistory(where: SubscriptionHistorySubscriptionWhereInput): SubscriptionHistorySubscriptionPayload
   tag(where: TagSubscriptionWhereInput): TagSubscriptionPayload
+  transferPlan(where: TransferPlanSubscriptionWhereInput): TransferPlanSubscriptionPayload
+  transferTransaction(where: TransferTransactionSubscriptionWhereInput): TransferTransactionSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   video(where: VideoSubscriptionWhereInput): VideoSubscriptionPayload
   watchedVideoUser(where: WatchedVideoUserSubscriptionWhereInput): WatchedVideoUserSubscriptionPayload
@@ -2305,6 +1948,363 @@ input TagWhereInput {
 }
 
 input TagWhereUniqueInput {
+  id: ID
+}
+
+type TransferPlan {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  artist: User!
+  subscriber: User!
+  year: Int!
+  month: Int!
+  amount: Int!
+  ignore_statis: Boolean!
+  paid_status: Boolean!
+  paid_date: DateTime
+}
+
+type TransferPlanConnection {
+  pageInfo: PageInfo!
+  edges: [TransferPlanEdge]!
+  aggregate: AggregateTransferPlan!
+}
+
+input TransferPlanCreateInput {
+  artist: UserCreateOneInput!
+  subscriber: UserCreateOneInput!
+  year: Int!
+  month: Int!
+  amount: Int!
+  ignore_statis: Boolean
+  paid_status: Boolean
+  paid_date: DateTime
+}
+
+type TransferPlanEdge {
+  node: TransferPlan!
+  cursor: String!
+}
+
+enum TransferPlanOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  year_ASC
+  year_DESC
+  month_ASC
+  month_DESC
+  amount_ASC
+  amount_DESC
+  ignore_statis_ASC
+  ignore_statis_DESC
+  paid_status_ASC
+  paid_status_DESC
+  paid_date_ASC
+  paid_date_DESC
+}
+
+type TransferPlanPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  year: Int!
+  month: Int!
+  amount: Int!
+  ignore_statis: Boolean!
+  paid_status: Boolean!
+  paid_date: DateTime
+}
+
+type TransferPlanSubscriptionPayload {
+  mutation: MutationType!
+  node: TransferPlan
+  updatedFields: [String!]
+  previousValues: TransferPlanPreviousValues
+}
+
+input TransferPlanSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: TransferPlanWhereInput
+  AND: [TransferPlanSubscriptionWhereInput!]
+  OR: [TransferPlanSubscriptionWhereInput!]
+  NOT: [TransferPlanSubscriptionWhereInput!]
+}
+
+input TransferPlanUpdateInput {
+  artist: UserUpdateOneRequiredInput
+  subscriber: UserUpdateOneRequiredInput
+  year: Int
+  month: Int
+  amount: Int
+  ignore_statis: Boolean
+  paid_status: Boolean
+  paid_date: DateTime
+}
+
+input TransferPlanUpdateManyMutationInput {
+  year: Int
+  month: Int
+  amount: Int
+  ignore_statis: Boolean
+  paid_status: Boolean
+  paid_date: DateTime
+}
+
+input TransferPlanWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  artist: UserWhereInput
+  subscriber: UserWhereInput
+  year: Int
+  year_not: Int
+  year_in: [Int!]
+  year_not_in: [Int!]
+  year_lt: Int
+  year_lte: Int
+  year_gt: Int
+  year_gte: Int
+  month: Int
+  month_not: Int
+  month_in: [Int!]
+  month_not_in: [Int!]
+  month_lt: Int
+  month_lte: Int
+  month_gt: Int
+  month_gte: Int
+  amount: Int
+  amount_not: Int
+  amount_in: [Int!]
+  amount_not_in: [Int!]
+  amount_lt: Int
+  amount_lte: Int
+  amount_gt: Int
+  amount_gte: Int
+  ignore_statis: Boolean
+  ignore_statis_not: Boolean
+  paid_status: Boolean
+  paid_status_not: Boolean
+  paid_date: DateTime
+  paid_date_not: DateTime
+  paid_date_in: [DateTime!]
+  paid_date_not_in: [DateTime!]
+  paid_date_lt: DateTime
+  paid_date_lte: DateTime
+  paid_date_gt: DateTime
+  paid_date_gte: DateTime
+  AND: [TransferPlanWhereInput!]
+  OR: [TransferPlanWhereInput!]
+  NOT: [TransferPlanWhereInput!]
+}
+
+input TransferPlanWhereUniqueInput {
+  id: ID
+}
+
+type TransferTransaction {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  artist: User!
+  year: Int!
+  month: Int!
+  amount: Int!
+  paid_status: Boolean!
+  paid_date: DateTime
+}
+
+type TransferTransactionConnection {
+  pageInfo: PageInfo!
+  edges: [TransferTransactionEdge]!
+  aggregate: AggregateTransferTransaction!
+}
+
+input TransferTransactionCreateInput {
+  artist: UserCreateOneInput!
+  year: Int!
+  month: Int!
+  amount: Int!
+  paid_status: Boolean
+  paid_date: DateTime
+}
+
+type TransferTransactionEdge {
+  node: TransferTransaction!
+  cursor: String!
+}
+
+enum TransferTransactionOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  year_ASC
+  year_DESC
+  month_ASC
+  month_DESC
+  amount_ASC
+  amount_DESC
+  paid_status_ASC
+  paid_status_DESC
+  paid_date_ASC
+  paid_date_DESC
+}
+
+type TransferTransactionPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  year: Int!
+  month: Int!
+  amount: Int!
+  paid_status: Boolean!
+  paid_date: DateTime
+}
+
+type TransferTransactionSubscriptionPayload {
+  mutation: MutationType!
+  node: TransferTransaction
+  updatedFields: [String!]
+  previousValues: TransferTransactionPreviousValues
+}
+
+input TransferTransactionSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: TransferTransactionWhereInput
+  AND: [TransferTransactionSubscriptionWhereInput!]
+  OR: [TransferTransactionSubscriptionWhereInput!]
+  NOT: [TransferTransactionSubscriptionWhereInput!]
+}
+
+input TransferTransactionUpdateInput {
+  artist: UserUpdateOneRequiredInput
+  year: Int
+  month: Int
+  amount: Int
+  paid_status: Boolean
+  paid_date: DateTime
+}
+
+input TransferTransactionUpdateManyMutationInput {
+  year: Int
+  month: Int
+  amount: Int
+  paid_status: Boolean
+  paid_date: DateTime
+}
+
+input TransferTransactionWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  artist: UserWhereInput
+  year: Int
+  year_not: Int
+  year_in: [Int!]
+  year_not_in: [Int!]
+  year_lt: Int
+  year_lte: Int
+  year_gt: Int
+  year_gte: Int
+  month: Int
+  month_not: Int
+  month_in: [Int!]
+  month_not_in: [Int!]
+  month_lt: Int
+  month_lte: Int
+  month_gt: Int
+  month_gte: Int
+  amount: Int
+  amount_not: Int
+  amount_in: [Int!]
+  amount_not_in: [Int!]
+  amount_lt: Int
+  amount_lte: Int
+  amount_gt: Int
+  amount_gte: Int
+  paid_status: Boolean
+  paid_status_not: Boolean
+  paid_date: DateTime
+  paid_date_not: DateTime
+  paid_date_in: [DateTime!]
+  paid_date_not_in: [DateTime!]
+  paid_date_lt: DateTime
+  paid_date_lte: DateTime
+  paid_date_gt: DateTime
+  paid_date_gte: DateTime
+  AND: [TransferTransactionWhereInput!]
+  OR: [TransferTransactionWhereInput!]
+  NOT: [TransferTransactionWhereInput!]
+}
+
+input TransferTransactionWhereUniqueInput {
   id: ID
 }
 

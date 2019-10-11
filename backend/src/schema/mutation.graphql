@@ -34,18 +34,6 @@ type Mutation {
     upsertCurriculum(where: CurriculumWhereUniqueInput!, create: CurriculumCreateInput!, update: CurriculumUpdateInput!): Curriculum!
     deleteCurriculum(where: CurriculumWhereUniqueInput!): Curriculum
     deleteManyCurricula(where: CurriculumWhereInput): BatchPayload!
-    createPayoutPlan(data: PayoutPlanCreateInput!): PayoutPlan!
-    updatePayoutPlan(data: PayoutPlanUpdateInput!, where: PayoutPlanWhereUniqueInput!): PayoutPlan
-    updateManyPayoutPlans(data: PayoutPlanUpdateManyMutationInput!, where: PayoutPlanWhereInput): BatchPayload!
-    upsertPayoutPlan(where: PayoutPlanWhereUniqueInput!, create: PayoutPlanCreateInput!, update: PayoutPlanUpdateInput!): PayoutPlan!
-    deletePayoutPlan(where: PayoutPlanWhereUniqueInput!): PayoutPlan
-    deleteManyPayoutPlans(where: PayoutPlanWhereInput): BatchPayload!
-    createPayoutTransaction(data: PayoutTransactionCreateInput!): PayoutTransaction!
-    updatePayoutTransaction(data: PayoutTransactionUpdateInput!, where: PayoutTransactionWhereUniqueInput!): PayoutTransaction
-    updateManyPayoutTransactions(data: PayoutTransactionUpdateManyMutationInput!, where: PayoutTransactionWhereInput): BatchPayload!
-    upsertPayoutTransaction(where: PayoutTransactionWhereUniqueInput!, create: PayoutTransactionCreateInput!, update: PayoutTransactionUpdateInput!): PayoutTransaction!
-    deletePayoutTransaction(where: PayoutTransactionWhereUniqueInput!): PayoutTransaction
-    deleteManyPayoutTransactions(where: PayoutTransactionWhereInput): BatchPayload!
     createPlayHistory(data: PlayHistoryCreateInput!): PlayHistory!
     updatePlayHistory(data: PlayHistoryUpdateInput!, where: PlayHistoryWhereUniqueInput!): PlayHistory
     updateManyPlayHistories(data: PlayHistoryUpdateManyMutationInput!, where: PlayHistoryWhereInput): BatchPayload!
@@ -82,6 +70,18 @@ type Mutation {
     upsertTag(where: TagWhereUniqueInput!, create: TagCreateInput!, update: TagUpdateInput!): Tag!
     deleteTag(where: TagWhereUniqueInput!): Tag
     deleteManyTags(where: TagWhereInput): BatchPayload!
+    createTransferPlan(data: TransferPlanCreateInput!): TransferPlan!
+    updateTransferPlan(data: TransferPlanUpdateInput!, where: TransferPlanWhereUniqueInput!): TransferPlan
+    updateManyTransferPlans(data: TransferPlanUpdateManyMutationInput!, where: TransferPlanWhereInput): BatchPayload!
+    upsertTransferPlan(where: TransferPlanWhereUniqueInput!, create: TransferPlanCreateInput!, update: TransferPlanUpdateInput!): TransferPlan!
+    deleteTransferPlan(where: TransferPlanWhereUniqueInput!): TransferPlan
+    deleteManyTransferPlans(where: TransferPlanWhereInput): BatchPayload!
+    createTransferTransaction(data: TransferTransactionCreateInput!): TransferTransaction!
+    updateTransferTransaction(data: TransferTransactionUpdateInput!, where: TransferTransactionWhereUniqueInput!): TransferTransaction
+    updateManyTransferTransactions(data: TransferTransactionUpdateManyMutationInput!, where: TransferTransactionWhereInput): BatchPayload!
+    upsertTransferTransaction(where: TransferTransactionWhereUniqueInput!, create: TransferTransactionCreateInput!, update: TransferTransactionUpdateInput!): TransferTransaction!
+    deleteTransferTransaction(where: TransferTransactionWhereUniqueInput!): TransferTransaction
+    deleteManyTransferTransactions(where: TransferTransactionWhereInput): BatchPayload!
     createUser(data: UserCreateInput!): User!
     updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
     updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
