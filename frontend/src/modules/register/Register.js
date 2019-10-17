@@ -7,10 +7,13 @@ import { createMuiTheme, MuiThemeProvider } from "@material-ui/core";
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { notification } from 'antd';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { notification, DatePicker } from 'antd';
 import 'antd/dist/antd.css';
+import Dropzone from "react-dropzone";
 import PlanSelector from "../../components/stripe/PlanSelector";
 import SubscribePlan from "../../components/stripe/SubscribePlan";
+import {API_URL} from "../../util/consts";
 
 import logger from "../../util/logger";
 
@@ -20,7 +23,12 @@ class Register extends React.Component {
 
     state = {
         plan: "MONTHLY",
-        role: "USER_VIEWER"
+        role: "USER_VIEWER",
+        external_account_type: "BANK_ACCOUNT", // DEBIT_CARD
+        // front_id_scan: "",
+        // front_id_scan_uploading: false,
+        // back_id_scan: "",
+        // back_id_scan_uploading: false
     };
 
     theme = createMuiTheme({
@@ -56,6 +64,28 @@ class Register extends React.Component {
         }
     };
 
+    // async uploadIDFile(file, type) {
+    //     const formData = new FormData();
+    //     formData.append('token', this.props.token);
+    //     let res;
+    //     if (type == "back") {
+    //         formData.append('backIDScan', file);
+    //         res = await (await fetch(`${API_URL}/user/backIDScan`, {
+    //             method: 'POST',
+    //             body: formData
+    //         })).json();
+    //     } else {
+    //         formData.append('frontIDScan', file);
+    //         res = await (await fetch(`${API_URL}/user/frontIDScan`, {
+    //             method: 'POST',
+    //             body: formData
+    //         })).json();
+    //     }
+
+    //     log.error('res', res);
+    //     return res.file_url;
+    // }
+
     onSelectPlan = (value) => {
         this.setState({ plan: value })
     };
@@ -63,6 +93,11 @@ class Register extends React.Component {
     onSignUpTypeChange = (value) => {
         this.setState({ role: value })
         this.props.setFieldValue("role", value)
+    }
+
+    onExternalAccountTypeChange = (value) => {
+        this.setState({ external_account_type: value })
+        this.props.setFieldValue("external_account_type", value)
     }
 
     render() {
@@ -218,7 +253,7 @@ class Register extends React.Component {
                                                 </div>
 
                                                 <div className="form-group">
-                                                    <label>Artist or Subscriber?</label>
+                                                    <label>Signup as a Artist or Subscriber?</label>
                                                     <MuiThemeProvider theme={this.theme}>
                                                         <RadioGroup
                                                             aria-label="signup-type"
@@ -253,14 +288,180 @@ class Register extends React.Component {
                                                                 value={this.props.values.promo_code}
                                                             />
                                                         </div>
+                                                    </React.Fragment>
+                                                )}
 
+                                                {this.state.role === "USER_PUBLISHER" && (
+                                                    <React.Fragment>
                                                         <div className="form-group">
-                                                            <label>Card</label>
-                                                            <SubscribePlan getToken={fn => this.getTokenFn = fn} />
+                                                            <label>Register your Bank account or Debit card to payout?</label>
+                                                            <MuiThemeProvider theme={this.theme}>
+                                                                <RadioGroup
+                                                                    aria-label="external-account"
+                                                                    style={{ justifyContent: "center", alignItems: "center" }}
+                                                                    value={this.state.external_account_type}
+                                                                    onChange={(_, value) => {
+                                                                        this.onExternalAccountTypeChange(value);
+                                                                    }}
+                                                                >
+                                                                    <FormControlLabel value="BANK_ACCOUNT" style={{ width: 150, height: 40 }}
+                                                                        control={<Radio
+                                                                            checked={this.state.external_account_type === "BANK_ACCOUNT"} />}
+                                                                        label="Bank account" />
+                                                                    <FormControlLabel value="DEBIT_CARD" style={{ width: 150, height: 40 }}
+                                                                        control={<Radio
+                                                                            checked={this.state.external_account_type === "DEBIT_CARD"} />}
+                                                                        label="Debit card" />
+                                                                </RadioGroup>
+                                                            </MuiThemeProvider>
                                                         </div>
-                                                        <PlanSelector onChange={value => {
-                                                            this.setState({ plan: value })
-                                                        }} value={this.state.plan} />
+                                                        {this.state.external_account_type === "BANK_ACCOUNT" && (
+                                                            <React.Fragment>
+                                                                <div className="form-group">
+                                                                    <label>Bank Information</label>
+                                                                    <input
+                                                                        type="text"
+                                                                        style={{ color: "#FFFFFF" }}
+                                                                        className="form-control"
+                                                                        placeholder="Account Number"
+                                                                        onChange={this.props.handleChange("account_number")}
+                                                                        value={this.props.values.account_number}
+                                                                    />
+                                                                    <input
+                                                                        type="text"
+                                                                        style={{ color: "#FFFFFF" }}
+                                                                        className="form-control"
+                                                                        placeholder="Routing Number"
+                                                                        onChange={this.props.handleChange("routing_number")}
+                                                                        value={this.props.values.routing_number}
+                                                                    />
+                                                                </div>
+                                                            </React.Fragment>
+                                                        )}
+                                                        
+                                                    </React.Fragment>
+                                                )}
+
+                                                {(this.state.role === "USER_VIEWER" || (this.state.role === "USER_PUBLISHER" && this.state.external_account_type === "DEBIT_CARD")) && (
+                                                    <div className="form-group">
+                                                        <label>Card</label>
+                                                        <SubscribePlan getToken={fn => this.getTokenFn = fn} />
+                                                    </div>
+                                                )}
+
+                                                {this.state.role === "USER_VIEWER" && (
+                                                    <PlanSelector onChange={value => {
+                                                        this.setState({ plan: value })
+                                                    }} value={this.state.plan} />
+                                                )}
+
+                                                {this.state.role === "USER_PUBLISHER" && (
+                                                    <React.Fragment>
+                                                        <div className="form-group">
+                                                            <label>Birthdate</label>
+                                                            <DatePicker
+                                                                className="form-control"
+                                                                onChange={this.props.handleChange("birthdate")}
+                                                            />
+                                                        </div>
+                                                        {/* <div className="form-group">
+                                                            <label>Verify SSN or ID document scan?</label>
+                                                            <MuiThemeProvider theme={this.theme}>
+                                                                <RadioGroup
+                                                                    aria-label="verification_type"
+                                                                    style={{ justifyContent: "center", alignItems: "center" }}
+                                                                    value={this.state.verification_type}
+                                                                    onChange={(_, value) => {
+                                                                        this.onVerificationTypeChange(value);
+                                                                    }}
+                                                                >
+                                                                    <FormControlLabel value="SSN" style={{ width: 175, height: 40 }}
+                                                                        control={<Radio
+                                                                            checked={this.state.verification_type === "SSN"} />}
+                                                                        label="SSN" />
+                                                                    <FormControlLabel value="ID_DOCUMENT" style={{ width: 175, height: 40 }}
+                                                                        control={<Radio
+                                                                            checked={this.state.verification_type === "ID_DOCUMENT"} />}
+                                                                        label="ID document scan" />
+                                                                </RadioGroup>
+                                                            </MuiThemeProvider>
+                                                        </div> */}
+                                                        <div className="form-group">
+                                                            <label>SSN</label>
+                                                            <input
+                                                                type="text"
+                                                                style={{ color: "#FFFFFF" }}
+                                                                className="form-control"
+                                                                placeholder="Last four digits of your Social Security Number"
+                                                                onChange={this.props.handleChange("ssn")}
+                                                                value={this.props.values.ssn}
+                                                            />
+                                                        </div>
+                                                        {/* <React.Fragment>
+                                                            <label>Front of ID document scan</label>
+                                                            <Dropzone
+                                                                accept={'image/*'}
+                                                                onDrop={async (files) => {
+                                                                    if (files[0].size > 10 * 1024 * 1024) {
+                                                                        notification['error']({
+                                                                            message: 'Error!',
+                                                                            description: 'The ID document scan image file should not be more than 10MB',
+                                                                        });
+                                                                        return;
+                                                                    }
+                                                                    this.setState({
+                                                                        front_id_scan_uploading: true,
+                                                                    })
+                                                                    const res = await this.uploadIDFile(files[0], "front");
+                                                                    this.setState({
+                                                                        front_id_scan_uploading: false,
+                                                                    })
+                                                                    if (res.success) {
+                                                                        this.setState({
+                                                                            front_id_scan: res
+                                                                        });
+                                                                    } else {
+                                                                        notification['error']({
+                                                                            message: 'Error!',
+                                                                            description: res.msg,
+                                                                        });
+                                                                    }
+                                                                }}>
+                                                                {({ getRootProps, getInputProps }) => (
+                                                                    <section>
+                                                                        {!this.state.front_id_scan_uploading
+                                                                            ? (
+                                                                                <div
+                                                                                    {...getRootProps()}
+                                                                                    style={{
+                                                                                        textAlign: "center",
+                                                                                        marginLeft: "auto",
+                                                                                        marginRight: "auto"
+                                                                                    }}
+                                                                                >
+                                                                                    <br />
+                                                                                    <input {...getInputProps()} />
+                                                                                    {this.state.front_id_scan && (
+                                                                                        <img
+                                                                                            width={'100%'}
+                                                                                            src={this.state.front_id_scan ? this.state.front_id_scan : ""}
+                                                                                            alt=''
+                                                                                        />
+                                                                                    )}
+                                                                                    <br />
+                                                                                    <br />
+                                                                                    <p>Drag & drop back of ID document scan here, or click to select file</p>
+                                                                                    <br />
+                                                                                </div>
+                                                                            )
+                                                                            : (
+                                                                                <div style={{ width: "400px", textAlign: 'center' }}><CircularProgress color="secondary" /></div>
+                                                                            )
+                                                                        }
+                                                                    </section>
+                                                                )}
+                                                            </Dropzone>
+                                                        </React.Fragment> */}
                                                     </React.Fragment>
                                                 )}
                                                 

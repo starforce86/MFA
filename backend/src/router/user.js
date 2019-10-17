@@ -297,6 +297,138 @@ router.post('/videoPreviewImage', awsUpload.single('videoPreviewImage'), async f
     });
 });
 
+router.post('/backIDScan', upload.single('backIDScan'), async function (req, res) {
+    if (!req.file) {
+        res.status(401).json({
+            result: 'backIDScan in body parameter "backIDScan" is required'
+        });
+        return;
+    }
+
+    let user;
+    try {
+        user = await token.validateToken(req.body.token);
+
+    } catch (e) {
+        res.status(401).json({
+            result: 'Token in body parameter "token" is required'
+        });
+        return;
+    }
+    const userId = user.id;
+    log.trace('Upload user backIDScan request', {user_id: user.id});
+
+    try {
+        const result = await prisma.updateUser({
+            where: {id: userId},
+            data: {back_id_scan: `/user/backIDScan?file_id=${req.file.filename}`}
+        });
+
+    } catch (e) {
+        res.status(404).json({
+            result: 'User not found'
+        });
+        try {
+            fs.unlinkSync(`./uploads/user_avatars/${req.file.filename}`);
+        } catch (e) {
+            log.warn(`Can't delete file:`, e);
+        }
+        return;
+    }
+
+    res.status(200).json({
+        result: 'ok',
+        file_url: `/user/backIDScan?file_id=${req.file.filename}`
+    });
+});
+
+router.get('/backIDScan', function (req, res) {
+    const file_id = req.query.file_id.replace(/([^a-z0-9\s]+)/gi, '_');
+
+    const fn = path.normalize(`${UPLOADS_DIR}/${file_id}`);
+
+    if (!fs.existsSync(fn) || !fs.lstatSync(fn).isFile()) {
+        return res.status(404).json({
+            message: 'File not found'
+        });
+    }
+
+    res.sendFile(
+        fn,
+        {
+            headers: {
+                'Content-Type': 'image/jpeg'
+            }
+        }
+    );
+});
+
+router.post('/frontIDScan', upload.single('frontIDScan'), async function (req, res) {
+    if (!req.file) {
+        res.status(401).json({
+            result: 'frontIDScan in body parameter "frontIDScan" is required'
+        });
+        return;
+    }
+
+    let user;
+    try {
+        user = await token.validateToken(req.body.token);
+
+    } catch (e) {
+        res.status(401).json({
+            result: 'Token in body parameter "token" is required'
+        });
+        return;
+    }
+    const userId = user.id;
+    log.trace('Upload user frontIDScan request', {user_id: user.id});
+
+    try {
+        const result = await prisma.updateUser({
+            where: {id: userId},
+            data: {front_id_scan: `/user/frontIDScan?file_id=${req.file.filename}`}
+        });
+
+    } catch (e) {
+        res.status(404).json({
+            result: 'User not found'
+        });
+        try {
+            fs.unlinkSync(`./uploads/user_avatars/${req.file.filename}`);
+        } catch (e) {
+            log.warn(`Can't delete file:`, e);
+        }
+        return;
+    }
+
+    res.status(200).json({
+        result: 'ok',
+        file_url: `/user/frontIDScan?file_id=${req.file.filename}`
+    });
+});
+
+router.get('/frontIDScan', function (req, res) {
+    const file_id = req.query.file_id.replace(/([^a-z0-9\s]+)/gi, '_');
+
+    const fn = path.normalize(`${UPLOADS_DIR}/${file_id}`);
+
+    if (!fs.existsSync(fn) || !fs.lstatSync(fn).isFile()) {
+        return res.status(404).json({
+            message: 'File not found'
+        });
+    }
+
+    res.sendFile(
+        fn,
+        {
+            headers: {
+                'Content-Type': 'image/jpeg'
+            }
+        }
+    );
+});
+
 module.exports = {
     router: router,
     path: '/user'

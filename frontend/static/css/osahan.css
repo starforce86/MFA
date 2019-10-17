@@ -1241,7 +1241,9 @@ a:hover, h1, h2, h3, h4, h5, h6 {
 }
 
 .full-height {
-    height: calc(100vh - 0rem);
+    /* height: calc(100vh - 0rem); */
+    height: 100%;
+    min-height: 100vh;
 }
 
 @media (max-width: 768px) {
@@ -2284,3 +2286,40 @@ strong {
     color: white !important;
     border-radius: 5px !important;
 }
+
+.ant-calendar a.ant-calendar-today-btn,
+.ant-calendar a.ant-calendar-month-select,
+.ant-calendar a.ant-calendar-year-select {
+    color: rgba(0, 0, 0, 0.65) !important;
+}
+
+.ant-calendar a:active {
+    color: #096dd9 !important;
+}
+
+.ant-calendar a:hover {
+    color: #40a9ff !important;
+}
+
+.ant-calendar-picker-input {
+    /* background: #1c1c1c none repeat scroll 0 0 !important; */
+    background: transparent !important;
+    border-color: #303030 !important;
+    border-radius: 2px !important;
+    color: white !important;
+    height: 38px !important;
+    font-size: 13px !important;
+    font-variant-numeric: normal !important;
+}
+
+.ant-calendar-picker-input::placeholder {y
+    color: rgb(255, 255, 255, 0.45) !important;
+}
+
+.ant-calendar-picker-input div {
+    height: 38px !important;
+}
+
+/* .card-element {
+    border: solid 1px red !important;
+} */

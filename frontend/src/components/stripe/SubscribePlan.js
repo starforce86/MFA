@@ -22,20 +22,21 @@ class SubscribePlan extends React.Component {
     render() {
         return (
             <>
-                <CardElement onReady={this.onReady}
-                             hidePostalCode
-                             className="form-control border-form-control"
-                             style={{
-                                 base: {
-                                     iconColor: "#fff",
-                                     color: '#FFFFFF',
-                                     '::placeholder': {
-                                         color: "#616268"
-                                     }
-                                 }
-                             }}
-                             ref={el => this.card = el}/>
-
+                <div className="card-element">
+                    <CardElement onReady={this.onReady}
+                        hidePostalCode
+                        className="form-control border-form-control"
+                        style={{
+                            base: {
+                                iconColor: "#fff",
+                                color: '#FFFFFF',
+                                '::placeholder': {
+                                    color: "#616268"
+                                }
+                            }
+                        }}
+                        ref={el => this.card = el} />
+                </div>
             </>
         )
     }

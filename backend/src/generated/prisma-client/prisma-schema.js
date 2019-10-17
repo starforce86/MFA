@@ -2330,6 +2330,8 @@ type User {
   payout_enabled: Boolean
   artist: User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  front_id_scan: String
+  back_id_scan: String
   my_videos(where: VideoWhereInput, orderBy: VideoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Video!]
   liked_videos(where: VideoWhereInput, orderBy: VideoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Video!]
   watched_videos(where: WatchedVideoUserWhereInput, orderBy: WatchedVideoUserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [WatchedVideoUser!]
@@ -2366,6 +2368,8 @@ input UserCreateInput {
   payout_enabled: Boolean
   artist: UserCreateOneWithoutUsersInput
   users: UserCreateManyWithoutArtistInput
+  front_id_scan: String
+  back_id_scan: String
   my_videos: VideoCreateManyWithoutAuthorInput
   liked_videos: VideoCreateManyWithoutLike_usersInput
   watched_videos: WatchedVideoUserCreateManyWithoutUserInput
@@ -2435,6 +2439,8 @@ input UserCreateWithoutArtistInput {
   payout_months_left: Int
   payout_enabled: Boolean
   users: UserCreateManyWithoutArtistInput
+  front_id_scan: String
+  back_id_scan: String
   my_videos: VideoCreateManyWithoutAuthorInput
   liked_videos: VideoCreateManyWithoutLike_usersInput
   watched_videos: WatchedVideoUserCreateManyWithoutUserInput
@@ -2465,6 +2471,8 @@ input UserCreateWithoutLiked_videosInput {
   payout_enabled: Boolean
   artist: UserCreateOneWithoutUsersInput
   users: UserCreateManyWithoutArtistInput
+  front_id_scan: String
+  back_id_scan: String
   my_videos: VideoCreateManyWithoutAuthorInput
   watched_videos: WatchedVideoUserCreateManyWithoutUserInput
   my_subscription_users: UserCreateManyWithoutSubscribed_usersInput
@@ -2494,6 +2502,8 @@ input UserCreateWithoutMy_subscription_usersInput {
   payout_enabled: Boolean
   artist: UserCreateOneWithoutUsersInput
   users: UserCreateManyWithoutArtistInput
+  front_id_scan: String
+  back_id_scan: String
   my_videos: VideoCreateManyWithoutAuthorInput
   liked_videos: VideoCreateManyWithoutLike_usersInput
   watched_videos: WatchedVideoUserCreateManyWithoutUserInput
@@ -2523,6 +2533,8 @@ input UserCreateWithoutMy_videosInput {
   payout_enabled: Boolean
   artist: UserCreateOneWithoutUsersInput
   users: UserCreateManyWithoutArtistInput
+  front_id_scan: String
+  back_id_scan: String
   liked_videos: VideoCreateManyWithoutLike_usersInput
   watched_videos: WatchedVideoUserCreateManyWithoutUserInput
   my_subscription_users: UserCreateManyWithoutSubscribed_usersInput
@@ -2552,6 +2564,8 @@ input UserCreateWithoutSubscribed_usersInput {
   payout_enabled: Boolean
   artist: UserCreateOneWithoutUsersInput
   users: UserCreateManyWithoutArtistInput
+  front_id_scan: String
+  back_id_scan: String
   my_videos: VideoCreateManyWithoutAuthorInput
   liked_videos: VideoCreateManyWithoutLike_usersInput
   watched_videos: WatchedVideoUserCreateManyWithoutUserInput
@@ -2580,6 +2594,8 @@ input UserCreateWithoutUsersInput {
   payout_months_left: Int
   payout_enabled: Boolean
   artist: UserCreateOneWithoutUsersInput
+  front_id_scan: String
+  back_id_scan: String
   my_videos: VideoCreateManyWithoutAuthorInput
   liked_videos: VideoCreateManyWithoutLike_usersInput
   watched_videos: WatchedVideoUserCreateManyWithoutUserInput
@@ -2610,6 +2626,8 @@ input UserCreateWithoutWatched_videosInput {
   payout_enabled: Boolean
   artist: UserCreateOneWithoutUsersInput
   users: UserCreateManyWithoutArtistInput
+  front_id_scan: String
+  back_id_scan: String
   my_videos: VideoCreateManyWithoutAuthorInput
   liked_videos: VideoCreateManyWithoutLike_usersInput
   my_subscription_users: UserCreateManyWithoutSubscribed_usersInput
@@ -2664,6 +2682,10 @@ enum UserOrderByInput {
   payout_months_left_DESC
   payout_enabled_ASC
   payout_enabled_DESC
+  front_id_scan_ASC
+  front_id_scan_DESC
+  back_id_scan_ASC
+  back_id_scan_DESC
   billing_subscription_active_ASC
   billing_subscription_active_DESC
   stripe_customer_id_ASC
@@ -2694,6 +2716,8 @@ type UserPreviousValues {
   payout_months_total: Int
   payout_months_left: Int
   payout_enabled: Boolean
+  front_id_scan: String
+  back_id_scan: String
   billing_subscription_active: Boolean!
   stripe_customer_id: String
   stripe_subsciption_json: Json
@@ -2922,6 +2946,34 @@ input UserScalarWhereInput {
   payout_months_left_gte: Int
   payout_enabled: Boolean
   payout_enabled_not: Boolean
+  front_id_scan: String
+  front_id_scan_not: String
+  front_id_scan_in: [String!]
+  front_id_scan_not_in: [String!]
+  front_id_scan_lt: String
+  front_id_scan_lte: String
+  front_id_scan_gt: String
+  front_id_scan_gte: String
+  front_id_scan_contains: String
+  front_id_scan_not_contains: String
+  front_id_scan_starts_with: String
+  front_id_scan_not_starts_with: String
+  front_id_scan_ends_with: String
+  front_id_scan_not_ends_with: String
+  back_id_scan: String
+  back_id_scan_not: String
+  back_id_scan_in: [String!]
+  back_id_scan_not_in: [String!]
+  back_id_scan_lt: String
+  back_id_scan_lte: String
+  back_id_scan_gt: String
+  back_id_scan_gte: String
+  back_id_scan_contains: String
+  back_id_scan_not_contains: String
+  back_id_scan_starts_with: String
+  back_id_scan_not_starts_with: String
+  back_id_scan_ends_with: String
+  back_id_scan_not_ends_with: String
   billing_subscription_active: Boolean
   billing_subscription_active_not: Boolean
   stripe_customer_id: String
@@ -2988,6 +3040,8 @@ input UserUpdateDataInput {
   payout_enabled: Boolean
   artist: UserUpdateOneWithoutUsersInput
   users: UserUpdateManyWithoutArtistInput
+  front_id_scan: String
+  back_id_scan: String
   my_videos: VideoUpdateManyWithoutAuthorInput
   liked_videos: VideoUpdateManyWithoutLike_usersInput
   watched_videos: WatchedVideoUserUpdateManyWithoutUserInput
@@ -3018,6 +3072,8 @@ input UserUpdateInput {
   payout_enabled: Boolean
   artist: UserUpdateOneWithoutUsersInput
   users: UserUpdateManyWithoutArtistInput
+  front_id_scan: String
+  back_id_scan: String
   my_videos: VideoUpdateManyWithoutAuthorInput
   liked_videos: VideoUpdateManyWithoutLike_usersInput
   watched_videos: WatchedVideoUserUpdateManyWithoutUserInput
@@ -3046,6 +3102,8 @@ input UserUpdateManyDataInput {
   payout_months_total: Int
   payout_months_left: Int
   payout_enabled: Boolean
+  front_id_scan: String
+  back_id_scan: String
   billing_subscription_active: Boolean
   stripe_customer_id: String
   stripe_subsciption_json: Json
@@ -3069,6 +3127,8 @@ input UserUpdateManyMutationInput {
   payout_months_total: Int
   payout_months_left: Int
   payout_enabled: Boolean
+  front_id_scan: String
+  back_id_scan: String
   billing_subscription_active: Boolean
   stripe_customer_id: String
   stripe_subsciption_json: Json
@@ -3176,6 +3236,8 @@ input UserUpdateWithoutArtistDataInput {
   payout_months_left: Int
   payout_enabled: Boolean
   users: UserUpdateManyWithoutArtistInput
+  front_id_scan: String
+  back_id_scan: String
   my_videos: VideoUpdateManyWithoutAuthorInput
   liked_videos: VideoUpdateManyWithoutLike_usersInput
   watched_videos: WatchedVideoUserUpdateManyWithoutUserInput
@@ -3206,6 +3268,8 @@ input UserUpdateWithoutLiked_videosDataInput {
   payout_enabled: Boolean
   artist: UserUpdateOneWithoutUsersInput
   users: UserUpdateManyWithoutArtistInput
+  front_id_scan: String
+  back_id_scan: String
   my_videos: VideoUpdateManyWithoutAuthorInput
   watched_videos: WatchedVideoUserUpdateManyWithoutUserInput
   my_subscription_users: UserUpdateManyWithoutSubscribed_usersInput
@@ -3235,6 +3299,8 @@ input UserUpdateWithoutMy_subscription_usersDataInput {
   payout_enabled: Boolean
   artist: UserUpdateOneWithoutUsersInput
   users: UserUpdateManyWithoutArtistInput
+  front_id_scan: String
+  back_id_scan: String
   my_videos: VideoUpdateManyWithoutAuthorInput
   liked_videos: VideoUpdateManyWithoutLike_usersInput
   watched_videos: WatchedVideoUserUpdateManyWithoutUserInput
@@ -3264,6 +3330,8 @@ input UserUpdateWithoutMy_videosDataInput {
   payout_enabled: Boolean
   artist: UserUpdateOneWithoutUsersInput
   users: UserUpdateManyWithoutArtistInput
+  front_id_scan: String
+  back_id_scan: String
   liked_videos: VideoUpdateManyWithoutLike_usersInput
   watched_videos: WatchedVideoUserUpdateManyWithoutUserInput
   my_subscription_users: UserUpdateManyWithoutSubscribed_usersInput
@@ -3293,6 +3361,8 @@ input UserUpdateWithoutSubscribed_usersDataInput {
   payout_enabled: Boolean
   artist: UserUpdateOneWithoutUsersInput
   users: UserUpdateManyWithoutArtistInput
+  front_id_scan: String
+  back_id_scan: String
   my_videos: VideoUpdateManyWithoutAuthorInput
   liked_videos: VideoUpdateManyWithoutLike_usersInput
   watched_videos: WatchedVideoUserUpdateManyWithoutUserInput
@@ -3321,6 +3391,8 @@ input UserUpdateWithoutUsersDataInput {
   payout_months_left: Int
   payout_enabled: Boolean
   artist: UserUpdateOneWithoutUsersInput
+  front_id_scan: String
+  back_id_scan: String
   my_videos: VideoUpdateManyWithoutAuthorInput
   liked_videos: VideoUpdateManyWithoutLike_usersInput
   watched_videos: WatchedVideoUserUpdateManyWithoutUserInput
@@ -3351,6 +3423,8 @@ input UserUpdateWithoutWatched_videosDataInput {
   payout_enabled: Boolean
   artist: UserUpdateOneWithoutUsersInput
   users: UserUpdateManyWithoutArtistInput
+  front_id_scan: String
+  back_id_scan: String
   my_videos: VideoUpdateManyWithoutAuthorInput
   liked_videos: VideoUpdateManyWithoutLike_usersInput
   my_subscription_users: UserUpdateManyWithoutSubscribed_usersInput
@@ -3644,6 +3718,34 @@ input UserWhereInput {
   users_every: UserWhereInput
   users_some: UserWhereInput
   users_none: UserWhereInput
+  front_id_scan: String
+  front_id_scan_not: String
+  front_id_scan_in: [String!]
+  front_id_scan_not_in: [String!]
+  front_id_scan_lt: String
+  front_id_scan_lte: String
+  front_id_scan_gt: String
+  front_id_scan_gte: String
+  front_id_scan_contains: String
+  front_id_scan_not_contains: String
+  front_id_scan_starts_with: String
+  front_id_scan_not_starts_with: String
+  front_id_scan_ends_with: String
+  front_id_scan_not_ends_with: String
+  back_id_scan: String
+  back_id_scan_not: String
+  back_id_scan_in: [String!]
+  back_id_scan_not_in: [String!]
+  back_id_scan_lt: String
+  back_id_scan_lte: String
+  back_id_scan_gt: String
+  back_id_scan_gte: String
+  back_id_scan_contains: String
+  back_id_scan_not_contains: String
+  back_id_scan_starts_with: String
+  back_id_scan_not_starts_with: String
+  back_id_scan_ends_with: String
+  back_id_scan_not_ends_with: String
   my_videos_every: VideoWhereInput
   my_videos_some: VideoWhereInput
   my_videos_none: VideoWhereInput

@@ -27,6 +27,9 @@ type User {
     artist: User @relation(name: "UserArtistRel")
     users: [User] @relation(name: "UserArtistRel")
 
+    front_id_scan: String
+    back_id_scan: String
+
     my_videos: [Video!]! @relation(name: "VideoAuthorRel")
 
     liked_videos: [Video!]! @relation(name: "VideoLikeUsersRel")

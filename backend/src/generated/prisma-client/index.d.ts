@@ -876,6 +876,10 @@ export type UserOrderByInput =
   | "payout_months_left_DESC"
   | "payout_enabled_ASC"
   | "payout_enabled_DESC"
+  | "front_id_scan_ASC"
+  | "front_id_scan_DESC"
+  | "back_id_scan_ASC"
+  | "back_id_scan_DESC"
   | "billing_subscription_active_ASC"
   | "billing_subscription_active_DESC"
   | "stripe_customer_id_ASC"
@@ -1502,6 +1506,34 @@ export interface UserWhereInput {
   users_every?: UserWhereInput;
   users_some?: UserWhereInput;
   users_none?: UserWhereInput;
+  front_id_scan?: String;
+  front_id_scan_not?: String;
+  front_id_scan_in?: String[] | String;
+  front_id_scan_not_in?: String[] | String;
+  front_id_scan_lt?: String;
+  front_id_scan_lte?: String;
+  front_id_scan_gt?: String;
+  front_id_scan_gte?: String;
+  front_id_scan_contains?: String;
+  front_id_scan_not_contains?: String;
+  front_id_scan_starts_with?: String;
+  front_id_scan_not_starts_with?: String;
+  front_id_scan_ends_with?: String;
+  front_id_scan_not_ends_with?: String;
+  back_id_scan?: String;
+  back_id_scan_not?: String;
+  back_id_scan_in?: String[] | String;
+  back_id_scan_not_in?: String[] | String;
+  back_id_scan_lt?: String;
+  back_id_scan_lte?: String;
+  back_id_scan_gt?: String;
+  back_id_scan_gte?: String;
+  back_id_scan_contains?: String;
+  back_id_scan_not_contains?: String;
+  back_id_scan_starts_with?: String;
+  back_id_scan_not_starts_with?: String;
+  back_id_scan_ends_with?: String;
+  back_id_scan_not_ends_with?: String;
   my_videos_every?: VideoWhereInput;
   my_videos_some?: VideoWhereInput;
   my_videos_none?: VideoWhereInput;
@@ -2440,6 +2472,8 @@ export interface UserCreateWithoutMy_videosInput {
   payout_enabled?: Boolean;
   artist?: UserCreateOneWithoutUsersInput;
   users?: UserCreateManyWithoutArtistInput;
+  front_id_scan?: String;
+  back_id_scan?: String;
   liked_videos?: VideoCreateManyWithoutLike_usersInput;
   watched_videos?: WatchedVideoUserCreateManyWithoutUserInput;
   my_subscription_users?: UserCreateManyWithoutSubscribed_usersInput;
@@ -2473,6 +2507,8 @@ export interface UserCreateWithoutUsersInput {
   payout_months_left?: Int;
   payout_enabled?: Boolean;
   artist?: UserCreateOneWithoutUsersInput;
+  front_id_scan?: String;
+  back_id_scan?: String;
   my_videos?: VideoCreateManyWithoutAuthorInput;
   liked_videos?: VideoCreateManyWithoutLike_usersInput;
   watched_videos?: WatchedVideoUserCreateManyWithoutUserInput;
@@ -2543,6 +2579,8 @@ export interface UserCreateWithoutLiked_videosInput {
   payout_enabled?: Boolean;
   artist?: UserCreateOneWithoutUsersInput;
   users?: UserCreateManyWithoutArtistInput;
+  front_id_scan?: String;
+  back_id_scan?: String;
   my_videos?: VideoCreateManyWithoutAuthorInput;
   watched_videos?: WatchedVideoUserCreateManyWithoutUserInput;
   my_subscription_users?: UserCreateManyWithoutSubscribed_usersInput;
@@ -2576,6 +2614,8 @@ export interface UserCreateWithoutArtistInput {
   payout_months_left?: Int;
   payout_enabled?: Boolean;
   users?: UserCreateManyWithoutArtistInput;
+  front_id_scan?: String;
+  back_id_scan?: String;
   my_videos?: VideoCreateManyWithoutAuthorInput;
   liked_videos?: VideoCreateManyWithoutLike_usersInput;
   watched_videos?: WatchedVideoUserCreateManyWithoutUserInput;
@@ -2648,6 +2688,8 @@ export interface UserCreateWithoutWatched_videosInput {
   payout_enabled?: Boolean;
   artist?: UserCreateOneWithoutUsersInput;
   users?: UserCreateManyWithoutArtistInput;
+  front_id_scan?: String;
+  back_id_scan?: String;
   my_videos?: VideoCreateManyWithoutAuthorInput;
   liked_videos?: VideoCreateManyWithoutLike_usersInput;
   my_subscription_users?: UserCreateManyWithoutSubscribed_usersInput;
@@ -2684,6 +2726,8 @@ export interface UserCreateWithoutSubscribed_usersInput {
   payout_enabled?: Boolean;
   artist?: UserCreateOneWithoutUsersInput;
   users?: UserCreateManyWithoutArtistInput;
+  front_id_scan?: String;
+  back_id_scan?: String;
   my_videos?: VideoCreateManyWithoutAuthorInput;
   liked_videos?: VideoCreateManyWithoutLike_usersInput;
   watched_videos?: WatchedVideoUserCreateManyWithoutUserInput;
@@ -2764,6 +2808,8 @@ export interface UserCreateWithoutMy_subscription_usersInput {
   payout_enabled?: Boolean;
   artist?: UserCreateOneWithoutUsersInput;
   users?: UserCreateManyWithoutArtistInput;
+  front_id_scan?: String;
+  back_id_scan?: String;
   my_videos?: VideoCreateManyWithoutAuthorInput;
   liked_videos?: VideoCreateManyWithoutLike_usersInput;
   watched_videos?: WatchedVideoUserCreateManyWithoutUserInput;
@@ -2847,6 +2893,8 @@ export interface UserUpdateWithoutMy_videosDataInput {
   payout_enabled?: Boolean;
   artist?: UserUpdateOneWithoutUsersInput;
   users?: UserUpdateManyWithoutArtistInput;
+  front_id_scan?: String;
+  back_id_scan?: String;
   liked_videos?: VideoUpdateManyWithoutLike_usersInput;
   watched_videos?: WatchedVideoUserUpdateManyWithoutUserInput;
   my_subscription_users?: UserUpdateManyWithoutSubscribed_usersInput;
@@ -2884,6 +2932,8 @@ export interface UserUpdateWithoutUsersDataInput {
   payout_months_left?: Int;
   payout_enabled?: Boolean;
   artist?: UserUpdateOneWithoutUsersInput;
+  front_id_scan?: String;
+  back_id_scan?: String;
   my_videos?: VideoUpdateManyWithoutAuthorInput;
   liked_videos?: VideoUpdateManyWithoutLike_usersInput;
   watched_videos?: WatchedVideoUserUpdateManyWithoutUserInput;
@@ -3088,6 +3138,8 @@ export interface UserUpdateWithoutLiked_videosDataInput {
   payout_enabled?: Boolean;
   artist?: UserUpdateOneWithoutUsersInput;
   users?: UserUpdateManyWithoutArtistInput;
+  front_id_scan?: String;
+  back_id_scan?: String;
   my_videos?: VideoUpdateManyWithoutAuthorInput;
   watched_videos?: WatchedVideoUserUpdateManyWithoutUserInput;
   my_subscription_users?: UserUpdateManyWithoutSubscribed_usersInput;
@@ -3139,6 +3191,8 @@ export interface UserUpdateWithoutArtistDataInput {
   payout_months_left?: Int;
   payout_enabled?: Boolean;
   users?: UserUpdateManyWithoutArtistInput;
+  front_id_scan?: String;
+  back_id_scan?: String;
   my_videos?: VideoUpdateManyWithoutAuthorInput;
   liked_videos?: VideoUpdateManyWithoutLike_usersInput;
   watched_videos?: WatchedVideoUserUpdateManyWithoutUserInput;
@@ -3255,6 +3309,8 @@ export interface UserUpdateWithoutWatched_videosDataInput {
   payout_enabled?: Boolean;
   artist?: UserUpdateOneWithoutUsersInput;
   users?: UserUpdateManyWithoutArtistInput;
+  front_id_scan?: String;
+  back_id_scan?: String;
   my_videos?: VideoUpdateManyWithoutAuthorInput;
   liked_videos?: VideoUpdateManyWithoutLike_usersInput;
   my_subscription_users?: UserUpdateManyWithoutSubscribed_usersInput;
@@ -3309,6 +3365,8 @@ export interface UserUpdateWithoutSubscribed_usersDataInput {
   payout_enabled?: Boolean;
   artist?: UserUpdateOneWithoutUsersInput;
   users?: UserUpdateManyWithoutArtistInput;
+  front_id_scan?: String;
+  back_id_scan?: String;
   my_videos?: VideoUpdateManyWithoutAuthorInput;
   liked_videos?: VideoUpdateManyWithoutLike_usersInput;
   watched_videos?: WatchedVideoUserUpdateManyWithoutUserInput;
@@ -3743,6 +3801,34 @@ export interface UserScalarWhereInput {
   payout_months_left_gte?: Int;
   payout_enabled?: Boolean;
   payout_enabled_not?: Boolean;
+  front_id_scan?: String;
+  front_id_scan_not?: String;
+  front_id_scan_in?: String[] | String;
+  front_id_scan_not_in?: String[] | String;
+  front_id_scan_lt?: String;
+  front_id_scan_lte?: String;
+  front_id_scan_gt?: String;
+  front_id_scan_gte?: String;
+  front_id_scan_contains?: String;
+  front_id_scan_not_contains?: String;
+  front_id_scan_starts_with?: String;
+  front_id_scan_not_starts_with?: String;
+  front_id_scan_ends_with?: String;
+  front_id_scan_not_ends_with?: String;
+  back_id_scan?: String;
+  back_id_scan_not?: String;
+  back_id_scan_in?: String[] | String;
+  back_id_scan_not_in?: String[] | String;
+  back_id_scan_lt?: String;
+  back_id_scan_lte?: String;
+  back_id_scan_gt?: String;
+  back_id_scan_gte?: String;
+  back_id_scan_contains?: String;
+  back_id_scan_not_contains?: String;
+  back_id_scan_starts_with?: String;
+  back_id_scan_not_starts_with?: String;
+  back_id_scan_ends_with?: String;
+  back_id_scan_not_ends_with?: String;
   billing_subscription_active?: Boolean;
   billing_subscription_active_not?: Boolean;
   stripe_customer_id?: String;
@@ -3794,6 +3880,8 @@ export interface UserUpdateManyDataInput {
   payout_months_total?: Int;
   payout_months_left?: Int;
   payout_enabled?: Boolean;
+  front_id_scan?: String;
+  back_id_scan?: String;
   billing_subscription_active?: Boolean;
   stripe_customer_id?: String;
   stripe_subsciption_json?: Json;
@@ -3844,6 +3932,8 @@ export interface UserUpdateWithoutMy_subscription_usersDataInput {
   payout_enabled?: Boolean;
   artist?: UserUpdateOneWithoutUsersInput;
   users?: UserUpdateManyWithoutArtistInput;
+  front_id_scan?: String;
+  back_id_scan?: String;
   my_videos?: VideoUpdateManyWithoutAuthorInput;
   liked_videos?: VideoUpdateManyWithoutLike_usersInput;
   watched_videos?: WatchedVideoUserUpdateManyWithoutUserInput;
@@ -4101,6 +4191,8 @@ export interface UserCreateInput {
   payout_enabled?: Boolean;
   artist?: UserCreateOneWithoutUsersInput;
   users?: UserCreateManyWithoutArtistInput;
+  front_id_scan?: String;
+  back_id_scan?: String;
   my_videos?: VideoCreateManyWithoutAuthorInput;
   liked_videos?: VideoCreateManyWithoutLike_usersInput;
   watched_videos?: WatchedVideoUserCreateManyWithoutUserInput;
@@ -4144,6 +4236,8 @@ export interface UserUpdateDataInput {
   payout_enabled?: Boolean;
   artist?: UserUpdateOneWithoutUsersInput;
   users?: UserUpdateManyWithoutArtistInput;
+  front_id_scan?: String;
+  back_id_scan?: String;
   my_videos?: VideoUpdateManyWithoutAuthorInput;
   liked_videos?: VideoUpdateManyWithoutLike_usersInput;
   watched_videos?: WatchedVideoUserUpdateManyWithoutUserInput;
@@ -4487,6 +4581,8 @@ export interface UserUpdateInput {
   payout_enabled?: Boolean;
   artist?: UserUpdateOneWithoutUsersInput;
   users?: UserUpdateManyWithoutArtistInput;
+  front_id_scan?: String;
+  back_id_scan?: String;
   my_videos?: VideoUpdateManyWithoutAuthorInput;
   liked_videos?: VideoUpdateManyWithoutLike_usersInput;
   watched_videos?: WatchedVideoUserUpdateManyWithoutUserInput;
@@ -4515,6 +4611,8 @@ export interface UserUpdateManyMutationInput {
   payout_months_total?: Int;
   payout_months_left?: Int;
   payout_enabled?: Boolean;
+  front_id_scan?: String;
+  back_id_scan?: String;
   billing_subscription_active?: Boolean;
   stripe_customer_id?: String;
   stripe_subsciption_json?: Json;
@@ -5086,6 +5184,8 @@ export interface User {
   payout_months_total?: Int;
   payout_months_left?: Int;
   payout_enabled?: Boolean;
+  front_id_scan?: String;
+  back_id_scan?: String;
   billing_subscription_active: Boolean;
   stripe_customer_id?: String;
   stripe_subsciption_json?: Json;
@@ -5124,6 +5224,8 @@ export interface UserPromise extends Promise<User>, Fragmentable {
       last?: Int;
     }
   ) => T;
+  front_id_scan: () => Promise<String>;
+  back_id_scan: () => Promise<String>;
   my_videos: <T = FragmentableArray<Video>>(
     args?: {
       where?: VideoWhereInput;
@@ -5219,6 +5321,8 @@ export interface UserSubscription
       last?: Int;
     }
   ) => T;
+  front_id_scan: () => Promise<AsyncIterator<String>>;
+  back_id_scan: () => Promise<AsyncIterator<String>>;
   my_videos: <T = Promise<AsyncIterator<VideoSubscription>>>(
     args?: {
       where?: VideoWhereInput;
@@ -7157,6 +7261,8 @@ export interface UserPreviousValues {
   payout_months_total?: Int;
   payout_months_left?: Int;
   payout_enabled?: Boolean;
+  front_id_scan?: String;
+  back_id_scan?: String;
   billing_subscription_active: Boolean;
   stripe_customer_id?: String;
   stripe_subsciption_json?: Json;
@@ -7185,6 +7291,8 @@ export interface UserPreviousValuesPromise
   payout_months_total: () => Promise<Int>;
   payout_months_left: () => Promise<Int>;
   payout_enabled: () => Promise<Boolean>;
+  front_id_scan: () => Promise<String>;
+  back_id_scan: () => Promise<String>;
   billing_subscription_active: () => Promise<Boolean>;
   stripe_customer_id: () => Promise<String>;
   stripe_subsciption_json: () => Promise<Json>;
@@ -7213,6 +7321,8 @@ export interface UserPreviousValuesSubscription
   payout_months_total: () => Promise<AsyncIterator<Int>>;
   payout_months_left: () => Promise<AsyncIterator<Int>>;
   payout_enabled: () => Promise<AsyncIterator<Boolean>>;
+  front_id_scan: () => Promise<AsyncIterator<String>>;
+  back_id_scan: () => Promise<AsyncIterator<String>>;
   billing_subscription_active: () => Promise<AsyncIterator<Boolean>>;
   stripe_customer_id: () => Promise<AsyncIterator<String>>;
   stripe_subsciption_json: () => Promise<AsyncIterator<Json>>;
