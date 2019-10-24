@@ -9,9 +9,10 @@ const stripeHelper = require('../helper/StripeHelper');
 const job_scheduler = require('../helper/job_scheduler');
 const config = require('../config/config');
 const stripe = require("stripe")(config.stripe.sk_token);
+const moment = require('moment');
 
-async function signUp(root, {email, firstname, lastname, phone, password, promo_code, step, activation_code, role}, ctx, info) {
-    return userCore.signUp(email, firstname, lastname, phone, password, promo_code, step, activation_code, role);
+async function signUp(root, {email, firstname, lastname, phone, password, promo_code, step, activation_code, role, external_account_type, account_number, routing_number, token, birthdate, ssn}, ctx, info) {
+    return userCore.signUp(email, firstname, lastname, phone, password, promo_code, step, activation_code, role, external_account_type, account_number, routing_number, token, birthdate, ssn, ctx.userIp);
 }
 
 async function signIn(root, {email, password}, ctx, info) {
@@ -90,7 +91,7 @@ async function purchase(root, {stripe_tok_token, plan}, ctx, info) {
 
     const user = await prisma.user({email: ctx.user.email});
 
-    await job_scheduler.addUserCheckPurchaseEvent(user.id);
+    // await job_scheduler.addUserCheckPurchaseEvent(user.id);
 
     const stripe_metadata = {
         name: `${user.firstname} ${user.lastname}`,
@@ -369,6 +370,50 @@ async function watchedVideoUser(root, args, ctx, info) {
     }
 }
 
+async function populateTransferPlan(root, args, ctx, info) {
+    try {
+        const year = moment().format('YYYY');
+        const month = moment().format('MM');
+
+        const artists = await prisma.users({
+            where: {
+                role: 'USER_PUBLISHER'
+            }
+        });
+        artists.forEach(artist => {
+            artist.users.forEach(async subscriber => {
+                if (subscriber.billing_subscription_active) {
+                    const transferPlans = await prisma.transferPlans({
+                        where: {
+                            artist: { id: artist.id },
+                            subscriber: { id: subscriber.id }
+                        }
+                    });
+                    if (transferPlans.length < artist.payout_months_left) {
+                        await prisma.createTransferPlan({
+                            artist: {
+                                connect: { id: artist.id }
+                            },
+                            subscriber: {
+                                connect: { id: subscriber.id }
+                            },
+                            year: year,
+                            month: month,
+                            amount: artist.payout_amount,
+                            ignore_status: false,
+                            paid_status: false
+                        }); 
+                    }
+                }
+            });
+        });
+        return true;
+    } catch (e) {
+        log.error('populateTransferPlan error:', e);
+        return false;
+    }
+}
+
 module.exports = {
     signUp: signUp,
     change_password: change_password,
@@ -380,5 +425,6 @@ module.exports = {
     signIn: signIn,
     addWatchedVideo: addWatchedVideo,
     updateWatchedVideo: updateWatchedVideo,
-    watchedVideoUser: watchedVideoUser
+    watchedVideoUser: watchedVideoUser,
+    populateTransferPlan: populateTransferPlan
 };

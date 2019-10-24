@@ -2,6 +2,7 @@ const config = require('../config/config');
 const stripe = require("stripe")(config.stripe.sk_token);
 const log = require('./logger').getLogger('StripeHelper');
 const _ = require('lodash');
+const moment = require('moment');
 
 async function getCharges() {
     return await stripe.charges.list({limit: 100});
@@ -29,6 +30,78 @@ async function subscribeUser(customer_id, planId, metadata) {
 
 async function unsubscribeUser(sub_id) {
     return await stripe.subscriptions.del(sub_id);
+}
+
+async function createCustomConnectAccount(firstname, lastname, email, birthdate, phone, external_account, account_number, routing_number, token, ssn, product_description, tos_ip) {
+    if (external_account == "BANK_ACCOUNT") {
+        const data = {
+            type: 'custom',
+            country: 'US',
+            business_type: 'individual',
+            email: email,
+            individual: {
+                first_name: firstname,
+                last_name: lastname,
+                email: email,
+                phone: phone,
+                dob: {
+                    year: moment(birthdate).format('YYYY'),
+                    month: moment(birthdate).format('MM'),
+                    day: moment(birthdate).format('DD')
+                },
+                ssn_last_4: ssn
+            },
+            external_account: {
+                object: 'bank_account',
+                country: 'US',
+                currency: 'usd',
+                account_number: account_number,
+                routing_number: routing_number
+            },
+            requested_capabilities: [
+                'transfers',
+            ],
+            tos_acceptance: {
+                date: moment().unix(),
+                ip: tos_ip
+            },
+            business_profile: {
+                product_description: product_description
+            }
+        };
+        return await stripe.accounts.create(data);
+    } else {
+        const data = {
+            type: 'custom',
+            country: 'US',
+            business_type: 'individual',
+            email: email,
+            individual: {
+                first_name: firstname,
+                last_name: lastname,
+                email: email,
+                phone: phone,
+                dob: {
+                    year: moment(birthdate).format('YYYY'),
+                    month: moment(birthdate).format('MM'),
+                    day: moment(birthdate).format('DD')
+                },
+                ssn_last_4: ssn
+            },
+            external_account: token,
+            requested_capabilities: [
+                'transfers',
+            ],
+            tos_acceptance: {
+                date: moment().unix(),
+                ip: tos_ip
+            },
+            business_profile: {
+                product_description: product_description
+            }
+        };
+        return await stripe.accounts.create(data);
+    }
 }
 
 async function isSubscriptionActive(customer_id) {
@@ -72,4 +145,5 @@ module.exports = {
     getLast4: getLast4,
     getCharges: getCharges,
     getSubscriptions: getSubscriptions,
+    createCustomConnectAccount: createCustomConnectAccount,
 };

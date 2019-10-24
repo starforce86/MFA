@@ -14,7 +14,9 @@ class SubscribePlan extends React.Component {
     }
 
     getToken = async () => {
-        const res = await this.props.stripe.createToken();
+        const res = await this.props.stripe.createToken({
+            currency: 'usd'
+        });
         if (res.error) throw res.error;
         else return !res.token ? null : res.token;
     };

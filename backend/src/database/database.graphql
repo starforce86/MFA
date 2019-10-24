@@ -55,7 +55,7 @@ type TransferPlan {
     year: Int!
     month: Int!
     amount: Int!
-    ignore_statis: Boolean! @default(value: "false")
+    ignore_status: Boolean! @default(value: "false")
     paid_status: Boolean! @default(value: "false")
     paid_date: DateTime
 }

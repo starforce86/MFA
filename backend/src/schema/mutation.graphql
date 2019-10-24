@@ -1,5 +1,21 @@
 type Mutation {
-    sign_up(email: String!, firstname: String, lastname: String, phone: String, password: String, activation_code: String, promo_code: String, step: SignUpStep!, role: UserRole): UserAuthResponse!
+    sign_up(
+        email: String!, 
+        firstname: String, 
+        lastname: String, 
+        phone: String, 
+        password: String, 
+        activation_code: String, 
+        promo_code: String, 
+        step: SignUpStep!, 
+        role: UserRole,
+        external_account_type: String,
+        account_number: String,
+        routing_number: String,
+        token: String,
+        birthdate: String,
+        ssn: String
+    ): UserAuthResponse!
     sign_in(email: String!, password: String!): UserAuthResponse!
     change_password(old_password: String!, new_password: String!): UserAuthResponse!
     restore_password(email: String!, restore_code: String, new_password: String, step: RestorePasswordStep!): UserAuthResponse!

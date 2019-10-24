@@ -101,6 +101,7 @@ const resolvers = {
         subscriptionStats: statsResolver.subscriptionStats,
         populateChargeHistory: statsResolver.populateChargeHistory,
         populateSubscriptionHistory: statsResolver.populateSubscriptionHistory,
+        populateTransferPlan: userResolver.populateTransferPlan,
     },
     Mutation: {
         sign_up: userResolver.signUp,
@@ -182,6 +183,8 @@ const resolvers = {
         deleteManyCurricula: (root, args) => prisma.deleteManyCurricula(args.where),
     },
     User: {
+        artist: (root, args) => prisma.user({id: root.id}).artist(args),
+        users: (root, args) => prisma.user({id: root.id}).users(args),
         my_videos: (root, args) => prisma.user({id: root.id}).my_videos(args),
         liked_videos: (root, args) => prisma.user({id: root.id}).liked_videos(args),
         watched_videos: (root, args) => prisma.user({id: root.id}).watched_videos(args),

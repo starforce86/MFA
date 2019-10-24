@@ -29,6 +29,10 @@ class Register extends React.Component {
         // front_id_scan_uploading: false,
         // back_id_scan: "",
         // back_id_scan_uploading: false
+        account_number: "",
+        routing_number: "",
+        birthdate: "",
+        ssn: "",
     };
 
     theme = createMuiTheme({
@@ -40,6 +44,7 @@ class Register extends React.Component {
     getTokenFn = null;
 
     submitForm = async () => {
+        console.log('##########', this.state)
         if (this.state.role === "USER_VIEWER") {
             if (!this.getTokenFn) {
                 return log.error('getTokenFn is not a function!')
@@ -60,6 +65,59 @@ class Register extends React.Component {
             }
         }
         else {
+            if (this.state.external_account_type == "BANK_ACCOUNT") {
+                if (!this.state.account_number) {
+                    notification['error']({
+                        message: 'Error!',
+                        description: "Please input account number!",
+                    });
+                    return;
+                }
+                if (!this.state.routing_number) {
+                    notification['error']({
+                        message: 'Error!',
+                        description: "Please input routing number!",
+                    });
+                    return;
+                }
+            } else if (this.state.external_account_type == "DEBIT_CARD") {
+                if (!this.getTokenFn) {
+                    return log.error('getTokenFn is not a function!')
+                }
+                try {
+                    const token = await this.getTokenFn();
+                    log.debug({ getTokenFn: this.getTokenFn, token });
+                    if (!token) {
+                        notification['error']({
+                            message: 'Error!',
+                            description: "Failed get Stripe token!",
+                        });
+                        return;
+                    }
+                    this.props.handleChange("token")(token.id);
+                } catch (error) {
+                    console.log('submitForm err:', error);
+                    notification['error']({
+                        message: 'Error!',
+                        description: error.message,
+                    });
+                    return;
+                }
+            }
+            if (!this.state.birthdate) {
+                notification['error']({
+                    message: 'Error!',
+                    description: "Please input your birthdate!",
+                });
+                return;
+            }
+            if (!this.state.ssn) {
+                notification['error']({
+                    message: 'Error!',
+                    description: "Please input your SSN!",
+                });
+                return;
+            }
             this.props.submitForm();
         }
     };
@@ -96,8 +154,31 @@ class Register extends React.Component {
     }
 
     onExternalAccountTypeChange = (value) => {
-        this.setState({ external_account_type: value })
+        console.log('#####', value)
+        this.setState({ external_account_type: value }, () => {
+            console.log('######', this.state)
+        })
         this.props.setFieldValue("external_account_type", value)
+    }
+
+    onAccountNumberChange = (e) => {
+        this.setState({ account_number: e.target.value })
+        this.props.setFieldValue("account_number", e.target.value)
+    }
+
+    onRoutingNumberChange = (e) => {
+        this.setState({ routing_number: e.target.value })
+        this.props.setFieldValue("routing_number", e.target.value)
+    }
+
+    onBirthdateChange = (value) => {
+        this.setState({ birthdate: value })
+        this.props.setFieldValue("birthdate", value)
+    }
+
+    onSsnChange = (e) => {
+        this.setState({ ssn: e.target.value })
+        this.props.setFieldValue("ssn", e.target.value)
     }
 
     render() {
@@ -324,16 +405,16 @@ class Register extends React.Component {
                                                                         style={{ color: "#FFFFFF" }}
                                                                         className="form-control"
                                                                         placeholder="Account Number"
-                                                                        onChange={this.props.handleChange("account_number")}
-                                                                        value={this.props.values.account_number}
+                                                                        onChange={this.onAccountNumberChange}
+                                                                        value={this.state.account_number}
                                                                     />
                                                                     <input
                                                                         type="text"
                                                                         style={{ color: "#FFFFFF" }}
                                                                         className="form-control"
                                                                         placeholder="Routing Number"
-                                                                        onChange={this.props.handleChange("routing_number")}
-                                                                        value={this.props.values.routing_number}
+                                                                        onChange={this.onRoutingNumberChange}
+                                                                        value={this.state.routing_number}
                                                                     />
                                                                 </div>
                                                             </React.Fragment>
@@ -361,7 +442,9 @@ class Register extends React.Component {
                                                             <label>Birthdate</label>
                                                             <DatePicker
                                                                 className="form-control"
-                                                                onChange={this.props.handleChange("birthdate")}
+                                                                onChange={(_, value) => {
+                                                                    this.onBirthdateChange(value);
+                                                                }}
                                                             />
                                                         </div>
                                                         {/* <div className="form-group">
@@ -392,9 +475,9 @@ class Register extends React.Component {
                                                                 type="text"
                                                                 style={{ color: "#FFFFFF" }}
                                                                 className="form-control"
-                                                                placeholder="Last four digits of your Social Security Number"
-                                                                onChange={this.props.handleChange("ssn")}
-                                                                value={this.props.values.ssn}
+                                                                placeholder="Last 4 digits of Social Security Number"
+                                                                onChange={this.onSsnChange}
+                                                                value={this.state.ssn}
                                                             />
                                                         </div>
                                                         {/* <React.Fragment>

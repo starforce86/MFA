@@ -72,5 +72,6 @@ type Query {
     subscriptionStats(beginDate: DateTime, endDate: DateTime, type: String): [SubscriptionStatsResult]
     populateChargeHistory: Boolean
     populateSubscriptionHistory: Boolean
+    populateTransferPlan: Boolean
     node(id: ID!): Node
 }

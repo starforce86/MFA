@@ -5,6 +5,7 @@ const token = require('../helper/token');
 const GQLError = require('../helper/GQLError');
 const validator = require('validator');
 const emailHelper = require('../helper/email_helper');
+const stripeHelper = require('../helper/StripeHelper');
 
 function safeUser(userObject) {
     if (!userObject) return null;
@@ -25,7 +26,7 @@ function makeRandStr(length) {
     return result;
  }
 
-async function signUp(email, firstname, lastname, phone, password, promo_code, step, activation_code, role) {
+async function signUp(email, firstname, lastname, phone, password, promo_code, step, activation_code, role, external_account_type, account_number, routing_number, stripeToken, birthdate, ssn, userIp) {
     if (!email) {
         throw new GQLError({message: 'Email is required', code: 400});
     }
@@ -41,6 +42,27 @@ async function signUp(email, firstname, lastname, phone, password, promo_code, s
 
     if (!validator.isEmail(email)) {
         throw new GQLError({message: 'Wrong email format', code: 400});
+    }
+
+    if (role == "USER_PUBLISHER") {
+        if (external_account_type == "BANK_ACCOUNT") {
+            if (!account_number) {
+                throw new GQLError({message: 'Account number is required', code: 400});
+            }
+            if (!routing_number) {
+                throw new GQLError({message: 'Routing number is required', code: 400});
+            }
+        } else {
+            if (!stripeToken) {
+                throw new GQLError({message: 'Token number is required', code: 400});
+            }
+        }
+        if (!birthdate) {
+            throw new GQLError({message: 'Birthdate is required', code: 400});
+        }
+        if (!ssn) {
+            throw new GQLError({message: 'SSN is required', code: 400});
+        }
     }
 
     email = email.toLowerCase();
@@ -96,6 +118,22 @@ async function signUp(email, firstname, lastname, phone, password, promo_code, s
                     };
                 }
                 if (userRole === 'USER_PUBLISHER') {
+                    
+                    const result = await stripeHelper.createCustomConnectAccount(
+                        firstname,
+                        lastname,
+                        email,
+                        birthdate,
+                        phone,
+                        external_account_type,
+                        account_number,
+                        routing_number,
+                        stripeToken,
+                        ssn,
+                        "training video for artist",
+                        userIp
+                    )
+
                     const promo_codes = (await prisma.users({
                         where: {
                             role: "USER_PUBLISHER"
@@ -115,6 +153,7 @@ async function signUp(email, firstname, lastname, phone, password, promo_code, s
                         name: 'payout_months'
                     });
 
+                    newUserData.stripe_customer_id = result.id;
                     newUserData.promo_code = new_promo_code;
                     newUserData.payout_amount = payout_amount.int_val;
                     newUserData.payout_months_total = payout_months.int_val;

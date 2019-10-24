@@ -1028,8 +1028,8 @@ export type TransferPlanOrderByInput =
   | "month_DESC"
   | "amount_ASC"
   | "amount_DESC"
-  | "ignore_statis_ASC"
-  | "ignore_statis_DESC"
+  | "ignore_status_ASC"
+  | "ignore_status_DESC"
   | "paid_status_ASC"
   | "paid_status_DESC"
   | "paid_date_ASC"
@@ -2293,8 +2293,8 @@ export interface TransferPlanWhereInput {
   amount_lte?: Int;
   amount_gt?: Int;
   amount_gte?: Int;
-  ignore_statis?: Boolean;
-  ignore_statis_not?: Boolean;
+  ignore_status?: Boolean;
+  ignore_status_not?: Boolean;
   paid_status?: Boolean;
   paid_status_not?: Boolean;
   paid_date?: DateTimeInput;
@@ -4511,7 +4511,7 @@ export interface TransferPlanCreateInput {
   year: Int;
   month: Int;
   amount: Int;
-  ignore_statis?: Boolean;
+  ignore_status?: Boolean;
   paid_status?: Boolean;
   paid_date?: DateTimeInput;
 }
@@ -4522,7 +4522,7 @@ export interface TransferPlanUpdateInput {
   year?: Int;
   month?: Int;
   amount?: Int;
-  ignore_statis?: Boolean;
+  ignore_status?: Boolean;
   paid_status?: Boolean;
   paid_date?: DateTimeInput;
 }
@@ -4531,7 +4531,7 @@ export interface TransferPlanUpdateManyMutationInput {
   year?: Int;
   month?: Int;
   amount?: Int;
-  ignore_statis?: Boolean;
+  ignore_status?: Boolean;
   paid_status?: Boolean;
   paid_date?: DateTimeInput;
 }
@@ -6174,7 +6174,7 @@ export interface TransferPlan {
   year: Int;
   month: Int;
   amount: Int;
-  ignore_statis: Boolean;
+  ignore_status: Boolean;
   paid_status: Boolean;
   paid_date?: DateTimeOutput;
 }
@@ -6190,7 +6190,7 @@ export interface TransferPlanPromise
   year: () => Promise<Int>;
   month: () => Promise<Int>;
   amount: () => Promise<Int>;
-  ignore_statis: () => Promise<Boolean>;
+  ignore_status: () => Promise<Boolean>;
   paid_status: () => Promise<Boolean>;
   paid_date: () => Promise<DateTimeOutput>;
 }
@@ -6206,7 +6206,7 @@ export interface TransferPlanSubscription
   year: () => Promise<AsyncIterator<Int>>;
   month: () => Promise<AsyncIterator<Int>>;
   amount: () => Promise<AsyncIterator<Int>>;
-  ignore_statis: () => Promise<AsyncIterator<Boolean>>;
+  ignore_status: () => Promise<AsyncIterator<Boolean>>;
   paid_status: () => Promise<AsyncIterator<Boolean>>;
   paid_date: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
@@ -7121,7 +7121,7 @@ export interface TransferPlanPreviousValues {
   year: Int;
   month: Int;
   amount: Int;
-  ignore_statis: Boolean;
+  ignore_status: Boolean;
   paid_status: Boolean;
   paid_date?: DateTimeOutput;
 }
@@ -7135,7 +7135,7 @@ export interface TransferPlanPreviousValuesPromise
   year: () => Promise<Int>;
   month: () => Promise<Int>;
   amount: () => Promise<Int>;
-  ignore_statis: () => Promise<Boolean>;
+  ignore_status: () => Promise<Boolean>;
   paid_status: () => Promise<Boolean>;
   paid_date: () => Promise<DateTimeOutput>;
 }
@@ -7149,7 +7149,7 @@ export interface TransferPlanPreviousValuesSubscription
   year: () => Promise<AsyncIterator<Int>>;
   month: () => Promise<AsyncIterator<Int>>;
   amount: () => Promise<AsyncIterator<Int>>;
-  ignore_statis: () => Promise<AsyncIterator<Boolean>>;
+  ignore_status: () => Promise<AsyncIterator<Boolean>>;
   paid_status: () => Promise<AsyncIterator<Boolean>>;
   paid_date: () => Promise<AsyncIterator<DateTimeOutput>>;
 }

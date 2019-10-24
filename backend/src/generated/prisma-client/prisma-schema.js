@@ -1960,7 +1960,7 @@ type TransferPlan {
   year: Int!
   month: Int!
   amount: Int!
-  ignore_statis: Boolean!
+  ignore_status: Boolean!
   paid_status: Boolean!
   paid_date: DateTime
 }
@@ -1977,7 +1977,7 @@ input TransferPlanCreateInput {
   year: Int!
   month: Int!
   amount: Int!
-  ignore_statis: Boolean
+  ignore_status: Boolean
   paid_status: Boolean
   paid_date: DateTime
 }
@@ -2000,8 +2000,8 @@ enum TransferPlanOrderByInput {
   month_DESC
   amount_ASC
   amount_DESC
-  ignore_statis_ASC
-  ignore_statis_DESC
+  ignore_status_ASC
+  ignore_status_DESC
   paid_status_ASC
   paid_status_DESC
   paid_date_ASC
@@ -2015,7 +2015,7 @@ type TransferPlanPreviousValues {
   year: Int!
   month: Int!
   amount: Int!
-  ignore_statis: Boolean!
+  ignore_status: Boolean!
   paid_status: Boolean!
   paid_date: DateTime
 }
@@ -2044,7 +2044,7 @@ input TransferPlanUpdateInput {
   year: Int
   month: Int
   amount: Int
-  ignore_statis: Boolean
+  ignore_status: Boolean
   paid_status: Boolean
   paid_date: DateTime
 }
@@ -2053,7 +2053,7 @@ input TransferPlanUpdateManyMutationInput {
   year: Int
   month: Int
   amount: Int
-  ignore_statis: Boolean
+  ignore_status: Boolean
   paid_status: Boolean
   paid_date: DateTime
 }
@@ -2115,8 +2115,8 @@ input TransferPlanWhereInput {
   amount_lte: Int
   amount_gt: Int
   amount_gte: Int
-  ignore_statis: Boolean
-  ignore_statis_not: Boolean
+  ignore_status: Boolean
+  ignore_status_not: Boolean
   paid_status: Boolean
   paid_status_not: Boolean
   paid_date: DateTime

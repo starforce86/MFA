@@ -22,7 +22,13 @@ const emptyForm = {
     email: "",
     confirmPassword: "",
     role: "USER_VIEWER",
-    promo_code: ""
+    promo_code: "",
+    external_account_type: "BANK_ACCOUNT",
+    account_number: "",
+    routing_number: "",
+    token: "",
+    birthdate: "",
+    ssn: ""
 };
 
 const formInputs = {
@@ -62,8 +68,37 @@ const validationSchema = Yup.object().shape({
 });
 
 const SIGN_UP = gql`
-    mutation AuthSignUpFormMutation($email: String!, $firstname: String!, $lastname: String!, $phone: String!, $password: String!, $role: UserRole, $promo_code: String) {
-        sign_up(email: $email, firstname: $firstname, lastname: $lastname, phone: $phone, password: $password, role: $role, promo_code: $promo_code, step: CHECK_ACTIVATION_CODE) {
+    mutation AuthSignUpFormMutation(
+        $email: String!, 
+        $firstname: String!, 
+        $lastname: String!, 
+        $phone: String!, 
+        $password: String!, 
+        $role: UserRole, 
+        $promo_code: String,
+        $external_account_type: String,
+        $account_number: String,
+        $routing_number: String,
+        $token: String,
+        $birthdate: String,
+        $ssn: String
+    ) {
+        sign_up(
+            email: $email, 
+            firstname: $firstname, 
+            lastname: $lastname, 
+            phone: $phone, 
+            password: $password, 
+            role: $role, 
+            promo_code: $promo_code, 
+            step: CHECK_ACTIVATION_CODE,
+            external_account_type: $external_account_type,
+            account_number: $account_number,
+            routing_number: $routing_number,
+            token: $token,
+            birthdate: $birthdate,
+            ssn: $ssn
+        ) {
             status
             user {
                 id
@@ -107,6 +142,7 @@ class RegisterPage extends React.Component {
                         initialValues={emptyForm}
                         validationSchema={validationSchema}
                         onSubmit={async values => {
+                            console.log('###', values)
 
                             try {
                                 const result = await submitMutation({
@@ -117,7 +153,13 @@ class RegisterPage extends React.Component {
                                         phone: values.phone,
                                         password: values.password,
                                         role: values.role,
-                                        promo_code: values.promo_code
+                                        promo_code: values.promo_code,
+                                        external_account_type: values.external_account_type,
+                                        account_number: values.account_number,
+                                        routing_number: values.routing_number,
+                                        token: values.token,
+                                        birthdate: values.birthdate,
+                                        ssn: values.ssn
                                     }
                                 });
                                 if (!result.data) {
