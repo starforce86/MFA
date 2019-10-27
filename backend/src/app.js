@@ -102,6 +102,8 @@ const resolvers = {
         populateChargeHistory: statsResolver.populateChargeHistory,
         populateSubscriptionHistory: statsResolver.populateSubscriptionHistory,
         populateTransferPlan: userResolver.populateTransferPlan,
+        transfer: userResolver.transfer,
+        payoutStats: statsResolver.payoutStats,
     },
     Mutation: {
         sign_up: userResolver.signUp,

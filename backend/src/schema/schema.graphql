@@ -4603,6 +4603,25 @@ type VideoStatsResult {
     timespans: [TimeSpan]
 }
 
+type PayoutStatsResult {
+    id: String
+    firstname: String
+    lastname: String
+    username: String
+    email: String
+    promo_code: String
+    payout_amount: Int
+    payout_months_total: Int
+    promo_code_uses: Int
+    timespans: [PayoutTimeSpan]
+}
+
+type PayoutTimeSpan {
+    year: Int
+    month: Int
+    amount: Int
+}
+
 type ArtistStatsResult {
     id: ID!
     fistname: String

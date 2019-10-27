@@ -32,6 +32,14 @@ async function unsubscribeUser(sub_id) {
     return await stripe.subscriptions.del(sub_id);
 }
 
+async function transfer(amount, destination) {
+    return await stripe.transfers.create({
+        amount: amount,
+        currency: "usd",
+        destination: destination
+    });
+}
+
 async function createCustomConnectAccount(firstname, lastname, email, birthdate, phone, external_account, account_number, routing_number, token, ssn, product_description, tos_ip) {
     if (external_account == "BANK_ACCOUNT") {
         const data = {
@@ -146,4 +154,5 @@ module.exports = {
     getCharges: getCharges,
     getSubscriptions: getSubscriptions,
     createCustomConnectAccount: createCustomConnectAccount,
+    transfer: transfer
 };

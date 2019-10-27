@@ -11,7 +11,7 @@ import moment from 'moment';
 import { Line, Bar, Pie } from 'react-chartjs-2';
 import logger from "../../util/logger";
 import Menu from "../../components/menu";
-// import 'antd/dist/antd.css';
+import 'antd/dist/antd.css';
 import TextField from '@material-ui/core/TextField';
 
 const log = logger('AdminAnalytics');
@@ -90,10 +90,10 @@ const line_colors = [
 
 const STATS_QUERY = gql`
     query GetStats(
-		$userId: String, $videoStatsBeginDate: DateTime!, $videoStatsEndDate: DateTime!, $videoStatsType: String!,
-		$chargeStatsBeginDate: DateTime!, $chargeStatsEndDate: DateTime!, $chargeStatsType: String!
-		$subscriptionStatsBeginDate: DateTime!, $subscriptionStatsEndDate: DateTime!, $subscriptionStatsType: String!
-		$signupStatsBeginDate: DateTime!, $signupStatsEndDate: DateTime!, $signupStatsType: String!
+			$userId: String, $videoStatsBeginDate: DateTime!, $videoStatsEndDate: DateTime!, $videoStatsType: String!,
+			$chargeStatsBeginDate: DateTime!, $chargeStatsEndDate: DateTime!, $chargeStatsType: String!
+			$subscriptionStatsBeginDate: DateTime!, $subscriptionStatsEndDate: DateTime!, $subscriptionStatsType: String!
+			$signupStatsBeginDate: DateTime!, $signupStatsEndDate: DateTime!, $signupStatsType: String!
 		) {
 		videoStats(
 			userId: $userId

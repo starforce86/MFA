@@ -163,7 +163,9 @@ const config = {
         timeout_in_ms: 3 * 60 * 1000,
         enable_web_interface: true,
         web_interface_path: '/jobs_dashboard',
-        access_token: 'yi9a35EcieFiLBYSx5YJhZKekbTXxUTxEez75ip4HqTHJD8FbLSotGGHcMzb2gv6h'
+        access_token: 'yi9a35EcieFiLBYSx5YJhZKekbTXxUTxEez75ip4HqTHJD8FbLSotGGHcMzb2gv6h',
+        process_every_generate_transfer_plan: '30 seconds',
+        process_every_transfer: '1 minute'
     },
     graphql: {
         endpoint_path: "/api",

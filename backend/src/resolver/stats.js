@@ -465,12 +465,70 @@ async function populateSubscriptionHistory(root, args, ctx, info) {
     }
 }
 
+async function payoutStats(root, args, ctx, info) {
+
+    try {
+        let beginDate = args.beginDate;
+        let endDate = args.endDate;
+
+        beginDate = moment(beginDate);
+        endDate = moment(endDate);
+        beginDate.set({'date': 1, 'hour': 0, 'minute': 0, 'second': 0});
+        endDate.set({ 'date': 1, 'hour': 0, 'minute': 0, 'second': 0 });
+        let tmpDate = beginDate.clone();
+        
+        let timespans = [];
+        while (tmpDate <= endDate) {
+            timespans.push({
+                year: moment(tmpDate).format('YYYY'),
+                month: moment(tmpDate).format('MM')
+            });
+            tmpDate = tmpDate.add(moment.duration(1, 'months')).clone();
+        }
+        
+        let artists = await prisma.users({
+            where: {
+                role: 'USER_PUBLISHER'
+            }
+        });
+
+        artists = await Promise.all(artists.map(async (artist) => {
+            const users = await prisma.user({id: artist.id}).users();
+            artist.promo_code_uses = users.length;
+            artist.timespans = await Promise.all(timespans.map(async (ts) => {
+                let tspan = {...ts};
+                const transferTrans = await prisma.transferTransactions({
+                    where: {
+                        artist: { id: artist.id },
+                        year: parseInt(tspan.year),
+                        month: parseInt(tspan.month)
+                    }
+                });
+                let transferAmount = 0;
+                if (transferTrans.length > 0) {
+                    transferAmount = transferTrans[0].amount;
+                }
+                tspan.amount = transferAmount;
+                return tspan;
+            }));
+            return artist;
+        }));
+
+        return artists;
+        
+    } catch (e) {
+        log.error('payoutStats error:', e);
+        return null;
+    }
+}
+
 module.exports = {
     signupStats: signupStats,
     subscriptionStats: subscriptionStats,
     chargeStats: chargeStats,
     videoStats: videoStats,
     artistStats: artistStats,
+    payoutStats: payoutStats,
     populateChargeHistory: populateChargeHistory,
     populateSubscriptionHistory: populateSubscriptionHistory
 };

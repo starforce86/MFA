@@ -387,6 +387,17 @@ class MyApp extends App {
                                                     </li>
                                                 )}
 
+                                                {user && (user.role == "ADMIN") && (
+                                                    <li className={`nav-item ${this.props.router.pathname === "/profit" ? " active" : ""}`}>
+                                                        <Link prefetch href={"profit"}>
+                                                            <a className="nav-link">
+                                                                <i className="fas fa-fw fa-money-bill-alt" />
+                                                                <span>Profit Sharing</span>
+                                                            </a>
+                                                        </Link>
+                                                    </li>
+                                                )}
+
                                                 {
                                                     user ?
                                                         <li className={`nav-item channel-sidebar-list ${this.props.router.pathname === "/subscriptions" ? " active" : ""}`}>

@@ -11,7 +11,7 @@ import moment from 'moment';
 import { Bar } from 'react-chartjs-2';
 import logger from "../../util/logger";
 import Menu from "../../components/menu";
-// import 'antd/dist/antd.css';
+import 'antd/dist/antd.css';
 import TextField from '@material-ui/core/TextField';
 
 const log = logger('AdminAnalytics');
