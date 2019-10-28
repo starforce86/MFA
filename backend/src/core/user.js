@@ -153,6 +153,7 @@ async function signUp(email, firstname, lastname, phone, password, promo_code, s
                         name: 'payout_months'
                     });
 
+                    newUserData.approved = false;
                     newUserData.stripe_customer_id = result.id;
                     newUserData.promo_code = new_promo_code;
                     newUserData.payout_amount = payout_amount.int_val;
@@ -175,10 +176,14 @@ async function signUp(email, firstname, lastname, phone, password, promo_code, s
             log.trace('User created: ', newUser.email);
             await emailHelper.addUserToMailingList(newUser);
 
-            return {
-                token: token.createToken(safeUser(newUser)),
-                user: newUser
-            };
+            if (userRole === 'USER_PUBLISHER') {
+                throw new GQLError({message: `Success! Please wait for approving by administrator`, code: 410});
+            } else {
+                return {
+                    token: token.createToken(safeUser(newUser)),
+                    user: newUser
+                };
+            }
         }
     }
 }
@@ -200,6 +205,10 @@ async function signIn(email, password) {
 
     if (!user) {
         throw new GQLError({message: 'Email is not associated with MFA account.', code: 402});
+    }
+
+    if (!user.approved) {
+        throw new GQLError({message: 'You are not approved by administrator of MFA. Please contact administrator to get approved.', code: 402});
     }
 
     log.trace('Login attempt: ', user.email);

@@ -2218,6 +2218,7 @@ type User {
     email: String!
     phone: String
     role: UserRole!
+    approved: Boolean
     avatar: String
     background_image: String
     about_text: String
@@ -2254,6 +2255,7 @@ input UserCreateInput {
     email: String!
     phone: String
     role: UserRole
+    approved: Boolean
     avatar: String
     background_image: String
     about_text: String
@@ -2324,6 +2326,7 @@ input UserCreateWithoutArtistInput {
   email: String!
   phone: String
   role: UserRole
+  approved: Boolean
   password_hash: String!
   password_salt: String!
   avatar: String
@@ -2355,6 +2358,7 @@ input UserCreateWithoutLiked_videosInput {
     email: String!
     phone: String
     role: UserRole
+    approved: Boolean
     avatar: String
     background_image: String
     about_text: String
@@ -2384,6 +2388,7 @@ input UserCreateWithoutMy_subscription_usersInput {
     email: String!
     phone: String
     role: UserRole
+    approved: Boolean
     avatar: String
     background_image: String
     about_text: String
@@ -2413,6 +2418,7 @@ input UserCreateWithoutMy_videosInput {
     email: String!
     phone: String
     role: UserRole
+    approved: Boolean
     avatar: String
     background_image: String
     about_text: String
@@ -2442,6 +2448,7 @@ input UserCreateWithoutSubscribed_usersInput {
     email: String!
     phone: String
     role: UserRole
+    approved: Boolean
     avatar: String
     background_image: String
     about_text: String
@@ -2471,6 +2478,7 @@ input UserCreateWithoutUsersInput {
   email: String!
   phone: String
   role: UserRole
+  approved: Boolean
   password_hash: String!
   password_salt: String!
   avatar: String
@@ -2502,6 +2510,7 @@ input UserCreateWithoutWatched_videosInput {
     email: String!
     phone: String
     role: UserRole
+    approved: Boolean
     avatar: String
     background_image: String
     about_text: String
@@ -2548,6 +2557,8 @@ enum UserOrderByInput {
     phone_DESC
     role_ASC
     role_DESC
+    approved_ASC
+    approved_DESC
     avatar_ASC
     avatar_DESC
     background_image_ASC
@@ -2588,6 +2599,7 @@ type UserPreviousValues {
     email: String!
     phone: String
     role: UserRole!
+    approved: Boolean
     avatar: String
     background_image: String
     about_text: String
@@ -2716,6 +2728,8 @@ input UserScalarWhereInput {
     role_not: UserRole
     role_in: [UserRole!]
     role_not_in: [UserRole!]
+    approved: Boolean
+    approved_not: Boolean
     avatar: String
     avatar_not: String
     avatar_in: [String!]
@@ -2880,6 +2894,7 @@ input UserUpdateDataInput {
     email: String
     phone: String
     role: UserRole
+    approved: Boolean
     avatar: String
     background_image: String
     about_text: String
@@ -2910,6 +2925,7 @@ input UserUpdateInput {
     email: String
     phone: String
     role: UserRole
+    approved: Boolean
     avatar: String
     background_image: String
     about_text: String
@@ -2940,6 +2956,7 @@ input UserUpdateManyDataInput {
     email: String
     phone: String
     role: UserRole
+    approved: Boolean
     avatar: String
     background_image: String
     about_text: String
@@ -2963,6 +2980,7 @@ input UserUpdateManyMutationInput {
     email: String
     phone: String
     role: UserRole
+    approved: Boolean
     avatar: String
     background_image: String
     about_text: String
@@ -3069,6 +3087,7 @@ input UserUpdateWithoutArtistDataInput {
   email: String
   phone: String
   role: UserRole
+  approved: Boolean
   password_hash: String
   password_salt: String
   avatar: String
@@ -3100,6 +3119,7 @@ input UserUpdateWithoutLiked_videosDataInput {
     email: String
     phone: String
     role: UserRole
+    approved: Boolean
     avatar: String
     background_image: String
     about_text: String
@@ -3129,6 +3149,7 @@ input UserUpdateWithoutMy_subscription_usersDataInput {
     email: String
     phone: String
     role: UserRole
+    approved: Boolean
     avatar: String
     background_image: String
     about_text: String
@@ -3158,6 +3179,7 @@ input UserUpdateWithoutMy_videosDataInput {
     email: String
     phone: String
     role: UserRole
+    approved: Boolean
     avatar: String
     background_image: String
     about_text: String
@@ -3187,6 +3209,7 @@ input UserUpdateWithoutSubscribed_usersDataInput {
     email: String
     phone: String
     role: UserRole
+    approved: Boolean
     avatar: String
     background_image: String
     about_text: String
@@ -3216,6 +3239,7 @@ input UserUpdateWithoutUsersDataInput {
   email: String
   phone: String
   role: UserRole
+  approved: Boolean
   password_hash: String
   password_salt: String
   avatar: String
@@ -3247,6 +3271,7 @@ input UserUpdateWithoutWatched_videosDataInput {
     email: String
     phone: String
     role: UserRole
+    approved: Boolean
     avatar: String
     background_image: String
     about_text: String
@@ -3438,6 +3463,8 @@ input UserWhereInput {
     role_not: UserRole
     role_in: [UserRole!]
     role_not_in: [UserRole!]
+    approved: Boolean
+    approved_not: Boolean
     avatar: String
     avatar_not: String
     avatar_in: [String!]

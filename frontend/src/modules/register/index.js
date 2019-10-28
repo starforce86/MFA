@@ -1,6 +1,7 @@
 import React from "react";
 import {Formik} from "formik";
 import * as Yup from "yup";
+import { withRouter } from "next/router";
 import { notification } from 'antd';
 import 'antd/dist/antd.css';
 import {register} from "../../util/auth";
@@ -139,10 +140,14 @@ class RegisterPage extends React.Component {
             >
                 {(submitMutation, {loading, error}) => (
                     <Formik
-                        initialValues={emptyForm}
+                        initialValues={
+                            {
+                                ...emptyForm,
+                                promo_code: this.props.router.query.promo_code
+                            }
+                        }
                         validationSchema={validationSchema}
                         onSubmit={async values => {
-                            console.log('###', values)
 
                             try {
                                 const result = await submitMutation({
@@ -217,4 +222,4 @@ class RegisterPage extends React.Component {
     }
 }
 
-export default withUser(withApollo(RegisterPage));
+export default withRouter(withUser(withApollo(RegisterPage)));

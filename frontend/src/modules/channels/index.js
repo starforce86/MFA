@@ -14,7 +14,7 @@ const GET_CHANNELS_QUERY = gql`
                 count
             }
         }
-        channels: users(first: 20, skip: $skip, where: { role: USER_PUBLISHER }) {
+        channels: users(first: 20, skip: $skip, where: { role: USER_PUBLISHER, approved: true }) {
             id
             createdAt
             updatedAt

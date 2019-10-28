@@ -217,7 +217,7 @@ class VideoPage extends Component {
                                             {this.props.video
                                                 ? this.props.author
                                                     ? this.props.author.my_videos
-                                                        ? this.props.author.my_videos.map(v => (
+                                                        ? this.props.author.my_videos.filter(v=>v.deleted==false).map(v => (
                                                             <div
                                                                 className="video-card video-card-list"
                                                                 key={`author_${v.id}`}

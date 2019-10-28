@@ -34,6 +34,7 @@ const VIDEO_QUERY = gql`
                     title
                     preview_url
                     file_url
+                    deleted
                 }
             }
         }

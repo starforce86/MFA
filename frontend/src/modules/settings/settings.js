@@ -10,6 +10,7 @@ import PaymentInfo from "./paymentInfo";
 import {Elements, StripeProvider} from 'react-stripe-elements'
 import { notification } from 'antd';
 import 'antd/dist/antd.css';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import * as consts from "../../util/consts";
 import SubscribePlan from "../../components/stripe/SubscribePlan";
 
@@ -32,6 +33,8 @@ class Settings extends PureComponent {
             plan: 'YEARLY',
             resubscribeInProgress: false,
             changeCardInProgress: false,
+            promo_code_copied: false,
+            promo_link_copied: false
         };
     }
 
@@ -67,7 +70,6 @@ class Settings extends PureComponent {
                 this.setState({ newPassword: event.target.value });
                 break;
             case "about_text":
-                event.target.value = event.target.value.slice(0,500);
                 this.setState({ about_text: event.target.value });
                 break;
         }
@@ -161,6 +163,8 @@ class Settings extends PureComponent {
     }
 
     render() {
+        const promo_link = `https://madeforartists.net/register?promo_code=${this.props.user.promo_code}`;
+
         return (
             <Menu {...this.props}>
                 <div id="wrapper">
@@ -329,7 +333,7 @@ class Settings extends PureComponent {
                                                 </label>
                                                 <TextareaAutosize
                                                     rows={3}
-                                                    placeholder="Not allowed to be more than 500 letters"
+                                                    placeholder=""
                                                     className="form-control border-form-control "
                                                     onChange={value =>
                                                         this.handleChange("about_text", value)
@@ -356,17 +360,46 @@ class Settings extends PureComponent {
 
                                 {this.props.user.role == "USER_PUBLISHER" && (
                                     <React.Fragment>
-                                        <h6>Promo Code</h6>
+                                        <h6>Promotion</h6>
                                         <div className="row">
                                             <div className="col-sm-6">
                                                 <div className="form-group">
+                                                    <label className="control-label">
+                                                        Promo code
+                                                    </label>
                                                     <input
                                                         className="form-control border-form-control"
                                                         placeholder=""
                                                         type="text"
                                                         disabled
                                                         value={this.props.user.promo_code}
+                                                        style={{ marginBottom: 8 }}
                                                     />
+                                                    {<CopyToClipboard text={this.props.user.promo_code}
+                                                        onCopy={() => this.setState({promo_code_copied: true, promo_link_copied: false})}>
+                                                        <span>Copy</span>
+                                                    </CopyToClipboard>}
+                                                    {this.state.promo_code_copied ? <span style={{ color: 'red', paddingLeft: 15 }}>Copied.</span> : null}
+                                                </div>
+                                            </div>
+                                            <div className="col-sm-6">
+                                                <div className="form-group">
+                                                    <label className="control-label">
+                                                        Please share below URL
+                                                    </label>
+                                                    <input
+                                                        className="form-control border-form-control"
+                                                        placeholder=""
+                                                        type="text"
+                                                        disabled
+                                                        value={promo_link}
+                                                        style={{ marginBottom: 8 }}
+                                                    />
+                                                    {<CopyToClipboard text={promo_link}
+                                                        onCopy={() => this.setState({promo_link_copied: true, promo_code_copied: false})}>
+                                                        <span>Copy</span>
+                                                    </CopyToClipboard>}
+                                                    {this.state.promo_link_copied ? <span style={{ color: 'red', paddingLeft: 15 }}>Copied.</span> : null}
                                                 </div>
                                             </div>
                                         </div>

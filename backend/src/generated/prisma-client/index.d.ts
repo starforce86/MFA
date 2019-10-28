@@ -856,6 +856,8 @@ export type UserOrderByInput =
   | "phone_DESC"
   | "role_ASC"
   | "role_DESC"
+  | "approved_ASC"
+  | "approved_DESC"
   | "password_hash_ASC"
   | "password_hash_DESC"
   | "password_salt_ASC"
@@ -1392,6 +1394,8 @@ export interface UserWhereInput {
   role_not?: UserRole;
   role_in?: UserRole[] | UserRole;
   role_not_in?: UserRole[] | UserRole;
+  approved?: Boolean;
+  approved_not?: Boolean;
   password_hash?: String;
   password_hash_not?: String;
   password_hash_in?: String[] | String;
@@ -2460,6 +2464,7 @@ export interface UserCreateWithoutMy_videosInput {
   email: String;
   phone?: String;
   role?: UserRole;
+  approved?: Boolean;
   password_hash: String;
   password_salt: String;
   avatar?: String;
@@ -2496,6 +2501,7 @@ export interface UserCreateWithoutUsersInput {
   email: String;
   phone?: String;
   role?: UserRole;
+  approved?: Boolean;
   password_hash: String;
   password_salt: String;
   avatar?: String;
@@ -2567,6 +2573,7 @@ export interface UserCreateWithoutLiked_videosInput {
   email: String;
   phone?: String;
   role?: UserRole;
+  approved?: Boolean;
   password_hash: String;
   password_salt: String;
   avatar?: String;
@@ -2603,6 +2610,7 @@ export interface UserCreateWithoutArtistInput {
   email: String;
   phone?: String;
   role?: UserRole;
+  approved?: Boolean;
   password_hash: String;
   password_salt: String;
   avatar?: String;
@@ -2676,6 +2684,7 @@ export interface UserCreateWithoutWatched_videosInput {
   email: String;
   phone?: String;
   role?: UserRole;
+  approved?: Boolean;
   password_hash: String;
   password_salt: String;
   avatar?: String;
@@ -2714,6 +2723,7 @@ export interface UserCreateWithoutSubscribed_usersInput {
   email: String;
   phone?: String;
   role?: UserRole;
+  approved?: Boolean;
   password_hash: String;
   password_salt: String;
   avatar?: String;
@@ -2796,6 +2806,7 @@ export interface UserCreateWithoutMy_subscription_usersInput {
   email: String;
   phone?: String;
   role?: UserRole;
+  approved?: Boolean;
   password_hash: String;
   password_salt: String;
   avatar?: String;
@@ -2881,6 +2892,7 @@ export interface UserUpdateWithoutMy_videosDataInput {
   email?: String;
   phone?: String;
   role?: UserRole;
+  approved?: Boolean;
   password_hash?: String;
   password_salt?: String;
   avatar?: String;
@@ -2921,6 +2933,7 @@ export interface UserUpdateWithoutUsersDataInput {
   email?: String;
   phone?: String;
   role?: UserRole;
+  approved?: Boolean;
   password_hash?: String;
   password_salt?: String;
   avatar?: String;
@@ -3126,6 +3139,7 @@ export interface UserUpdateWithoutLiked_videosDataInput {
   email?: String;
   phone?: String;
   role?: UserRole;
+  approved?: Boolean;
   password_hash?: String;
   password_salt?: String;
   avatar?: String;
@@ -3180,6 +3194,7 @@ export interface UserUpdateWithoutArtistDataInput {
   email?: String;
   phone?: String;
   role?: UserRole;
+  approved?: Boolean;
   password_hash?: String;
   password_salt?: String;
   avatar?: String;
@@ -3297,6 +3312,7 @@ export interface UserUpdateWithoutWatched_videosDataInput {
   email?: String;
   phone?: String;
   role?: UserRole;
+  approved?: Boolean;
   password_hash?: String;
   password_salt?: String;
   avatar?: String;
@@ -3353,6 +3369,7 @@ export interface UserUpdateWithoutSubscribed_usersDataInput {
   email?: String;
   phone?: String;
   role?: UserRole;
+  approved?: Boolean;
   password_hash?: String;
   password_salt?: String;
   avatar?: String;
@@ -3691,6 +3708,8 @@ export interface UserScalarWhereInput {
   role_not?: UserRole;
   role_in?: UserRole[] | UserRole;
   role_not_in?: UserRole[] | UserRole;
+  approved?: Boolean;
+  approved_not?: Boolean;
   password_hash?: String;
   password_hash_not?: String;
   password_hash_in?: String[] | String;
@@ -3870,6 +3889,7 @@ export interface UserUpdateManyDataInput {
   email?: String;
   phone?: String;
   role?: UserRole;
+  approved?: Boolean;
   password_hash?: String;
   password_salt?: String;
   avatar?: String;
@@ -3920,6 +3940,7 @@ export interface UserUpdateWithoutMy_subscription_usersDataInput {
   email?: String;
   phone?: String;
   role?: UserRole;
+  approved?: Boolean;
   password_hash?: String;
   password_salt?: String;
   avatar?: String;
@@ -4179,6 +4200,7 @@ export interface UserCreateInput {
   email: String;
   phone?: String;
   role?: UserRole;
+  approved?: Boolean;
   password_hash: String;
   password_salt: String;
   avatar?: String;
@@ -4224,6 +4246,7 @@ export interface UserUpdateDataInput {
   email?: String;
   phone?: String;
   role?: UserRole;
+  approved?: Boolean;
   password_hash?: String;
   password_salt?: String;
   avatar?: String;
@@ -4569,6 +4592,7 @@ export interface UserUpdateInput {
   email?: String;
   phone?: String;
   role?: UserRole;
+  approved?: Boolean;
   password_hash?: String;
   password_salt?: String;
   avatar?: String;
@@ -4601,6 +4625,7 @@ export interface UserUpdateManyMutationInput {
   email?: String;
   phone?: String;
   role?: UserRole;
+  approved?: Boolean;
   password_hash?: String;
   password_salt?: String;
   avatar?: String;
@@ -5174,6 +5199,7 @@ export interface User {
   email: String;
   phone?: String;
   role: UserRole;
+  approved?: Boolean;
   password_hash: String;
   password_salt: String;
   avatar?: String;
@@ -5202,6 +5228,7 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   email: () => Promise<String>;
   phone: () => Promise<String>;
   role: () => Promise<UserRole>;
+  approved: () => Promise<Boolean>;
   password_hash: () => Promise<String>;
   password_salt: () => Promise<String>;
   avatar: () => Promise<String>;
@@ -5299,6 +5326,7 @@ export interface UserSubscription
   email: () => Promise<AsyncIterator<String>>;
   phone: () => Promise<AsyncIterator<String>>;
   role: () => Promise<AsyncIterator<UserRole>>;
+  approved: () => Promise<AsyncIterator<Boolean>>;
   password_hash: () => Promise<AsyncIterator<String>>;
   password_salt: () => Promise<AsyncIterator<String>>;
   avatar: () => Promise<AsyncIterator<String>>;
@@ -7251,6 +7279,7 @@ export interface UserPreviousValues {
   email: String;
   phone?: String;
   role: UserRole;
+  approved?: Boolean;
   password_hash: String;
   password_salt: String;
   avatar?: String;
@@ -7281,6 +7310,7 @@ export interface UserPreviousValuesPromise
   email: () => Promise<String>;
   phone: () => Promise<String>;
   role: () => Promise<UserRole>;
+  approved: () => Promise<Boolean>;
   password_hash: () => Promise<String>;
   password_salt: () => Promise<String>;
   avatar: () => Promise<String>;
@@ -7311,6 +7341,7 @@ export interface UserPreviousValuesSubscription
   email: () => Promise<AsyncIterator<String>>;
   phone: () => Promise<AsyncIterator<String>>;
   role: () => Promise<AsyncIterator<UserRole>>;
+  approved: () => Promise<AsyncIterator<Boolean>>;
   password_hash: () => Promise<AsyncIterator<String>>;
   password_salt: () => Promise<AsyncIterator<String>>;
   avatar: () => Promise<AsyncIterator<String>>;

@@ -10,6 +10,7 @@ type User {
     email: String! @unique
     phone: String @unique
     role: UserRole! @default(value: "USER_VIEWER")
+    approved: Boolean
 
     password_hash: String!
     password_salt: String! @unique
