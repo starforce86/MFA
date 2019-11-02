@@ -490,8 +490,7 @@ async function transfer(root, args, ctx, info) {
     
                     if (transferAmount > 0 && artist.stripe_customer_id) {
                         try {
-                            // const result = await stripeHelper.transfer(transferAmount, artist.stripe_customer_id);
-                            const result = true;
+                            const result = await stripeHelper.transfer(transferAmount, artist.stripe_customer_id);
                             if (result) {
                                 await prisma.createTransferTransaction({
                                     artist: {
