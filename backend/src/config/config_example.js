@@ -164,8 +164,8 @@ const config = {
         enable_web_interface: true,
         web_interface_path: '/jobs_dashboard',
         access_token: 'yi9a35EcieFiLBYSx5YJhZKekbTXxUTxEez75ip4HqTHJD8FbLSotGGHcMzb2gv6h',
-        process_every_generate_transfer_plan: '30 seconds',
-        process_every_transfer: '1 minute'
+        process_every_generate_transfer_plan: '1 day',
+        process_every_transfer: '1 day'
     },
     graphql: {
         endpoint_path: "/api",
