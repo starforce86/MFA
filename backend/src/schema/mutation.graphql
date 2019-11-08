@@ -25,6 +25,7 @@ type Mutation {
     addContactUsMessage(email: String! text: String!): Boolean
     addWatchedVideo(videoId: String!): Boolean
     updateWatchedVideo(videoId: String! watchedSeconds: Int!): Boolean
+    transfer(year: Int, month: Int): Boolean
 
     createActivationCode(data: ActivationCodeCreateInput!): ActivationCode!
     updateActivationCode(data: ActivationCodeUpdateInput!, where: ActivationCodeWhereUniqueInput!): ActivationCode

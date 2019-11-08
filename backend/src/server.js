@@ -220,5 +220,5 @@ process.on('uncaughtException', function (error) {
     log.info(`Server started successful (http://0.0.0.0:${config.port}).`);
 
     job_scheduler.addPopulateTransferPlanEvent();
-    job_scheduler.addTransferEvent();
+    // job_scheduler.addTransferEvent();
 })();

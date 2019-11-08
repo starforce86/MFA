@@ -144,6 +144,10 @@ async function changeCard(customerId, newToken) {
     });
 }
 
+async function availableBalance() {
+    return await stripe.balance.retrieve();
+}
+
 module.exports = {
     createCustomer: createCustomer,
     changeCard: changeCard,
@@ -154,5 +158,6 @@ module.exports = {
     getCharges: getCharges,
     getSubscriptions: getSubscriptions,
     createCustomConnectAccount: createCustomConnectAccount,
-    transfer: transfer
+    transfer: transfer,
+    availableBalance: availableBalance
 };

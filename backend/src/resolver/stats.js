@@ -478,7 +478,7 @@ async function payoutStats(root, args, ctx, info) {
         let tmpDate = beginDate.clone();
         
         let timespans = [];
-        while (tmpDate <= endDate) {
+        while (tmpDate < endDate) {
             timespans.push({
                 year: moment(tmpDate).format('YYYY'),
                 month: moment(tmpDate).format('MM')
@@ -508,16 +508,63 @@ async function payoutStats(root, args, ctx, info) {
                 if (transferTrans.length > 0) {
                     transferAmount = transferTrans[0].amount;
                 }
-                tspan.amount = transferAmount;
+                tspan.payout_amount = transferAmount;
+
+                const transferPlans = await prisma.transferPlans({
+                    where: {
+                        artist: { id: artist.id },
+                        year: parseInt(tspan.year),
+                        month: parseInt(tspan.month),
+                        ignore_status: false,
+                        paid_status: false
+                    }
+                });
+                transferAmount = 0;
+                transferPlans.forEach(tp => {
+                    transferAmount += tp.amount;
+                });
+                tspan.due_amount = transferAmount;
+
                 return tspan;
             }));
             return artist;
         }));
 
-        return artists;
-        
+        const months = await Promise.all(timespans.map(async (ts) => {
+            let tspan = {...ts};
+
+            let due_amount = 0;
+            artists.forEach(artist => {
+                artist.timespans.forEach(t => {
+                    if (t.year == ts.year && t.month == ts.month) {
+                        due_amount += t.due_amount;
+                    }
+                });
+            });
+            tspan.due_amount = due_amount;
+            
+            return tspan;
+        }));
+
+        const due_months = months.filter(m => parseInt(m.due_amount) > 0);
+
+        return {
+            artists: artists,
+            due_months: due_months
+        };
     } catch (e) {
         log.error('payoutStats error:', e);
+        return null;
+    }
+}
+
+async function availableBalance(root, args, ctx, info) {
+    try {
+        const balanceObj = await stripeHelper.availableBalance();
+        const usdBalance = balanceObj.available.find(d => d.currency == "usd");
+        return usdBalance.amount;
+    } catch (e) {
+        log.error('availableBalance error:', e);
         return null;
     }
 }
@@ -529,6 +576,7 @@ module.exports = {
     videoStats: videoStats,
     artistStats: artistStats,
     payoutStats: payoutStats,
+    availableBalance: availableBalance,
     populateChargeHistory: populateChargeHistory,
     populateSubscriptionHistory: populateSubscriptionHistory
 };

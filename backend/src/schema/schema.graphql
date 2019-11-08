@@ -4631,11 +4631,23 @@ type VideoStatsResult {
 }
 
 type PayoutStatsResult {
+    due_months: [DueMonthStats]
+    artists: [ArtistStats]
+}
+
+type DueMonthStats {
+    year: Int
+    month: Int
+    due_amount: Int
+}
+
+type ArtistStats {
     id: String
     firstname: String
     lastname: String
     username: String
     email: String
+    approved: Boolean
     promo_code: String
     payout_amount: Int
     payout_months_total: Int
@@ -4646,7 +4658,8 @@ type PayoutStatsResult {
 type PayoutTimeSpan {
     year: Int
     month: Int
-    amount: Int
+    due_amount: Int
+    payout_amount: Int
 }
 
 type ArtistStatsResult {

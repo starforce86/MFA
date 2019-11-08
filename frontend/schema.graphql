@@ -159,6 +159,7 @@ type Mutation {
     upsertVideo(create: VideoCreateInput!, update: VideoUpdateInput!, where: VideoWhereUniqueInput!): Video!
     addWatchedVideo(videoId: String!): Boolean
     updateWatchedVideo(videoId: String!, watchedSeconds: Int!): Boolean
+    transfer: Boolean
 }
 
 type PageInfo {

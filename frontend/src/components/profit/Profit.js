@@ -13,6 +13,8 @@ import logger from "../../util/logger";
 import Menu from "../../components/menu";
 import 'antd/dist/antd.css';
 import TextField from '@material-ui/core/TextField';
+import { notification } from 'antd';
+import 'antd/dist/antd.css';
 
 const log = logger('Profit');
 const dateFormat = 'YYYY-MM-DD HH:mm:ss';
@@ -94,21 +96,37 @@ const STATS_QUERY = gql`
 				beginDate: $payoutStatsBeginDate
 				endDate: $payoutStatsEndDate
 			) {
-				id
-				firstname
-				lastname
-				username
-				email
-				promo_code
-				payout_amount
-				payout_months_total
-				promo_code_uses
-				timespans {
+				artists {
+					id
+					firstname
+					lastname
+					username
+					email
+					approved
+					promo_code
+					payout_amount
+					payout_months_total
+					promo_code_uses
+					timespans {
+						year
+						month
+						payout_amount
+						due_amount
+					}
+				}
+				due_months {
 					year
 					month
-					amount
+					due_amount
 				}
 			}
+			availableBalance
+    }
+`;
+
+const TRANSFER_MONTH = gql`
+    mutation Transfer($year: Int, $month: Int) {
+        transfer(year: $year, month: $month)
     }
 `;
 
@@ -124,6 +142,23 @@ class Profit extends Component {
 	constructor(props) {
 		super(props);
 	}
+
+	handlePayMonth = async (year, month) => {
+		try {
+			return await this.props.transfer({
+				variables: {
+					year: year,
+					month: month
+				}
+			});
+		} catch (ex) {
+			notification['error']({
+				message: 'Error!',
+				description: ex.message,
+			});
+			return;
+		}
+	};
 
 	handleFromDateChange = (e) => {
 		if(e.target.value < this.state.payoutStats.endDate) {
@@ -169,7 +204,7 @@ class Profit extends Component {
 				({ loading, error, data }) => {
 					if (loading) return <div>Loading...</div>;
 					if (error) return <div>Error</div>;
-					console.log('############# response', data)
+					// console.log('############# response', data)
 
 					let payout_table_columns = [
 						{
@@ -177,6 +212,13 @@ class Profit extends Component {
 							dataIndex: 'email',
 							key: 'email',
 							sorter: this.stringSorter('email')
+						},
+						{
+							title: 'Verified',
+							dataIndex: 'approved',
+							key: 'approved',
+							sorter: this.stringSorter('approved'),
+							render: (val) => { return val ? 'Yes' : 'No' }
 						},
 						{
 							title: 'Promo code',
@@ -203,9 +245,9 @@ class Profit extends Component {
 					];
 					let payout_table_data = [];
 
-					if(data.payoutStats && data.payoutStats.length > 0) {
-						for(let i=0; i<data.payoutStats[0].timespans.length; i++) {
-							const d = data.payoutStats[0].timespans[i];
+					if(data.payoutStats.artists && data.payoutStats.artists.length > 0) {
+						for(let i=0; i<data.payoutStats.artists[0].timespans.length; i++) {
+							const d = data.payoutStats.artists[0].timespans[i];
 							payout_table_columns.push({
 								title: `${d.year}-${d.month}`,
 								dataIndex: `${d.year}-${d.month}`,
@@ -213,11 +255,11 @@ class Profit extends Component {
 							});
 						}
 
-						data.payoutStats.map(v => {
+						data.payoutStats.artists.map(v => {
 							let val = {};
 							for(let i=0; i<v.timespans.length; i++) {
 								const d = v.timespans[i];
-								val[`${d.year}-${d.month}`] = (d.amount / 100.0).toFixed(2);
+								val[`${d.year}-${d.month}`] = `${(d.due_amount / 100.0).toFixed(2)}/${(d.payout_amount / 100.0).toFixed(2)}`;
 							}
 							let sum = 0;
 							payout_table_data.push({
@@ -228,6 +270,11 @@ class Profit extends Component {
 						});
 					}
 					// console.log('############### payout_table_columns payout_table_data', payout_table_columns, payout_table_data)
+
+					let due_total = 0;
+					data.payoutStats.due_months.map(d => {
+						due_total += parseInt(d.due_amount);
+					});
 					
 					return (
 						<Menu>
@@ -264,7 +311,38 @@ class Profit extends Component {
 													<h4>Profit Sharing</h4>
 												</div>
 											</div>
-											<div className="col-md-2 col-xs-12 m-auto">
+											<div className="col-md-12">
+													<h6 style={{ height: 36, marginTop: 20 }}>Available balance: ${ (data.availableBalance / 100).toFixed(2) }</h6> 
+											</div>
+
+											{data.payoutStats.due_months.map(due_month => {
+												return (
+													<div className="col-md-12">
+														<h6 className="float-left" style={{ height: 36, marginTop: 10, width: 180 }}>{`Due for ${due_month.year}-${due_month.month}`}:  ${(due_month.due_amount / 100).toFixed(2)}</h6>
+														<button
+															type="button"
+															className="btn btn-warning border-none"
+															style={{ marginLeft: 10, minWidth: 152 }}
+															onClick={() => this.handlePayMonth(due_month.year, due_month.month)}
+														>
+															Payout for {`${due_month.year}-${due_month.month}`}
+														</button>
+													</div>
+												)
+											})}
+
+											{/* <div className="col-md-12">
+												<h6 className="float-left" style={{ height: 36, marginTop: 10, width: 180 }}>Due Total:  ${(due_total / 100).toFixed(2)}</h6>
+												<button
+													type="button"
+													className="btn btn-warning border-none"
+													style={{ marginLeft: 10, minWidth: 152 }}
+												>
+													Payout All
+												</button>
+											</div> */}
+											
+											<div className="col-md-2 col-xs-12 mh-auto" style={{ marginTop: 30 }}>
 												<span style={{ color: 'white' }}>from</span>
 												<TextField
 													type="date"
@@ -273,7 +351,7 @@ class Profit extends Component {
 													onChange={this.handleFromDateChange}
 												/>
 											</div>
-											<div className="col-md-3 col-xs-12 m-auto">
+											<div className="col-md-3 col-xs-12 mh-auto" style={{ marginTop: 30 }}>
 												<span style={{ color: 'white' }}>to</span>
 												<TextField
 													type="date"
@@ -304,5 +382,46 @@ class Profit extends Component {
 	}
 }
 
-export default withApollo(Profit);
+const ProfitPage = compose(
+	graphql(TRANSFER_MONTH, {
+		name: "transfer",
+		options: props => ({
+			variables: {
+				year: props.year,
+				month: props.month
+			},
+			onCompleted: (res) => {
+				if (res) {
+					location.reload();
+				}
+				else {
+					notification['error']({
+						message: 'Error!',
+						description: "Unknown error occured!",
+					});
+				}
+			},
+			onError: async errors => {
+				let errs = JSON.stringify(errors);
+				//TODO return error to component
+				log.trace(errs);
+				if (errors && errors.graphQLErrors && errors.graphQLErrors.length > 0) {
+					const errMsg = errors.graphQLErrors.map(e => e.message ? e.message : "").join(" ");
+					notification['error']({
+						message: 'Error!',
+						description: errMsg,
+					});
+				} else {
+					notification['error']({
+						message: 'Error!',
+						description: "Unknown error occured!",
+					});
+				}
+				return { error: true }
+			}
+		})
+	})
+)(Profit);
+
+export default withApollo(ProfitPage);
 

@@ -455,8 +455,20 @@ async function populateTransferPlan(root, args, ctx, info) {
 
 async function transfer(root, args, ctx, info) {
     try {
-        const year = parseInt(moment().subtract(1, 'M').format('YYYY'));
-        const month = parseInt(moment().subtract(1, 'M').format('MM'));
+        const prev_year = parseInt(moment().subtract(1, 'M').format('YYYY'));
+        const prev_month = parseInt(moment().subtract(1, 'M').format('MM'));
+
+        let { year, month } = args;
+        
+        year = parseInt(year);
+        month = parseInt(month);
+
+        const inputDate = moment(`${year}-${month}-01`);
+        const prevDate = moment(`${prev_year}-${prev_month}-01`);
+
+        if (inputDate > prevDate) {
+            throw new GQLError({message: `Not allowed to payout for ${year}-${month}`, code: 401});
+        }
 
         const artists = await prisma.users({
             where: {
