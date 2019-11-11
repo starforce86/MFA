@@ -334,7 +334,7 @@ class Register extends React.Component {
                                                 </div>
 
                                                 <div className="form-group">
-                                                    <label>Signup as a Artist or Subscriber?</label>
+                                                    <label>Signup as a Student or Educator?</label>
                                                     <MuiThemeProvider theme={this.theme}>
                                                         <RadioGroup
                                                             aria-label="signup-type"
@@ -347,11 +347,11 @@ class Register extends React.Component {
                                                             <FormControlLabel value="USER_VIEWER" style={{ width: 150, height: 40 }}
                                                                 control={<Radio
                                                                     checked={this.state.role === "USER_VIEWER"} />}
-                                                                label="Subscriber" />
+                                                                label="Student" />
                                                             <FormControlLabel value="USER_PUBLISHER" style={{ width: 150, height: 40 }}
                                                                 control={<Radio
                                                                     checked={this.state.role === "USER_PUBLISHER"} />}
-                                                                label="Artist" />
+                                                                label="Educator" />
                                                         </RadioGroup>
                                                     </MuiThemeProvider>
                                                 </div>
