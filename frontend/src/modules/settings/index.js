@@ -163,14 +163,14 @@ class SettingsPageWithoutMutations extends Component {
             (this.props.getUserProfile.user && (
                 <Settings
                     {...this.props}
-                    saveUserProfile={(firstname, lastname, username, bio) =>
-                        this.handleSaveUserProfile(
+                    saveUserProfile={async (firstname, lastname, username, bio) => {
+                        return await this.handleSaveUserProfile(
                             firstname,
                             lastname,
                             username,
                             bio
                         )
-                    }
+                    }}
                     cancelSubscription={() => this.handleCancelSubscription()}
                     resubscribe={async (token, plan) => await this.handleResubscribe(token, plan)}
                     changeCard={async (token) => await this.handleChangeCard(token)}

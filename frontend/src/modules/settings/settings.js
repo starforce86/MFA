@@ -77,9 +77,14 @@ class Settings extends PureComponent {
 
     onClickSaveUserProfile = async () => {
         try {
-            console.log(this.paymentInfoRef)
-            console.log(this.paymentInfoRef.current.props.children);
-            this.paymentInfoRef.current.handleSave();
+            await this.props.saveUserProfile(
+                this.state.firstname,
+                this.state.lastname,
+                this.state.username,
+                this.state.about_text
+            )
+            location.reload();
+            // this.paymentInfoRef.current.handleSave();
         } catch(ex) {
             notification['error']({
                 message: 'Error!',
