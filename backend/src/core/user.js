@@ -207,7 +207,7 @@ async function signIn(email, password) {
         throw new GQLError({message: 'Email is not associated with MFA account.', code: 402});
     }
 
-    if (!user.approved) {
+    if (user.role == 'USER_PUBLISHER' && !user.approved) {
         throw new GQLError({message: 'You are not approved by administrator of MFA. Please contact administrator to get approved.', code: 402});
     }
 
