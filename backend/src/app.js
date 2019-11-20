@@ -22,6 +22,7 @@ const resolvers = {
     Query: {
         systemInfo: systemResolver.systemInfo,
         isPurchaseActive: userResolver.isPurchaseActive,
+        isPayExpiredForVideo: userResolver.isPayExpiredForVideo,
 
         activationCode: (root, args) => prisma.activationCode(args.where),
         activationCodes: (root, args) => prisma.activationCodes(args),

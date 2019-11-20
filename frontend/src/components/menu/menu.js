@@ -33,6 +33,7 @@ class Menu extends React.Component {
             id,
             token,
             isPurchaseActive,
+            isPayExpiredForVideo,
             categories,
             apolloClient
         } = this.props;

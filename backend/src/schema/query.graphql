@@ -18,6 +18,7 @@ type Query {
 
     systemInfo: SystemInfo @cost(complexity: 50) @cacheControl(maxAge: 5)
     isPurchaseActive: Boolean
+    isPayExpiredForVideo: Boolean
     featured_videos: [Video]
 
     activationCode(where: ActivationCodeWhereUniqueInput!): ActivationCode

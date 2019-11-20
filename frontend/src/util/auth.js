@@ -131,13 +131,14 @@ export function withUser(Component) {
     return function ConnectedComponent(props) {
         return (
             <UserContext.Consumer>
-                {({user, token, id, isPurchaseActive}) => (
+                {({user, token, id, isPurchaseActive, isPayExpiredForVideo}) => (
                     <Component
                         {...props}
                         user={user}
                         token={token}
                         id={id}
                         isPurchaseActive={isPurchaseActive}
+                        isPayExpiredForVideo={isPayExpiredForVideo}
                     />
                 )}
             </UserContext.Consumer>

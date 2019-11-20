@@ -207,6 +207,8 @@ type ChargeHistory {
     user: User!
     amount: Int!
     chargeDate: DateTime
+    chargeId: String
+    refunded: Boolean! @default(value: "false")
 }
 
 type SubscriptionHistory {

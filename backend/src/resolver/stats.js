@@ -425,13 +425,18 @@ async function populateChargeHistory(root, args, ctx, info) {
             const users = await prisma.users({where: {stripe_customer_id: c.customer}});
             if(users && users.length > 0) {
                 const user = users[0];
-                await prisma.createChargeHistory({
-                    amount: c.amount,
-                    user: {
-                        connect: {id: user.id}
-                    },
-                    chargeDate: moment(c.created * 1000)
-                });
+                const histories = await prisma.chargeHistories({where: {chargeId: c.id}});
+                if (!histories || histories.length == 0) {
+                    await prisma.createChargeHistory({
+                        amount: c.amount,
+                        user: {
+                            connect: {id: user.id}
+                        },
+                        chargeDate: moment(c.created * 1000),
+                        chargeId: c.id,
+                        refunded: false
+                    });
+                }
             }
         }));
         return true;

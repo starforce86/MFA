@@ -908,6 +908,8 @@ type ChargeHistory {
   user: User!
   amount: Int!
   chargeDate: DateTime
+  chargeId: String
+  refunded: Boolean!
 }
 
 type ChargeHistoryConnection {
@@ -920,6 +922,8 @@ input ChargeHistoryCreateInput {
   user: UserCreateOneInput!
   amount: Int!
   chargeDate: DateTime
+  chargeId: String
+  refunded: Boolean
 }
 
 type ChargeHistoryEdge {
@@ -938,6 +942,10 @@ enum ChargeHistoryOrderByInput {
   amount_DESC
   chargeDate_ASC
   chargeDate_DESC
+  chargeId_ASC
+  chargeId_DESC
+  refunded_ASC
+  refunded_DESC
 }
 
 type ChargeHistoryPreviousValues {
@@ -946,6 +954,8 @@ type ChargeHistoryPreviousValues {
   updatedAt: DateTime!
   amount: Int!
   chargeDate: DateTime
+  chargeId: String
+  refunded: Boolean!
 }
 
 type ChargeHistorySubscriptionPayload {
@@ -970,11 +980,15 @@ input ChargeHistoryUpdateInput {
   user: UserUpdateOneRequiredInput
   amount: Int
   chargeDate: DateTime
+  chargeId: String
+  refunded: Boolean
 }
 
 input ChargeHistoryUpdateManyMutationInput {
   amount: Int
   chargeDate: DateTime
+  chargeId: String
+  refunded: Boolean
 }
 
 input ChargeHistoryWhereInput {
@@ -1025,6 +1039,22 @@ input ChargeHistoryWhereInput {
   chargeDate_lte: DateTime
   chargeDate_gt: DateTime
   chargeDate_gte: DateTime
+  chargeId: String
+  chargeId_not: String
+  chargeId_in: [String!]
+  chargeId_not_in: [String!]
+  chargeId_lt: String
+  chargeId_lte: String
+  chargeId_gt: String
+  chargeId_gte: String
+  chargeId_contains: String
+  chargeId_not_contains: String
+  chargeId_starts_with: String
+  chargeId_not_starts_with: String
+  chargeId_ends_with: String
+  chargeId_not_ends_with: String
+  refunded: Boolean
+  refunded_not: Boolean
   AND: [ChargeHistoryWhereInput!]
   OR: [ChargeHistoryWhereInput!]
   NOT: [ChargeHistoryWhereInput!]

@@ -42,6 +42,7 @@ class Video extends Component {
 			like_users,
 			onClick,
 			isPurchaseActive,
+			isPayExpiredForVideo,
 		} = this.props;
 
 		const duration = new Date(null);

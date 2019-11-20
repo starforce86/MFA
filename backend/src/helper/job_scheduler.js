@@ -79,6 +79,43 @@ async function removeUserCheckPurchaseEvent(user_id) {
     return await agenda.cancel({name: task_name});
 }
 
+async function addPullChargeHistoryEvent() {
+    log.trace(`addPullChargeHistoryEvent`);
+
+    const task_name = `pull_charge_history`;
+    agenda.define(task_name, async (job, done) => {
+        try {
+            const charges = await stripe.getCharges();
+            await Promise.all(charges.data.map(async (c) => {
+                const users = await prisma.users({where: {stripe_customer_id: c.customer}});
+                if(users && users.length > 0) {
+                    const user = users[0];
+                    const histories = await prisma.chargeHistories({where: {chargeId: c.id}});
+                    if (!histories || histories.length == 0) {
+                        await prisma.createChargeHistory({
+                            amount: c.amount,
+                            user: {
+                                connect: {id: user.id}
+                            },
+                            chargeDate: moment(c.created * 1000),
+                            chargeId: c.id,
+                            refunded: false
+                        });
+                    }
+                }
+            }));
+
+            log.trace(`PullChargeHistory job: ${task_name}`);
+        } catch (e) {
+            log.error('PullChargeHistory job error:', e);
+        } finally {
+            done();
+        }
+    });
+
+    await agenda.every(config.job_scheduler.process_every_generate_transfer_plan, task_name);
+}
+
 async function addPopulateTransferPlanEvent() {
     log.trace(`addPopulateTransferPlanEvent`);
 
@@ -263,5 +300,6 @@ module.exports = {
     addUserCheckPurchaseEvent: addUserCheckPurchaseEvent,
     removeUserCheckPurchaseEvent: removeUserCheckPurchaseEvent,
     addPopulateTransferPlanEvent: addPopulateTransferPlanEvent,
-    addTransferEvent: addTransferEvent
+    addTransferEvent: addTransferEvent,
+    addPullChargeHistoryEvent: addPullChargeHistoryEvent
 };

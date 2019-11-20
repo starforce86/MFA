@@ -40,6 +40,7 @@ const MENU_QUERY = gql`
             }
         }
         isPurchaseActive: isPurchaseActive
+        isPayExpiredForVideo: isPayExpiredForVideo
         categories: categories {
             id
             title
@@ -122,13 +123,14 @@ class MyApp extends App {
                                     const categories = data ? data.categories : [];
 
                                     const isPurchaseActive = data ? data.isPurchaseActive : false;
+                                    const isPayExpiredForVideo = data ? data.isPayExpiredForVideo : true;
 
                                     // this.setState({isPurchaseActive})
                                     // log.trace("_app", isPurchaseActive);
                                     // log.trace("_app", user);
                                     return (
                                         <UserContext.Provider
-                                            value={{ user, isPurchaseActive, id, token }}
+                                            value={{ user, isPurchaseActive, isPayExpiredForVideo, id, token }}
                                         >
                                             <Component {...pageProps} />
 
@@ -174,6 +176,7 @@ class MyApp extends App {
                                 const categories = data ? data.categories : [];
 
                                 const isPurchaseActive = data ? data.isPurchaseActive : false;
+                                const isPayExpiredForVideo = data ? data.isPayExpiredForVideo : true;
 
                                 // log.trace("_app", isPurchaseActive);
                                 // log.trace("_app", user);
@@ -186,7 +189,7 @@ class MyApp extends App {
                                 //  </UserContext.Provider>)
                                 return (
                                     <UserContext.Provider
-                                        value={{ user, isPurchaseActive, id, token }}
+                                        value={{ user, isPurchaseActive, isPayExpiredForVideo, id, token }}
                                     >
                                         {/*menu*/}
                                         <div className="sticky-top">

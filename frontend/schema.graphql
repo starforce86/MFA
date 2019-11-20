@@ -230,6 +230,7 @@ type Query {
     clearCachedResponse(id: Int!): Boolean
     featured_videos: [Video]
     isPurchaseActive: Boolean
+    isPayExpiredForVideo: Boolean
     post(where: PostWhereUniqueInput!): Post
     posts(after: String, before: String, first: Int, last: Int, orderBy: PostOrderByInput, skip: Int, where: PostWhereInput): [Post]!
     postsConnection(after: String, before: String, first: Int, last: Int, orderBy: PostOrderByInput, skip: Int, where: PostWhereInput): PostConnection!

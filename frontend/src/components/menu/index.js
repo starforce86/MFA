@@ -22,7 +22,7 @@ class MenuWrapper extends Component {
     render() {
         //log.trace(this.props)
         return (<UserContext.Consumer>
-                {({id, user, token, isPurchaseActive}) => {
+                {({id, user, token, isPurchaseActive, isPayExpiredForVideo}) => {
                     log.trace("menu.user", user, `(id:${id})`);
                     return (
                         <Query

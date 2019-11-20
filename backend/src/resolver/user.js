@@ -212,6 +212,39 @@ async function isPurchaseActive(root, args, ctx, info) {
     return user.billing_subscription_active;
 }
 
+async function isPayExpiredForVideo(root, args, ctx, info) {
+    log.trace(`isPayExpiredForVideo: ${ctx.user.id} (${ctx.user.email})`);
+
+    if (!ctx.user || !ctx.user.id) {
+        throw new GQLError({message: 'Unauthorized', code: 401});
+    }
+
+    const user = await prisma.user({email: ctx.user.email});
+
+    const charges = await prisma.chargeHistories({
+        where: {
+            user: {id: user.id},
+            refunded: false
+        },
+        orderBy: 'chargeDate_DESC'
+    });
+    if (charges && charges.length > 0) {
+        const last_charge = charges[0];
+        let expire_date = moment(last_charge.chargeDate).add(moment.duration(1, 'months'));
+        if (parseInt(last_charge.amount) > 3000) {
+            expire_date = moment(last_charge.chargeDate).add(moment.duration(1, 'years'));
+        }
+        const cur_date = moment();
+        if (cur_date <= expire_date) {
+            return false;
+        } else {
+            return true;
+        }
+    } else {
+        return true;
+    }
+}
+
 async function changeCard(root, args, ctx, info) {
     if (!ctx.user || !ctx.user.id) {
         throw new GQLError({message: 'Unauthorized', code: 401});
@@ -547,6 +580,7 @@ module.exports = {
     changeCard: changeCard,
     delete_subscription: delete_subscription,
     isPurchaseActive: isPurchaseActive,
+    isPayExpiredForVideo: isPayExpiredForVideo,
     signIn: signIn,
     addWatchedVideo: addWatchedVideo,
     updateWatchedVideo: updateWatchedVideo,

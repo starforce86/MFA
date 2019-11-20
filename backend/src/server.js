@@ -221,4 +221,5 @@ process.on('uncaughtException', function (error) {
 
     job_scheduler.addPopulateTransferPlanEvent();
     // job_scheduler.addTransferEvent();
+    job_scheduler.addPullChargeHistoryEvent();
 })();
