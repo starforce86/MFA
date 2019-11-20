@@ -170,7 +170,12 @@ async function signUp(email, firstname, lastname, phone, password, promo_code, s
                 } else {
                     err_msg = e.message;
                 }
-                throw new GQLError({message: err_msg, code: 409});
+                if (err_msg == "A unique constraint would be violated on User. Details: Field name = email") {
+                    throw new GQLError({message: "Email used by another account.", code: 409});
+                } else {
+                    throw new GQLError({message: err_msg, code: 409});
+                }
+                
             }
 
             log.trace('User created: ', newUser.email);
