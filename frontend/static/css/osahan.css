@@ -2191,9 +2191,9 @@ ul.menu li a {
     padding-right: 0 !important;
 }
 
-a:not([href]):not([tabindex]) {
+/* a:not([href]):not([tabindex]) {
     color: white !important;
-}
+} */
 
 .ant-pagination-item-active a:not([href]):not([tabindex]) {
     color: black !important;
@@ -2323,3 +2323,32 @@ strong {
 /* .card-element {
     border: solid 1px red !important;
 } */
+
+.ant-table-thead > tr > th {
+    background: #121212 !important;
+}
+
+.ant-table-thead > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td,
+.ant-table-tbody > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
+    background: #121212 !important;
+}
+
+.ant-pagination-item:focus a, .ant-pagination-item:hover a {
+    color: #1890ff !important;
+}
+.ant-pagination-prev:focus .ant-pagination-item-link,
+.ant-pagination-next:focus .ant-pagination-item-link,
+.ant-pagination-prev:hover .ant-pagination-item-link,
+.ant-pagination-next:hover .ant-pagination-item-link {
+  color: #1890ff !important;
+  border-color: #1890ff !important;
+}
+
+/* .ant-pagination-prev, .ant-pagination-next, .ant-pagination-jump-prev, .ant-pagination-jump-next {
+    color: white !important;
+} */
+
+.ant-pagination-jump-prev .ant-pagination-item-container .ant-pagination-item-ellipsis,
+.ant-pagination-jump-next .ant-pagination-item-container .ant-pagination-item-ellipsis {
+    color: white !important;
+}

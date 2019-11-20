@@ -104,6 +104,7 @@ const resolvers = {
         populateTransferPlan: userResolver.populateTransferPlan,
         payoutStats: statsResolver.payoutStats,
         availableBalance: statsResolver.availableBalance,
+        artistFactorses: statsResolver.artistFactorses,
     },
     Mutation: {
         sign_up: userResolver.signUp,
@@ -216,6 +217,9 @@ const resolvers = {
     WatchedVideoUser: {
         user: (root, args) => prisma.watchedVideoUser({id: root.id}).user(args),
         video: (root, args) => prisma.watchedVideoUser({id: root.id}).video(args),
+    },
+    ArtistFactors: {
+        artist: (root, args) => prisma.artistFactors({id: root.id}).artist(args),
     },
     Node: { // to remove warning "Type "Node" is missing a "__resolveType" resolver. Pass false into "resolverValidationOptions.requireResolversForResolveType" to disable this warning."
         __resolveType() {

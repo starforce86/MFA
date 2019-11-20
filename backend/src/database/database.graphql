@@ -219,3 +219,152 @@ type SubscriptionHistory {
     amount: Int!
     subscriptionDate: DateTime
 }
+
+type ArtistFactorsSetting {
+    id: ID! @unique
+    createdAt: DateTime!
+    updatedAt: DateTime!
+
+    promotion_factor: Float!
+    minutes_exponent: Float!
+    finder_fee_factor: Float!
+    monthly_fee_duration: Int!
+    monthly_fee_amount_per_month: Int!
+    annual_fee_amount_per_month: Int!
+}
+
+type ArtistFactors {
+    id: ID! @unique
+    createdAt: DateTime!
+    updatedAt: DateTime!
+
+    artist: User!
+    promotion_factor: Float! @default(value: 1)
+    minutes_exponent: Float! @default(value: 1)
+    finder_fee_factor: Float! @default(value: 1)
+    monthly_fee_duration: Int! @default(value: 6)
+    monthly_fee_amount_per_month: Int! @default(value: 10)
+    annual_fee_amount_per_month: Int! @default(value: 50)
+}
+
+type VideoTotalParameters {
+    id: ID! @unique
+    createdAt: DateTime!
+    updatedAt: DateTime!
+
+    minutes_watched_multiplier: Float! @default(value: 0)
+    exponent_for_minutes_watched: Float! @default(value: 0.5)
+    star_rating_multiplier: Float! @default(value: 0)
+    star_rating_on_off: Boolean! @default(value: "true")
+}
+
+type ProfitPoolFactor {
+    id: ID! @unique
+    createdAt: DateTime!
+    updatedAt: DateTime!
+
+    overhead: Int! @default(value: 2000)
+    monthly_multiplier: Float! @default(value: 1)
+    finder_fee_multiplier: Float! @default(value: 1)
+    profit_pool_option1_variable: Int! @default(value: 0)
+    profit_pool_option1_multiplier: Float! @default(value: 1)
+    profit_pool_option2_variable: Int! @default(value: 0)
+    profit_pool_option2_multiplier: Float! @default(value: 1)
+    profit_pool_percentage: Int! @default(value: 70)
+    manual_change: Int! @default(value: 0)
+}
+
+type VideoDataForMonth {
+    id: ID! @unique
+    createdAt: DateTime!
+    updatedAt: DateTime!
+
+    year: Int!
+    month: Int!
+    video: Video!
+    video_length: Int!
+    unique_users: Int! @default(value: 0)
+    real_minutes_watched: Int! @default(value: 0)
+    avg_minutes_watched: Int! @default(value: 0)
+    exponent_applied: Int! @default(value: 0)
+    minutes_after_exponent: Int! @default(value: 0)
+}
+
+type VideoParameters {
+    id: ID! @unique
+    createdAt: DateTime!
+    updatedAt: DateTime!
+
+    video: Video!
+    owner1: User @relation(name: "VideoParametersOwner1Rel")
+    owner1_percentage: Int!
+    owner2: User @relation(name: "VideoParametersOwner2Rel")
+    owner2_percentage: Int!
+    owner3: User @relation(name: "VideoParametersOwner3Rel")
+    owner3_percentage: Int!
+}
+
+type VideoParametersForMonth {
+    id: ID! @unique
+    createdAt: DateTime!
+    updatedAt: DateTime!
+
+    year: Int!
+    month: Int!
+    video: Video!
+    owner1: User @relation(name: "VideoParametersForMonthOwner1Rel")
+    owner1_percentage: Int!
+    owner2: User @relation(name: "VideoParametersForMonthOwner2Rel")
+    owner2_percentage: Int!
+    owner3: User @relation(name: "VideoParametersForMonthOwner3Rel")
+    owner3_percentage: Int!
+
+    total_minutes: Float! @default(value: 0)
+    owner1_minutes: Float! @default(value: 0)
+    owner2_minutes: Float! @default(value: 0)
+    owner3_minutes: Float! @default(value: 0)
+}
+
+type TotalMinutesForArtist {
+    id: ID! @unique
+    createdAt: DateTime!
+    updatedAt: DateTime!
+
+    year: Int!
+    month: Int!
+    artist: User!
+
+    minutes_as_owner1: Float! @default(value: 0)
+    minutes_as_owner2: Float! @default(value: 0)
+    minutes_as_owner3: Float! @default(value: 0)
+    total_minutes: Float! @default(value: 0)
+    artist_rating_factor: Float!
+    final_minutes: Float! @default(value: 0)
+    percent_of_profit_pool: Float! @default(value: 0)
+
+    monthly_quantity: Int!
+    annual_quantity: Int!
+    finder_fee: Int! @default(value: 0)
+
+    payment_from_profit_pool: Float! @default(value: 0)
+    total_payment: Float! @default(value: 0)
+}
+
+type ProfitPoolCalculation {
+    id: ID! @unique
+    createdAt: DateTime!
+    updatedAt: DateTime!
+
+    year: Int!
+    month: Int!
+    annual_active_subscribers: Int! @default(value: 0)
+    monthly_active_subscribers: Int! @default(value: 0)
+    annual_subscription_rate: Int
+    monthly_subscription_rate: Int
+    annual_pool_revenue: Int! @default(value: 0)
+    monthly_pool_revenue: Int! @default(value: 0)
+    total_revenue: Int! @default(value: 0)
+
+    total_payment_to_artists: Float! @default(value: 0)
+    net_revenue: Float! @default(value: 0)
+}

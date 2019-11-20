@@ -15,23 +15,42 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
 
 export interface Exists {
   activationCode: (where?: ActivationCodeWhereInput) => Promise<boolean>;
+  artistFactors: (where?: ArtistFactorsWhereInput) => Promise<boolean>;
+  artistFactorsSetting: (
+    where?: ArtistFactorsSettingWhereInput
+  ) => Promise<boolean>;
   category: (where?: CategoryWhereInput) => Promise<boolean>;
   chargeHistory: (where?: ChargeHistoryWhereInput) => Promise<boolean>;
   curriculum: (where?: CurriculumWhereInput) => Promise<boolean>;
   playHistory: (where?: PlayHistoryWhereInput) => Promise<boolean>;
   post: (where?: PostWhereInput) => Promise<boolean>;
+  profitPoolCalculation: (
+    where?: ProfitPoolCalculationWhereInput
+  ) => Promise<boolean>;
+  profitPoolFactor: (where?: ProfitPoolFactorWhereInput) => Promise<boolean>;
   restoreCode: (where?: RestoreCodeWhereInput) => Promise<boolean>;
   settings: (where?: SettingsWhereInput) => Promise<boolean>;
   subscriptionHistory: (
     where?: SubscriptionHistoryWhereInput
   ) => Promise<boolean>;
   tag: (where?: TagWhereInput) => Promise<boolean>;
+  totalMinutesForArtist: (
+    where?: TotalMinutesForArtistWhereInput
+  ) => Promise<boolean>;
   transferPlan: (where?: TransferPlanWhereInput) => Promise<boolean>;
   transferTransaction: (
     where?: TransferTransactionWhereInput
   ) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
   video: (where?: VideoWhereInput) => Promise<boolean>;
+  videoDataForMonth: (where?: VideoDataForMonthWhereInput) => Promise<boolean>;
+  videoParameters: (where?: VideoParametersWhereInput) => Promise<boolean>;
+  videoParametersForMonth: (
+    where?: VideoParametersForMonthWhereInput
+  ) => Promise<boolean>;
+  videoTotalParameters: (
+    where?: VideoTotalParametersWhereInput
+  ) => Promise<boolean>;
   watchedVideoUser: (where?: WatchedVideoUserWhereInput) => Promise<boolean>;
 }
 
@@ -79,6 +98,54 @@ export interface Prisma {
       last?: Int;
     }
   ) => ActivationCodeConnectionPromise;
+  artistFactors: (where: ArtistFactorsWhereUniqueInput) => ArtistFactorsPromise;
+  artistFactorses: (
+    args?: {
+      where?: ArtistFactorsWhereInput;
+      orderBy?: ArtistFactorsOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => FragmentableArray<ArtistFactors>;
+  artistFactorsesConnection: (
+    args?: {
+      where?: ArtistFactorsWhereInput;
+      orderBy?: ArtistFactorsOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => ArtistFactorsConnectionPromise;
+  artistFactorsSetting: (
+    where: ArtistFactorsSettingWhereUniqueInput
+  ) => ArtistFactorsSettingPromise;
+  artistFactorsSettings: (
+    args?: {
+      where?: ArtistFactorsSettingWhereInput;
+      orderBy?: ArtistFactorsSettingOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => FragmentableArray<ArtistFactorsSetting>;
+  artistFactorsSettingsConnection: (
+    args?: {
+      where?: ArtistFactorsSettingWhereInput;
+      orderBy?: ArtistFactorsSettingOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => ArtistFactorsSettingConnectionPromise;
   category: (where: CategoryWhereUniqueInput) => CategoryPromise;
   categories: (
     args?: {
@@ -194,6 +261,56 @@ export interface Prisma {
       last?: Int;
     }
   ) => PostConnectionPromise;
+  profitPoolCalculation: (
+    where: ProfitPoolCalculationWhereUniqueInput
+  ) => ProfitPoolCalculationPromise;
+  profitPoolCalculations: (
+    args?: {
+      where?: ProfitPoolCalculationWhereInput;
+      orderBy?: ProfitPoolCalculationOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => FragmentableArray<ProfitPoolCalculation>;
+  profitPoolCalculationsConnection: (
+    args?: {
+      where?: ProfitPoolCalculationWhereInput;
+      orderBy?: ProfitPoolCalculationOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => ProfitPoolCalculationConnectionPromise;
+  profitPoolFactor: (
+    where: ProfitPoolFactorWhereUniqueInput
+  ) => ProfitPoolFactorPromise;
+  profitPoolFactors: (
+    args?: {
+      where?: ProfitPoolFactorWhereInput;
+      orderBy?: ProfitPoolFactorOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => FragmentableArray<ProfitPoolFactor>;
+  profitPoolFactorsConnection: (
+    args?: {
+      where?: ProfitPoolFactorWhereInput;
+      orderBy?: ProfitPoolFactorOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => ProfitPoolFactorConnectionPromise;
   restoreCode: (where: RestoreCodeWhereUniqueInput) => RestoreCodePromise;
   restoreCodes: (
     args?: {
@@ -288,6 +405,31 @@ export interface Prisma {
       last?: Int;
     }
   ) => TagConnectionPromise;
+  totalMinutesForArtist: (
+    where: TotalMinutesForArtistWhereUniqueInput
+  ) => TotalMinutesForArtistPromise;
+  totalMinutesForArtists: (
+    args?: {
+      where?: TotalMinutesForArtistWhereInput;
+      orderBy?: TotalMinutesForArtistOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => FragmentableArray<TotalMinutesForArtist>;
+  totalMinutesForArtistsConnection: (
+    args?: {
+      where?: TotalMinutesForArtistWhereInput;
+      orderBy?: TotalMinutesForArtistOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => TotalMinutesForArtistConnectionPromise;
   transferPlan: (where: TransferPlanWhereUniqueInput) => TransferPlanPromise;
   transferPlans: (
     args?: {
@@ -382,6 +524,106 @@ export interface Prisma {
       last?: Int;
     }
   ) => VideoConnectionPromise;
+  videoDataForMonth: (
+    where: VideoDataForMonthWhereUniqueInput
+  ) => VideoDataForMonthPromise;
+  videoDataForMonths: (
+    args?: {
+      where?: VideoDataForMonthWhereInput;
+      orderBy?: VideoDataForMonthOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => FragmentableArray<VideoDataForMonth>;
+  videoDataForMonthsConnection: (
+    args?: {
+      where?: VideoDataForMonthWhereInput;
+      orderBy?: VideoDataForMonthOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => VideoDataForMonthConnectionPromise;
+  videoParameters: (
+    where: VideoParametersWhereUniqueInput
+  ) => VideoParametersPromise;
+  videoParameterses: (
+    args?: {
+      where?: VideoParametersWhereInput;
+      orderBy?: VideoParametersOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => FragmentableArray<VideoParameters>;
+  videoParametersesConnection: (
+    args?: {
+      where?: VideoParametersWhereInput;
+      orderBy?: VideoParametersOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => VideoParametersConnectionPromise;
+  videoParametersForMonth: (
+    where: VideoParametersForMonthWhereUniqueInput
+  ) => VideoParametersForMonthPromise;
+  videoParametersForMonths: (
+    args?: {
+      where?: VideoParametersForMonthWhereInput;
+      orderBy?: VideoParametersForMonthOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => FragmentableArray<VideoParametersForMonth>;
+  videoParametersForMonthsConnection: (
+    args?: {
+      where?: VideoParametersForMonthWhereInput;
+      orderBy?: VideoParametersForMonthOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => VideoParametersForMonthConnectionPromise;
+  videoTotalParameters: (
+    where: VideoTotalParametersWhereUniqueInput
+  ) => VideoTotalParametersPromise;
+  videoTotalParameterses: (
+    args?: {
+      where?: VideoTotalParametersWhereInput;
+      orderBy?: VideoTotalParametersOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => FragmentableArray<VideoTotalParameters>;
+  videoTotalParametersesConnection: (
+    args?: {
+      where?: VideoTotalParametersWhereInput;
+      orderBy?: VideoTotalParametersOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => VideoTotalParametersConnectionPromise;
   watchedVideoUser: (
     where: WatchedVideoUserWhereUniqueInput
   ) => WatchedVideoUserPromise;
@@ -440,6 +682,60 @@ export interface Prisma {
   ) => ActivationCodePromise;
   deleteManyActivationCodes: (
     where?: ActivationCodeWhereInput
+  ) => BatchPayloadPromise;
+  createArtistFactors: (data: ArtistFactorsCreateInput) => ArtistFactorsPromise;
+  updateArtistFactors: (
+    args: {
+      data: ArtistFactorsUpdateInput;
+      where: ArtistFactorsWhereUniqueInput;
+    }
+  ) => ArtistFactorsPromise;
+  updateManyArtistFactorses: (
+    args: {
+      data: ArtistFactorsUpdateManyMutationInput;
+      where?: ArtistFactorsWhereInput;
+    }
+  ) => BatchPayloadPromise;
+  upsertArtistFactors: (
+    args: {
+      where: ArtistFactorsWhereUniqueInput;
+      create: ArtistFactorsCreateInput;
+      update: ArtistFactorsUpdateInput;
+    }
+  ) => ArtistFactorsPromise;
+  deleteArtistFactors: (
+    where: ArtistFactorsWhereUniqueInput
+  ) => ArtistFactorsPromise;
+  deleteManyArtistFactorses: (
+    where?: ArtistFactorsWhereInput
+  ) => BatchPayloadPromise;
+  createArtistFactorsSetting: (
+    data: ArtistFactorsSettingCreateInput
+  ) => ArtistFactorsSettingPromise;
+  updateArtistFactorsSetting: (
+    args: {
+      data: ArtistFactorsSettingUpdateInput;
+      where: ArtistFactorsSettingWhereUniqueInput;
+    }
+  ) => ArtistFactorsSettingPromise;
+  updateManyArtistFactorsSettings: (
+    args: {
+      data: ArtistFactorsSettingUpdateManyMutationInput;
+      where?: ArtistFactorsSettingWhereInput;
+    }
+  ) => BatchPayloadPromise;
+  upsertArtistFactorsSetting: (
+    args: {
+      where: ArtistFactorsSettingWhereUniqueInput;
+      create: ArtistFactorsSettingCreateInput;
+      update: ArtistFactorsSettingUpdateInput;
+    }
+  ) => ArtistFactorsSettingPromise;
+  deleteArtistFactorsSetting: (
+    where: ArtistFactorsSettingWhereUniqueInput
+  ) => ArtistFactorsSettingPromise;
+  deleteManyArtistFactorsSettings: (
+    where?: ArtistFactorsSettingWhereInput
   ) => BatchPayloadPromise;
   createCategory: (data: CategoryCreateInput) => CategoryPromise;
   updateCategory: (
@@ -539,6 +835,62 @@ export interface Prisma {
   ) => PostPromise;
   deletePost: (where: PostWhereUniqueInput) => PostPromise;
   deleteManyPosts: (where?: PostWhereInput) => BatchPayloadPromise;
+  createProfitPoolCalculation: (
+    data: ProfitPoolCalculationCreateInput
+  ) => ProfitPoolCalculationPromise;
+  updateProfitPoolCalculation: (
+    args: {
+      data: ProfitPoolCalculationUpdateInput;
+      where: ProfitPoolCalculationWhereUniqueInput;
+    }
+  ) => ProfitPoolCalculationPromise;
+  updateManyProfitPoolCalculations: (
+    args: {
+      data: ProfitPoolCalculationUpdateManyMutationInput;
+      where?: ProfitPoolCalculationWhereInput;
+    }
+  ) => BatchPayloadPromise;
+  upsertProfitPoolCalculation: (
+    args: {
+      where: ProfitPoolCalculationWhereUniqueInput;
+      create: ProfitPoolCalculationCreateInput;
+      update: ProfitPoolCalculationUpdateInput;
+    }
+  ) => ProfitPoolCalculationPromise;
+  deleteProfitPoolCalculation: (
+    where: ProfitPoolCalculationWhereUniqueInput
+  ) => ProfitPoolCalculationPromise;
+  deleteManyProfitPoolCalculations: (
+    where?: ProfitPoolCalculationWhereInput
+  ) => BatchPayloadPromise;
+  createProfitPoolFactor: (
+    data: ProfitPoolFactorCreateInput
+  ) => ProfitPoolFactorPromise;
+  updateProfitPoolFactor: (
+    args: {
+      data: ProfitPoolFactorUpdateInput;
+      where: ProfitPoolFactorWhereUniqueInput;
+    }
+  ) => ProfitPoolFactorPromise;
+  updateManyProfitPoolFactors: (
+    args: {
+      data: ProfitPoolFactorUpdateManyMutationInput;
+      where?: ProfitPoolFactorWhereInput;
+    }
+  ) => BatchPayloadPromise;
+  upsertProfitPoolFactor: (
+    args: {
+      where: ProfitPoolFactorWhereUniqueInput;
+      create: ProfitPoolFactorCreateInput;
+      update: ProfitPoolFactorUpdateInput;
+    }
+  ) => ProfitPoolFactorPromise;
+  deleteProfitPoolFactor: (
+    where: ProfitPoolFactorWhereUniqueInput
+  ) => ProfitPoolFactorPromise;
+  deleteManyProfitPoolFactors: (
+    where?: ProfitPoolFactorWhereInput
+  ) => BatchPayloadPromise;
   createRestoreCode: (data: RestoreCodeCreateInput) => RestoreCodePromise;
   updateRestoreCode: (
     args: { data: RestoreCodeUpdateInput; where: RestoreCodeWhereUniqueInput }
@@ -620,6 +972,34 @@ export interface Prisma {
   ) => TagPromise;
   deleteTag: (where: TagWhereUniqueInput) => TagPromise;
   deleteManyTags: (where?: TagWhereInput) => BatchPayloadPromise;
+  createTotalMinutesForArtist: (
+    data: TotalMinutesForArtistCreateInput
+  ) => TotalMinutesForArtistPromise;
+  updateTotalMinutesForArtist: (
+    args: {
+      data: TotalMinutesForArtistUpdateInput;
+      where: TotalMinutesForArtistWhereUniqueInput;
+    }
+  ) => TotalMinutesForArtistPromise;
+  updateManyTotalMinutesForArtists: (
+    args: {
+      data: TotalMinutesForArtistUpdateManyMutationInput;
+      where?: TotalMinutesForArtistWhereInput;
+    }
+  ) => BatchPayloadPromise;
+  upsertTotalMinutesForArtist: (
+    args: {
+      where: TotalMinutesForArtistWhereUniqueInput;
+      create: TotalMinutesForArtistCreateInput;
+      update: TotalMinutesForArtistUpdateInput;
+    }
+  ) => TotalMinutesForArtistPromise;
+  deleteTotalMinutesForArtist: (
+    where: TotalMinutesForArtistWhereUniqueInput
+  ) => TotalMinutesForArtistPromise;
+  deleteManyTotalMinutesForArtists: (
+    where?: TotalMinutesForArtistWhereInput
+  ) => BatchPayloadPromise;
   createTransferPlan: (data: TransferPlanCreateInput) => TransferPlanPromise;
   updateTransferPlan: (
     args: { data: TransferPlanUpdateInput; where: TransferPlanWhereUniqueInput }
@@ -703,6 +1083,118 @@ export interface Prisma {
   ) => VideoPromise;
   deleteVideo: (where: VideoWhereUniqueInput) => VideoPromise;
   deleteManyVideos: (where?: VideoWhereInput) => BatchPayloadPromise;
+  createVideoDataForMonth: (
+    data: VideoDataForMonthCreateInput
+  ) => VideoDataForMonthPromise;
+  updateVideoDataForMonth: (
+    args: {
+      data: VideoDataForMonthUpdateInput;
+      where: VideoDataForMonthWhereUniqueInput;
+    }
+  ) => VideoDataForMonthPromise;
+  updateManyVideoDataForMonths: (
+    args: {
+      data: VideoDataForMonthUpdateManyMutationInput;
+      where?: VideoDataForMonthWhereInput;
+    }
+  ) => BatchPayloadPromise;
+  upsertVideoDataForMonth: (
+    args: {
+      where: VideoDataForMonthWhereUniqueInput;
+      create: VideoDataForMonthCreateInput;
+      update: VideoDataForMonthUpdateInput;
+    }
+  ) => VideoDataForMonthPromise;
+  deleteVideoDataForMonth: (
+    where: VideoDataForMonthWhereUniqueInput
+  ) => VideoDataForMonthPromise;
+  deleteManyVideoDataForMonths: (
+    where?: VideoDataForMonthWhereInput
+  ) => BatchPayloadPromise;
+  createVideoParameters: (
+    data: VideoParametersCreateInput
+  ) => VideoParametersPromise;
+  updateVideoParameters: (
+    args: {
+      data: VideoParametersUpdateInput;
+      where: VideoParametersWhereUniqueInput;
+    }
+  ) => VideoParametersPromise;
+  updateManyVideoParameterses: (
+    args: {
+      data: VideoParametersUpdateManyMutationInput;
+      where?: VideoParametersWhereInput;
+    }
+  ) => BatchPayloadPromise;
+  upsertVideoParameters: (
+    args: {
+      where: VideoParametersWhereUniqueInput;
+      create: VideoParametersCreateInput;
+      update: VideoParametersUpdateInput;
+    }
+  ) => VideoParametersPromise;
+  deleteVideoParameters: (
+    where: VideoParametersWhereUniqueInput
+  ) => VideoParametersPromise;
+  deleteManyVideoParameterses: (
+    where?: VideoParametersWhereInput
+  ) => BatchPayloadPromise;
+  createVideoParametersForMonth: (
+    data: VideoParametersForMonthCreateInput
+  ) => VideoParametersForMonthPromise;
+  updateVideoParametersForMonth: (
+    args: {
+      data: VideoParametersForMonthUpdateInput;
+      where: VideoParametersForMonthWhereUniqueInput;
+    }
+  ) => VideoParametersForMonthPromise;
+  updateManyVideoParametersForMonths: (
+    args: {
+      data: VideoParametersForMonthUpdateManyMutationInput;
+      where?: VideoParametersForMonthWhereInput;
+    }
+  ) => BatchPayloadPromise;
+  upsertVideoParametersForMonth: (
+    args: {
+      where: VideoParametersForMonthWhereUniqueInput;
+      create: VideoParametersForMonthCreateInput;
+      update: VideoParametersForMonthUpdateInput;
+    }
+  ) => VideoParametersForMonthPromise;
+  deleteVideoParametersForMonth: (
+    where: VideoParametersForMonthWhereUniqueInput
+  ) => VideoParametersForMonthPromise;
+  deleteManyVideoParametersForMonths: (
+    where?: VideoParametersForMonthWhereInput
+  ) => BatchPayloadPromise;
+  createVideoTotalParameters: (
+    data: VideoTotalParametersCreateInput
+  ) => VideoTotalParametersPromise;
+  updateVideoTotalParameters: (
+    args: {
+      data: VideoTotalParametersUpdateInput;
+      where: VideoTotalParametersWhereUniqueInput;
+    }
+  ) => VideoTotalParametersPromise;
+  updateManyVideoTotalParameterses: (
+    args: {
+      data: VideoTotalParametersUpdateManyMutationInput;
+      where?: VideoTotalParametersWhereInput;
+    }
+  ) => BatchPayloadPromise;
+  upsertVideoTotalParameters: (
+    args: {
+      where: VideoTotalParametersWhereUniqueInput;
+      create: VideoTotalParametersCreateInput;
+      update: VideoTotalParametersUpdateInput;
+    }
+  ) => VideoTotalParametersPromise;
+  deleteVideoTotalParameters: (
+    where: VideoTotalParametersWhereUniqueInput
+  ) => VideoTotalParametersPromise;
+  deleteManyVideoTotalParameterses: (
+    where?: VideoTotalParametersWhereInput
+  ) => BatchPayloadPromise;
   createWatchedVideoUser: (
     data: WatchedVideoUserCreateInput
   ) => WatchedVideoUserPromise;
@@ -743,6 +1235,12 @@ export interface Subscription {
   activationCode: (
     where?: ActivationCodeSubscriptionWhereInput
   ) => ActivationCodeSubscriptionPayloadSubscription;
+  artistFactors: (
+    where?: ArtistFactorsSubscriptionWhereInput
+  ) => ArtistFactorsSubscriptionPayloadSubscription;
+  artistFactorsSetting: (
+    where?: ArtistFactorsSettingSubscriptionWhereInput
+  ) => ArtistFactorsSettingSubscriptionPayloadSubscription;
   category: (
     where?: CategorySubscriptionWhereInput
   ) => CategorySubscriptionPayloadSubscription;
@@ -758,6 +1256,12 @@ export interface Subscription {
   post: (
     where?: PostSubscriptionWhereInput
   ) => PostSubscriptionPayloadSubscription;
+  profitPoolCalculation: (
+    where?: ProfitPoolCalculationSubscriptionWhereInput
+  ) => ProfitPoolCalculationSubscriptionPayloadSubscription;
+  profitPoolFactor: (
+    where?: ProfitPoolFactorSubscriptionWhereInput
+  ) => ProfitPoolFactorSubscriptionPayloadSubscription;
   restoreCode: (
     where?: RestoreCodeSubscriptionWhereInput
   ) => RestoreCodeSubscriptionPayloadSubscription;
@@ -770,6 +1274,9 @@ export interface Subscription {
   tag: (
     where?: TagSubscriptionWhereInput
   ) => TagSubscriptionPayloadSubscription;
+  totalMinutesForArtist: (
+    where?: TotalMinutesForArtistSubscriptionWhereInput
+  ) => TotalMinutesForArtistSubscriptionPayloadSubscription;
   transferPlan: (
     where?: TransferPlanSubscriptionWhereInput
   ) => TransferPlanSubscriptionPayloadSubscription;
@@ -782,6 +1289,18 @@ export interface Subscription {
   video: (
     where?: VideoSubscriptionWhereInput
   ) => VideoSubscriptionPayloadSubscription;
+  videoDataForMonth: (
+    where?: VideoDataForMonthSubscriptionWhereInput
+  ) => VideoDataForMonthSubscriptionPayloadSubscription;
+  videoParameters: (
+    where?: VideoParametersSubscriptionWhereInput
+  ) => VideoParametersSubscriptionPayloadSubscription;
+  videoParametersForMonth: (
+    where?: VideoParametersForMonthSubscriptionWhereInput
+  ) => VideoParametersForMonthSubscriptionPayloadSubscription;
+  videoTotalParameters: (
+    where?: VideoTotalParametersSubscriptionWhereInput
+  ) => VideoTotalParametersSubscriptionPayloadSubscription;
   watchedVideoUser: (
     where?: WatchedVideoUserSubscriptionWhereInput
   ) => WatchedVideoUserSubscriptionPayloadSubscription;
@@ -810,32 +1329,6 @@ export type ActivationCodeOrderByInput =
   | "code_DESC";
 
 export type UserRole = "USER_VIEWER" | "USER_PUBLISHER" | "MODERATOR" | "ADMIN";
-
-export type VideoOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC"
-  | "updatedAt_ASC"
-  | "updatedAt_DESC"
-  | "title_ASC"
-  | "title_DESC"
-  | "description_ASC"
-  | "description_DESC"
-  | "publish_date_ASC"
-  | "publish_date_DESC"
-  | "file_url_ASC"
-  | "file_url_DESC"
-  | "video_duration_ASC"
-  | "video_duration_DESC"
-  | "preview_url_ASC"
-  | "preview_url_DESC"
-  | "preview_video_url_ASC"
-  | "preview_video_url_DESC"
-  | "preview_video_duration_ASC"
-  | "preview_video_duration_DESC"
-  | "deleted_ASC"
-  | "deleted_DESC";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -891,15 +1384,31 @@ export type UserOrderByInput =
   | "last_login_date_ASC"
   | "last_login_date_DESC";
 
-export type WatchedVideoUserOrderByInput =
+export type VideoOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "watched_seconds_ASC"
-  | "watched_seconds_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
-  | "updatedAt_DESC";
+  | "updatedAt_DESC"
+  | "title_ASC"
+  | "title_DESC"
+  | "description_ASC"
+  | "description_DESC"
+  | "publish_date_ASC"
+  | "publish_date_DESC"
+  | "file_url_ASC"
+  | "file_url_DESC"
+  | "video_duration_ASC"
+  | "video_duration_DESC"
+  | "preview_url_ASC"
+  | "preview_url_DESC"
+  | "preview_video_url_ASC"
+  | "preview_video_url_DESC"
+  | "preview_video_duration_ASC"
+  | "preview_video_duration_DESC"
+  | "deleted_ASC"
+  | "deleted_DESC";
 
 export type CategoryOrderByInput =
   | "id_ASC"
@@ -913,6 +1422,16 @@ export type CategoryOrderByInput =
   | "description_ASC"
   | "description_DESC";
 
+export type WatchedVideoUserOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "watched_seconds_ASC"
+  | "watched_seconds_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
+
 export type TagOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -922,6 +1441,46 @@ export type TagOrderByInput =
   | "updatedAt_DESC"
   | "text_ASC"
   | "text_DESC";
+
+export type ArtistFactorsOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC"
+  | "promotion_factor_ASC"
+  | "promotion_factor_DESC"
+  | "minutes_exponent_ASC"
+  | "minutes_exponent_DESC"
+  | "finder_fee_factor_ASC"
+  | "finder_fee_factor_DESC"
+  | "monthly_fee_duration_ASC"
+  | "monthly_fee_duration_DESC"
+  | "monthly_fee_amount_per_month_ASC"
+  | "monthly_fee_amount_per_month_DESC"
+  | "annual_fee_amount_per_month_ASC"
+  | "annual_fee_amount_per_month_DESC";
+
+export type ArtistFactorsSettingOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC"
+  | "promotion_factor_ASC"
+  | "promotion_factor_DESC"
+  | "minutes_exponent_ASC"
+  | "minutes_exponent_DESC"
+  | "finder_fee_factor_ASC"
+  | "finder_fee_factor_DESC"
+  | "monthly_fee_duration_ASC"
+  | "monthly_fee_duration_DESC"
+  | "monthly_fee_amount_per_month_ASC"
+  | "monthly_fee_amount_per_month_DESC"
+  | "annual_fee_amount_per_month_ASC"
+  | "annual_fee_amount_per_month_DESC";
 
 export type ChargeHistoryOrderByInput =
   | "id_ASC"
@@ -975,6 +1534,62 @@ export type PostOrderByInput =
   | "text_ASC"
   | "text_DESC";
 
+export type ProfitPoolCalculationOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC"
+  | "year_ASC"
+  | "year_DESC"
+  | "month_ASC"
+  | "month_DESC"
+  | "annual_active_subscribers_ASC"
+  | "annual_active_subscribers_DESC"
+  | "monthly_active_subscribers_ASC"
+  | "monthly_active_subscribers_DESC"
+  | "annual_subscription_rate_ASC"
+  | "annual_subscription_rate_DESC"
+  | "monthly_subscription_rate_ASC"
+  | "monthly_subscription_rate_DESC"
+  | "annual_pool_revenue_ASC"
+  | "annual_pool_revenue_DESC"
+  | "monthly_pool_revenue_ASC"
+  | "monthly_pool_revenue_DESC"
+  | "total_revenue_ASC"
+  | "total_revenue_DESC"
+  | "total_payment_to_artists_ASC"
+  | "total_payment_to_artists_DESC"
+  | "net_revenue_ASC"
+  | "net_revenue_DESC";
+
+export type ProfitPoolFactorOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC"
+  | "overhead_ASC"
+  | "overhead_DESC"
+  | "monthly_multiplier_ASC"
+  | "monthly_multiplier_DESC"
+  | "finder_fee_multiplier_ASC"
+  | "finder_fee_multiplier_DESC"
+  | "profit_pool_option1_variable_ASC"
+  | "profit_pool_option1_variable_DESC"
+  | "profit_pool_option1_multiplier_ASC"
+  | "profit_pool_option1_multiplier_DESC"
+  | "profit_pool_option2_variable_ASC"
+  | "profit_pool_option2_variable_DESC"
+  | "profit_pool_option2_multiplier_ASC"
+  | "profit_pool_option2_multiplier_DESC"
+  | "profit_pool_percentage_ASC"
+  | "profit_pool_percentage_DESC"
+  | "manual_change_ASC"
+  | "manual_change_DESC";
+
 export type RestoreCodeOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -1017,6 +1632,42 @@ export type SubscriptionHistoryOrderByInput =
   | "subscriptionDate_ASC"
   | "subscriptionDate_DESC";
 
+export type TotalMinutesForArtistOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC"
+  | "year_ASC"
+  | "year_DESC"
+  | "month_ASC"
+  | "month_DESC"
+  | "minutes_as_owner1_ASC"
+  | "minutes_as_owner1_DESC"
+  | "minutes_as_owner2_ASC"
+  | "minutes_as_owner2_DESC"
+  | "minutes_as_owner3_ASC"
+  | "minutes_as_owner3_DESC"
+  | "total_minutes_ASC"
+  | "total_minutes_DESC"
+  | "artist_rating_factor_ASC"
+  | "artist_rating_factor_DESC"
+  | "final_minutes_ASC"
+  | "final_minutes_DESC"
+  | "percent_of_profit_pool_ASC"
+  | "percent_of_profit_pool_DESC"
+  | "monthly_quantity_ASC"
+  | "monthly_quantity_DESC"
+  | "annual_quantity_ASC"
+  | "annual_quantity_DESC"
+  | "finder_fee_ASC"
+  | "finder_fee_DESC"
+  | "payment_from_profit_pool_ASC"
+  | "payment_from_profit_pool_DESC"
+  | "total_payment_ASC"
+  | "total_payment_DESC";
+
 export type TransferPlanOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -1054,6 +1705,86 @@ export type TransferTransactionOrderByInput =
   | "paid_status_DESC"
   | "paid_date_ASC"
   | "paid_date_DESC";
+
+export type VideoDataForMonthOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC"
+  | "year_ASC"
+  | "year_DESC"
+  | "month_ASC"
+  | "month_DESC"
+  | "video_length_ASC"
+  | "video_length_DESC"
+  | "unique_users_ASC"
+  | "unique_users_DESC"
+  | "real_minutes_watched_ASC"
+  | "real_minutes_watched_DESC"
+  | "avg_minutes_watched_ASC"
+  | "avg_minutes_watched_DESC"
+  | "exponent_applied_ASC"
+  | "exponent_applied_DESC"
+  | "minutes_after_exponent_ASC"
+  | "minutes_after_exponent_DESC";
+
+export type VideoParametersOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC"
+  | "owner1_percentage_ASC"
+  | "owner1_percentage_DESC"
+  | "owner2_percentage_ASC"
+  | "owner2_percentage_DESC"
+  | "owner3_percentage_ASC"
+  | "owner3_percentage_DESC";
+
+export type VideoParametersForMonthOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC"
+  | "year_ASC"
+  | "year_DESC"
+  | "month_ASC"
+  | "month_DESC"
+  | "owner1_percentage_ASC"
+  | "owner1_percentage_DESC"
+  | "owner2_percentage_ASC"
+  | "owner2_percentage_DESC"
+  | "owner3_percentage_ASC"
+  | "owner3_percentage_DESC"
+  | "total_minutes_ASC"
+  | "total_minutes_DESC"
+  | "owner1_minutes_ASC"
+  | "owner1_minutes_DESC"
+  | "owner2_minutes_ASC"
+  | "owner2_minutes_DESC"
+  | "owner3_minutes_ASC"
+  | "owner3_minutes_DESC";
+
+export type VideoTotalParametersOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC"
+  | "minutes_watched_multiplier_ASC"
+  | "minutes_watched_multiplier_DESC"
+  | "exponent_for_minutes_watched_ASC"
+  | "exponent_for_minutes_watched_DESC"
+  | "star_rating_multiplier_ASC"
+  | "star_rating_multiplier_DESC"
+  | "star_rating_on_off_ASC"
+  | "star_rating_on_off_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
@@ -1134,160 +1865,9 @@ export interface ActivationCodeWhereInput {
   NOT?: ActivationCodeWhereInput[] | ActivationCodeWhereInput;
 }
 
-export type CategoryWhereUniqueInput = AtLeastOne<{
+export type ArtistFactorsWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
-
-export interface VideoWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  createdAt?: DateTimeInput;
-  createdAt_not?: DateTimeInput;
-  createdAt_in?: DateTimeInput[] | DateTimeInput;
-  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
-  createdAt_lt?: DateTimeInput;
-  createdAt_lte?: DateTimeInput;
-  createdAt_gt?: DateTimeInput;
-  createdAt_gte?: DateTimeInput;
-  updatedAt?: DateTimeInput;
-  updatedAt_not?: DateTimeInput;
-  updatedAt_in?: DateTimeInput[] | DateTimeInput;
-  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
-  updatedAt_lt?: DateTimeInput;
-  updatedAt_lte?: DateTimeInput;
-  updatedAt_gt?: DateTimeInput;
-  updatedAt_gte?: DateTimeInput;
-  title?: String;
-  title_not?: String;
-  title_in?: String[] | String;
-  title_not_in?: String[] | String;
-  title_lt?: String;
-  title_lte?: String;
-  title_gt?: String;
-  title_gte?: String;
-  title_contains?: String;
-  title_not_contains?: String;
-  title_starts_with?: String;
-  title_not_starts_with?: String;
-  title_ends_with?: String;
-  title_not_ends_with?: String;
-  description?: String;
-  description_not?: String;
-  description_in?: String[] | String;
-  description_not_in?: String[] | String;
-  description_lt?: String;
-  description_lte?: String;
-  description_gt?: String;
-  description_gte?: String;
-  description_contains?: String;
-  description_not_contains?: String;
-  description_starts_with?: String;
-  description_not_starts_with?: String;
-  description_ends_with?: String;
-  description_not_ends_with?: String;
-  publish_date?: DateTimeInput;
-  publish_date_not?: DateTimeInput;
-  publish_date_in?: DateTimeInput[] | DateTimeInput;
-  publish_date_not_in?: DateTimeInput[] | DateTimeInput;
-  publish_date_lt?: DateTimeInput;
-  publish_date_lte?: DateTimeInput;
-  publish_date_gt?: DateTimeInput;
-  publish_date_gte?: DateTimeInput;
-  file_url?: String;
-  file_url_not?: String;
-  file_url_in?: String[] | String;
-  file_url_not_in?: String[] | String;
-  file_url_lt?: String;
-  file_url_lte?: String;
-  file_url_gt?: String;
-  file_url_gte?: String;
-  file_url_contains?: String;
-  file_url_not_contains?: String;
-  file_url_starts_with?: String;
-  file_url_not_starts_with?: String;
-  file_url_ends_with?: String;
-  file_url_not_ends_with?: String;
-  video_duration?: Int;
-  video_duration_not?: Int;
-  video_duration_in?: Int[] | Int;
-  video_duration_not_in?: Int[] | Int;
-  video_duration_lt?: Int;
-  video_duration_lte?: Int;
-  video_duration_gt?: Int;
-  video_duration_gte?: Int;
-  preview_url?: String;
-  preview_url_not?: String;
-  preview_url_in?: String[] | String;
-  preview_url_not_in?: String[] | String;
-  preview_url_lt?: String;
-  preview_url_lte?: String;
-  preview_url_gt?: String;
-  preview_url_gte?: String;
-  preview_url_contains?: String;
-  preview_url_not_contains?: String;
-  preview_url_starts_with?: String;
-  preview_url_not_starts_with?: String;
-  preview_url_ends_with?: String;
-  preview_url_not_ends_with?: String;
-  preview_video_url?: String;
-  preview_video_url_not?: String;
-  preview_video_url_in?: String[] | String;
-  preview_video_url_not_in?: String[] | String;
-  preview_video_url_lt?: String;
-  preview_video_url_lte?: String;
-  preview_video_url_gt?: String;
-  preview_video_url_gte?: String;
-  preview_video_url_contains?: String;
-  preview_video_url_not_contains?: String;
-  preview_video_url_starts_with?: String;
-  preview_video_url_not_starts_with?: String;
-  preview_video_url_ends_with?: String;
-  preview_video_url_not_ends_with?: String;
-  preview_video_duration?: String;
-  preview_video_duration_not?: String;
-  preview_video_duration_in?: String[] | String;
-  preview_video_duration_not_in?: String[] | String;
-  preview_video_duration_lt?: String;
-  preview_video_duration_lte?: String;
-  preview_video_duration_gt?: String;
-  preview_video_duration_gte?: String;
-  preview_video_duration_contains?: String;
-  preview_video_duration_not_contains?: String;
-  preview_video_duration_starts_with?: String;
-  preview_video_duration_not_starts_with?: String;
-  preview_video_duration_ends_with?: String;
-  preview_video_duration_not_ends_with?: String;
-  author?: UserWhereInput;
-  categories_every?: CategoryWhereInput;
-  categories_some?: CategoryWhereInput;
-  categories_none?: CategoryWhereInput;
-  like_users_every?: UserWhereInput;
-  like_users_some?: UserWhereInput;
-  like_users_none?: UserWhereInput;
-  watched_users_every?: WatchedVideoUserWhereInput;
-  watched_users_some?: WatchedVideoUserWhereInput;
-  watched_users_none?: WatchedVideoUserWhereInput;
-  tags_every?: TagWhereInput;
-  tags_some?: TagWhereInput;
-  tags_none?: TagWhereInput;
-  deleted?: Boolean;
-  deleted_not?: Boolean;
-  AND?: VideoWhereInput[] | VideoWhereInput;
-  OR?: VideoWhereInput[] | VideoWhereInput;
-  NOT?: VideoWhereInput[] | VideoWhereInput;
-}
 
 export interface UserWhereInput {
   id?: ID_Input;
@@ -1582,7 +2162,7 @@ export interface UserWhereInput {
   NOT?: UserWhereInput[] | UserWhereInput;
 }
 
-export interface WatchedVideoUserWhereInput {
+export interface VideoWhereInput {
   id?: ID_Input;
   id_not?: ID_Input;
   id_in?: ID_Input[] | ID_Input;
@@ -1597,19 +2177,140 @@ export interface WatchedVideoUserWhereInput {
   id_not_starts_with?: ID_Input;
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
-  video?: VideoWhereInput;
-  user?: UserWhereInput;
-  watched_seconds?: Int;
-  watched_seconds_not?: Int;
-  watched_seconds_in?: Int[] | Int;
-  watched_seconds_not_in?: Int[] | Int;
-  watched_seconds_lt?: Int;
-  watched_seconds_lte?: Int;
-  watched_seconds_gt?: Int;
-  watched_seconds_gte?: Int;
-  AND?: WatchedVideoUserWhereInput[] | WatchedVideoUserWhereInput;
-  OR?: WatchedVideoUserWhereInput[] | WatchedVideoUserWhereInput;
-  NOT?: WatchedVideoUserWhereInput[] | WatchedVideoUserWhereInput;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  updatedAt?: DateTimeInput;
+  updatedAt_not?: DateTimeInput;
+  updatedAt_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_lt?: DateTimeInput;
+  updatedAt_lte?: DateTimeInput;
+  updatedAt_gt?: DateTimeInput;
+  updatedAt_gte?: DateTimeInput;
+  title?: String;
+  title_not?: String;
+  title_in?: String[] | String;
+  title_not_in?: String[] | String;
+  title_lt?: String;
+  title_lte?: String;
+  title_gt?: String;
+  title_gte?: String;
+  title_contains?: String;
+  title_not_contains?: String;
+  title_starts_with?: String;
+  title_not_starts_with?: String;
+  title_ends_with?: String;
+  title_not_ends_with?: String;
+  description?: String;
+  description_not?: String;
+  description_in?: String[] | String;
+  description_not_in?: String[] | String;
+  description_lt?: String;
+  description_lte?: String;
+  description_gt?: String;
+  description_gte?: String;
+  description_contains?: String;
+  description_not_contains?: String;
+  description_starts_with?: String;
+  description_not_starts_with?: String;
+  description_ends_with?: String;
+  description_not_ends_with?: String;
+  publish_date?: DateTimeInput;
+  publish_date_not?: DateTimeInput;
+  publish_date_in?: DateTimeInput[] | DateTimeInput;
+  publish_date_not_in?: DateTimeInput[] | DateTimeInput;
+  publish_date_lt?: DateTimeInput;
+  publish_date_lte?: DateTimeInput;
+  publish_date_gt?: DateTimeInput;
+  publish_date_gte?: DateTimeInput;
+  file_url?: String;
+  file_url_not?: String;
+  file_url_in?: String[] | String;
+  file_url_not_in?: String[] | String;
+  file_url_lt?: String;
+  file_url_lte?: String;
+  file_url_gt?: String;
+  file_url_gte?: String;
+  file_url_contains?: String;
+  file_url_not_contains?: String;
+  file_url_starts_with?: String;
+  file_url_not_starts_with?: String;
+  file_url_ends_with?: String;
+  file_url_not_ends_with?: String;
+  video_duration?: Int;
+  video_duration_not?: Int;
+  video_duration_in?: Int[] | Int;
+  video_duration_not_in?: Int[] | Int;
+  video_duration_lt?: Int;
+  video_duration_lte?: Int;
+  video_duration_gt?: Int;
+  video_duration_gte?: Int;
+  preview_url?: String;
+  preview_url_not?: String;
+  preview_url_in?: String[] | String;
+  preview_url_not_in?: String[] | String;
+  preview_url_lt?: String;
+  preview_url_lte?: String;
+  preview_url_gt?: String;
+  preview_url_gte?: String;
+  preview_url_contains?: String;
+  preview_url_not_contains?: String;
+  preview_url_starts_with?: String;
+  preview_url_not_starts_with?: String;
+  preview_url_ends_with?: String;
+  preview_url_not_ends_with?: String;
+  preview_video_url?: String;
+  preview_video_url_not?: String;
+  preview_video_url_in?: String[] | String;
+  preview_video_url_not_in?: String[] | String;
+  preview_video_url_lt?: String;
+  preview_video_url_lte?: String;
+  preview_video_url_gt?: String;
+  preview_video_url_gte?: String;
+  preview_video_url_contains?: String;
+  preview_video_url_not_contains?: String;
+  preview_video_url_starts_with?: String;
+  preview_video_url_not_starts_with?: String;
+  preview_video_url_ends_with?: String;
+  preview_video_url_not_ends_with?: String;
+  preview_video_duration?: String;
+  preview_video_duration_not?: String;
+  preview_video_duration_in?: String[] | String;
+  preview_video_duration_not_in?: String[] | String;
+  preview_video_duration_lt?: String;
+  preview_video_duration_lte?: String;
+  preview_video_duration_gt?: String;
+  preview_video_duration_gte?: String;
+  preview_video_duration_contains?: String;
+  preview_video_duration_not_contains?: String;
+  preview_video_duration_starts_with?: String;
+  preview_video_duration_not_starts_with?: String;
+  preview_video_duration_ends_with?: String;
+  preview_video_duration_not_ends_with?: String;
+  author?: UserWhereInput;
+  categories_every?: CategoryWhereInput;
+  categories_some?: CategoryWhereInput;
+  categories_none?: CategoryWhereInput;
+  like_users_every?: UserWhereInput;
+  like_users_some?: UserWhereInput;
+  like_users_none?: UserWhereInput;
+  watched_users_every?: WatchedVideoUserWhereInput;
+  watched_users_some?: WatchedVideoUserWhereInput;
+  watched_users_none?: WatchedVideoUserWhereInput;
+  tags_every?: TagWhereInput;
+  tags_some?: TagWhereInput;
+  tags_none?: TagWhereInput;
+  deleted?: Boolean;
+  deleted_not?: Boolean;
+  AND?: VideoWhereInput[] | VideoWhereInput;
+  OR?: VideoWhereInput[] | VideoWhereInput;
+  NOT?: VideoWhereInput[] | VideoWhereInput;
 }
 
 export interface CategoryWhereInput {
@@ -1679,6 +2380,36 @@ export interface CategoryWhereInput {
   NOT?: CategoryWhereInput[] | CategoryWhereInput;
 }
 
+export interface WatchedVideoUserWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  video?: VideoWhereInput;
+  user?: UserWhereInput;
+  watched_seconds?: Int;
+  watched_seconds_not?: Int;
+  watched_seconds_in?: Int[] | Int;
+  watched_seconds_not_in?: Int[] | Int;
+  watched_seconds_lt?: Int;
+  watched_seconds_lte?: Int;
+  watched_seconds_gt?: Int;
+  watched_seconds_gte?: Int;
+  AND?: WatchedVideoUserWhereInput[] | WatchedVideoUserWhereInput;
+  OR?: WatchedVideoUserWhereInput[] | WatchedVideoUserWhereInput;
+  NOT?: WatchedVideoUserWhereInput[] | WatchedVideoUserWhereInput;
+}
+
 export interface TagWhereInput {
   id?: ID_Input;
   id_not?: ID_Input;
@@ -1731,6 +2462,183 @@ export interface TagWhereInput {
   OR?: TagWhereInput[] | TagWhereInput;
   NOT?: TagWhereInput[] | TagWhereInput;
 }
+
+export interface ArtistFactorsWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  updatedAt?: DateTimeInput;
+  updatedAt_not?: DateTimeInput;
+  updatedAt_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_lt?: DateTimeInput;
+  updatedAt_lte?: DateTimeInput;
+  updatedAt_gt?: DateTimeInput;
+  updatedAt_gte?: DateTimeInput;
+  artist?: UserWhereInput;
+  promotion_factor?: Float;
+  promotion_factor_not?: Float;
+  promotion_factor_in?: Float[] | Float;
+  promotion_factor_not_in?: Float[] | Float;
+  promotion_factor_lt?: Float;
+  promotion_factor_lte?: Float;
+  promotion_factor_gt?: Float;
+  promotion_factor_gte?: Float;
+  minutes_exponent?: Float;
+  minutes_exponent_not?: Float;
+  minutes_exponent_in?: Float[] | Float;
+  minutes_exponent_not_in?: Float[] | Float;
+  minutes_exponent_lt?: Float;
+  minutes_exponent_lte?: Float;
+  minutes_exponent_gt?: Float;
+  minutes_exponent_gte?: Float;
+  finder_fee_factor?: Float;
+  finder_fee_factor_not?: Float;
+  finder_fee_factor_in?: Float[] | Float;
+  finder_fee_factor_not_in?: Float[] | Float;
+  finder_fee_factor_lt?: Float;
+  finder_fee_factor_lte?: Float;
+  finder_fee_factor_gt?: Float;
+  finder_fee_factor_gte?: Float;
+  monthly_fee_duration?: Int;
+  monthly_fee_duration_not?: Int;
+  monthly_fee_duration_in?: Int[] | Int;
+  monthly_fee_duration_not_in?: Int[] | Int;
+  monthly_fee_duration_lt?: Int;
+  monthly_fee_duration_lte?: Int;
+  monthly_fee_duration_gt?: Int;
+  monthly_fee_duration_gte?: Int;
+  monthly_fee_amount_per_month?: Int;
+  monthly_fee_amount_per_month_not?: Int;
+  monthly_fee_amount_per_month_in?: Int[] | Int;
+  monthly_fee_amount_per_month_not_in?: Int[] | Int;
+  monthly_fee_amount_per_month_lt?: Int;
+  monthly_fee_amount_per_month_lte?: Int;
+  monthly_fee_amount_per_month_gt?: Int;
+  monthly_fee_amount_per_month_gte?: Int;
+  annual_fee_amount_per_month?: Int;
+  annual_fee_amount_per_month_not?: Int;
+  annual_fee_amount_per_month_in?: Int[] | Int;
+  annual_fee_amount_per_month_not_in?: Int[] | Int;
+  annual_fee_amount_per_month_lt?: Int;
+  annual_fee_amount_per_month_lte?: Int;
+  annual_fee_amount_per_month_gt?: Int;
+  annual_fee_amount_per_month_gte?: Int;
+  AND?: ArtistFactorsWhereInput[] | ArtistFactorsWhereInput;
+  OR?: ArtistFactorsWhereInput[] | ArtistFactorsWhereInput;
+  NOT?: ArtistFactorsWhereInput[] | ArtistFactorsWhereInput;
+}
+
+export type ArtistFactorsSettingWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface ArtistFactorsSettingWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  updatedAt?: DateTimeInput;
+  updatedAt_not?: DateTimeInput;
+  updatedAt_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_lt?: DateTimeInput;
+  updatedAt_lte?: DateTimeInput;
+  updatedAt_gt?: DateTimeInput;
+  updatedAt_gte?: DateTimeInput;
+  promotion_factor?: Float;
+  promotion_factor_not?: Float;
+  promotion_factor_in?: Float[] | Float;
+  promotion_factor_not_in?: Float[] | Float;
+  promotion_factor_lt?: Float;
+  promotion_factor_lte?: Float;
+  promotion_factor_gt?: Float;
+  promotion_factor_gte?: Float;
+  minutes_exponent?: Float;
+  minutes_exponent_not?: Float;
+  minutes_exponent_in?: Float[] | Float;
+  minutes_exponent_not_in?: Float[] | Float;
+  minutes_exponent_lt?: Float;
+  minutes_exponent_lte?: Float;
+  minutes_exponent_gt?: Float;
+  minutes_exponent_gte?: Float;
+  finder_fee_factor?: Float;
+  finder_fee_factor_not?: Float;
+  finder_fee_factor_in?: Float[] | Float;
+  finder_fee_factor_not_in?: Float[] | Float;
+  finder_fee_factor_lt?: Float;
+  finder_fee_factor_lte?: Float;
+  finder_fee_factor_gt?: Float;
+  finder_fee_factor_gte?: Float;
+  monthly_fee_duration?: Int;
+  monthly_fee_duration_not?: Int;
+  monthly_fee_duration_in?: Int[] | Int;
+  monthly_fee_duration_not_in?: Int[] | Int;
+  monthly_fee_duration_lt?: Int;
+  monthly_fee_duration_lte?: Int;
+  monthly_fee_duration_gt?: Int;
+  monthly_fee_duration_gte?: Int;
+  monthly_fee_amount_per_month?: Int;
+  monthly_fee_amount_per_month_not?: Int;
+  monthly_fee_amount_per_month_in?: Int[] | Int;
+  monthly_fee_amount_per_month_not_in?: Int[] | Int;
+  monthly_fee_amount_per_month_lt?: Int;
+  monthly_fee_amount_per_month_lte?: Int;
+  monthly_fee_amount_per_month_gt?: Int;
+  monthly_fee_amount_per_month_gte?: Int;
+  annual_fee_amount_per_month?: Int;
+  annual_fee_amount_per_month_not?: Int;
+  annual_fee_amount_per_month_in?: Int[] | Int;
+  annual_fee_amount_per_month_not_in?: Int[] | Int;
+  annual_fee_amount_per_month_lt?: Int;
+  annual_fee_amount_per_month_lte?: Int;
+  annual_fee_amount_per_month_gt?: Int;
+  annual_fee_amount_per_month_gte?: Int;
+  AND?: ArtistFactorsSettingWhereInput[] | ArtistFactorsSettingWhereInput;
+  OR?: ArtistFactorsSettingWhereInput[] | ArtistFactorsSettingWhereInput;
+  NOT?: ArtistFactorsSettingWhereInput[] | ArtistFactorsSettingWhereInput;
+}
+
+export type CategoryWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
 
 export type ChargeHistoryWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
@@ -2007,6 +2915,246 @@ export interface PostWhereInput {
   NOT?: PostWhereInput[] | PostWhereInput;
 }
 
+export type ProfitPoolCalculationWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface ProfitPoolCalculationWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  updatedAt?: DateTimeInput;
+  updatedAt_not?: DateTimeInput;
+  updatedAt_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_lt?: DateTimeInput;
+  updatedAt_lte?: DateTimeInput;
+  updatedAt_gt?: DateTimeInput;
+  updatedAt_gte?: DateTimeInput;
+  year?: Int;
+  year_not?: Int;
+  year_in?: Int[] | Int;
+  year_not_in?: Int[] | Int;
+  year_lt?: Int;
+  year_lte?: Int;
+  year_gt?: Int;
+  year_gte?: Int;
+  month?: Int;
+  month_not?: Int;
+  month_in?: Int[] | Int;
+  month_not_in?: Int[] | Int;
+  month_lt?: Int;
+  month_lte?: Int;
+  month_gt?: Int;
+  month_gte?: Int;
+  annual_active_subscribers?: Int;
+  annual_active_subscribers_not?: Int;
+  annual_active_subscribers_in?: Int[] | Int;
+  annual_active_subscribers_not_in?: Int[] | Int;
+  annual_active_subscribers_lt?: Int;
+  annual_active_subscribers_lte?: Int;
+  annual_active_subscribers_gt?: Int;
+  annual_active_subscribers_gte?: Int;
+  monthly_active_subscribers?: Int;
+  monthly_active_subscribers_not?: Int;
+  monthly_active_subscribers_in?: Int[] | Int;
+  monthly_active_subscribers_not_in?: Int[] | Int;
+  monthly_active_subscribers_lt?: Int;
+  monthly_active_subscribers_lte?: Int;
+  monthly_active_subscribers_gt?: Int;
+  monthly_active_subscribers_gte?: Int;
+  annual_subscription_rate?: Int;
+  annual_subscription_rate_not?: Int;
+  annual_subscription_rate_in?: Int[] | Int;
+  annual_subscription_rate_not_in?: Int[] | Int;
+  annual_subscription_rate_lt?: Int;
+  annual_subscription_rate_lte?: Int;
+  annual_subscription_rate_gt?: Int;
+  annual_subscription_rate_gte?: Int;
+  monthly_subscription_rate?: Int;
+  monthly_subscription_rate_not?: Int;
+  monthly_subscription_rate_in?: Int[] | Int;
+  monthly_subscription_rate_not_in?: Int[] | Int;
+  monthly_subscription_rate_lt?: Int;
+  monthly_subscription_rate_lte?: Int;
+  monthly_subscription_rate_gt?: Int;
+  monthly_subscription_rate_gte?: Int;
+  annual_pool_revenue?: Int;
+  annual_pool_revenue_not?: Int;
+  annual_pool_revenue_in?: Int[] | Int;
+  annual_pool_revenue_not_in?: Int[] | Int;
+  annual_pool_revenue_lt?: Int;
+  annual_pool_revenue_lte?: Int;
+  annual_pool_revenue_gt?: Int;
+  annual_pool_revenue_gte?: Int;
+  monthly_pool_revenue?: Int;
+  monthly_pool_revenue_not?: Int;
+  monthly_pool_revenue_in?: Int[] | Int;
+  monthly_pool_revenue_not_in?: Int[] | Int;
+  monthly_pool_revenue_lt?: Int;
+  monthly_pool_revenue_lte?: Int;
+  monthly_pool_revenue_gt?: Int;
+  monthly_pool_revenue_gte?: Int;
+  total_revenue?: Int;
+  total_revenue_not?: Int;
+  total_revenue_in?: Int[] | Int;
+  total_revenue_not_in?: Int[] | Int;
+  total_revenue_lt?: Int;
+  total_revenue_lte?: Int;
+  total_revenue_gt?: Int;
+  total_revenue_gte?: Int;
+  total_payment_to_artists?: Float;
+  total_payment_to_artists_not?: Float;
+  total_payment_to_artists_in?: Float[] | Float;
+  total_payment_to_artists_not_in?: Float[] | Float;
+  total_payment_to_artists_lt?: Float;
+  total_payment_to_artists_lte?: Float;
+  total_payment_to_artists_gt?: Float;
+  total_payment_to_artists_gte?: Float;
+  net_revenue?: Float;
+  net_revenue_not?: Float;
+  net_revenue_in?: Float[] | Float;
+  net_revenue_not_in?: Float[] | Float;
+  net_revenue_lt?: Float;
+  net_revenue_lte?: Float;
+  net_revenue_gt?: Float;
+  net_revenue_gte?: Float;
+  AND?: ProfitPoolCalculationWhereInput[] | ProfitPoolCalculationWhereInput;
+  OR?: ProfitPoolCalculationWhereInput[] | ProfitPoolCalculationWhereInput;
+  NOT?: ProfitPoolCalculationWhereInput[] | ProfitPoolCalculationWhereInput;
+}
+
+export type ProfitPoolFactorWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface ProfitPoolFactorWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  updatedAt?: DateTimeInput;
+  updatedAt_not?: DateTimeInput;
+  updatedAt_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_lt?: DateTimeInput;
+  updatedAt_lte?: DateTimeInput;
+  updatedAt_gt?: DateTimeInput;
+  updatedAt_gte?: DateTimeInput;
+  overhead?: Int;
+  overhead_not?: Int;
+  overhead_in?: Int[] | Int;
+  overhead_not_in?: Int[] | Int;
+  overhead_lt?: Int;
+  overhead_lte?: Int;
+  overhead_gt?: Int;
+  overhead_gte?: Int;
+  monthly_multiplier?: Float;
+  monthly_multiplier_not?: Float;
+  monthly_multiplier_in?: Float[] | Float;
+  monthly_multiplier_not_in?: Float[] | Float;
+  monthly_multiplier_lt?: Float;
+  monthly_multiplier_lte?: Float;
+  monthly_multiplier_gt?: Float;
+  monthly_multiplier_gte?: Float;
+  finder_fee_multiplier?: Float;
+  finder_fee_multiplier_not?: Float;
+  finder_fee_multiplier_in?: Float[] | Float;
+  finder_fee_multiplier_not_in?: Float[] | Float;
+  finder_fee_multiplier_lt?: Float;
+  finder_fee_multiplier_lte?: Float;
+  finder_fee_multiplier_gt?: Float;
+  finder_fee_multiplier_gte?: Float;
+  profit_pool_option1_variable?: Int;
+  profit_pool_option1_variable_not?: Int;
+  profit_pool_option1_variable_in?: Int[] | Int;
+  profit_pool_option1_variable_not_in?: Int[] | Int;
+  profit_pool_option1_variable_lt?: Int;
+  profit_pool_option1_variable_lte?: Int;
+  profit_pool_option1_variable_gt?: Int;
+  profit_pool_option1_variable_gte?: Int;
+  profit_pool_option1_multiplier?: Float;
+  profit_pool_option1_multiplier_not?: Float;
+  profit_pool_option1_multiplier_in?: Float[] | Float;
+  profit_pool_option1_multiplier_not_in?: Float[] | Float;
+  profit_pool_option1_multiplier_lt?: Float;
+  profit_pool_option1_multiplier_lte?: Float;
+  profit_pool_option1_multiplier_gt?: Float;
+  profit_pool_option1_multiplier_gte?: Float;
+  profit_pool_option2_variable?: Int;
+  profit_pool_option2_variable_not?: Int;
+  profit_pool_option2_variable_in?: Int[] | Int;
+  profit_pool_option2_variable_not_in?: Int[] | Int;
+  profit_pool_option2_variable_lt?: Int;
+  profit_pool_option2_variable_lte?: Int;
+  profit_pool_option2_variable_gt?: Int;
+  profit_pool_option2_variable_gte?: Int;
+  profit_pool_option2_multiplier?: Float;
+  profit_pool_option2_multiplier_not?: Float;
+  profit_pool_option2_multiplier_in?: Float[] | Float;
+  profit_pool_option2_multiplier_not_in?: Float[] | Float;
+  profit_pool_option2_multiplier_lt?: Float;
+  profit_pool_option2_multiplier_lte?: Float;
+  profit_pool_option2_multiplier_gt?: Float;
+  profit_pool_option2_multiplier_gte?: Float;
+  profit_pool_percentage?: Int;
+  profit_pool_percentage_not?: Int;
+  profit_pool_percentage_in?: Int[] | Int;
+  profit_pool_percentage_not_in?: Int[] | Int;
+  profit_pool_percentage_lt?: Int;
+  profit_pool_percentage_lte?: Int;
+  profit_pool_percentage_gt?: Int;
+  profit_pool_percentage_gte?: Int;
+  manual_change?: Int;
+  manual_change_not?: Int;
+  manual_change_in?: Int[] | Int;
+  manual_change_not_in?: Int[] | Int;
+  manual_change_lt?: Int;
+  manual_change_lte?: Int;
+  manual_change_gt?: Int;
+  manual_change_gte?: Int;
+  AND?: ProfitPoolFactorWhereInput[] | ProfitPoolFactorWhereInput;
+  OR?: ProfitPoolFactorWhereInput[] | ProfitPoolFactorWhereInput;
+  NOT?: ProfitPoolFactorWhereInput[] | ProfitPoolFactorWhereInput;
+}
+
 export type RestoreCodeWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
   email?: String;
@@ -2236,6 +3384,159 @@ export type TagWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
 
+export type TotalMinutesForArtistWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface TotalMinutesForArtistWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  updatedAt?: DateTimeInput;
+  updatedAt_not?: DateTimeInput;
+  updatedAt_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_lt?: DateTimeInput;
+  updatedAt_lte?: DateTimeInput;
+  updatedAt_gt?: DateTimeInput;
+  updatedAt_gte?: DateTimeInput;
+  year?: Int;
+  year_not?: Int;
+  year_in?: Int[] | Int;
+  year_not_in?: Int[] | Int;
+  year_lt?: Int;
+  year_lte?: Int;
+  year_gt?: Int;
+  year_gte?: Int;
+  month?: Int;
+  month_not?: Int;
+  month_in?: Int[] | Int;
+  month_not_in?: Int[] | Int;
+  month_lt?: Int;
+  month_lte?: Int;
+  month_gt?: Int;
+  month_gte?: Int;
+  artist?: UserWhereInput;
+  minutes_as_owner1?: Float;
+  minutes_as_owner1_not?: Float;
+  minutes_as_owner1_in?: Float[] | Float;
+  minutes_as_owner1_not_in?: Float[] | Float;
+  minutes_as_owner1_lt?: Float;
+  minutes_as_owner1_lte?: Float;
+  minutes_as_owner1_gt?: Float;
+  minutes_as_owner1_gte?: Float;
+  minutes_as_owner2?: Float;
+  minutes_as_owner2_not?: Float;
+  minutes_as_owner2_in?: Float[] | Float;
+  minutes_as_owner2_not_in?: Float[] | Float;
+  minutes_as_owner2_lt?: Float;
+  minutes_as_owner2_lte?: Float;
+  minutes_as_owner2_gt?: Float;
+  minutes_as_owner2_gte?: Float;
+  minutes_as_owner3?: Float;
+  minutes_as_owner3_not?: Float;
+  minutes_as_owner3_in?: Float[] | Float;
+  minutes_as_owner3_not_in?: Float[] | Float;
+  minutes_as_owner3_lt?: Float;
+  minutes_as_owner3_lte?: Float;
+  minutes_as_owner3_gt?: Float;
+  minutes_as_owner3_gte?: Float;
+  total_minutes?: Float;
+  total_minutes_not?: Float;
+  total_minutes_in?: Float[] | Float;
+  total_minutes_not_in?: Float[] | Float;
+  total_minutes_lt?: Float;
+  total_minutes_lte?: Float;
+  total_minutes_gt?: Float;
+  total_minutes_gte?: Float;
+  artist_rating_factor?: Float;
+  artist_rating_factor_not?: Float;
+  artist_rating_factor_in?: Float[] | Float;
+  artist_rating_factor_not_in?: Float[] | Float;
+  artist_rating_factor_lt?: Float;
+  artist_rating_factor_lte?: Float;
+  artist_rating_factor_gt?: Float;
+  artist_rating_factor_gte?: Float;
+  final_minutes?: Float;
+  final_minutes_not?: Float;
+  final_minutes_in?: Float[] | Float;
+  final_minutes_not_in?: Float[] | Float;
+  final_minutes_lt?: Float;
+  final_minutes_lte?: Float;
+  final_minutes_gt?: Float;
+  final_minutes_gte?: Float;
+  percent_of_profit_pool?: Float;
+  percent_of_profit_pool_not?: Float;
+  percent_of_profit_pool_in?: Float[] | Float;
+  percent_of_profit_pool_not_in?: Float[] | Float;
+  percent_of_profit_pool_lt?: Float;
+  percent_of_profit_pool_lte?: Float;
+  percent_of_profit_pool_gt?: Float;
+  percent_of_profit_pool_gte?: Float;
+  monthly_quantity?: Int;
+  monthly_quantity_not?: Int;
+  monthly_quantity_in?: Int[] | Int;
+  monthly_quantity_not_in?: Int[] | Int;
+  monthly_quantity_lt?: Int;
+  monthly_quantity_lte?: Int;
+  monthly_quantity_gt?: Int;
+  monthly_quantity_gte?: Int;
+  annual_quantity?: Int;
+  annual_quantity_not?: Int;
+  annual_quantity_in?: Int[] | Int;
+  annual_quantity_not_in?: Int[] | Int;
+  annual_quantity_lt?: Int;
+  annual_quantity_lte?: Int;
+  annual_quantity_gt?: Int;
+  annual_quantity_gte?: Int;
+  finder_fee?: Int;
+  finder_fee_not?: Int;
+  finder_fee_in?: Int[] | Int;
+  finder_fee_not_in?: Int[] | Int;
+  finder_fee_lt?: Int;
+  finder_fee_lte?: Int;
+  finder_fee_gt?: Int;
+  finder_fee_gte?: Int;
+  payment_from_profit_pool?: Float;
+  payment_from_profit_pool_not?: Float;
+  payment_from_profit_pool_in?: Float[] | Float;
+  payment_from_profit_pool_not_in?: Float[] | Float;
+  payment_from_profit_pool_lt?: Float;
+  payment_from_profit_pool_lte?: Float;
+  payment_from_profit_pool_gt?: Float;
+  payment_from_profit_pool_gte?: Float;
+  total_payment?: Float;
+  total_payment_not?: Float;
+  total_payment_in?: Float[] | Float;
+  total_payment_not_in?: Float[] | Float;
+  total_payment_lt?: Float;
+  total_payment_lte?: Float;
+  total_payment_gt?: Float;
+  total_payment_gte?: Float;
+  AND?: TotalMinutesForArtistWhereInput[] | TotalMinutesForArtistWhereInput;
+  OR?: TotalMinutesForArtistWhereInput[] | TotalMinutesForArtistWhereInput;
+  NOT?: TotalMinutesForArtistWhereInput[] | TotalMinutesForArtistWhereInput;
+}
+
 export type TransferPlanWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
@@ -2401,6 +3702,361 @@ export type VideoWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
 
+export type VideoDataForMonthWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface VideoDataForMonthWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  updatedAt?: DateTimeInput;
+  updatedAt_not?: DateTimeInput;
+  updatedAt_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_lt?: DateTimeInput;
+  updatedAt_lte?: DateTimeInput;
+  updatedAt_gt?: DateTimeInput;
+  updatedAt_gte?: DateTimeInput;
+  year?: Int;
+  year_not?: Int;
+  year_in?: Int[] | Int;
+  year_not_in?: Int[] | Int;
+  year_lt?: Int;
+  year_lte?: Int;
+  year_gt?: Int;
+  year_gte?: Int;
+  month?: Int;
+  month_not?: Int;
+  month_in?: Int[] | Int;
+  month_not_in?: Int[] | Int;
+  month_lt?: Int;
+  month_lte?: Int;
+  month_gt?: Int;
+  month_gte?: Int;
+  video?: VideoWhereInput;
+  video_length?: Int;
+  video_length_not?: Int;
+  video_length_in?: Int[] | Int;
+  video_length_not_in?: Int[] | Int;
+  video_length_lt?: Int;
+  video_length_lte?: Int;
+  video_length_gt?: Int;
+  video_length_gte?: Int;
+  unique_users?: Int;
+  unique_users_not?: Int;
+  unique_users_in?: Int[] | Int;
+  unique_users_not_in?: Int[] | Int;
+  unique_users_lt?: Int;
+  unique_users_lte?: Int;
+  unique_users_gt?: Int;
+  unique_users_gte?: Int;
+  real_minutes_watched?: Int;
+  real_minutes_watched_not?: Int;
+  real_minutes_watched_in?: Int[] | Int;
+  real_minutes_watched_not_in?: Int[] | Int;
+  real_minutes_watched_lt?: Int;
+  real_minutes_watched_lte?: Int;
+  real_minutes_watched_gt?: Int;
+  real_minutes_watched_gte?: Int;
+  avg_minutes_watched?: Int;
+  avg_minutes_watched_not?: Int;
+  avg_minutes_watched_in?: Int[] | Int;
+  avg_minutes_watched_not_in?: Int[] | Int;
+  avg_minutes_watched_lt?: Int;
+  avg_minutes_watched_lte?: Int;
+  avg_minutes_watched_gt?: Int;
+  avg_minutes_watched_gte?: Int;
+  exponent_applied?: Int;
+  exponent_applied_not?: Int;
+  exponent_applied_in?: Int[] | Int;
+  exponent_applied_not_in?: Int[] | Int;
+  exponent_applied_lt?: Int;
+  exponent_applied_lte?: Int;
+  exponent_applied_gt?: Int;
+  exponent_applied_gte?: Int;
+  minutes_after_exponent?: Int;
+  minutes_after_exponent_not?: Int;
+  minutes_after_exponent_in?: Int[] | Int;
+  minutes_after_exponent_not_in?: Int[] | Int;
+  minutes_after_exponent_lt?: Int;
+  minutes_after_exponent_lte?: Int;
+  minutes_after_exponent_gt?: Int;
+  minutes_after_exponent_gte?: Int;
+  AND?: VideoDataForMonthWhereInput[] | VideoDataForMonthWhereInput;
+  OR?: VideoDataForMonthWhereInput[] | VideoDataForMonthWhereInput;
+  NOT?: VideoDataForMonthWhereInput[] | VideoDataForMonthWhereInput;
+}
+
+export type VideoParametersWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface VideoParametersWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  updatedAt?: DateTimeInput;
+  updatedAt_not?: DateTimeInput;
+  updatedAt_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_lt?: DateTimeInput;
+  updatedAt_lte?: DateTimeInput;
+  updatedAt_gt?: DateTimeInput;
+  updatedAt_gte?: DateTimeInput;
+  video?: VideoWhereInput;
+  owner1?: UserWhereInput;
+  owner1_percentage?: Int;
+  owner1_percentage_not?: Int;
+  owner1_percentage_in?: Int[] | Int;
+  owner1_percentage_not_in?: Int[] | Int;
+  owner1_percentage_lt?: Int;
+  owner1_percentage_lte?: Int;
+  owner1_percentage_gt?: Int;
+  owner1_percentage_gte?: Int;
+  owner2?: UserWhereInput;
+  owner2_percentage?: Int;
+  owner2_percentage_not?: Int;
+  owner2_percentage_in?: Int[] | Int;
+  owner2_percentage_not_in?: Int[] | Int;
+  owner2_percentage_lt?: Int;
+  owner2_percentage_lte?: Int;
+  owner2_percentage_gt?: Int;
+  owner2_percentage_gte?: Int;
+  owner3?: UserWhereInput;
+  owner3_percentage?: Int;
+  owner3_percentage_not?: Int;
+  owner3_percentage_in?: Int[] | Int;
+  owner3_percentage_not_in?: Int[] | Int;
+  owner3_percentage_lt?: Int;
+  owner3_percentage_lte?: Int;
+  owner3_percentage_gt?: Int;
+  owner3_percentage_gte?: Int;
+  AND?: VideoParametersWhereInput[] | VideoParametersWhereInput;
+  OR?: VideoParametersWhereInput[] | VideoParametersWhereInput;
+  NOT?: VideoParametersWhereInput[] | VideoParametersWhereInput;
+}
+
+export type VideoParametersForMonthWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface VideoParametersForMonthWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  updatedAt?: DateTimeInput;
+  updatedAt_not?: DateTimeInput;
+  updatedAt_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_lt?: DateTimeInput;
+  updatedAt_lte?: DateTimeInput;
+  updatedAt_gt?: DateTimeInput;
+  updatedAt_gte?: DateTimeInput;
+  year?: Int;
+  year_not?: Int;
+  year_in?: Int[] | Int;
+  year_not_in?: Int[] | Int;
+  year_lt?: Int;
+  year_lte?: Int;
+  year_gt?: Int;
+  year_gte?: Int;
+  month?: Int;
+  month_not?: Int;
+  month_in?: Int[] | Int;
+  month_not_in?: Int[] | Int;
+  month_lt?: Int;
+  month_lte?: Int;
+  month_gt?: Int;
+  month_gte?: Int;
+  video?: VideoWhereInput;
+  owner1?: UserWhereInput;
+  owner1_percentage?: Int;
+  owner1_percentage_not?: Int;
+  owner1_percentage_in?: Int[] | Int;
+  owner1_percentage_not_in?: Int[] | Int;
+  owner1_percentage_lt?: Int;
+  owner1_percentage_lte?: Int;
+  owner1_percentage_gt?: Int;
+  owner1_percentage_gte?: Int;
+  owner2?: UserWhereInput;
+  owner2_percentage?: Int;
+  owner2_percentage_not?: Int;
+  owner2_percentage_in?: Int[] | Int;
+  owner2_percentage_not_in?: Int[] | Int;
+  owner2_percentage_lt?: Int;
+  owner2_percentage_lte?: Int;
+  owner2_percentage_gt?: Int;
+  owner2_percentage_gte?: Int;
+  owner3?: UserWhereInput;
+  owner3_percentage?: Int;
+  owner3_percentage_not?: Int;
+  owner3_percentage_in?: Int[] | Int;
+  owner3_percentage_not_in?: Int[] | Int;
+  owner3_percentage_lt?: Int;
+  owner3_percentage_lte?: Int;
+  owner3_percentage_gt?: Int;
+  owner3_percentage_gte?: Int;
+  total_minutes?: Float;
+  total_minutes_not?: Float;
+  total_minutes_in?: Float[] | Float;
+  total_minutes_not_in?: Float[] | Float;
+  total_minutes_lt?: Float;
+  total_minutes_lte?: Float;
+  total_minutes_gt?: Float;
+  total_minutes_gte?: Float;
+  owner1_minutes?: Float;
+  owner1_minutes_not?: Float;
+  owner1_minutes_in?: Float[] | Float;
+  owner1_minutes_not_in?: Float[] | Float;
+  owner1_minutes_lt?: Float;
+  owner1_minutes_lte?: Float;
+  owner1_minutes_gt?: Float;
+  owner1_minutes_gte?: Float;
+  owner2_minutes?: Float;
+  owner2_minutes_not?: Float;
+  owner2_minutes_in?: Float[] | Float;
+  owner2_minutes_not_in?: Float[] | Float;
+  owner2_minutes_lt?: Float;
+  owner2_minutes_lte?: Float;
+  owner2_minutes_gt?: Float;
+  owner2_minutes_gte?: Float;
+  owner3_minutes?: Float;
+  owner3_minutes_not?: Float;
+  owner3_minutes_in?: Float[] | Float;
+  owner3_minutes_not_in?: Float[] | Float;
+  owner3_minutes_lt?: Float;
+  owner3_minutes_lte?: Float;
+  owner3_minutes_gt?: Float;
+  owner3_minutes_gte?: Float;
+  AND?: VideoParametersForMonthWhereInput[] | VideoParametersForMonthWhereInput;
+  OR?: VideoParametersForMonthWhereInput[] | VideoParametersForMonthWhereInput;
+  NOT?: VideoParametersForMonthWhereInput[] | VideoParametersForMonthWhereInput;
+}
+
+export type VideoTotalParametersWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface VideoTotalParametersWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  updatedAt?: DateTimeInput;
+  updatedAt_not?: DateTimeInput;
+  updatedAt_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_lt?: DateTimeInput;
+  updatedAt_lte?: DateTimeInput;
+  updatedAt_gt?: DateTimeInput;
+  updatedAt_gte?: DateTimeInput;
+  minutes_watched_multiplier?: Float;
+  minutes_watched_multiplier_not?: Float;
+  minutes_watched_multiplier_in?: Float[] | Float;
+  minutes_watched_multiplier_not_in?: Float[] | Float;
+  minutes_watched_multiplier_lt?: Float;
+  minutes_watched_multiplier_lte?: Float;
+  minutes_watched_multiplier_gt?: Float;
+  minutes_watched_multiplier_gte?: Float;
+  exponent_for_minutes_watched?: Float;
+  exponent_for_minutes_watched_not?: Float;
+  exponent_for_minutes_watched_in?: Float[] | Float;
+  exponent_for_minutes_watched_not_in?: Float[] | Float;
+  exponent_for_minutes_watched_lt?: Float;
+  exponent_for_minutes_watched_lte?: Float;
+  exponent_for_minutes_watched_gt?: Float;
+  exponent_for_minutes_watched_gte?: Float;
+  star_rating_multiplier?: Float;
+  star_rating_multiplier_not?: Float;
+  star_rating_multiplier_in?: Float[] | Float;
+  star_rating_multiplier_not_in?: Float[] | Float;
+  star_rating_multiplier_lt?: Float;
+  star_rating_multiplier_lte?: Float;
+  star_rating_multiplier_gt?: Float;
+  star_rating_multiplier_gte?: Float;
+  star_rating_on_off?: Boolean;
+  star_rating_on_off_not?: Boolean;
+  AND?: VideoTotalParametersWhereInput[] | VideoTotalParametersWhereInput;
+  OR?: VideoTotalParametersWhereInput[] | VideoTotalParametersWhereInput;
+  NOT?: VideoTotalParametersWhereInput[] | VideoTotalParametersWhereInput;
+}
+
 export type WatchedVideoUserWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
@@ -2423,41 +4079,22 @@ export interface ActivationCodeUpdateManyMutationInput {
   code?: String;
 }
 
-export interface CategoryCreateInput {
-  title: String;
-  description?: String;
-  videos?: VideoCreateManyWithoutCategoriesInput;
+export interface ArtistFactorsCreateInput {
+  artist: UserCreateOneInput;
+  promotion_factor?: Float;
+  minutes_exponent?: Float;
+  finder_fee_factor?: Float;
+  monthly_fee_duration?: Int;
+  monthly_fee_amount_per_month?: Int;
+  annual_fee_amount_per_month?: Int;
 }
 
-export interface VideoCreateManyWithoutCategoriesInput {
-  create?:
-    | VideoCreateWithoutCategoriesInput[]
-    | VideoCreateWithoutCategoriesInput;
-  connect?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
-}
-
-export interface VideoCreateWithoutCategoriesInput {
-  title?: String;
-  description?: String;
-  publish_date?: DateTimeInput;
-  file_url?: String;
-  video_duration?: Int;
-  preview_url?: String;
-  preview_video_url?: String;
-  preview_video_duration?: String;
-  author: UserCreateOneWithoutMy_videosInput;
-  like_users?: UserCreateManyWithoutLiked_videosInput;
-  watched_users?: WatchedVideoUserCreateManyWithoutVideoInput;
-  tags?: TagCreateManyWithoutVideosInput;
-  deleted?: Boolean;
-}
-
-export interface UserCreateOneWithoutMy_videosInput {
-  create?: UserCreateWithoutMy_videosInput;
+export interface UserCreateOneInput {
+  create?: UserCreateInput;
   connect?: UserWhereUniqueInput;
 }
 
-export interface UserCreateWithoutMy_videosInput {
+export interface UserCreateInput {
   firstname?: String;
   lastname?: String;
   username?: String;
@@ -2479,6 +4116,7 @@ export interface UserCreateWithoutMy_videosInput {
   users?: UserCreateManyWithoutArtistInput;
   front_id_scan?: String;
   back_id_scan?: String;
+  my_videos?: VideoCreateManyWithoutAuthorInput;
   liked_videos?: VideoCreateManyWithoutLike_usersInput;
   watched_videos?: WatchedVideoUserCreateManyWithoutUserInput;
   my_subscription_users?: UserCreateManyWithoutSubscribed_usersInput;
@@ -2658,6 +4296,165 @@ export interface VideoCreateWithoutLike_usersInput {
   deleted?: Boolean;
 }
 
+export interface UserCreateOneWithoutMy_videosInput {
+  create?: UserCreateWithoutMy_videosInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface UserCreateWithoutMy_videosInput {
+  firstname?: String;
+  lastname?: String;
+  username?: String;
+  email: String;
+  phone?: String;
+  role?: UserRole;
+  approved?: Boolean;
+  password_hash: String;
+  password_salt: String;
+  avatar?: String;
+  background_image?: String;
+  about_text?: String;
+  promo_code?: String;
+  payout_amount?: Int;
+  payout_months_total?: Int;
+  payout_months_left?: Int;
+  payout_enabled?: Boolean;
+  artist?: UserCreateOneWithoutUsersInput;
+  users?: UserCreateManyWithoutArtistInput;
+  front_id_scan?: String;
+  back_id_scan?: String;
+  liked_videos?: VideoCreateManyWithoutLike_usersInput;
+  watched_videos?: WatchedVideoUserCreateManyWithoutUserInput;
+  my_subscription_users?: UserCreateManyWithoutSubscribed_usersInput;
+  subscribed_users?: UserCreateManyWithoutMy_subscription_usersInput;
+  billing_subscription_active?: Boolean;
+  stripe_customer_id?: String;
+  stripe_subsciption_json?: Json;
+  last_login_date?: DateTimeInput;
+}
+
+export interface WatchedVideoUserCreateManyWithoutUserInput {
+  create?:
+    | WatchedVideoUserCreateWithoutUserInput[]
+    | WatchedVideoUserCreateWithoutUserInput;
+  connect?:
+    | WatchedVideoUserWhereUniqueInput[]
+    | WatchedVideoUserWhereUniqueInput;
+}
+
+export interface WatchedVideoUserCreateWithoutUserInput {
+  video?: VideoCreateOneWithoutWatched_usersInput;
+  watched_seconds?: Int;
+}
+
+export interface VideoCreateOneWithoutWatched_usersInput {
+  create?: VideoCreateWithoutWatched_usersInput;
+  connect?: VideoWhereUniqueInput;
+}
+
+export interface VideoCreateWithoutWatched_usersInput {
+  title?: String;
+  description?: String;
+  publish_date?: DateTimeInput;
+  file_url?: String;
+  video_duration?: Int;
+  preview_url?: String;
+  preview_video_url?: String;
+  preview_video_duration?: String;
+  author: UserCreateOneWithoutMy_videosInput;
+  categories?: CategoryCreateManyWithoutVideosInput;
+  like_users?: UserCreateManyWithoutLiked_videosInput;
+  tags?: TagCreateManyWithoutVideosInput;
+  deleted?: Boolean;
+}
+
+export interface TagCreateManyWithoutVideosInput {
+  create?: TagCreateWithoutVideosInput[] | TagCreateWithoutVideosInput;
+  connect?: TagWhereUniqueInput[] | TagWhereUniqueInput;
+}
+
+export interface TagCreateWithoutVideosInput {
+  text: String;
+}
+
+export interface UserCreateManyWithoutSubscribed_usersInput {
+  create?:
+    | UserCreateWithoutSubscribed_usersInput[]
+    | UserCreateWithoutSubscribed_usersInput;
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+}
+
+export interface UserCreateWithoutSubscribed_usersInput {
+  firstname?: String;
+  lastname?: String;
+  username?: String;
+  email: String;
+  phone?: String;
+  role?: UserRole;
+  approved?: Boolean;
+  password_hash: String;
+  password_salt: String;
+  avatar?: String;
+  background_image?: String;
+  about_text?: String;
+  promo_code?: String;
+  payout_amount?: Int;
+  payout_months_total?: Int;
+  payout_months_left?: Int;
+  payout_enabled?: Boolean;
+  artist?: UserCreateOneWithoutUsersInput;
+  users?: UserCreateManyWithoutArtistInput;
+  front_id_scan?: String;
+  back_id_scan?: String;
+  my_videos?: VideoCreateManyWithoutAuthorInput;
+  liked_videos?: VideoCreateManyWithoutLike_usersInput;
+  watched_videos?: WatchedVideoUserCreateManyWithoutUserInput;
+  my_subscription_users?: UserCreateManyWithoutSubscribed_usersInput;
+  billing_subscription_active?: Boolean;
+  stripe_customer_id?: String;
+  stripe_subsciption_json?: Json;
+  last_login_date?: DateTimeInput;
+}
+
+export interface UserCreateManyWithoutMy_subscription_usersInput {
+  create?:
+    | UserCreateWithoutMy_subscription_usersInput[]
+    | UserCreateWithoutMy_subscription_usersInput;
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+}
+
+export interface UserCreateWithoutMy_subscription_usersInput {
+  firstname?: String;
+  lastname?: String;
+  username?: String;
+  email: String;
+  phone?: String;
+  role?: UserRole;
+  approved?: Boolean;
+  password_hash: String;
+  password_salt: String;
+  avatar?: String;
+  background_image?: String;
+  about_text?: String;
+  promo_code?: String;
+  payout_amount?: Int;
+  payout_months_total?: Int;
+  payout_months_left?: Int;
+  payout_enabled?: Boolean;
+  artist?: UserCreateOneWithoutUsersInput;
+  users?: UserCreateManyWithoutArtistInput;
+  front_id_scan?: String;
+  back_id_scan?: String;
+  my_videos?: VideoCreateManyWithoutAuthorInput;
+  liked_videos?: VideoCreateManyWithoutLike_usersInput;
+  watched_videos?: WatchedVideoUserCreateManyWithoutUserInput;
+  subscribed_users?: UserCreateManyWithoutMy_subscription_usersInput;
+  billing_subscription_active?: Boolean;
+  stripe_customer_id?: String;
+  stripe_subsciption_json?: Json;
+  last_login_date?: DateTimeInput;
+}
+
 export interface WatchedVideoUserCreateManyWithoutVideoInput {
   create?:
     | WatchedVideoUserCreateWithoutVideoInput[]
@@ -2709,183 +4506,24 @@ export interface UserCreateWithoutWatched_videosInput {
   last_login_date?: DateTimeInput;
 }
 
-export interface UserCreateManyWithoutSubscribed_usersInput {
-  create?:
-    | UserCreateWithoutSubscribed_usersInput[]
-    | UserCreateWithoutSubscribed_usersInput;
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+export interface ArtistFactorsUpdateInput {
+  artist?: UserUpdateOneRequiredInput;
+  promotion_factor?: Float;
+  minutes_exponent?: Float;
+  finder_fee_factor?: Float;
+  monthly_fee_duration?: Int;
+  monthly_fee_amount_per_month?: Int;
+  annual_fee_amount_per_month?: Int;
 }
 
-export interface UserCreateWithoutSubscribed_usersInput {
-  firstname?: String;
-  lastname?: String;
-  username?: String;
-  email: String;
-  phone?: String;
-  role?: UserRole;
-  approved?: Boolean;
-  password_hash: String;
-  password_salt: String;
-  avatar?: String;
-  background_image?: String;
-  about_text?: String;
-  promo_code?: String;
-  payout_amount?: Int;
-  payout_months_total?: Int;
-  payout_months_left?: Int;
-  payout_enabled?: Boolean;
-  artist?: UserCreateOneWithoutUsersInput;
-  users?: UserCreateManyWithoutArtistInput;
-  front_id_scan?: String;
-  back_id_scan?: String;
-  my_videos?: VideoCreateManyWithoutAuthorInput;
-  liked_videos?: VideoCreateManyWithoutLike_usersInput;
-  watched_videos?: WatchedVideoUserCreateManyWithoutUserInput;
-  my_subscription_users?: UserCreateManyWithoutSubscribed_usersInput;
-  billing_subscription_active?: Boolean;
-  stripe_customer_id?: String;
-  stripe_subsciption_json?: Json;
-  last_login_date?: DateTimeInput;
-}
-
-export interface WatchedVideoUserCreateManyWithoutUserInput {
-  create?:
-    | WatchedVideoUserCreateWithoutUserInput[]
-    | WatchedVideoUserCreateWithoutUserInput;
-  connect?:
-    | WatchedVideoUserWhereUniqueInput[]
-    | WatchedVideoUserWhereUniqueInput;
-}
-
-export interface WatchedVideoUserCreateWithoutUserInput {
-  video?: VideoCreateOneWithoutWatched_usersInput;
-  watched_seconds?: Int;
-}
-
-export interface VideoCreateOneWithoutWatched_usersInput {
-  create?: VideoCreateWithoutWatched_usersInput;
-  connect?: VideoWhereUniqueInput;
-}
-
-export interface VideoCreateWithoutWatched_usersInput {
-  title?: String;
-  description?: String;
-  publish_date?: DateTimeInput;
-  file_url?: String;
-  video_duration?: Int;
-  preview_url?: String;
-  preview_video_url?: String;
-  preview_video_duration?: String;
-  author: UserCreateOneWithoutMy_videosInput;
-  categories?: CategoryCreateManyWithoutVideosInput;
-  like_users?: UserCreateManyWithoutLiked_videosInput;
-  tags?: TagCreateManyWithoutVideosInput;
-  deleted?: Boolean;
-}
-
-export interface TagCreateManyWithoutVideosInput {
-  create?: TagCreateWithoutVideosInput[] | TagCreateWithoutVideosInput;
-  connect?: TagWhereUniqueInput[] | TagWhereUniqueInput;
-}
-
-export interface TagCreateWithoutVideosInput {
-  text: String;
-}
-
-export interface UserCreateManyWithoutMy_subscription_usersInput {
-  create?:
-    | UserCreateWithoutMy_subscription_usersInput[]
-    | UserCreateWithoutMy_subscription_usersInput;
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-}
-
-export interface UserCreateWithoutMy_subscription_usersInput {
-  firstname?: String;
-  lastname?: String;
-  username?: String;
-  email: String;
-  phone?: String;
-  role?: UserRole;
-  approved?: Boolean;
-  password_hash: String;
-  password_salt: String;
-  avatar?: String;
-  background_image?: String;
-  about_text?: String;
-  promo_code?: String;
-  payout_amount?: Int;
-  payout_months_total?: Int;
-  payout_months_left?: Int;
-  payout_enabled?: Boolean;
-  artist?: UserCreateOneWithoutUsersInput;
-  users?: UserCreateManyWithoutArtistInput;
-  front_id_scan?: String;
-  back_id_scan?: String;
-  my_videos?: VideoCreateManyWithoutAuthorInput;
-  liked_videos?: VideoCreateManyWithoutLike_usersInput;
-  watched_videos?: WatchedVideoUserCreateManyWithoutUserInput;
-  subscribed_users?: UserCreateManyWithoutMy_subscription_usersInput;
-  billing_subscription_active?: Boolean;
-  stripe_customer_id?: String;
-  stripe_subsciption_json?: Json;
-  last_login_date?: DateTimeInput;
-}
-
-export interface CategoryUpdateInput {
-  title?: String;
-  description?: String;
-  videos?: VideoUpdateManyWithoutCategoriesInput;
-}
-
-export interface VideoUpdateManyWithoutCategoriesInput {
-  create?:
-    | VideoCreateWithoutCategoriesInput[]
-    | VideoCreateWithoutCategoriesInput;
-  delete?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
-  connect?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
-  set?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
-  disconnect?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
-  update?:
-    | VideoUpdateWithWhereUniqueWithoutCategoriesInput[]
-    | VideoUpdateWithWhereUniqueWithoutCategoriesInput;
-  upsert?:
-    | VideoUpsertWithWhereUniqueWithoutCategoriesInput[]
-    | VideoUpsertWithWhereUniqueWithoutCategoriesInput;
-  deleteMany?: VideoScalarWhereInput[] | VideoScalarWhereInput;
-  updateMany?:
-    | VideoUpdateManyWithWhereNestedInput[]
-    | VideoUpdateManyWithWhereNestedInput;
-}
-
-export interface VideoUpdateWithWhereUniqueWithoutCategoriesInput {
-  where: VideoWhereUniqueInput;
-  data: VideoUpdateWithoutCategoriesDataInput;
-}
-
-export interface VideoUpdateWithoutCategoriesDataInput {
-  title?: String;
-  description?: String;
-  publish_date?: DateTimeInput;
-  file_url?: String;
-  video_duration?: Int;
-  preview_url?: String;
-  preview_video_url?: String;
-  preview_video_duration?: String;
-  author?: UserUpdateOneRequiredWithoutMy_videosInput;
-  like_users?: UserUpdateManyWithoutLiked_videosInput;
-  watched_users?: WatchedVideoUserUpdateManyWithoutVideoInput;
-  tags?: TagUpdateManyWithoutVideosInput;
-  deleted?: Boolean;
-}
-
-export interface UserUpdateOneRequiredWithoutMy_videosInput {
-  create?: UserCreateWithoutMy_videosInput;
-  update?: UserUpdateWithoutMy_videosDataInput;
-  upsert?: UserUpsertWithoutMy_videosInput;
+export interface UserUpdateOneRequiredInput {
+  create?: UserCreateInput;
+  update?: UserUpdateDataInput;
+  upsert?: UserUpsertNestedInput;
   connect?: UserWhereUniqueInput;
 }
 
-export interface UserUpdateWithoutMy_videosDataInput {
+export interface UserUpdateDataInput {
   firstname?: String;
   lastname?: String;
   username?: String;
@@ -2907,6 +4545,7 @@ export interface UserUpdateWithoutMy_videosDataInput {
   users?: UserUpdateManyWithoutArtistInput;
   front_id_scan?: String;
   back_id_scan?: String;
+  my_videos?: VideoUpdateManyWithoutAuthorInput;
   liked_videos?: VideoUpdateManyWithoutLike_usersInput;
   watched_videos?: WatchedVideoUserUpdateManyWithoutUserInput;
   my_subscription_users?: UserUpdateManyWithoutSubscribed_usersInput;
@@ -3260,52 +4899,14 @@ export interface VideoUpdateWithoutLike_usersDataInput {
   deleted?: Boolean;
 }
 
-export interface WatchedVideoUserUpdateManyWithoutVideoInput {
-  create?:
-    | WatchedVideoUserCreateWithoutVideoInput[]
-    | WatchedVideoUserCreateWithoutVideoInput;
-  delete?:
-    | WatchedVideoUserWhereUniqueInput[]
-    | WatchedVideoUserWhereUniqueInput;
-  connect?:
-    | WatchedVideoUserWhereUniqueInput[]
-    | WatchedVideoUserWhereUniqueInput;
-  set?: WatchedVideoUserWhereUniqueInput[] | WatchedVideoUserWhereUniqueInput;
-  disconnect?:
-    | WatchedVideoUserWhereUniqueInput[]
-    | WatchedVideoUserWhereUniqueInput;
-  update?:
-    | WatchedVideoUserUpdateWithWhereUniqueWithoutVideoInput[]
-    | WatchedVideoUserUpdateWithWhereUniqueWithoutVideoInput;
-  upsert?:
-    | WatchedVideoUserUpsertWithWhereUniqueWithoutVideoInput[]
-    | WatchedVideoUserUpsertWithWhereUniqueWithoutVideoInput;
-  deleteMany?:
-    | WatchedVideoUserScalarWhereInput[]
-    | WatchedVideoUserScalarWhereInput;
-  updateMany?:
-    | WatchedVideoUserUpdateManyWithWhereNestedInput[]
-    | WatchedVideoUserUpdateManyWithWhereNestedInput;
-}
-
-export interface WatchedVideoUserUpdateWithWhereUniqueWithoutVideoInput {
-  where: WatchedVideoUserWhereUniqueInput;
-  data: WatchedVideoUserUpdateWithoutVideoDataInput;
-}
-
-export interface WatchedVideoUserUpdateWithoutVideoDataInput {
-  user?: UserUpdateOneRequiredWithoutWatched_videosInput;
-  watched_seconds?: Int;
-}
-
-export interface UserUpdateOneRequiredWithoutWatched_videosInput {
-  create?: UserCreateWithoutWatched_videosInput;
-  update?: UserUpdateWithoutWatched_videosDataInput;
-  upsert?: UserUpsertWithoutWatched_videosInput;
+export interface UserUpdateOneRequiredWithoutMy_videosInput {
+  create?: UserCreateWithoutMy_videosInput;
+  update?: UserUpdateWithoutMy_videosDataInput;
+  upsert?: UserUpsertWithoutMy_videosInput;
   connect?: UserWhereUniqueInput;
 }
 
-export interface UserUpdateWithoutWatched_videosDataInput {
+export interface UserUpdateWithoutMy_videosDataInput {
   firstname?: String;
   lastname?: String;
   username?: String;
@@ -3327,67 +4928,10 @@ export interface UserUpdateWithoutWatched_videosDataInput {
   users?: UserUpdateManyWithoutArtistInput;
   front_id_scan?: String;
   back_id_scan?: String;
-  my_videos?: VideoUpdateManyWithoutAuthorInput;
-  liked_videos?: VideoUpdateManyWithoutLike_usersInput;
-  my_subscription_users?: UserUpdateManyWithoutSubscribed_usersInput;
-  subscribed_users?: UserUpdateManyWithoutMy_subscription_usersInput;
-  billing_subscription_active?: Boolean;
-  stripe_customer_id?: String;
-  stripe_subsciption_json?: Json;
-  last_login_date?: DateTimeInput;
-}
-
-export interface UserUpdateManyWithoutSubscribed_usersInput {
-  create?:
-    | UserCreateWithoutSubscribed_usersInput[]
-    | UserCreateWithoutSubscribed_usersInput;
-  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  set?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  update?:
-    | UserUpdateWithWhereUniqueWithoutSubscribed_usersInput[]
-    | UserUpdateWithWhereUniqueWithoutSubscribed_usersInput;
-  upsert?:
-    | UserUpsertWithWhereUniqueWithoutSubscribed_usersInput[]
-    | UserUpsertWithWhereUniqueWithoutSubscribed_usersInput;
-  deleteMany?: UserScalarWhereInput[] | UserScalarWhereInput;
-  updateMany?:
-    | UserUpdateManyWithWhereNestedInput[]
-    | UserUpdateManyWithWhereNestedInput;
-}
-
-export interface UserUpdateWithWhereUniqueWithoutSubscribed_usersInput {
-  where: UserWhereUniqueInput;
-  data: UserUpdateWithoutSubscribed_usersDataInput;
-}
-
-export interface UserUpdateWithoutSubscribed_usersDataInput {
-  firstname?: String;
-  lastname?: String;
-  username?: String;
-  email?: String;
-  phone?: String;
-  role?: UserRole;
-  approved?: Boolean;
-  password_hash?: String;
-  password_salt?: String;
-  avatar?: String;
-  background_image?: String;
-  about_text?: String;
-  promo_code?: String;
-  payout_amount?: Int;
-  payout_months_total?: Int;
-  payout_months_left?: Int;
-  payout_enabled?: Boolean;
-  artist?: UserUpdateOneWithoutUsersInput;
-  users?: UserUpdateManyWithoutArtistInput;
-  front_id_scan?: String;
-  back_id_scan?: String;
-  my_videos?: VideoUpdateManyWithoutAuthorInput;
   liked_videos?: VideoUpdateManyWithoutLike_usersInput;
   watched_videos?: WatchedVideoUserUpdateManyWithoutUserInput;
   my_subscription_users?: UserUpdateManyWithoutSubscribed_usersInput;
+  subscribed_users?: UserUpdateManyWithoutMy_subscription_usersInput;
   billing_subscription_active?: Boolean;
   stripe_customer_id?: String;
   stripe_subsciption_json?: Json;
@@ -3595,6 +5139,63 @@ export interface WatchedVideoUserUpdateManyWithWhereNestedInput {
 
 export interface WatchedVideoUserUpdateManyDataInput {
   watched_seconds?: Int;
+}
+
+export interface UserUpdateManyWithoutSubscribed_usersInput {
+  create?:
+    | UserCreateWithoutSubscribed_usersInput[]
+    | UserCreateWithoutSubscribed_usersInput;
+  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  set?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  update?:
+    | UserUpdateWithWhereUniqueWithoutSubscribed_usersInput[]
+    | UserUpdateWithWhereUniqueWithoutSubscribed_usersInput;
+  upsert?:
+    | UserUpsertWithWhereUniqueWithoutSubscribed_usersInput[]
+    | UserUpsertWithWhereUniqueWithoutSubscribed_usersInput;
+  deleteMany?: UserScalarWhereInput[] | UserScalarWhereInput;
+  updateMany?:
+    | UserUpdateManyWithWhereNestedInput[]
+    | UserUpdateManyWithWhereNestedInput;
+}
+
+export interface UserUpdateWithWhereUniqueWithoutSubscribed_usersInput {
+  where: UserWhereUniqueInput;
+  data: UserUpdateWithoutSubscribed_usersDataInput;
+}
+
+export interface UserUpdateWithoutSubscribed_usersDataInput {
+  firstname?: String;
+  lastname?: String;
+  username?: String;
+  email?: String;
+  phone?: String;
+  role?: UserRole;
+  approved?: Boolean;
+  password_hash?: String;
+  password_salt?: String;
+  avatar?: String;
+  background_image?: String;
+  about_text?: String;
+  promo_code?: String;
+  payout_amount?: Int;
+  payout_months_total?: Int;
+  payout_months_left?: Int;
+  payout_enabled?: Boolean;
+  artist?: UserUpdateOneWithoutUsersInput;
+  users?: UserUpdateManyWithoutArtistInput;
+  front_id_scan?: String;
+  back_id_scan?: String;
+  my_videos?: VideoUpdateManyWithoutAuthorInput;
+  liked_videos?: VideoUpdateManyWithoutLike_usersInput;
+  watched_videos?: WatchedVideoUserUpdateManyWithoutUserInput;
+  my_subscription_users?: UserUpdateManyWithoutSubscribed_usersInput;
+  billing_subscription_active?: Boolean;
+  stripe_customer_id?: String;
+  stripe_subsciption_json?: Json;
+  last_login_date?: DateTimeInput;
 }
 
 export interface UserUpsertWithWhereUniqueWithoutSubscribed_usersInput {
@@ -3971,6 +5572,88 @@ export interface UserUpsertWithWhereUniqueWithoutMy_subscription_usersInput {
   create: UserCreateWithoutMy_subscription_usersInput;
 }
 
+export interface UserUpsertWithoutMy_videosInput {
+  update: UserUpdateWithoutMy_videosDataInput;
+  create: UserCreateWithoutMy_videosInput;
+}
+
+export interface WatchedVideoUserUpdateManyWithoutVideoInput {
+  create?:
+    | WatchedVideoUserCreateWithoutVideoInput[]
+    | WatchedVideoUserCreateWithoutVideoInput;
+  delete?:
+    | WatchedVideoUserWhereUniqueInput[]
+    | WatchedVideoUserWhereUniqueInput;
+  connect?:
+    | WatchedVideoUserWhereUniqueInput[]
+    | WatchedVideoUserWhereUniqueInput;
+  set?: WatchedVideoUserWhereUniqueInput[] | WatchedVideoUserWhereUniqueInput;
+  disconnect?:
+    | WatchedVideoUserWhereUniqueInput[]
+    | WatchedVideoUserWhereUniqueInput;
+  update?:
+    | WatchedVideoUserUpdateWithWhereUniqueWithoutVideoInput[]
+    | WatchedVideoUserUpdateWithWhereUniqueWithoutVideoInput;
+  upsert?:
+    | WatchedVideoUserUpsertWithWhereUniqueWithoutVideoInput[]
+    | WatchedVideoUserUpsertWithWhereUniqueWithoutVideoInput;
+  deleteMany?:
+    | WatchedVideoUserScalarWhereInput[]
+    | WatchedVideoUserScalarWhereInput;
+  updateMany?:
+    | WatchedVideoUserUpdateManyWithWhereNestedInput[]
+    | WatchedVideoUserUpdateManyWithWhereNestedInput;
+}
+
+export interface WatchedVideoUserUpdateWithWhereUniqueWithoutVideoInput {
+  where: WatchedVideoUserWhereUniqueInput;
+  data: WatchedVideoUserUpdateWithoutVideoDataInput;
+}
+
+export interface WatchedVideoUserUpdateWithoutVideoDataInput {
+  user?: UserUpdateOneRequiredWithoutWatched_videosInput;
+  watched_seconds?: Int;
+}
+
+export interface UserUpdateOneRequiredWithoutWatched_videosInput {
+  create?: UserCreateWithoutWatched_videosInput;
+  update?: UserUpdateWithoutWatched_videosDataInput;
+  upsert?: UserUpsertWithoutWatched_videosInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface UserUpdateWithoutWatched_videosDataInput {
+  firstname?: String;
+  lastname?: String;
+  username?: String;
+  email?: String;
+  phone?: String;
+  role?: UserRole;
+  approved?: Boolean;
+  password_hash?: String;
+  password_salt?: String;
+  avatar?: String;
+  background_image?: String;
+  about_text?: String;
+  promo_code?: String;
+  payout_amount?: Int;
+  payout_months_total?: Int;
+  payout_months_left?: Int;
+  payout_enabled?: Boolean;
+  artist?: UserUpdateOneWithoutUsersInput;
+  users?: UserUpdateManyWithoutArtistInput;
+  front_id_scan?: String;
+  back_id_scan?: String;
+  my_videos?: VideoUpdateManyWithoutAuthorInput;
+  liked_videos?: VideoUpdateManyWithoutLike_usersInput;
+  my_subscription_users?: UserUpdateManyWithoutSubscribed_usersInput;
+  subscribed_users?: UserUpdateManyWithoutMy_subscription_usersInput;
+  billing_subscription_active?: Boolean;
+  stripe_customer_id?: String;
+  stripe_subsciption_json?: Json;
+  last_login_date?: DateTimeInput;
+}
+
 export interface UserUpsertWithoutWatched_videosInput {
   update: UserUpdateWithoutWatched_videosDataInput;
   create: UserCreateWithoutWatched_videosInput;
@@ -4166,9 +5849,121 @@ export interface UserUpsertWithoutUsersInput {
   create: UserCreateWithoutUsersInput;
 }
 
-export interface UserUpsertWithoutMy_videosInput {
-  update: UserUpdateWithoutMy_videosDataInput;
-  create: UserCreateWithoutMy_videosInput;
+export interface UserUpsertNestedInput {
+  update: UserUpdateDataInput;
+  create: UserCreateInput;
+}
+
+export interface ArtistFactorsUpdateManyMutationInput {
+  promotion_factor?: Float;
+  minutes_exponent?: Float;
+  finder_fee_factor?: Float;
+  monthly_fee_duration?: Int;
+  monthly_fee_amount_per_month?: Int;
+  annual_fee_amount_per_month?: Int;
+}
+
+export interface ArtistFactorsSettingCreateInput {
+  promotion_factor: Float;
+  minutes_exponent: Float;
+  finder_fee_factor: Float;
+  monthly_fee_duration: Int;
+  monthly_fee_amount_per_month: Int;
+  annual_fee_amount_per_month: Int;
+}
+
+export interface ArtistFactorsSettingUpdateInput {
+  promotion_factor?: Float;
+  minutes_exponent?: Float;
+  finder_fee_factor?: Float;
+  monthly_fee_duration?: Int;
+  monthly_fee_amount_per_month?: Int;
+  annual_fee_amount_per_month?: Int;
+}
+
+export interface ArtistFactorsSettingUpdateManyMutationInput {
+  promotion_factor?: Float;
+  minutes_exponent?: Float;
+  finder_fee_factor?: Float;
+  monthly_fee_duration?: Int;
+  monthly_fee_amount_per_month?: Int;
+  annual_fee_amount_per_month?: Int;
+}
+
+export interface CategoryCreateInput {
+  title: String;
+  description?: String;
+  videos?: VideoCreateManyWithoutCategoriesInput;
+}
+
+export interface VideoCreateManyWithoutCategoriesInput {
+  create?:
+    | VideoCreateWithoutCategoriesInput[]
+    | VideoCreateWithoutCategoriesInput;
+  connect?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
+}
+
+export interface VideoCreateWithoutCategoriesInput {
+  title?: String;
+  description?: String;
+  publish_date?: DateTimeInput;
+  file_url?: String;
+  video_duration?: Int;
+  preview_url?: String;
+  preview_video_url?: String;
+  preview_video_duration?: String;
+  author: UserCreateOneWithoutMy_videosInput;
+  like_users?: UserCreateManyWithoutLiked_videosInput;
+  watched_users?: WatchedVideoUserCreateManyWithoutVideoInput;
+  tags?: TagCreateManyWithoutVideosInput;
+  deleted?: Boolean;
+}
+
+export interface CategoryUpdateInput {
+  title?: String;
+  description?: String;
+  videos?: VideoUpdateManyWithoutCategoriesInput;
+}
+
+export interface VideoUpdateManyWithoutCategoriesInput {
+  create?:
+    | VideoCreateWithoutCategoriesInput[]
+    | VideoCreateWithoutCategoriesInput;
+  delete?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
+  connect?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
+  set?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
+  disconnect?: VideoWhereUniqueInput[] | VideoWhereUniqueInput;
+  update?:
+    | VideoUpdateWithWhereUniqueWithoutCategoriesInput[]
+    | VideoUpdateWithWhereUniqueWithoutCategoriesInput;
+  upsert?:
+    | VideoUpsertWithWhereUniqueWithoutCategoriesInput[]
+    | VideoUpsertWithWhereUniqueWithoutCategoriesInput;
+  deleteMany?: VideoScalarWhereInput[] | VideoScalarWhereInput;
+  updateMany?:
+    | VideoUpdateManyWithWhereNestedInput[]
+    | VideoUpdateManyWithWhereNestedInput;
+}
+
+export interface VideoUpdateWithWhereUniqueWithoutCategoriesInput {
+  where: VideoWhereUniqueInput;
+  data: VideoUpdateWithoutCategoriesDataInput;
+}
+
+export interface VideoUpdateWithoutCategoriesDataInput {
+  title?: String;
+  description?: String;
+  publish_date?: DateTimeInput;
+  file_url?: String;
+  video_duration?: Int;
+  preview_url?: String;
+  preview_video_url?: String;
+  preview_video_duration?: String;
+  author?: UserUpdateOneRequiredWithoutMy_videosInput;
+  like_users?: UserUpdateManyWithoutLiked_videosInput;
+  watched_users?: WatchedVideoUserUpdateManyWithoutVideoInput;
+  tags?: TagUpdateManyWithoutVideosInput;
+  deleted?: Boolean;
 }
 
 export interface VideoUpsertWithWhereUniqueWithoutCategoriesInput {
@@ -4188,93 +5983,10 @@ export interface ChargeHistoryCreateInput {
   chargeDate?: DateTimeInput;
 }
 
-export interface UserCreateOneInput {
-  create?: UserCreateInput;
-  connect?: UserWhereUniqueInput;
-}
-
-export interface UserCreateInput {
-  firstname?: String;
-  lastname?: String;
-  username?: String;
-  email: String;
-  phone?: String;
-  role?: UserRole;
-  approved?: Boolean;
-  password_hash: String;
-  password_salt: String;
-  avatar?: String;
-  background_image?: String;
-  about_text?: String;
-  promo_code?: String;
-  payout_amount?: Int;
-  payout_months_total?: Int;
-  payout_months_left?: Int;
-  payout_enabled?: Boolean;
-  artist?: UserCreateOneWithoutUsersInput;
-  users?: UserCreateManyWithoutArtistInput;
-  front_id_scan?: String;
-  back_id_scan?: String;
-  my_videos?: VideoCreateManyWithoutAuthorInput;
-  liked_videos?: VideoCreateManyWithoutLike_usersInput;
-  watched_videos?: WatchedVideoUserCreateManyWithoutUserInput;
-  my_subscription_users?: UserCreateManyWithoutSubscribed_usersInput;
-  subscribed_users?: UserCreateManyWithoutMy_subscription_usersInput;
-  billing_subscription_active?: Boolean;
-  stripe_customer_id?: String;
-  stripe_subsciption_json?: Json;
-  last_login_date?: DateTimeInput;
-}
-
 export interface ChargeHistoryUpdateInput {
   user?: UserUpdateOneRequiredInput;
   amount?: Int;
   chargeDate?: DateTimeInput;
-}
-
-export interface UserUpdateOneRequiredInput {
-  create?: UserCreateInput;
-  update?: UserUpdateDataInput;
-  upsert?: UserUpsertNestedInput;
-  connect?: UserWhereUniqueInput;
-}
-
-export interface UserUpdateDataInput {
-  firstname?: String;
-  lastname?: String;
-  username?: String;
-  email?: String;
-  phone?: String;
-  role?: UserRole;
-  approved?: Boolean;
-  password_hash?: String;
-  password_salt?: String;
-  avatar?: String;
-  background_image?: String;
-  about_text?: String;
-  promo_code?: String;
-  payout_amount?: Int;
-  payout_months_total?: Int;
-  payout_months_left?: Int;
-  payout_enabled?: Boolean;
-  artist?: UserUpdateOneWithoutUsersInput;
-  users?: UserUpdateManyWithoutArtistInput;
-  front_id_scan?: String;
-  back_id_scan?: String;
-  my_videos?: VideoUpdateManyWithoutAuthorInput;
-  liked_videos?: VideoUpdateManyWithoutLike_usersInput;
-  watched_videos?: WatchedVideoUserUpdateManyWithoutUserInput;
-  my_subscription_users?: UserUpdateManyWithoutSubscribed_usersInput;
-  subscribed_users?: UserUpdateManyWithoutMy_subscription_usersInput;
-  billing_subscription_active?: Boolean;
-  stripe_customer_id?: String;
-  stripe_subsciption_json?: Json;
-  last_login_date?: DateTimeInput;
-}
-
-export interface UserUpsertNestedInput {
-  update: UserUpdateDataInput;
-  create: UserCreateInput;
 }
 
 export interface ChargeHistoryUpdateManyMutationInput {
@@ -4390,6 +6102,84 @@ export interface PostUpdateManyMutationInput {
   title?: String;
   mainImageUrl?: String;
   text?: String;
+}
+
+export interface ProfitPoolCalculationCreateInput {
+  year: Int;
+  month: Int;
+  annual_active_subscribers?: Int;
+  monthly_active_subscribers?: Int;
+  annual_subscription_rate?: Int;
+  monthly_subscription_rate?: Int;
+  annual_pool_revenue?: Int;
+  monthly_pool_revenue?: Int;
+  total_revenue?: Int;
+  total_payment_to_artists?: Float;
+  net_revenue?: Float;
+}
+
+export interface ProfitPoolCalculationUpdateInput {
+  year?: Int;
+  month?: Int;
+  annual_active_subscribers?: Int;
+  monthly_active_subscribers?: Int;
+  annual_subscription_rate?: Int;
+  monthly_subscription_rate?: Int;
+  annual_pool_revenue?: Int;
+  monthly_pool_revenue?: Int;
+  total_revenue?: Int;
+  total_payment_to_artists?: Float;
+  net_revenue?: Float;
+}
+
+export interface ProfitPoolCalculationUpdateManyMutationInput {
+  year?: Int;
+  month?: Int;
+  annual_active_subscribers?: Int;
+  monthly_active_subscribers?: Int;
+  annual_subscription_rate?: Int;
+  monthly_subscription_rate?: Int;
+  annual_pool_revenue?: Int;
+  monthly_pool_revenue?: Int;
+  total_revenue?: Int;
+  total_payment_to_artists?: Float;
+  net_revenue?: Float;
+}
+
+export interface ProfitPoolFactorCreateInput {
+  overhead?: Int;
+  monthly_multiplier?: Float;
+  finder_fee_multiplier?: Float;
+  profit_pool_option1_variable?: Int;
+  profit_pool_option1_multiplier?: Float;
+  profit_pool_option2_variable?: Int;
+  profit_pool_option2_multiplier?: Float;
+  profit_pool_percentage?: Int;
+  manual_change?: Int;
+}
+
+export interface ProfitPoolFactorUpdateInput {
+  overhead?: Int;
+  monthly_multiplier?: Float;
+  finder_fee_multiplier?: Float;
+  profit_pool_option1_variable?: Int;
+  profit_pool_option1_multiplier?: Float;
+  profit_pool_option2_variable?: Int;
+  profit_pool_option2_multiplier?: Float;
+  profit_pool_percentage?: Int;
+  manual_change?: Int;
+}
+
+export interface ProfitPoolFactorUpdateManyMutationInput {
+  overhead?: Int;
+  monthly_multiplier?: Float;
+  finder_fee_multiplier?: Float;
+  profit_pool_option1_variable?: Int;
+  profit_pool_option1_multiplier?: Float;
+  profit_pool_option2_variable?: Int;
+  profit_pool_option2_multiplier?: Float;
+  profit_pool_percentage?: Int;
+  manual_change?: Int;
 }
 
 export interface RestoreCodeCreateInput {
@@ -4526,6 +6316,59 @@ export interface VideoUpsertWithWhereUniqueWithoutTagsInput {
 
 export interface TagUpdateManyMutationInput {
   text?: String;
+}
+
+export interface TotalMinutesForArtistCreateInput {
+  year: Int;
+  month: Int;
+  artist: UserCreateOneInput;
+  minutes_as_owner1?: Float;
+  minutes_as_owner2?: Float;
+  minutes_as_owner3?: Float;
+  total_minutes?: Float;
+  artist_rating_factor: Float;
+  final_minutes?: Float;
+  percent_of_profit_pool?: Float;
+  monthly_quantity: Int;
+  annual_quantity: Int;
+  finder_fee?: Int;
+  payment_from_profit_pool?: Float;
+  total_payment?: Float;
+}
+
+export interface TotalMinutesForArtistUpdateInput {
+  year?: Int;
+  month?: Int;
+  artist?: UserUpdateOneRequiredInput;
+  minutes_as_owner1?: Float;
+  minutes_as_owner2?: Float;
+  minutes_as_owner3?: Float;
+  total_minutes?: Float;
+  artist_rating_factor?: Float;
+  final_minutes?: Float;
+  percent_of_profit_pool?: Float;
+  monthly_quantity?: Int;
+  annual_quantity?: Int;
+  finder_fee?: Int;
+  payment_from_profit_pool?: Float;
+  total_payment?: Float;
+}
+
+export interface TotalMinutesForArtistUpdateManyMutationInput {
+  year?: Int;
+  month?: Int;
+  minutes_as_owner1?: Float;
+  minutes_as_owner2?: Float;
+  minutes_as_owner3?: Float;
+  total_minutes?: Float;
+  artist_rating_factor?: Float;
+  final_minutes?: Float;
+  percent_of_profit_pool?: Float;
+  monthly_quantity?: Int;
+  annual_quantity?: Int;
+  finder_fee?: Int;
+  payment_from_profit_pool?: Float;
+  total_payment?: Float;
 }
 
 export interface TransferPlanCreateInput {
@@ -4673,6 +6516,141 @@ export interface VideoUpdateManyMutationInput {
   deleted?: Boolean;
 }
 
+export interface VideoDataForMonthCreateInput {
+  year: Int;
+  month: Int;
+  video: VideoCreateOneInput;
+  video_length: Int;
+  unique_users?: Int;
+  real_minutes_watched?: Int;
+  avg_minutes_watched?: Int;
+  exponent_applied?: Int;
+  minutes_after_exponent?: Int;
+}
+
+export interface VideoDataForMonthUpdateInput {
+  year?: Int;
+  month?: Int;
+  video?: VideoUpdateOneRequiredInput;
+  video_length?: Int;
+  unique_users?: Int;
+  real_minutes_watched?: Int;
+  avg_minutes_watched?: Int;
+  exponent_applied?: Int;
+  minutes_after_exponent?: Int;
+}
+
+export interface VideoDataForMonthUpdateManyMutationInput {
+  year?: Int;
+  month?: Int;
+  video_length?: Int;
+  unique_users?: Int;
+  real_minutes_watched?: Int;
+  avg_minutes_watched?: Int;
+  exponent_applied?: Int;
+  minutes_after_exponent?: Int;
+}
+
+export interface VideoParametersCreateInput {
+  video: VideoCreateOneInput;
+  owner1?: UserCreateOneInput;
+  owner1_percentage: Int;
+  owner2?: UserCreateOneInput;
+  owner2_percentage: Int;
+  owner3?: UserCreateOneInput;
+  owner3_percentage: Int;
+}
+
+export interface VideoParametersUpdateInput {
+  video?: VideoUpdateOneRequiredInput;
+  owner1?: UserUpdateOneInput;
+  owner1_percentage?: Int;
+  owner2?: UserUpdateOneInput;
+  owner2_percentage?: Int;
+  owner3?: UserUpdateOneInput;
+  owner3_percentage?: Int;
+}
+
+export interface UserUpdateOneInput {
+  create?: UserCreateInput;
+  update?: UserUpdateDataInput;
+  upsert?: UserUpsertNestedInput;
+  delete?: Boolean;
+  disconnect?: Boolean;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface VideoParametersUpdateManyMutationInput {
+  owner1_percentage?: Int;
+  owner2_percentage?: Int;
+  owner3_percentage?: Int;
+}
+
+export interface VideoParametersForMonthCreateInput {
+  year: Int;
+  month: Int;
+  video: VideoCreateOneInput;
+  owner1?: UserCreateOneInput;
+  owner1_percentage: Int;
+  owner2?: UserCreateOneInput;
+  owner2_percentage: Int;
+  owner3?: UserCreateOneInput;
+  owner3_percentage: Int;
+  total_minutes?: Float;
+  owner1_minutes?: Float;
+  owner2_minutes?: Float;
+  owner3_minutes?: Float;
+}
+
+export interface VideoParametersForMonthUpdateInput {
+  year?: Int;
+  month?: Int;
+  video?: VideoUpdateOneRequiredInput;
+  owner1?: UserUpdateOneInput;
+  owner1_percentage?: Int;
+  owner2?: UserUpdateOneInput;
+  owner2_percentage?: Int;
+  owner3?: UserUpdateOneInput;
+  owner3_percentage?: Int;
+  total_minutes?: Float;
+  owner1_minutes?: Float;
+  owner2_minutes?: Float;
+  owner3_minutes?: Float;
+}
+
+export interface VideoParametersForMonthUpdateManyMutationInput {
+  year?: Int;
+  month?: Int;
+  owner1_percentage?: Int;
+  owner2_percentage?: Int;
+  owner3_percentage?: Int;
+  total_minutes?: Float;
+  owner1_minutes?: Float;
+  owner2_minutes?: Float;
+  owner3_minutes?: Float;
+}
+
+export interface VideoTotalParametersCreateInput {
+  minutes_watched_multiplier?: Float;
+  exponent_for_minutes_watched?: Float;
+  star_rating_multiplier?: Float;
+  star_rating_on_off?: Boolean;
+}
+
+export interface VideoTotalParametersUpdateInput {
+  minutes_watched_multiplier?: Float;
+  exponent_for_minutes_watched?: Float;
+  star_rating_multiplier?: Float;
+  star_rating_on_off?: Boolean;
+}
+
+export interface VideoTotalParametersUpdateManyMutationInput {
+  minutes_watched_multiplier?: Float;
+  exponent_for_minutes_watched?: Float;
+  star_rating_multiplier?: Float;
+  star_rating_on_off?: Boolean;
+}
+
 export interface WatchedVideoUserCreateInput {
   video?: VideoCreateOneWithoutWatched_usersInput;
   user: UserCreateOneWithoutWatched_videosInput;
@@ -4704,6 +6682,40 @@ export interface ActivationCodeSubscriptionWhereInput {
   NOT?:
     | ActivationCodeSubscriptionWhereInput[]
     | ActivationCodeSubscriptionWhereInput;
+}
+
+export interface ArtistFactorsSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: ArtistFactorsWhereInput;
+  AND?:
+    | ArtistFactorsSubscriptionWhereInput[]
+    | ArtistFactorsSubscriptionWhereInput;
+  OR?:
+    | ArtistFactorsSubscriptionWhereInput[]
+    | ArtistFactorsSubscriptionWhereInput;
+  NOT?:
+    | ArtistFactorsSubscriptionWhereInput[]
+    | ArtistFactorsSubscriptionWhereInput;
+}
+
+export interface ArtistFactorsSettingSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: ArtistFactorsSettingWhereInput;
+  AND?:
+    | ArtistFactorsSettingSubscriptionWhereInput[]
+    | ArtistFactorsSettingSubscriptionWhereInput;
+  OR?:
+    | ArtistFactorsSettingSubscriptionWhereInput[]
+    | ArtistFactorsSettingSubscriptionWhereInput;
+  NOT?:
+    | ArtistFactorsSettingSubscriptionWhereInput[]
+    | ArtistFactorsSettingSubscriptionWhereInput;
 }
 
 export interface CategorySubscriptionWhereInput {
@@ -4767,6 +6779,40 @@ export interface PostSubscriptionWhereInput {
   NOT?: PostSubscriptionWhereInput[] | PostSubscriptionWhereInput;
 }
 
+export interface ProfitPoolCalculationSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: ProfitPoolCalculationWhereInput;
+  AND?:
+    | ProfitPoolCalculationSubscriptionWhereInput[]
+    | ProfitPoolCalculationSubscriptionWhereInput;
+  OR?:
+    | ProfitPoolCalculationSubscriptionWhereInput[]
+    | ProfitPoolCalculationSubscriptionWhereInput;
+  NOT?:
+    | ProfitPoolCalculationSubscriptionWhereInput[]
+    | ProfitPoolCalculationSubscriptionWhereInput;
+}
+
+export interface ProfitPoolFactorSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: ProfitPoolFactorWhereInput;
+  AND?:
+    | ProfitPoolFactorSubscriptionWhereInput[]
+    | ProfitPoolFactorSubscriptionWhereInput;
+  OR?:
+    | ProfitPoolFactorSubscriptionWhereInput[]
+    | ProfitPoolFactorSubscriptionWhereInput;
+  NOT?:
+    | ProfitPoolFactorSubscriptionWhereInput[]
+    | ProfitPoolFactorSubscriptionWhereInput;
+}
+
 export interface RestoreCodeSubscriptionWhereInput {
   mutation_in?: MutationType[] | MutationType;
   updatedFields_contains?: String;
@@ -4815,6 +6861,23 @@ export interface TagSubscriptionWhereInput {
   AND?: TagSubscriptionWhereInput[] | TagSubscriptionWhereInput;
   OR?: TagSubscriptionWhereInput[] | TagSubscriptionWhereInput;
   NOT?: TagSubscriptionWhereInput[] | TagSubscriptionWhereInput;
+}
+
+export interface TotalMinutesForArtistSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: TotalMinutesForArtistWhereInput;
+  AND?:
+    | TotalMinutesForArtistSubscriptionWhereInput[]
+    | TotalMinutesForArtistSubscriptionWhereInput;
+  OR?:
+    | TotalMinutesForArtistSubscriptionWhereInput[]
+    | TotalMinutesForArtistSubscriptionWhereInput;
+  NOT?:
+    | TotalMinutesForArtistSubscriptionWhereInput[]
+    | TotalMinutesForArtistSubscriptionWhereInput;
 }
 
 export interface TransferPlanSubscriptionWhereInput {
@@ -4871,6 +6934,74 @@ export interface VideoSubscriptionWhereInput {
   AND?: VideoSubscriptionWhereInput[] | VideoSubscriptionWhereInput;
   OR?: VideoSubscriptionWhereInput[] | VideoSubscriptionWhereInput;
   NOT?: VideoSubscriptionWhereInput[] | VideoSubscriptionWhereInput;
+}
+
+export interface VideoDataForMonthSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: VideoDataForMonthWhereInput;
+  AND?:
+    | VideoDataForMonthSubscriptionWhereInput[]
+    | VideoDataForMonthSubscriptionWhereInput;
+  OR?:
+    | VideoDataForMonthSubscriptionWhereInput[]
+    | VideoDataForMonthSubscriptionWhereInput;
+  NOT?:
+    | VideoDataForMonthSubscriptionWhereInput[]
+    | VideoDataForMonthSubscriptionWhereInput;
+}
+
+export interface VideoParametersSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: VideoParametersWhereInput;
+  AND?:
+    | VideoParametersSubscriptionWhereInput[]
+    | VideoParametersSubscriptionWhereInput;
+  OR?:
+    | VideoParametersSubscriptionWhereInput[]
+    | VideoParametersSubscriptionWhereInput;
+  NOT?:
+    | VideoParametersSubscriptionWhereInput[]
+    | VideoParametersSubscriptionWhereInput;
+}
+
+export interface VideoParametersForMonthSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: VideoParametersForMonthWhereInput;
+  AND?:
+    | VideoParametersForMonthSubscriptionWhereInput[]
+    | VideoParametersForMonthSubscriptionWhereInput;
+  OR?:
+    | VideoParametersForMonthSubscriptionWhereInput[]
+    | VideoParametersForMonthSubscriptionWhereInput;
+  NOT?:
+    | VideoParametersForMonthSubscriptionWhereInput[]
+    | VideoParametersForMonthSubscriptionWhereInput;
+}
+
+export interface VideoTotalParametersSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: VideoTotalParametersWhereInput;
+  AND?:
+    | VideoTotalParametersSubscriptionWhereInput[]
+    | VideoTotalParametersSubscriptionWhereInput;
+  OR?:
+    | VideoTotalParametersSubscriptionWhereInput[]
+    | VideoTotalParametersSubscriptionWhereInput;
+  NOT?:
+    | VideoTotalParametersSubscriptionWhereInput[]
+    | VideoTotalParametersSubscriptionWhereInput;
 }
 
 export interface WatchedVideoUserSubscriptionWhereInput {
@@ -5004,189 +7135,46 @@ export interface AggregateActivationCodeSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface Category {
+export interface ArtistFactors {
   id: ID_Output;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
-  title: String;
-  description?: String;
+  promotion_factor: Float;
+  minutes_exponent: Float;
+  finder_fee_factor: Float;
+  monthly_fee_duration: Int;
+  monthly_fee_amount_per_month: Int;
+  annual_fee_amount_per_month: Int;
 }
 
-export interface CategoryPromise extends Promise<Category>, Fragmentable {
+export interface ArtistFactorsPromise
+  extends Promise<ArtistFactors>,
+    Fragmentable {
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
-  title: () => Promise<String>;
-  description: () => Promise<String>;
-  videos: <T = FragmentableArray<Video>>(
-    args?: {
-      where?: VideoWhereInput;
-      orderBy?: VideoOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
+  artist: <T = UserPromise>() => T;
+  promotion_factor: () => Promise<Float>;
+  minutes_exponent: () => Promise<Float>;
+  finder_fee_factor: () => Promise<Float>;
+  monthly_fee_duration: () => Promise<Int>;
+  monthly_fee_amount_per_month: () => Promise<Int>;
+  annual_fee_amount_per_month: () => Promise<Int>;
 }
 
-export interface CategorySubscription
-  extends Promise<AsyncIterator<Category>>,
+export interface ArtistFactorsSubscription
+  extends Promise<AsyncIterator<ArtistFactors>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  title: () => Promise<AsyncIterator<String>>;
-  description: () => Promise<AsyncIterator<String>>;
-  videos: <T = Promise<AsyncIterator<VideoSubscription>>>(
-    args?: {
-      where?: VideoWhereInput;
-      orderBy?: VideoOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-}
-
-export interface Video {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  title?: String;
-  description?: String;
-  publish_date?: DateTimeOutput;
-  file_url?: String;
-  video_duration?: Int;
-  preview_url?: String;
-  preview_video_url?: String;
-  preview_video_duration?: String;
-  deleted: Boolean;
-}
-
-export interface VideoPromise extends Promise<Video>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  title: () => Promise<String>;
-  description: () => Promise<String>;
-  publish_date: () => Promise<DateTimeOutput>;
-  file_url: () => Promise<String>;
-  video_duration: () => Promise<Int>;
-  preview_url: () => Promise<String>;
-  preview_video_url: () => Promise<String>;
-  preview_video_duration: () => Promise<String>;
-  author: <T = UserPromise>() => T;
-  categories: <T = FragmentableArray<Category>>(
-    args?: {
-      where?: CategoryWhereInput;
-      orderBy?: CategoryOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-  like_users: <T = FragmentableArray<User>>(
-    args?: {
-      where?: UserWhereInput;
-      orderBy?: UserOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-  watched_users: <T = FragmentableArray<WatchedVideoUser>>(
-    args?: {
-      where?: WatchedVideoUserWhereInput;
-      orderBy?: WatchedVideoUserOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-  tags: <T = FragmentableArray<Tag>>(
-    args?: {
-      where?: TagWhereInput;
-      orderBy?: TagOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-  deleted: () => Promise<Boolean>;
-}
-
-export interface VideoSubscription
-  extends Promise<AsyncIterator<Video>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  title: () => Promise<AsyncIterator<String>>;
-  description: () => Promise<AsyncIterator<String>>;
-  publish_date: () => Promise<AsyncIterator<DateTimeOutput>>;
-  file_url: () => Promise<AsyncIterator<String>>;
-  video_duration: () => Promise<AsyncIterator<Int>>;
-  preview_url: () => Promise<AsyncIterator<String>>;
-  preview_video_url: () => Promise<AsyncIterator<String>>;
-  preview_video_duration: () => Promise<AsyncIterator<String>>;
-  author: <T = UserSubscription>() => T;
-  categories: <T = Promise<AsyncIterator<CategorySubscription>>>(
-    args?: {
-      where?: CategoryWhereInput;
-      orderBy?: CategoryOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-  like_users: <T = Promise<AsyncIterator<UserSubscription>>>(
-    args?: {
-      where?: UserWhereInput;
-      orderBy?: UserOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-  watched_users: <T = Promise<AsyncIterator<WatchedVideoUserSubscription>>>(
-    args?: {
-      where?: WatchedVideoUserWhereInput;
-      orderBy?: WatchedVideoUserOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-  tags: <T = Promise<AsyncIterator<TagSubscription>>>(
-    args?: {
-      where?: TagWhereInput;
-      orderBy?: TagOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-  deleted: () => Promise<AsyncIterator<Boolean>>;
+  artist: <T = UserSubscription>() => T;
+  promotion_factor: () => Promise<AsyncIterator<Float>>;
+  minutes_exponent: () => Promise<AsyncIterator<Float>>;
+  finder_fee_factor: () => Promise<AsyncIterator<Float>>;
+  monthly_fee_duration: () => Promise<AsyncIterator<Int>>;
+  monthly_fee_amount_per_month: () => Promise<AsyncIterator<Int>>;
+  annual_fee_amount_per_month: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface User {
@@ -5412,6 +7400,191 @@ export interface UserSubscription
   last_login_date: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
+export interface Video {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  title?: String;
+  description?: String;
+  publish_date?: DateTimeOutput;
+  file_url?: String;
+  video_duration?: Int;
+  preview_url?: String;
+  preview_video_url?: String;
+  preview_video_duration?: String;
+  deleted: Boolean;
+}
+
+export interface VideoPromise extends Promise<Video>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  title: () => Promise<String>;
+  description: () => Promise<String>;
+  publish_date: () => Promise<DateTimeOutput>;
+  file_url: () => Promise<String>;
+  video_duration: () => Promise<Int>;
+  preview_url: () => Promise<String>;
+  preview_video_url: () => Promise<String>;
+  preview_video_duration: () => Promise<String>;
+  author: <T = UserPromise>() => T;
+  categories: <T = FragmentableArray<Category>>(
+    args?: {
+      where?: CategoryWhereInput;
+      orderBy?: CategoryOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  like_users: <T = FragmentableArray<User>>(
+    args?: {
+      where?: UserWhereInput;
+      orderBy?: UserOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  watched_users: <T = FragmentableArray<WatchedVideoUser>>(
+    args?: {
+      where?: WatchedVideoUserWhereInput;
+      orderBy?: WatchedVideoUserOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  tags: <T = FragmentableArray<Tag>>(
+    args?: {
+      where?: TagWhereInput;
+      orderBy?: TagOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  deleted: () => Promise<Boolean>;
+}
+
+export interface VideoSubscription
+  extends Promise<AsyncIterator<Video>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  title: () => Promise<AsyncIterator<String>>;
+  description: () => Promise<AsyncIterator<String>>;
+  publish_date: () => Promise<AsyncIterator<DateTimeOutput>>;
+  file_url: () => Promise<AsyncIterator<String>>;
+  video_duration: () => Promise<AsyncIterator<Int>>;
+  preview_url: () => Promise<AsyncIterator<String>>;
+  preview_video_url: () => Promise<AsyncIterator<String>>;
+  preview_video_duration: () => Promise<AsyncIterator<String>>;
+  author: <T = UserSubscription>() => T;
+  categories: <T = Promise<AsyncIterator<CategorySubscription>>>(
+    args?: {
+      where?: CategoryWhereInput;
+      orderBy?: CategoryOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  like_users: <T = Promise<AsyncIterator<UserSubscription>>>(
+    args?: {
+      where?: UserWhereInput;
+      orderBy?: UserOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  watched_users: <T = Promise<AsyncIterator<WatchedVideoUserSubscription>>>(
+    args?: {
+      where?: WatchedVideoUserWhereInput;
+      orderBy?: WatchedVideoUserOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  tags: <T = Promise<AsyncIterator<TagSubscription>>>(
+    args?: {
+      where?: TagWhereInput;
+      orderBy?: TagOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  deleted: () => Promise<AsyncIterator<Boolean>>;
+}
+
+export interface Category {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  title: String;
+  description?: String;
+}
+
+export interface CategoryPromise extends Promise<Category>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  title: () => Promise<String>;
+  description: () => Promise<String>;
+  videos: <T = FragmentableArray<Video>>(
+    args?: {
+      where?: VideoWhereInput;
+      orderBy?: VideoOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+}
+
+export interface CategorySubscription
+  extends Promise<AsyncIterator<Category>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  title: () => Promise<AsyncIterator<String>>;
+  description: () => Promise<AsyncIterator<String>>;
+  videos: <T = Promise<AsyncIterator<VideoSubscription>>>(
+    args?: {
+      where?: VideoWhereInput;
+      orderBy?: VideoOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+}
+
 export interface WatchedVideoUser {
   id: ID_Output;
   watched_seconds: Int;
@@ -5478,6 +7651,160 @@ export interface TagSubscription
       last?: Int;
     }
   ) => T;
+}
+
+export interface ArtistFactorsConnection {
+  pageInfo: PageInfo;
+  edges: ArtistFactorsEdge[];
+}
+
+export interface ArtistFactorsConnectionPromise
+  extends Promise<ArtistFactorsConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ArtistFactorsEdge>>() => T;
+  aggregate: <T = AggregateArtistFactorsPromise>() => T;
+}
+
+export interface ArtistFactorsConnectionSubscription
+  extends Promise<AsyncIterator<ArtistFactorsConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ArtistFactorsEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateArtistFactorsSubscription>() => T;
+}
+
+export interface ArtistFactorsEdge {
+  node: ArtistFactors;
+  cursor: String;
+}
+
+export interface ArtistFactorsEdgePromise
+  extends Promise<ArtistFactorsEdge>,
+    Fragmentable {
+  node: <T = ArtistFactorsPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface ArtistFactorsEdgeSubscription
+  extends Promise<AsyncIterator<ArtistFactorsEdge>>,
+    Fragmentable {
+  node: <T = ArtistFactorsSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateArtistFactors {
+  count: Int;
+}
+
+export interface AggregateArtistFactorsPromise
+  extends Promise<AggregateArtistFactors>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateArtistFactorsSubscription
+  extends Promise<AsyncIterator<AggregateArtistFactors>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface ArtistFactorsSetting {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  promotion_factor: Float;
+  minutes_exponent: Float;
+  finder_fee_factor: Float;
+  monthly_fee_duration: Int;
+  monthly_fee_amount_per_month: Int;
+  annual_fee_amount_per_month: Int;
+}
+
+export interface ArtistFactorsSettingPromise
+  extends Promise<ArtistFactorsSetting>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  promotion_factor: () => Promise<Float>;
+  minutes_exponent: () => Promise<Float>;
+  finder_fee_factor: () => Promise<Float>;
+  monthly_fee_duration: () => Promise<Int>;
+  monthly_fee_amount_per_month: () => Promise<Int>;
+  annual_fee_amount_per_month: () => Promise<Int>;
+}
+
+export interface ArtistFactorsSettingSubscription
+  extends Promise<AsyncIterator<ArtistFactorsSetting>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  promotion_factor: () => Promise<AsyncIterator<Float>>;
+  minutes_exponent: () => Promise<AsyncIterator<Float>>;
+  finder_fee_factor: () => Promise<AsyncIterator<Float>>;
+  monthly_fee_duration: () => Promise<AsyncIterator<Int>>;
+  monthly_fee_amount_per_month: () => Promise<AsyncIterator<Int>>;
+  annual_fee_amount_per_month: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface ArtistFactorsSettingConnection {
+  pageInfo: PageInfo;
+  edges: ArtistFactorsSettingEdge[];
+}
+
+export interface ArtistFactorsSettingConnectionPromise
+  extends Promise<ArtistFactorsSettingConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ArtistFactorsSettingEdge>>() => T;
+  aggregate: <T = AggregateArtistFactorsSettingPromise>() => T;
+}
+
+export interface ArtistFactorsSettingConnectionSubscription
+  extends Promise<AsyncIterator<ArtistFactorsSettingConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <
+    T = Promise<AsyncIterator<ArtistFactorsSettingEdgeSubscription>>
+  >() => T;
+  aggregate: <T = AggregateArtistFactorsSettingSubscription>() => T;
+}
+
+export interface ArtistFactorsSettingEdge {
+  node: ArtistFactorsSetting;
+  cursor: String;
+}
+
+export interface ArtistFactorsSettingEdgePromise
+  extends Promise<ArtistFactorsSettingEdge>,
+    Fragmentable {
+  node: <T = ArtistFactorsSettingPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface ArtistFactorsSettingEdgeSubscription
+  extends Promise<AsyncIterator<ArtistFactorsSettingEdge>>,
+    Fragmentable {
+  node: <T = ArtistFactorsSettingSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateArtistFactorsSetting {
+  count: Int;
+}
+
+export interface AggregateArtistFactorsSettingPromise
+  extends Promise<AggregateArtistFactorsSetting>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateArtistFactorsSettingSubscription
+  extends Promise<AsyncIterator<AggregateArtistFactorsSetting>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface CategoryConnection {
@@ -5880,6 +8207,224 @@ export interface AggregatePostSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
+export interface ProfitPoolCalculation {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  year: Int;
+  month: Int;
+  annual_active_subscribers: Int;
+  monthly_active_subscribers: Int;
+  annual_subscription_rate?: Int;
+  monthly_subscription_rate?: Int;
+  annual_pool_revenue: Int;
+  monthly_pool_revenue: Int;
+  total_revenue: Int;
+  total_payment_to_artists: Float;
+  net_revenue: Float;
+}
+
+export interface ProfitPoolCalculationPromise
+  extends Promise<ProfitPoolCalculation>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  year: () => Promise<Int>;
+  month: () => Promise<Int>;
+  annual_active_subscribers: () => Promise<Int>;
+  monthly_active_subscribers: () => Promise<Int>;
+  annual_subscription_rate: () => Promise<Int>;
+  monthly_subscription_rate: () => Promise<Int>;
+  annual_pool_revenue: () => Promise<Int>;
+  monthly_pool_revenue: () => Promise<Int>;
+  total_revenue: () => Promise<Int>;
+  total_payment_to_artists: () => Promise<Float>;
+  net_revenue: () => Promise<Float>;
+}
+
+export interface ProfitPoolCalculationSubscription
+  extends Promise<AsyncIterator<ProfitPoolCalculation>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  year: () => Promise<AsyncIterator<Int>>;
+  month: () => Promise<AsyncIterator<Int>>;
+  annual_active_subscribers: () => Promise<AsyncIterator<Int>>;
+  monthly_active_subscribers: () => Promise<AsyncIterator<Int>>;
+  annual_subscription_rate: () => Promise<AsyncIterator<Int>>;
+  monthly_subscription_rate: () => Promise<AsyncIterator<Int>>;
+  annual_pool_revenue: () => Promise<AsyncIterator<Int>>;
+  monthly_pool_revenue: () => Promise<AsyncIterator<Int>>;
+  total_revenue: () => Promise<AsyncIterator<Int>>;
+  total_payment_to_artists: () => Promise<AsyncIterator<Float>>;
+  net_revenue: () => Promise<AsyncIterator<Float>>;
+}
+
+export interface ProfitPoolCalculationConnection {
+  pageInfo: PageInfo;
+  edges: ProfitPoolCalculationEdge[];
+}
+
+export interface ProfitPoolCalculationConnectionPromise
+  extends Promise<ProfitPoolCalculationConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ProfitPoolCalculationEdge>>() => T;
+  aggregate: <T = AggregateProfitPoolCalculationPromise>() => T;
+}
+
+export interface ProfitPoolCalculationConnectionSubscription
+  extends Promise<AsyncIterator<ProfitPoolCalculationConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <
+    T = Promise<AsyncIterator<ProfitPoolCalculationEdgeSubscription>>
+  >() => T;
+  aggregate: <T = AggregateProfitPoolCalculationSubscription>() => T;
+}
+
+export interface ProfitPoolCalculationEdge {
+  node: ProfitPoolCalculation;
+  cursor: String;
+}
+
+export interface ProfitPoolCalculationEdgePromise
+  extends Promise<ProfitPoolCalculationEdge>,
+    Fragmentable {
+  node: <T = ProfitPoolCalculationPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface ProfitPoolCalculationEdgeSubscription
+  extends Promise<AsyncIterator<ProfitPoolCalculationEdge>>,
+    Fragmentable {
+  node: <T = ProfitPoolCalculationSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateProfitPoolCalculation {
+  count: Int;
+}
+
+export interface AggregateProfitPoolCalculationPromise
+  extends Promise<AggregateProfitPoolCalculation>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateProfitPoolCalculationSubscription
+  extends Promise<AsyncIterator<AggregateProfitPoolCalculation>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface ProfitPoolFactor {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  overhead: Int;
+  monthly_multiplier: Float;
+  finder_fee_multiplier: Float;
+  profit_pool_option1_variable: Int;
+  profit_pool_option1_multiplier: Float;
+  profit_pool_option2_variable: Int;
+  profit_pool_option2_multiplier: Float;
+  profit_pool_percentage: Int;
+  manual_change: Int;
+}
+
+export interface ProfitPoolFactorPromise
+  extends Promise<ProfitPoolFactor>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  overhead: () => Promise<Int>;
+  monthly_multiplier: () => Promise<Float>;
+  finder_fee_multiplier: () => Promise<Float>;
+  profit_pool_option1_variable: () => Promise<Int>;
+  profit_pool_option1_multiplier: () => Promise<Float>;
+  profit_pool_option2_variable: () => Promise<Int>;
+  profit_pool_option2_multiplier: () => Promise<Float>;
+  profit_pool_percentage: () => Promise<Int>;
+  manual_change: () => Promise<Int>;
+}
+
+export interface ProfitPoolFactorSubscription
+  extends Promise<AsyncIterator<ProfitPoolFactor>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  overhead: () => Promise<AsyncIterator<Int>>;
+  monthly_multiplier: () => Promise<AsyncIterator<Float>>;
+  finder_fee_multiplier: () => Promise<AsyncIterator<Float>>;
+  profit_pool_option1_variable: () => Promise<AsyncIterator<Int>>;
+  profit_pool_option1_multiplier: () => Promise<AsyncIterator<Float>>;
+  profit_pool_option2_variable: () => Promise<AsyncIterator<Int>>;
+  profit_pool_option2_multiplier: () => Promise<AsyncIterator<Float>>;
+  profit_pool_percentage: () => Promise<AsyncIterator<Int>>;
+  manual_change: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface ProfitPoolFactorConnection {
+  pageInfo: PageInfo;
+  edges: ProfitPoolFactorEdge[];
+}
+
+export interface ProfitPoolFactorConnectionPromise
+  extends Promise<ProfitPoolFactorConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ProfitPoolFactorEdge>>() => T;
+  aggregate: <T = AggregateProfitPoolFactorPromise>() => T;
+}
+
+export interface ProfitPoolFactorConnectionSubscription
+  extends Promise<AsyncIterator<ProfitPoolFactorConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ProfitPoolFactorEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateProfitPoolFactorSubscription>() => T;
+}
+
+export interface ProfitPoolFactorEdge {
+  node: ProfitPoolFactor;
+  cursor: String;
+}
+
+export interface ProfitPoolFactorEdgePromise
+  extends Promise<ProfitPoolFactorEdge>,
+    Fragmentable {
+  node: <T = ProfitPoolFactorPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface ProfitPoolFactorEdgeSubscription
+  extends Promise<AsyncIterator<ProfitPoolFactorEdge>>,
+    Fragmentable {
+  node: <T = ProfitPoolFactorSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateProfitPoolFactor {
+  count: Int;
+}
+
+export interface AggregateProfitPoolFactorPromise
+  extends Promise<AggregateProfitPoolFactor>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateProfitPoolFactorSubscription
+  extends Promise<AsyncIterator<AggregateProfitPoolFactor>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
 export interface RestoreCode {
   id: ID_Output;
   createdAt: DateTimeOutput;
@@ -6195,6 +8740,130 @@ export interface AggregateTagSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
+export interface TotalMinutesForArtist {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  year: Int;
+  month: Int;
+  minutes_as_owner1: Float;
+  minutes_as_owner2: Float;
+  minutes_as_owner3: Float;
+  total_minutes: Float;
+  artist_rating_factor: Float;
+  final_minutes: Float;
+  percent_of_profit_pool: Float;
+  monthly_quantity: Int;
+  annual_quantity: Int;
+  finder_fee: Int;
+  payment_from_profit_pool: Float;
+  total_payment: Float;
+}
+
+export interface TotalMinutesForArtistPromise
+  extends Promise<TotalMinutesForArtist>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  year: () => Promise<Int>;
+  month: () => Promise<Int>;
+  artist: <T = UserPromise>() => T;
+  minutes_as_owner1: () => Promise<Float>;
+  minutes_as_owner2: () => Promise<Float>;
+  minutes_as_owner3: () => Promise<Float>;
+  total_minutes: () => Promise<Float>;
+  artist_rating_factor: () => Promise<Float>;
+  final_minutes: () => Promise<Float>;
+  percent_of_profit_pool: () => Promise<Float>;
+  monthly_quantity: () => Promise<Int>;
+  annual_quantity: () => Promise<Int>;
+  finder_fee: () => Promise<Int>;
+  payment_from_profit_pool: () => Promise<Float>;
+  total_payment: () => Promise<Float>;
+}
+
+export interface TotalMinutesForArtistSubscription
+  extends Promise<AsyncIterator<TotalMinutesForArtist>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  year: () => Promise<AsyncIterator<Int>>;
+  month: () => Promise<AsyncIterator<Int>>;
+  artist: <T = UserSubscription>() => T;
+  minutes_as_owner1: () => Promise<AsyncIterator<Float>>;
+  minutes_as_owner2: () => Promise<AsyncIterator<Float>>;
+  minutes_as_owner3: () => Promise<AsyncIterator<Float>>;
+  total_minutes: () => Promise<AsyncIterator<Float>>;
+  artist_rating_factor: () => Promise<AsyncIterator<Float>>;
+  final_minutes: () => Promise<AsyncIterator<Float>>;
+  percent_of_profit_pool: () => Promise<AsyncIterator<Float>>;
+  monthly_quantity: () => Promise<AsyncIterator<Int>>;
+  annual_quantity: () => Promise<AsyncIterator<Int>>;
+  finder_fee: () => Promise<AsyncIterator<Int>>;
+  payment_from_profit_pool: () => Promise<AsyncIterator<Float>>;
+  total_payment: () => Promise<AsyncIterator<Float>>;
+}
+
+export interface TotalMinutesForArtistConnection {
+  pageInfo: PageInfo;
+  edges: TotalMinutesForArtistEdge[];
+}
+
+export interface TotalMinutesForArtistConnectionPromise
+  extends Promise<TotalMinutesForArtistConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<TotalMinutesForArtistEdge>>() => T;
+  aggregate: <T = AggregateTotalMinutesForArtistPromise>() => T;
+}
+
+export interface TotalMinutesForArtistConnectionSubscription
+  extends Promise<AsyncIterator<TotalMinutesForArtistConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <
+    T = Promise<AsyncIterator<TotalMinutesForArtistEdgeSubscription>>
+  >() => T;
+  aggregate: <T = AggregateTotalMinutesForArtistSubscription>() => T;
+}
+
+export interface TotalMinutesForArtistEdge {
+  node: TotalMinutesForArtist;
+  cursor: String;
+}
+
+export interface TotalMinutesForArtistEdgePromise
+  extends Promise<TotalMinutesForArtistEdge>,
+    Fragmentable {
+  node: <T = TotalMinutesForArtistPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface TotalMinutesForArtistEdgeSubscription
+  extends Promise<AsyncIterator<TotalMinutesForArtistEdge>>,
+    Fragmentable {
+  node: <T = TotalMinutesForArtistSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateTotalMinutesForArtist {
+  count: Int;
+}
+
+export interface AggregateTotalMinutesForArtistPromise
+  extends Promise<AggregateTotalMinutesForArtist>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateTotalMinutesForArtistSubscription
+  extends Promise<AsyncIterator<AggregateTotalMinutesForArtist>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
 export interface TransferPlan {
   id: ID_Output;
   createdAt: DateTimeOutput;
@@ -6500,6 +9169,412 @@ export interface AggregateVideoSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
+export interface VideoDataForMonth {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  year: Int;
+  month: Int;
+  video_length: Int;
+  unique_users: Int;
+  real_minutes_watched: Int;
+  avg_minutes_watched: Int;
+  exponent_applied: Int;
+  minutes_after_exponent: Int;
+}
+
+export interface VideoDataForMonthPromise
+  extends Promise<VideoDataForMonth>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  year: () => Promise<Int>;
+  month: () => Promise<Int>;
+  video: <T = VideoPromise>() => T;
+  video_length: () => Promise<Int>;
+  unique_users: () => Promise<Int>;
+  real_minutes_watched: () => Promise<Int>;
+  avg_minutes_watched: () => Promise<Int>;
+  exponent_applied: () => Promise<Int>;
+  minutes_after_exponent: () => Promise<Int>;
+}
+
+export interface VideoDataForMonthSubscription
+  extends Promise<AsyncIterator<VideoDataForMonth>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  year: () => Promise<AsyncIterator<Int>>;
+  month: () => Promise<AsyncIterator<Int>>;
+  video: <T = VideoSubscription>() => T;
+  video_length: () => Promise<AsyncIterator<Int>>;
+  unique_users: () => Promise<AsyncIterator<Int>>;
+  real_minutes_watched: () => Promise<AsyncIterator<Int>>;
+  avg_minutes_watched: () => Promise<AsyncIterator<Int>>;
+  exponent_applied: () => Promise<AsyncIterator<Int>>;
+  minutes_after_exponent: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface VideoDataForMonthConnection {
+  pageInfo: PageInfo;
+  edges: VideoDataForMonthEdge[];
+}
+
+export interface VideoDataForMonthConnectionPromise
+  extends Promise<VideoDataForMonthConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<VideoDataForMonthEdge>>() => T;
+  aggregate: <T = AggregateVideoDataForMonthPromise>() => T;
+}
+
+export interface VideoDataForMonthConnectionSubscription
+  extends Promise<AsyncIterator<VideoDataForMonthConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<VideoDataForMonthEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateVideoDataForMonthSubscription>() => T;
+}
+
+export interface VideoDataForMonthEdge {
+  node: VideoDataForMonth;
+  cursor: String;
+}
+
+export interface VideoDataForMonthEdgePromise
+  extends Promise<VideoDataForMonthEdge>,
+    Fragmentable {
+  node: <T = VideoDataForMonthPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface VideoDataForMonthEdgeSubscription
+  extends Promise<AsyncIterator<VideoDataForMonthEdge>>,
+    Fragmentable {
+  node: <T = VideoDataForMonthSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateVideoDataForMonth {
+  count: Int;
+}
+
+export interface AggregateVideoDataForMonthPromise
+  extends Promise<AggregateVideoDataForMonth>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateVideoDataForMonthSubscription
+  extends Promise<AsyncIterator<AggregateVideoDataForMonth>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface VideoParameters {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  owner1_percentage: Int;
+  owner2_percentage: Int;
+  owner3_percentage: Int;
+}
+
+export interface VideoParametersPromise
+  extends Promise<VideoParameters>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  video: <T = VideoPromise>() => T;
+  owner1: <T = UserPromise>() => T;
+  owner1_percentage: () => Promise<Int>;
+  owner2: <T = UserPromise>() => T;
+  owner2_percentage: () => Promise<Int>;
+  owner3: <T = UserPromise>() => T;
+  owner3_percentage: () => Promise<Int>;
+}
+
+export interface VideoParametersSubscription
+  extends Promise<AsyncIterator<VideoParameters>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  video: <T = VideoSubscription>() => T;
+  owner1: <T = UserSubscription>() => T;
+  owner1_percentage: () => Promise<AsyncIterator<Int>>;
+  owner2: <T = UserSubscription>() => T;
+  owner2_percentage: () => Promise<AsyncIterator<Int>>;
+  owner3: <T = UserSubscription>() => T;
+  owner3_percentage: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface VideoParametersConnection {
+  pageInfo: PageInfo;
+  edges: VideoParametersEdge[];
+}
+
+export interface VideoParametersConnectionPromise
+  extends Promise<VideoParametersConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<VideoParametersEdge>>() => T;
+  aggregate: <T = AggregateVideoParametersPromise>() => T;
+}
+
+export interface VideoParametersConnectionSubscription
+  extends Promise<AsyncIterator<VideoParametersConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<VideoParametersEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateVideoParametersSubscription>() => T;
+}
+
+export interface VideoParametersEdge {
+  node: VideoParameters;
+  cursor: String;
+}
+
+export interface VideoParametersEdgePromise
+  extends Promise<VideoParametersEdge>,
+    Fragmentable {
+  node: <T = VideoParametersPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface VideoParametersEdgeSubscription
+  extends Promise<AsyncIterator<VideoParametersEdge>>,
+    Fragmentable {
+  node: <T = VideoParametersSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateVideoParameters {
+  count: Int;
+}
+
+export interface AggregateVideoParametersPromise
+  extends Promise<AggregateVideoParameters>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateVideoParametersSubscription
+  extends Promise<AsyncIterator<AggregateVideoParameters>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface VideoParametersForMonth {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  year: Int;
+  month: Int;
+  owner1_percentage: Int;
+  owner2_percentage: Int;
+  owner3_percentage: Int;
+  total_minutes: Float;
+  owner1_minutes: Float;
+  owner2_minutes: Float;
+  owner3_minutes: Float;
+}
+
+export interface VideoParametersForMonthPromise
+  extends Promise<VideoParametersForMonth>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  year: () => Promise<Int>;
+  month: () => Promise<Int>;
+  video: <T = VideoPromise>() => T;
+  owner1: <T = UserPromise>() => T;
+  owner1_percentage: () => Promise<Int>;
+  owner2: <T = UserPromise>() => T;
+  owner2_percentage: () => Promise<Int>;
+  owner3: <T = UserPromise>() => T;
+  owner3_percentage: () => Promise<Int>;
+  total_minutes: () => Promise<Float>;
+  owner1_minutes: () => Promise<Float>;
+  owner2_minutes: () => Promise<Float>;
+  owner3_minutes: () => Promise<Float>;
+}
+
+export interface VideoParametersForMonthSubscription
+  extends Promise<AsyncIterator<VideoParametersForMonth>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  year: () => Promise<AsyncIterator<Int>>;
+  month: () => Promise<AsyncIterator<Int>>;
+  video: <T = VideoSubscription>() => T;
+  owner1: <T = UserSubscription>() => T;
+  owner1_percentage: () => Promise<AsyncIterator<Int>>;
+  owner2: <T = UserSubscription>() => T;
+  owner2_percentage: () => Promise<AsyncIterator<Int>>;
+  owner3: <T = UserSubscription>() => T;
+  owner3_percentage: () => Promise<AsyncIterator<Int>>;
+  total_minutes: () => Promise<AsyncIterator<Float>>;
+  owner1_minutes: () => Promise<AsyncIterator<Float>>;
+  owner2_minutes: () => Promise<AsyncIterator<Float>>;
+  owner3_minutes: () => Promise<AsyncIterator<Float>>;
+}
+
+export interface VideoParametersForMonthConnection {
+  pageInfo: PageInfo;
+  edges: VideoParametersForMonthEdge[];
+}
+
+export interface VideoParametersForMonthConnectionPromise
+  extends Promise<VideoParametersForMonthConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<VideoParametersForMonthEdge>>() => T;
+  aggregate: <T = AggregateVideoParametersForMonthPromise>() => T;
+}
+
+export interface VideoParametersForMonthConnectionSubscription
+  extends Promise<AsyncIterator<VideoParametersForMonthConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <
+    T = Promise<AsyncIterator<VideoParametersForMonthEdgeSubscription>>
+  >() => T;
+  aggregate: <T = AggregateVideoParametersForMonthSubscription>() => T;
+}
+
+export interface VideoParametersForMonthEdge {
+  node: VideoParametersForMonth;
+  cursor: String;
+}
+
+export interface VideoParametersForMonthEdgePromise
+  extends Promise<VideoParametersForMonthEdge>,
+    Fragmentable {
+  node: <T = VideoParametersForMonthPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface VideoParametersForMonthEdgeSubscription
+  extends Promise<AsyncIterator<VideoParametersForMonthEdge>>,
+    Fragmentable {
+  node: <T = VideoParametersForMonthSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateVideoParametersForMonth {
+  count: Int;
+}
+
+export interface AggregateVideoParametersForMonthPromise
+  extends Promise<AggregateVideoParametersForMonth>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateVideoParametersForMonthSubscription
+  extends Promise<AsyncIterator<AggregateVideoParametersForMonth>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface VideoTotalParameters {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  minutes_watched_multiplier: Float;
+  exponent_for_minutes_watched: Float;
+  star_rating_multiplier: Float;
+  star_rating_on_off: Boolean;
+}
+
+export interface VideoTotalParametersPromise
+  extends Promise<VideoTotalParameters>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  minutes_watched_multiplier: () => Promise<Float>;
+  exponent_for_minutes_watched: () => Promise<Float>;
+  star_rating_multiplier: () => Promise<Float>;
+  star_rating_on_off: () => Promise<Boolean>;
+}
+
+export interface VideoTotalParametersSubscription
+  extends Promise<AsyncIterator<VideoTotalParameters>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  minutes_watched_multiplier: () => Promise<AsyncIterator<Float>>;
+  exponent_for_minutes_watched: () => Promise<AsyncIterator<Float>>;
+  star_rating_multiplier: () => Promise<AsyncIterator<Float>>;
+  star_rating_on_off: () => Promise<AsyncIterator<Boolean>>;
+}
+
+export interface VideoTotalParametersConnection {
+  pageInfo: PageInfo;
+  edges: VideoTotalParametersEdge[];
+}
+
+export interface VideoTotalParametersConnectionPromise
+  extends Promise<VideoTotalParametersConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<VideoTotalParametersEdge>>() => T;
+  aggregate: <T = AggregateVideoTotalParametersPromise>() => T;
+}
+
+export interface VideoTotalParametersConnectionSubscription
+  extends Promise<AsyncIterator<VideoTotalParametersConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <
+    T = Promise<AsyncIterator<VideoTotalParametersEdgeSubscription>>
+  >() => T;
+  aggregate: <T = AggregateVideoTotalParametersSubscription>() => T;
+}
+
+export interface VideoTotalParametersEdge {
+  node: VideoTotalParameters;
+  cursor: String;
+}
+
+export interface VideoTotalParametersEdgePromise
+  extends Promise<VideoTotalParametersEdge>,
+    Fragmentable {
+  node: <T = VideoTotalParametersPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface VideoTotalParametersEdgeSubscription
+  extends Promise<AsyncIterator<VideoTotalParametersEdge>>,
+    Fragmentable {
+  node: <T = VideoTotalParametersSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateVideoTotalParameters {
+  count: Int;
+}
+
+export interface AggregateVideoTotalParametersPromise
+  extends Promise<AggregateVideoTotalParameters>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateVideoTotalParametersSubscription
+  extends Promise<AsyncIterator<AggregateVideoTotalParameters>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
 export interface WatchedVideoUserConnection {
   pageInfo: PageInfo;
   edges: WatchedVideoUserEdge[];
@@ -6626,6 +9701,136 @@ export interface ActivationCodePreviousValuesSubscription
   email: () => Promise<AsyncIterator<String>>;
   valid_until: () => Promise<AsyncIterator<DateTimeOutput>>;
   code: () => Promise<AsyncIterator<String>>;
+}
+
+export interface ArtistFactorsSubscriptionPayload {
+  mutation: MutationType;
+  node: ArtistFactors;
+  updatedFields: String[];
+  previousValues: ArtistFactorsPreviousValues;
+}
+
+export interface ArtistFactorsSubscriptionPayloadPromise
+  extends Promise<ArtistFactorsSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = ArtistFactorsPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = ArtistFactorsPreviousValuesPromise>() => T;
+}
+
+export interface ArtistFactorsSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<ArtistFactorsSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = ArtistFactorsSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = ArtistFactorsPreviousValuesSubscription>() => T;
+}
+
+export interface ArtistFactorsPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  promotion_factor: Float;
+  minutes_exponent: Float;
+  finder_fee_factor: Float;
+  monthly_fee_duration: Int;
+  monthly_fee_amount_per_month: Int;
+  annual_fee_amount_per_month: Int;
+}
+
+export interface ArtistFactorsPreviousValuesPromise
+  extends Promise<ArtistFactorsPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  promotion_factor: () => Promise<Float>;
+  minutes_exponent: () => Promise<Float>;
+  finder_fee_factor: () => Promise<Float>;
+  monthly_fee_duration: () => Promise<Int>;
+  monthly_fee_amount_per_month: () => Promise<Int>;
+  annual_fee_amount_per_month: () => Promise<Int>;
+}
+
+export interface ArtistFactorsPreviousValuesSubscription
+  extends Promise<AsyncIterator<ArtistFactorsPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  promotion_factor: () => Promise<AsyncIterator<Float>>;
+  minutes_exponent: () => Promise<AsyncIterator<Float>>;
+  finder_fee_factor: () => Promise<AsyncIterator<Float>>;
+  monthly_fee_duration: () => Promise<AsyncIterator<Int>>;
+  monthly_fee_amount_per_month: () => Promise<AsyncIterator<Int>>;
+  annual_fee_amount_per_month: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface ArtistFactorsSettingSubscriptionPayload {
+  mutation: MutationType;
+  node: ArtistFactorsSetting;
+  updatedFields: String[];
+  previousValues: ArtistFactorsSettingPreviousValues;
+}
+
+export interface ArtistFactorsSettingSubscriptionPayloadPromise
+  extends Promise<ArtistFactorsSettingSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = ArtistFactorsSettingPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = ArtistFactorsSettingPreviousValuesPromise>() => T;
+}
+
+export interface ArtistFactorsSettingSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<ArtistFactorsSettingSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = ArtistFactorsSettingSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = ArtistFactorsSettingPreviousValuesSubscription>() => T;
+}
+
+export interface ArtistFactorsSettingPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  promotion_factor: Float;
+  minutes_exponent: Float;
+  finder_fee_factor: Float;
+  monthly_fee_duration: Int;
+  monthly_fee_amount_per_month: Int;
+  annual_fee_amount_per_month: Int;
+}
+
+export interface ArtistFactorsSettingPreviousValuesPromise
+  extends Promise<ArtistFactorsSettingPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  promotion_factor: () => Promise<Float>;
+  minutes_exponent: () => Promise<Float>;
+  finder_fee_factor: () => Promise<Float>;
+  monthly_fee_duration: () => Promise<Int>;
+  monthly_fee_amount_per_month: () => Promise<Int>;
+  annual_fee_amount_per_month: () => Promise<Int>;
+}
+
+export interface ArtistFactorsSettingPreviousValuesSubscription
+  extends Promise<AsyncIterator<ArtistFactorsSettingPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  promotion_factor: () => Promise<AsyncIterator<Float>>;
+  minutes_exponent: () => Promise<AsyncIterator<Float>>;
+  finder_fee_factor: () => Promise<AsyncIterator<Float>>;
+  monthly_fee_duration: () => Promise<AsyncIterator<Int>>;
+  monthly_fee_amount_per_month: () => Promise<AsyncIterator<Int>>;
+  annual_fee_amount_per_month: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface CategorySubscriptionPayload {
@@ -6899,6 +10104,160 @@ export interface PostPreviousValuesSubscription
   text: () => Promise<AsyncIterator<String>>;
 }
 
+export interface ProfitPoolCalculationSubscriptionPayload {
+  mutation: MutationType;
+  node: ProfitPoolCalculation;
+  updatedFields: String[];
+  previousValues: ProfitPoolCalculationPreviousValues;
+}
+
+export interface ProfitPoolCalculationSubscriptionPayloadPromise
+  extends Promise<ProfitPoolCalculationSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = ProfitPoolCalculationPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = ProfitPoolCalculationPreviousValuesPromise>() => T;
+}
+
+export interface ProfitPoolCalculationSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<ProfitPoolCalculationSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = ProfitPoolCalculationSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = ProfitPoolCalculationPreviousValuesSubscription>() => T;
+}
+
+export interface ProfitPoolCalculationPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  year: Int;
+  month: Int;
+  annual_active_subscribers: Int;
+  monthly_active_subscribers: Int;
+  annual_subscription_rate?: Int;
+  monthly_subscription_rate?: Int;
+  annual_pool_revenue: Int;
+  monthly_pool_revenue: Int;
+  total_revenue: Int;
+  total_payment_to_artists: Float;
+  net_revenue: Float;
+}
+
+export interface ProfitPoolCalculationPreviousValuesPromise
+  extends Promise<ProfitPoolCalculationPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  year: () => Promise<Int>;
+  month: () => Promise<Int>;
+  annual_active_subscribers: () => Promise<Int>;
+  monthly_active_subscribers: () => Promise<Int>;
+  annual_subscription_rate: () => Promise<Int>;
+  monthly_subscription_rate: () => Promise<Int>;
+  annual_pool_revenue: () => Promise<Int>;
+  monthly_pool_revenue: () => Promise<Int>;
+  total_revenue: () => Promise<Int>;
+  total_payment_to_artists: () => Promise<Float>;
+  net_revenue: () => Promise<Float>;
+}
+
+export interface ProfitPoolCalculationPreviousValuesSubscription
+  extends Promise<AsyncIterator<ProfitPoolCalculationPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  year: () => Promise<AsyncIterator<Int>>;
+  month: () => Promise<AsyncIterator<Int>>;
+  annual_active_subscribers: () => Promise<AsyncIterator<Int>>;
+  monthly_active_subscribers: () => Promise<AsyncIterator<Int>>;
+  annual_subscription_rate: () => Promise<AsyncIterator<Int>>;
+  monthly_subscription_rate: () => Promise<AsyncIterator<Int>>;
+  annual_pool_revenue: () => Promise<AsyncIterator<Int>>;
+  monthly_pool_revenue: () => Promise<AsyncIterator<Int>>;
+  total_revenue: () => Promise<AsyncIterator<Int>>;
+  total_payment_to_artists: () => Promise<AsyncIterator<Float>>;
+  net_revenue: () => Promise<AsyncIterator<Float>>;
+}
+
+export interface ProfitPoolFactorSubscriptionPayload {
+  mutation: MutationType;
+  node: ProfitPoolFactor;
+  updatedFields: String[];
+  previousValues: ProfitPoolFactorPreviousValues;
+}
+
+export interface ProfitPoolFactorSubscriptionPayloadPromise
+  extends Promise<ProfitPoolFactorSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = ProfitPoolFactorPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = ProfitPoolFactorPreviousValuesPromise>() => T;
+}
+
+export interface ProfitPoolFactorSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<ProfitPoolFactorSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = ProfitPoolFactorSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = ProfitPoolFactorPreviousValuesSubscription>() => T;
+}
+
+export interface ProfitPoolFactorPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  overhead: Int;
+  monthly_multiplier: Float;
+  finder_fee_multiplier: Float;
+  profit_pool_option1_variable: Int;
+  profit_pool_option1_multiplier: Float;
+  profit_pool_option2_variable: Int;
+  profit_pool_option2_multiplier: Float;
+  profit_pool_percentage: Int;
+  manual_change: Int;
+}
+
+export interface ProfitPoolFactorPreviousValuesPromise
+  extends Promise<ProfitPoolFactorPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  overhead: () => Promise<Int>;
+  monthly_multiplier: () => Promise<Float>;
+  finder_fee_multiplier: () => Promise<Float>;
+  profit_pool_option1_variable: () => Promise<Int>;
+  profit_pool_option1_multiplier: () => Promise<Float>;
+  profit_pool_option2_variable: () => Promise<Int>;
+  profit_pool_option2_multiplier: () => Promise<Float>;
+  profit_pool_percentage: () => Promise<Int>;
+  manual_change: () => Promise<Int>;
+}
+
+export interface ProfitPoolFactorPreviousValuesSubscription
+  extends Promise<AsyncIterator<ProfitPoolFactorPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  overhead: () => Promise<AsyncIterator<Int>>;
+  monthly_multiplier: () => Promise<AsyncIterator<Float>>;
+  finder_fee_multiplier: () => Promise<AsyncIterator<Float>>;
+  profit_pool_option1_variable: () => Promise<AsyncIterator<Int>>;
+  profit_pool_option1_multiplier: () => Promise<AsyncIterator<Float>>;
+  profit_pool_option2_variable: () => Promise<AsyncIterator<Int>>;
+  profit_pool_option2_multiplier: () => Promise<AsyncIterator<Float>>;
+  profit_pool_percentage: () => Promise<AsyncIterator<Int>>;
+  manual_change: () => Promise<AsyncIterator<Int>>;
+}
+
 export interface RestoreCodeSubscriptionPayload {
   mutation: MutationType;
   node: RestoreCode;
@@ -7115,6 +10474,95 @@ export interface TagPreviousValuesSubscription
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   text: () => Promise<AsyncIterator<String>>;
+}
+
+export interface TotalMinutesForArtistSubscriptionPayload {
+  mutation: MutationType;
+  node: TotalMinutesForArtist;
+  updatedFields: String[];
+  previousValues: TotalMinutesForArtistPreviousValues;
+}
+
+export interface TotalMinutesForArtistSubscriptionPayloadPromise
+  extends Promise<TotalMinutesForArtistSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = TotalMinutesForArtistPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = TotalMinutesForArtistPreviousValuesPromise>() => T;
+}
+
+export interface TotalMinutesForArtistSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<TotalMinutesForArtistSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = TotalMinutesForArtistSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = TotalMinutesForArtistPreviousValuesSubscription>() => T;
+}
+
+export interface TotalMinutesForArtistPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  year: Int;
+  month: Int;
+  minutes_as_owner1: Float;
+  minutes_as_owner2: Float;
+  minutes_as_owner3: Float;
+  total_minutes: Float;
+  artist_rating_factor: Float;
+  final_minutes: Float;
+  percent_of_profit_pool: Float;
+  monthly_quantity: Int;
+  annual_quantity: Int;
+  finder_fee: Int;
+  payment_from_profit_pool: Float;
+  total_payment: Float;
+}
+
+export interface TotalMinutesForArtistPreviousValuesPromise
+  extends Promise<TotalMinutesForArtistPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  year: () => Promise<Int>;
+  month: () => Promise<Int>;
+  minutes_as_owner1: () => Promise<Float>;
+  minutes_as_owner2: () => Promise<Float>;
+  minutes_as_owner3: () => Promise<Float>;
+  total_minutes: () => Promise<Float>;
+  artist_rating_factor: () => Promise<Float>;
+  final_minutes: () => Promise<Float>;
+  percent_of_profit_pool: () => Promise<Float>;
+  monthly_quantity: () => Promise<Int>;
+  annual_quantity: () => Promise<Int>;
+  finder_fee: () => Promise<Int>;
+  payment_from_profit_pool: () => Promise<Float>;
+  total_payment: () => Promise<Float>;
+}
+
+export interface TotalMinutesForArtistPreviousValuesSubscription
+  extends Promise<AsyncIterator<TotalMinutesForArtistPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  year: () => Promise<AsyncIterator<Int>>;
+  month: () => Promise<AsyncIterator<Int>>;
+  minutes_as_owner1: () => Promise<AsyncIterator<Float>>;
+  minutes_as_owner2: () => Promise<AsyncIterator<Float>>;
+  minutes_as_owner3: () => Promise<AsyncIterator<Float>>;
+  total_minutes: () => Promise<AsyncIterator<Float>>;
+  artist_rating_factor: () => Promise<AsyncIterator<Float>>;
+  final_minutes: () => Promise<AsyncIterator<Float>>;
+  percent_of_profit_pool: () => Promise<AsyncIterator<Float>>;
+  monthly_quantity: () => Promise<AsyncIterator<Int>>;
+  annual_quantity: () => Promise<AsyncIterator<Int>>;
+  finder_fee: () => Promise<AsyncIterator<Int>>;
+  payment_from_profit_pool: () => Promise<AsyncIterator<Float>>;
+  total_payment: () => Promise<AsyncIterator<Float>>;
 }
 
 export interface TransferPlanSubscriptionPayload {
@@ -7434,6 +10882,268 @@ export interface VideoPreviousValuesSubscription
   deleted: () => Promise<AsyncIterator<Boolean>>;
 }
 
+export interface VideoDataForMonthSubscriptionPayload {
+  mutation: MutationType;
+  node: VideoDataForMonth;
+  updatedFields: String[];
+  previousValues: VideoDataForMonthPreviousValues;
+}
+
+export interface VideoDataForMonthSubscriptionPayloadPromise
+  extends Promise<VideoDataForMonthSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = VideoDataForMonthPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = VideoDataForMonthPreviousValuesPromise>() => T;
+}
+
+export interface VideoDataForMonthSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<VideoDataForMonthSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = VideoDataForMonthSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = VideoDataForMonthPreviousValuesSubscription>() => T;
+}
+
+export interface VideoDataForMonthPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  year: Int;
+  month: Int;
+  video_length: Int;
+  unique_users: Int;
+  real_minutes_watched: Int;
+  avg_minutes_watched: Int;
+  exponent_applied: Int;
+  minutes_after_exponent: Int;
+}
+
+export interface VideoDataForMonthPreviousValuesPromise
+  extends Promise<VideoDataForMonthPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  year: () => Promise<Int>;
+  month: () => Promise<Int>;
+  video_length: () => Promise<Int>;
+  unique_users: () => Promise<Int>;
+  real_minutes_watched: () => Promise<Int>;
+  avg_minutes_watched: () => Promise<Int>;
+  exponent_applied: () => Promise<Int>;
+  minutes_after_exponent: () => Promise<Int>;
+}
+
+export interface VideoDataForMonthPreviousValuesSubscription
+  extends Promise<AsyncIterator<VideoDataForMonthPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  year: () => Promise<AsyncIterator<Int>>;
+  month: () => Promise<AsyncIterator<Int>>;
+  video_length: () => Promise<AsyncIterator<Int>>;
+  unique_users: () => Promise<AsyncIterator<Int>>;
+  real_minutes_watched: () => Promise<AsyncIterator<Int>>;
+  avg_minutes_watched: () => Promise<AsyncIterator<Int>>;
+  exponent_applied: () => Promise<AsyncIterator<Int>>;
+  minutes_after_exponent: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface VideoParametersSubscriptionPayload {
+  mutation: MutationType;
+  node: VideoParameters;
+  updatedFields: String[];
+  previousValues: VideoParametersPreviousValues;
+}
+
+export interface VideoParametersSubscriptionPayloadPromise
+  extends Promise<VideoParametersSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = VideoParametersPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = VideoParametersPreviousValuesPromise>() => T;
+}
+
+export interface VideoParametersSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<VideoParametersSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = VideoParametersSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = VideoParametersPreviousValuesSubscription>() => T;
+}
+
+export interface VideoParametersPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  owner1_percentage: Int;
+  owner2_percentage: Int;
+  owner3_percentage: Int;
+}
+
+export interface VideoParametersPreviousValuesPromise
+  extends Promise<VideoParametersPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  owner1_percentage: () => Promise<Int>;
+  owner2_percentage: () => Promise<Int>;
+  owner3_percentage: () => Promise<Int>;
+}
+
+export interface VideoParametersPreviousValuesSubscription
+  extends Promise<AsyncIterator<VideoParametersPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  owner1_percentage: () => Promise<AsyncIterator<Int>>;
+  owner2_percentage: () => Promise<AsyncIterator<Int>>;
+  owner3_percentage: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface VideoParametersForMonthSubscriptionPayload {
+  mutation: MutationType;
+  node: VideoParametersForMonth;
+  updatedFields: String[];
+  previousValues: VideoParametersForMonthPreviousValues;
+}
+
+export interface VideoParametersForMonthSubscriptionPayloadPromise
+  extends Promise<VideoParametersForMonthSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = VideoParametersForMonthPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = VideoParametersForMonthPreviousValuesPromise>() => T;
+}
+
+export interface VideoParametersForMonthSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<VideoParametersForMonthSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = VideoParametersForMonthSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <
+    T = VideoParametersForMonthPreviousValuesSubscription
+  >() => T;
+}
+
+export interface VideoParametersForMonthPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  year: Int;
+  month: Int;
+  owner1_percentage: Int;
+  owner2_percentage: Int;
+  owner3_percentage: Int;
+  total_minutes: Float;
+  owner1_minutes: Float;
+  owner2_minutes: Float;
+  owner3_minutes: Float;
+}
+
+export interface VideoParametersForMonthPreviousValuesPromise
+  extends Promise<VideoParametersForMonthPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  year: () => Promise<Int>;
+  month: () => Promise<Int>;
+  owner1_percentage: () => Promise<Int>;
+  owner2_percentage: () => Promise<Int>;
+  owner3_percentage: () => Promise<Int>;
+  total_minutes: () => Promise<Float>;
+  owner1_minutes: () => Promise<Float>;
+  owner2_minutes: () => Promise<Float>;
+  owner3_minutes: () => Promise<Float>;
+}
+
+export interface VideoParametersForMonthPreviousValuesSubscription
+  extends Promise<AsyncIterator<VideoParametersForMonthPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  year: () => Promise<AsyncIterator<Int>>;
+  month: () => Promise<AsyncIterator<Int>>;
+  owner1_percentage: () => Promise<AsyncIterator<Int>>;
+  owner2_percentage: () => Promise<AsyncIterator<Int>>;
+  owner3_percentage: () => Promise<AsyncIterator<Int>>;
+  total_minutes: () => Promise<AsyncIterator<Float>>;
+  owner1_minutes: () => Promise<AsyncIterator<Float>>;
+  owner2_minutes: () => Promise<AsyncIterator<Float>>;
+  owner3_minutes: () => Promise<AsyncIterator<Float>>;
+}
+
+export interface VideoTotalParametersSubscriptionPayload {
+  mutation: MutationType;
+  node: VideoTotalParameters;
+  updatedFields: String[];
+  previousValues: VideoTotalParametersPreviousValues;
+}
+
+export interface VideoTotalParametersSubscriptionPayloadPromise
+  extends Promise<VideoTotalParametersSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = VideoTotalParametersPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = VideoTotalParametersPreviousValuesPromise>() => T;
+}
+
+export interface VideoTotalParametersSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<VideoTotalParametersSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = VideoTotalParametersSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = VideoTotalParametersPreviousValuesSubscription>() => T;
+}
+
+export interface VideoTotalParametersPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  minutes_watched_multiplier: Float;
+  exponent_for_minutes_watched: Float;
+  star_rating_multiplier: Float;
+  star_rating_on_off: Boolean;
+}
+
+export interface VideoTotalParametersPreviousValuesPromise
+  extends Promise<VideoTotalParametersPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  minutes_watched_multiplier: () => Promise<Float>;
+  exponent_for_minutes_watched: () => Promise<Float>;
+  star_rating_multiplier: () => Promise<Float>;
+  star_rating_on_off: () => Promise<Boolean>;
+}
+
+export interface VideoTotalParametersPreviousValuesSubscription
+  extends Promise<AsyncIterator<VideoTotalParametersPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  minutes_watched_multiplier: () => Promise<AsyncIterator<Float>>;
+  exponent_for_minutes_watched: () => Promise<AsyncIterator<Float>>;
+  star_rating_multiplier: () => Promise<AsyncIterator<Float>>;
+  star_rating_on_off: () => Promise<AsyncIterator<Boolean>>;
+}
+
 export interface WatchedVideoUserSubscriptionPayload {
   mutation: MutationType;
   node: WatchedVideoUser;
@@ -7511,6 +11221,11 @@ export type Boolean = boolean;
 
 export type Json = any;
 
+/*
+The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point). 
+*/
+export type Float = number;
+
 export type Long = string;
 
 /**
@@ -7580,6 +11295,42 @@ export const models: Model[] = [
   },
   {
     name: "SubscriptionHistory",
+    embedded: false
+  },
+  {
+    name: "ArtistFactorsSetting",
+    embedded: false
+  },
+  {
+    name: "ArtistFactors",
+    embedded: false
+  },
+  {
+    name: "VideoTotalParameters",
+    embedded: false
+  },
+  {
+    name: "ProfitPoolFactor",
+    embedded: false
+  },
+  {
+    name: "VideoDataForMonth",
+    embedded: false
+  },
+  {
+    name: "VideoParameters",
+    embedded: false
+  },
+  {
+    name: "VideoParametersForMonth",
+    embedded: false
+  },
+  {
+    name: "TotalMinutesForArtist",
+    embedded: false
+  },
+  {
+    name: "ProfitPoolCalculation",
     embedded: false
   }
 ];

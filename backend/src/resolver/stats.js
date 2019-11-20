@@ -569,6 +569,46 @@ async function availableBalance(root, args, ctx, info) {
     }
 }
 
+async function artistFactorses(root, args, ctx, info) {
+    try {
+        const artistFactorsSettings = await prisma.artistFactorsSettings();
+        if (artistFactorsSettings.length == 0) {
+            throw new GQLError({message: 'Artist Factors Setting empty.', code: 402});
+        }
+        const artistFactorsSetting = artistFactorsSettings[0];
+        const artists = await prisma.users({
+            where: {
+                role: 'USER_PUBLISHER'
+            }
+        });
+        await Promise.all(artists.map(async (artist) => {
+            const records = await prisma.artistFactorses({
+                where: {
+                    artist: { id: artist.id }
+                }
+            });
+            if (records.length == 0) {
+                await prisma.createArtistFactors({
+                    artist: {
+                        connect: { id: artist.id }
+                    },
+                    promotion_factor: artistFactorsSetting.promotion_factor,
+                    minutes_exponent: artistFactorsSetting.minutes_exponent,
+                    finder_fee_factor: artistFactorsSetting.finder_fee_factor,
+                    monthly_fee_duration: artistFactorsSetting.monthly_fee_duration,
+                    monthly_fee_amount_per_month: artistFactorsSetting.monthly_fee_amount_per_month,
+                    annual_fee_amount_per_month: artistFactorsSetting.annual_fee_amount_per_month,
+                });
+            }
+        }));
+        
+        return await prisma.artistFactorses(args);
+    } catch (e) {
+        log.error('artistFactorses resolver error:', e);
+        return null;
+    }
+}
+
 module.exports = {
     signupStats: signupStats,
     subscriptionStats: subscriptionStats,
@@ -578,5 +618,6 @@ module.exports = {
     payoutStats: payoutStats,
     availableBalance: availableBalance,
     populateChargeHistory: populateChargeHistory,
-    populateSubscriptionHistory: populateSubscriptionHistory
+    populateSubscriptionHistory: populateSubscriptionHistory,
+    artistFactorses: artistFactorses
 };

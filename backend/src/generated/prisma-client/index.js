@@ -67,6 +67,42 @@ var models = [
   {
     name: "SubscriptionHistory",
     embedded: false
+  },
+  {
+    name: "ArtistFactorsSetting",
+    embedded: false
+  },
+  {
+    name: "ArtistFactors",
+    embedded: false
+  },
+  {
+    name: "VideoTotalParameters",
+    embedded: false
+  },
+  {
+    name: "ProfitPoolFactor",
+    embedded: false
+  },
+  {
+    name: "VideoDataForMonth",
+    embedded: false
+  },
+  {
+    name: "VideoParameters",
+    embedded: false
+  },
+  {
+    name: "VideoParametersForMonth",
+    embedded: false
+  },
+  {
+    name: "TotalMinutesForArtist",
+    embedded: false
+  },
+  {
+    name: "ProfitPoolCalculation",
+    embedded: false
   }
 ];
 exports.Prisma = prisma_lib_1.makePrismaClientClass({

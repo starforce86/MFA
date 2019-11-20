@@ -214,6 +214,14 @@ type AggregateActivationCode {
     count: Int!
 }
 
+type AggregateArtistFactors {
+  count: Int!
+}
+
+type AggregateArtistFactorsSetting {
+  count: Int!
+}
+
 type AggregateCategory {
     count: Int!
 }
@@ -234,6 +242,14 @@ type AggregatePost {
     count: Int!
 }
 
+type AggregateProfitPoolCalculation {
+  count: Int!
+}
+
+type AggregateProfitPoolFactor {
+  count: Int!
+}
+
 type AggregateRestoreCode {
     count: Int!
 }
@@ -248,6 +264,10 @@ type AggregateSubscriptionHistory {
 
 type AggregateTag {
     count: Int!
+}
+
+type AggregateTotalMinutesForArtist {
+  count: Int!
 }
 
 type AggregateTransferPlan {
@@ -266,8 +286,406 @@ type AggregateVideo {
     count: Int!
 }
 
+type AggregateVideoDataForMonth {
+  count: Int!
+}
+
+type AggregateVideoParameters {
+  count: Int!
+}
+
+type AggregateVideoParametersForMonth {
+  count: Int!
+}
+
+type AggregateVideoTotalParameters {
+  count: Int!
+}
+
 type AggregateWatchedVideoUser {
   count: Int!
+}
+
+type ArtistFactors {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  artist: User!
+  promotion_factor: Float!
+  minutes_exponent: Float!
+  finder_fee_factor: Float!
+  monthly_fee_duration: Int!
+  monthly_fee_amount_per_month: Int!
+  annual_fee_amount_per_month: Int!
+}
+
+type ArtistFactorsConnection {
+  pageInfo: PageInfo!
+  edges: [ArtistFactorsEdge]!
+  aggregate: AggregateArtistFactors!
+}
+
+input ArtistFactorsCreateInput {
+  artist: UserCreateOneInput!
+  promotion_factor: Float
+  minutes_exponent: Float
+  finder_fee_factor: Float
+  monthly_fee_duration: Int
+  monthly_fee_amount_per_month: Int
+  annual_fee_amount_per_month: Int
+}
+
+type ArtistFactorsEdge {
+  node: ArtistFactors!
+  cursor: String!
+}
+
+enum ArtistFactorsOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  promotion_factor_ASC
+  promotion_factor_DESC
+  minutes_exponent_ASC
+  minutes_exponent_DESC
+  finder_fee_factor_ASC
+  finder_fee_factor_DESC
+  monthly_fee_duration_ASC
+  monthly_fee_duration_DESC
+  monthly_fee_amount_per_month_ASC
+  monthly_fee_amount_per_month_DESC
+  annual_fee_amount_per_month_ASC
+  annual_fee_amount_per_month_DESC
+}
+
+type ArtistFactorsPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  promotion_factor: Float!
+  minutes_exponent: Float!
+  finder_fee_factor: Float!
+  monthly_fee_duration: Int!
+  monthly_fee_amount_per_month: Int!
+  annual_fee_amount_per_month: Int!
+}
+
+type ArtistFactorsSetting {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  promotion_factor: Float!
+  minutes_exponent: Float!
+  finder_fee_factor: Float!
+  monthly_fee_duration: Int!
+  monthly_fee_amount_per_month: Int!
+  annual_fee_amount_per_month: Int!
+}
+
+type ArtistFactorsSettingConnection {
+  pageInfo: PageInfo!
+  edges: [ArtistFactorsSettingEdge]!
+  aggregate: AggregateArtistFactorsSetting!
+}
+
+input ArtistFactorsSettingCreateInput {
+  promotion_factor: Float!
+  minutes_exponent: Float!
+  finder_fee_factor: Float!
+  monthly_fee_duration: Int!
+  monthly_fee_amount_per_month: Int!
+  annual_fee_amount_per_month: Int!
+}
+
+type ArtistFactorsSettingEdge {
+  node: ArtistFactorsSetting!
+  cursor: String!
+}
+
+enum ArtistFactorsSettingOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  promotion_factor_ASC
+  promotion_factor_DESC
+  minutes_exponent_ASC
+  minutes_exponent_DESC
+  finder_fee_factor_ASC
+  finder_fee_factor_DESC
+  monthly_fee_duration_ASC
+  monthly_fee_duration_DESC
+  monthly_fee_amount_per_month_ASC
+  monthly_fee_amount_per_month_DESC
+  annual_fee_amount_per_month_ASC
+  annual_fee_amount_per_month_DESC
+}
+
+type ArtistFactorsSettingPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  promotion_factor: Float!
+  minutes_exponent: Float!
+  finder_fee_factor: Float!
+  monthly_fee_duration: Int!
+  monthly_fee_amount_per_month: Int!
+  annual_fee_amount_per_month: Int!
+}
+
+type ArtistFactorsSettingSubscriptionPayload {
+  mutation: MutationType!
+  node: ArtistFactorsSetting
+  updatedFields: [String!]
+  previousValues: ArtistFactorsSettingPreviousValues
+}
+
+input ArtistFactorsSettingSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ArtistFactorsSettingWhereInput
+  AND: [ArtistFactorsSettingSubscriptionWhereInput!]
+  OR: [ArtistFactorsSettingSubscriptionWhereInput!]
+  NOT: [ArtistFactorsSettingSubscriptionWhereInput!]
+}
+
+input ArtistFactorsSettingUpdateInput {
+  promotion_factor: Float
+  minutes_exponent: Float
+  finder_fee_factor: Float
+  monthly_fee_duration: Int
+  monthly_fee_amount_per_month: Int
+  annual_fee_amount_per_month: Int
+}
+
+input ArtistFactorsSettingUpdateManyMutationInput {
+  promotion_factor: Float
+  minutes_exponent: Float
+  finder_fee_factor: Float
+  monthly_fee_duration: Int
+  monthly_fee_amount_per_month: Int
+  annual_fee_amount_per_month: Int
+}
+
+input ArtistFactorsSettingWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  promotion_factor: Float
+  promotion_factor_not: Float
+  promotion_factor_in: [Float!]
+  promotion_factor_not_in: [Float!]
+  promotion_factor_lt: Float
+  promotion_factor_lte: Float
+  promotion_factor_gt: Float
+  promotion_factor_gte: Float
+  minutes_exponent: Float
+  minutes_exponent_not: Float
+  minutes_exponent_in: [Float!]
+  minutes_exponent_not_in: [Float!]
+  minutes_exponent_lt: Float
+  minutes_exponent_lte: Float
+  minutes_exponent_gt: Float
+  minutes_exponent_gte: Float
+  finder_fee_factor: Float
+  finder_fee_factor_not: Float
+  finder_fee_factor_in: [Float!]
+  finder_fee_factor_not_in: [Float!]
+  finder_fee_factor_lt: Float
+  finder_fee_factor_lte: Float
+  finder_fee_factor_gt: Float
+  finder_fee_factor_gte: Float
+  monthly_fee_duration: Int
+  monthly_fee_duration_not: Int
+  monthly_fee_duration_in: [Int!]
+  monthly_fee_duration_not_in: [Int!]
+  monthly_fee_duration_lt: Int
+  monthly_fee_duration_lte: Int
+  monthly_fee_duration_gt: Int
+  monthly_fee_duration_gte: Int
+  monthly_fee_amount_per_month: Int
+  monthly_fee_amount_per_month_not: Int
+  monthly_fee_amount_per_month_in: [Int!]
+  monthly_fee_amount_per_month_not_in: [Int!]
+  monthly_fee_amount_per_month_lt: Int
+  monthly_fee_amount_per_month_lte: Int
+  monthly_fee_amount_per_month_gt: Int
+  monthly_fee_amount_per_month_gte: Int
+  annual_fee_amount_per_month: Int
+  annual_fee_amount_per_month_not: Int
+  annual_fee_amount_per_month_in: [Int!]
+  annual_fee_amount_per_month_not_in: [Int!]
+  annual_fee_amount_per_month_lt: Int
+  annual_fee_amount_per_month_lte: Int
+  annual_fee_amount_per_month_gt: Int
+  annual_fee_amount_per_month_gte: Int
+  AND: [ArtistFactorsSettingWhereInput!]
+  OR: [ArtistFactorsSettingWhereInput!]
+  NOT: [ArtistFactorsSettingWhereInput!]
+}
+
+input ArtistFactorsSettingWhereUniqueInput {
+  id: ID
+}
+
+type ArtistFactorsSubscriptionPayload {
+  mutation: MutationType!
+  node: ArtistFactors
+  updatedFields: [String!]
+  previousValues: ArtistFactorsPreviousValues
+}
+
+input ArtistFactorsSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ArtistFactorsWhereInput
+  AND: [ArtistFactorsSubscriptionWhereInput!]
+  OR: [ArtistFactorsSubscriptionWhereInput!]
+  NOT: [ArtistFactorsSubscriptionWhereInput!]
+}
+
+input ArtistFactorsUpdateInput {
+  artist: UserUpdateOneRequiredInput
+  promotion_factor: Float
+  minutes_exponent: Float
+  finder_fee_factor: Float
+  monthly_fee_duration: Int
+  monthly_fee_amount_per_month: Int
+  annual_fee_amount_per_month: Int
+}
+
+input ArtistFactorsUpdateManyMutationInput {
+  promotion_factor: Float
+  minutes_exponent: Float
+  finder_fee_factor: Float
+  monthly_fee_duration: Int
+  monthly_fee_amount_per_month: Int
+  annual_fee_amount_per_month: Int
+}
+
+input ArtistFactorsWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  artist: UserWhereInput
+  promotion_factor: Float
+  promotion_factor_not: Float
+  promotion_factor_in: [Float!]
+  promotion_factor_not_in: [Float!]
+  promotion_factor_lt: Float
+  promotion_factor_lte: Float
+  promotion_factor_gt: Float
+  promotion_factor_gte: Float
+  minutes_exponent: Float
+  minutes_exponent_not: Float
+  minutes_exponent_in: [Float!]
+  minutes_exponent_not_in: [Float!]
+  minutes_exponent_lt: Float
+  minutes_exponent_lte: Float
+  minutes_exponent_gt: Float
+  minutes_exponent_gte: Float
+  finder_fee_factor: Float
+  finder_fee_factor_not: Float
+  finder_fee_factor_in: [Float!]
+  finder_fee_factor_not_in: [Float!]
+  finder_fee_factor_lt: Float
+  finder_fee_factor_lte: Float
+  finder_fee_factor_gt: Float
+  finder_fee_factor_gte: Float
+  monthly_fee_duration: Int
+  monthly_fee_duration_not: Int
+  monthly_fee_duration_in: [Int!]
+  monthly_fee_duration_not_in: [Int!]
+  monthly_fee_duration_lt: Int
+  monthly_fee_duration_lte: Int
+  monthly_fee_duration_gt: Int
+  monthly_fee_duration_gte: Int
+  monthly_fee_amount_per_month: Int
+  monthly_fee_amount_per_month_not: Int
+  monthly_fee_amount_per_month_in: [Int!]
+  monthly_fee_amount_per_month_not_in: [Int!]
+  monthly_fee_amount_per_month_lt: Int
+  monthly_fee_amount_per_month_lte: Int
+  monthly_fee_amount_per_month_gt: Int
+  monthly_fee_amount_per_month_gte: Int
+  annual_fee_amount_per_month: Int
+  annual_fee_amount_per_month_not: Int
+  annual_fee_amount_per_month_in: [Int!]
+  annual_fee_amount_per_month_not_in: [Int!]
+  annual_fee_amount_per_month_lt: Int
+  annual_fee_amount_per_month_lte: Int
+  annual_fee_amount_per_month_gt: Int
+  annual_fee_amount_per_month_gte: Int
+  AND: [ArtistFactorsWhereInput!]
+  OR: [ArtistFactorsWhereInput!]
+  NOT: [ArtistFactorsWhereInput!]
+}
+
+input ArtistFactorsWhereUniqueInput {
+  id: ID
 }
 
 type BatchPayload {
@@ -1152,6 +1570,504 @@ input PostWhereUniqueInput {
     id: ID
 }
 
+type ProfitPoolCalculation {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  year: Int!
+  month: Int!
+  annual_active_subscribers: Int!
+  monthly_active_subscribers: Int!
+  annual_subscription_rate: Int
+  monthly_subscription_rate: Int
+  annual_pool_revenue: Int!
+  monthly_pool_revenue: Int!
+  total_revenue: Int!
+  total_payment_to_artists: Float!
+  net_revenue: Float!
+}
+
+type ProfitPoolCalculationConnection {
+  pageInfo: PageInfo!
+  edges: [ProfitPoolCalculationEdge]!
+  aggregate: AggregateProfitPoolCalculation!
+}
+
+input ProfitPoolCalculationCreateInput {
+  year: Int!
+  month: Int!
+  annual_active_subscribers: Int
+  monthly_active_subscribers: Int
+  annual_subscription_rate: Int
+  monthly_subscription_rate: Int
+  annual_pool_revenue: Int
+  monthly_pool_revenue: Int
+  total_revenue: Int
+  total_payment_to_artists: Float
+  net_revenue: Float
+}
+
+type ProfitPoolCalculationEdge {
+  node: ProfitPoolCalculation!
+  cursor: String!
+}
+
+enum ProfitPoolCalculationOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  year_ASC
+  year_DESC
+  month_ASC
+  month_DESC
+  annual_active_subscribers_ASC
+  annual_active_subscribers_DESC
+  monthly_active_subscribers_ASC
+  monthly_active_subscribers_DESC
+  annual_subscription_rate_ASC
+  annual_subscription_rate_DESC
+  monthly_subscription_rate_ASC
+  monthly_subscription_rate_DESC
+  annual_pool_revenue_ASC
+  annual_pool_revenue_DESC
+  monthly_pool_revenue_ASC
+  monthly_pool_revenue_DESC
+  total_revenue_ASC
+  total_revenue_DESC
+  total_payment_to_artists_ASC
+  total_payment_to_artists_DESC
+  net_revenue_ASC
+  net_revenue_DESC
+}
+
+type ProfitPoolCalculationPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  year: Int!
+  month: Int!
+  annual_active_subscribers: Int!
+  monthly_active_subscribers: Int!
+  annual_subscription_rate: Int
+  monthly_subscription_rate: Int
+  annual_pool_revenue: Int!
+  monthly_pool_revenue: Int!
+  total_revenue: Int!
+  total_payment_to_artists: Float!
+  net_revenue: Float!
+}
+
+type ProfitPoolCalculationSubscriptionPayload {
+  mutation: MutationType!
+  node: ProfitPoolCalculation
+  updatedFields: [String!]
+  previousValues: ProfitPoolCalculationPreviousValues
+}
+
+input ProfitPoolCalculationSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ProfitPoolCalculationWhereInput
+  AND: [ProfitPoolCalculationSubscriptionWhereInput!]
+  OR: [ProfitPoolCalculationSubscriptionWhereInput!]
+  NOT: [ProfitPoolCalculationSubscriptionWhereInput!]
+}
+
+input ProfitPoolCalculationUpdateInput {
+  year: Int
+  month: Int
+  annual_active_subscribers: Int
+  monthly_active_subscribers: Int
+  annual_subscription_rate: Int
+  monthly_subscription_rate: Int
+  annual_pool_revenue: Int
+  monthly_pool_revenue: Int
+  total_revenue: Int
+  total_payment_to_artists: Float
+  net_revenue: Float
+}
+
+input ProfitPoolCalculationUpdateManyMutationInput {
+  year: Int
+  month: Int
+  annual_active_subscribers: Int
+  monthly_active_subscribers: Int
+  annual_subscription_rate: Int
+  monthly_subscription_rate: Int
+  annual_pool_revenue: Int
+  monthly_pool_revenue: Int
+  total_revenue: Int
+  total_payment_to_artists: Float
+  net_revenue: Float
+}
+
+input ProfitPoolCalculationWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  year: Int
+  year_not: Int
+  year_in: [Int!]
+  year_not_in: [Int!]
+  year_lt: Int
+  year_lte: Int
+  year_gt: Int
+  year_gte: Int
+  month: Int
+  month_not: Int
+  month_in: [Int!]
+  month_not_in: [Int!]
+  month_lt: Int
+  month_lte: Int
+  month_gt: Int
+  month_gte: Int
+  annual_active_subscribers: Int
+  annual_active_subscribers_not: Int
+  annual_active_subscribers_in: [Int!]
+  annual_active_subscribers_not_in: [Int!]
+  annual_active_subscribers_lt: Int
+  annual_active_subscribers_lte: Int
+  annual_active_subscribers_gt: Int
+  annual_active_subscribers_gte: Int
+  monthly_active_subscribers: Int
+  monthly_active_subscribers_not: Int
+  monthly_active_subscribers_in: [Int!]
+  monthly_active_subscribers_not_in: [Int!]
+  monthly_active_subscribers_lt: Int
+  monthly_active_subscribers_lte: Int
+  monthly_active_subscribers_gt: Int
+  monthly_active_subscribers_gte: Int
+  annual_subscription_rate: Int
+  annual_subscription_rate_not: Int
+  annual_subscription_rate_in: [Int!]
+  annual_subscription_rate_not_in: [Int!]
+  annual_subscription_rate_lt: Int
+  annual_subscription_rate_lte: Int
+  annual_subscription_rate_gt: Int
+  annual_subscription_rate_gte: Int
+  monthly_subscription_rate: Int
+  monthly_subscription_rate_not: Int
+  monthly_subscription_rate_in: [Int!]
+  monthly_subscription_rate_not_in: [Int!]
+  monthly_subscription_rate_lt: Int
+  monthly_subscription_rate_lte: Int
+  monthly_subscription_rate_gt: Int
+  monthly_subscription_rate_gte: Int
+  annual_pool_revenue: Int
+  annual_pool_revenue_not: Int
+  annual_pool_revenue_in: [Int!]
+  annual_pool_revenue_not_in: [Int!]
+  annual_pool_revenue_lt: Int
+  annual_pool_revenue_lte: Int
+  annual_pool_revenue_gt: Int
+  annual_pool_revenue_gte: Int
+  monthly_pool_revenue: Int
+  monthly_pool_revenue_not: Int
+  monthly_pool_revenue_in: [Int!]
+  monthly_pool_revenue_not_in: [Int!]
+  monthly_pool_revenue_lt: Int
+  monthly_pool_revenue_lte: Int
+  monthly_pool_revenue_gt: Int
+  monthly_pool_revenue_gte: Int
+  total_revenue: Int
+  total_revenue_not: Int
+  total_revenue_in: [Int!]
+  total_revenue_not_in: [Int!]
+  total_revenue_lt: Int
+  total_revenue_lte: Int
+  total_revenue_gt: Int
+  total_revenue_gte: Int
+  total_payment_to_artists: Float
+  total_payment_to_artists_not: Float
+  total_payment_to_artists_in: [Float!]
+  total_payment_to_artists_not_in: [Float!]
+  total_payment_to_artists_lt: Float
+  total_payment_to_artists_lte: Float
+  total_payment_to_artists_gt: Float
+  total_payment_to_artists_gte: Float
+  net_revenue: Float
+  net_revenue_not: Float
+  net_revenue_in: [Float!]
+  net_revenue_not_in: [Float!]
+  net_revenue_lt: Float
+  net_revenue_lte: Float
+  net_revenue_gt: Float
+  net_revenue_gte: Float
+  AND: [ProfitPoolCalculationWhereInput!]
+  OR: [ProfitPoolCalculationWhereInput!]
+  NOT: [ProfitPoolCalculationWhereInput!]
+}
+
+input ProfitPoolCalculationWhereUniqueInput {
+  id: ID
+}
+
+type ProfitPoolFactor {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  overhead: Int!
+  monthly_multiplier: Float!
+  finder_fee_multiplier: Float!
+  profit_pool_option1_variable: Int!
+  profit_pool_option1_multiplier: Float!
+  profit_pool_option2_variable: Int!
+  profit_pool_option2_multiplier: Float!
+  profit_pool_percentage: Int!
+  manual_change: Int!
+}
+
+type ProfitPoolFactorConnection {
+  pageInfo: PageInfo!
+  edges: [ProfitPoolFactorEdge]!
+  aggregate: AggregateProfitPoolFactor!
+}
+
+input ProfitPoolFactorCreateInput {
+  overhead: Int
+  monthly_multiplier: Float
+  finder_fee_multiplier: Float
+  profit_pool_option1_variable: Int
+  profit_pool_option1_multiplier: Float
+  profit_pool_option2_variable: Int
+  profit_pool_option2_multiplier: Float
+  profit_pool_percentage: Int
+  manual_change: Int
+}
+
+type ProfitPoolFactorEdge {
+  node: ProfitPoolFactor!
+  cursor: String!
+}
+
+enum ProfitPoolFactorOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  overhead_ASC
+  overhead_DESC
+  monthly_multiplier_ASC
+  monthly_multiplier_DESC
+  finder_fee_multiplier_ASC
+  finder_fee_multiplier_DESC
+  profit_pool_option1_variable_ASC
+  profit_pool_option1_variable_DESC
+  profit_pool_option1_multiplier_ASC
+  profit_pool_option1_multiplier_DESC
+  profit_pool_option2_variable_ASC
+  profit_pool_option2_variable_DESC
+  profit_pool_option2_multiplier_ASC
+  profit_pool_option2_multiplier_DESC
+  profit_pool_percentage_ASC
+  profit_pool_percentage_DESC
+  manual_change_ASC
+  manual_change_DESC
+}
+
+type ProfitPoolFactorPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  overhead: Int!
+  monthly_multiplier: Float!
+  finder_fee_multiplier: Float!
+  profit_pool_option1_variable: Int!
+  profit_pool_option1_multiplier: Float!
+  profit_pool_option2_variable: Int!
+  profit_pool_option2_multiplier: Float!
+  profit_pool_percentage: Int!
+  manual_change: Int!
+}
+
+type ProfitPoolFactorSubscriptionPayload {
+  mutation: MutationType!
+  node: ProfitPoolFactor
+  updatedFields: [String!]
+  previousValues: ProfitPoolFactorPreviousValues
+}
+
+input ProfitPoolFactorSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ProfitPoolFactorWhereInput
+  AND: [ProfitPoolFactorSubscriptionWhereInput!]
+  OR: [ProfitPoolFactorSubscriptionWhereInput!]
+  NOT: [ProfitPoolFactorSubscriptionWhereInput!]
+}
+
+input ProfitPoolFactorUpdateInput {
+  overhead: Int
+  monthly_multiplier: Float
+  finder_fee_multiplier: Float
+  profit_pool_option1_variable: Int
+  profit_pool_option1_multiplier: Float
+  profit_pool_option2_variable: Int
+  profit_pool_option2_multiplier: Float
+  profit_pool_percentage: Int
+  manual_change: Int
+}
+
+input ProfitPoolFactorUpdateManyMutationInput {
+  overhead: Int
+  monthly_multiplier: Float
+  finder_fee_multiplier: Float
+  profit_pool_option1_variable: Int
+  profit_pool_option1_multiplier: Float
+  profit_pool_option2_variable: Int
+  profit_pool_option2_multiplier: Float
+  profit_pool_percentage: Int
+  manual_change: Int
+}
+
+input ProfitPoolFactorWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  overhead: Int
+  overhead_not: Int
+  overhead_in: [Int!]
+  overhead_not_in: [Int!]
+  overhead_lt: Int
+  overhead_lte: Int
+  overhead_gt: Int
+  overhead_gte: Int
+  monthly_multiplier: Float
+  monthly_multiplier_not: Float
+  monthly_multiplier_in: [Float!]
+  monthly_multiplier_not_in: [Float!]
+  monthly_multiplier_lt: Float
+  monthly_multiplier_lte: Float
+  monthly_multiplier_gt: Float
+  monthly_multiplier_gte: Float
+  finder_fee_multiplier: Float
+  finder_fee_multiplier_not: Float
+  finder_fee_multiplier_in: [Float!]
+  finder_fee_multiplier_not_in: [Float!]
+  finder_fee_multiplier_lt: Float
+  finder_fee_multiplier_lte: Float
+  finder_fee_multiplier_gt: Float
+  finder_fee_multiplier_gte: Float
+  profit_pool_option1_variable: Int
+  profit_pool_option1_variable_not: Int
+  profit_pool_option1_variable_in: [Int!]
+  profit_pool_option1_variable_not_in: [Int!]
+  profit_pool_option1_variable_lt: Int
+  profit_pool_option1_variable_lte: Int
+  profit_pool_option1_variable_gt: Int
+  profit_pool_option1_variable_gte: Int
+  profit_pool_option1_multiplier: Float
+  profit_pool_option1_multiplier_not: Float
+  profit_pool_option1_multiplier_in: [Float!]
+  profit_pool_option1_multiplier_not_in: [Float!]
+  profit_pool_option1_multiplier_lt: Float
+  profit_pool_option1_multiplier_lte: Float
+  profit_pool_option1_multiplier_gt: Float
+  profit_pool_option1_multiplier_gte: Float
+  profit_pool_option2_variable: Int
+  profit_pool_option2_variable_not: Int
+  profit_pool_option2_variable_in: [Int!]
+  profit_pool_option2_variable_not_in: [Int!]
+  profit_pool_option2_variable_lt: Int
+  profit_pool_option2_variable_lte: Int
+  profit_pool_option2_variable_gt: Int
+  profit_pool_option2_variable_gte: Int
+  profit_pool_option2_multiplier: Float
+  profit_pool_option2_multiplier_not: Float
+  profit_pool_option2_multiplier_in: [Float!]
+  profit_pool_option2_multiplier_not_in: [Float!]
+  profit_pool_option2_multiplier_lt: Float
+  profit_pool_option2_multiplier_lte: Float
+  profit_pool_option2_multiplier_gt: Float
+  profit_pool_option2_multiplier_gte: Float
+  profit_pool_percentage: Int
+  profit_pool_percentage_not: Int
+  profit_pool_percentage_in: [Int!]
+  profit_pool_percentage_not_in: [Int!]
+  profit_pool_percentage_lt: Int
+  profit_pool_percentage_lte: Int
+  profit_pool_percentage_gt: Int
+  profit_pool_percentage_gte: Int
+  manual_change: Int
+  manual_change_not: Int
+  manual_change_in: [Int!]
+  manual_change_not_in: [Int!]
+  manual_change_lt: Int
+  manual_change_lte: Int
+  manual_change_gt: Int
+  manual_change_gte: Int
+  AND: [ProfitPoolFactorWhereInput!]
+  OR: [ProfitPoolFactorWhereInput!]
+  NOT: [ProfitPoolFactorWhereInput!]
+}
+
+input ProfitPoolFactorWhereUniqueInput {
+  id: ID
+}
+
 type RestoreCode {
     id: ID!
     createdAt: DateTime!
@@ -1468,19 +2384,28 @@ input SettingsWhereUniqueInput {
 
 type Subscription {
   activationCode(where: ActivationCodeSubscriptionWhereInput): ActivationCodeSubscriptionPayload
+  artistFactors(where: ArtistFactorsSubscriptionWhereInput): ArtistFactorsSubscriptionPayload
+  artistFactorsSetting(where: ArtistFactorsSettingSubscriptionWhereInput): ArtistFactorsSettingSubscriptionPayload
   category(where: CategorySubscriptionWhereInput): CategorySubscriptionPayload
   chargeHistory(where: ChargeHistorySubscriptionWhereInput): ChargeHistorySubscriptionPayload
   curriculum(where: CurriculumSubscriptionWhereInput): CurriculumSubscriptionPayload
   playHistory(where: PlayHistorySubscriptionWhereInput): PlayHistorySubscriptionPayload
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
+  profitPoolCalculation(where: ProfitPoolCalculationSubscriptionWhereInput): ProfitPoolCalculationSubscriptionPayload
+  profitPoolFactor(where: ProfitPoolFactorSubscriptionWhereInput): ProfitPoolFactorSubscriptionPayload
   restoreCode(where: RestoreCodeSubscriptionWhereInput): RestoreCodeSubscriptionPayload
   settings(where: SettingsSubscriptionWhereInput): SettingsSubscriptionPayload
   subscriptionHistory(where: SubscriptionHistorySubscriptionWhereInput): SubscriptionHistorySubscriptionPayload
   tag(where: TagSubscriptionWhereInput): TagSubscriptionPayload
+  totalMinutesForArtist(where: TotalMinutesForArtistSubscriptionWhereInput): TotalMinutesForArtistSubscriptionPayload
   transferPlan(where: TransferPlanSubscriptionWhereInput): TransferPlanSubscriptionPayload
   transferTransaction(where: TransferTransactionSubscriptionWhereInput): TransferTransactionSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   video(where: VideoSubscriptionWhereInput): VideoSubscriptionPayload
+  videoDataForMonth(where: VideoDataForMonthSubscriptionWhereInput): VideoDataForMonthSubscriptionPayload
+  videoParameters(where: VideoParametersSubscriptionWhereInput): VideoParametersSubscriptionPayload
+  videoParametersForMonth(where: VideoParametersForMonthSubscriptionWhereInput): VideoParametersForMonthSubscriptionPayload
+  videoTotalParameters(where: VideoTotalParametersSubscriptionWhereInput): VideoTotalParametersSubscriptionPayload
   watchedVideoUser(where: WatchedVideoUserSubscriptionWhereInput): WatchedVideoUserSubscriptionPayload
 }
 
@@ -1849,6 +2774,319 @@ input TagWhereInput {
 
 input TagWhereUniqueInput {
     id: ID
+}
+
+type TotalMinutesForArtist {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  year: Int!
+  month: Int!
+  artist: User!
+  minutes_as_owner1: Float!
+  minutes_as_owner2: Float!
+  minutes_as_owner3: Float!
+  total_minutes: Float!
+  artist_rating_factor: Float!
+  final_minutes: Float!
+  percent_of_profit_pool: Float!
+  monthly_quantity: Int!
+  annual_quantity: Int!
+  finder_fee: Int!
+  payment_from_profit_pool: Float!
+  total_payment: Float!
+}
+
+type TotalMinutesForArtistConnection {
+  pageInfo: PageInfo!
+  edges: [TotalMinutesForArtistEdge]!
+  aggregate: AggregateTotalMinutesForArtist!
+}
+
+input TotalMinutesForArtistCreateInput {
+  year: Int!
+  month: Int!
+  artist: UserCreateOneInput!
+  minutes_as_owner1: Float
+  minutes_as_owner2: Float
+  minutes_as_owner3: Float
+  total_minutes: Float
+  artist_rating_factor: Float!
+  final_minutes: Float
+  percent_of_profit_pool: Float
+  monthly_quantity: Int!
+  annual_quantity: Int!
+  finder_fee: Int
+  payment_from_profit_pool: Float
+  total_payment: Float
+}
+
+type TotalMinutesForArtistEdge {
+  node: TotalMinutesForArtist!
+  cursor: String!
+}
+
+enum TotalMinutesForArtistOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  year_ASC
+  year_DESC
+  month_ASC
+  month_DESC
+  minutes_as_owner1_ASC
+  minutes_as_owner1_DESC
+  minutes_as_owner2_ASC
+  minutes_as_owner2_DESC
+  minutes_as_owner3_ASC
+  minutes_as_owner3_DESC
+  total_minutes_ASC
+  total_minutes_DESC
+  artist_rating_factor_ASC
+  artist_rating_factor_DESC
+  final_minutes_ASC
+  final_minutes_DESC
+  percent_of_profit_pool_ASC
+  percent_of_profit_pool_DESC
+  monthly_quantity_ASC
+  monthly_quantity_DESC
+  annual_quantity_ASC
+  annual_quantity_DESC
+  finder_fee_ASC
+  finder_fee_DESC
+  payment_from_profit_pool_ASC
+  payment_from_profit_pool_DESC
+  total_payment_ASC
+  total_payment_DESC
+}
+
+type TotalMinutesForArtistPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  year: Int!
+  month: Int!
+  minutes_as_owner1: Float!
+  minutes_as_owner2: Float!
+  minutes_as_owner3: Float!
+  total_minutes: Float!
+  artist_rating_factor: Float!
+  final_minutes: Float!
+  percent_of_profit_pool: Float!
+  monthly_quantity: Int!
+  annual_quantity: Int!
+  finder_fee: Int!
+  payment_from_profit_pool: Float!
+  total_payment: Float!
+}
+
+type TotalMinutesForArtistSubscriptionPayload {
+  mutation: MutationType!
+  node: TotalMinutesForArtist
+  updatedFields: [String!]
+  previousValues: TotalMinutesForArtistPreviousValues
+}
+
+input TotalMinutesForArtistSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: TotalMinutesForArtistWhereInput
+  AND: [TotalMinutesForArtistSubscriptionWhereInput!]
+  OR: [TotalMinutesForArtistSubscriptionWhereInput!]
+  NOT: [TotalMinutesForArtistSubscriptionWhereInput!]
+}
+
+input TotalMinutesForArtistUpdateInput {
+  year: Int
+  month: Int
+  artist: UserUpdateOneRequiredInput
+  minutes_as_owner1: Float
+  minutes_as_owner2: Float
+  minutes_as_owner3: Float
+  total_minutes: Float
+  artist_rating_factor: Float
+  final_minutes: Float
+  percent_of_profit_pool: Float
+  monthly_quantity: Int
+  annual_quantity: Int
+  finder_fee: Int
+  payment_from_profit_pool: Float
+  total_payment: Float
+}
+
+input TotalMinutesForArtistUpdateManyMutationInput {
+  year: Int
+  month: Int
+  minutes_as_owner1: Float
+  minutes_as_owner2: Float
+  minutes_as_owner3: Float
+  total_minutes: Float
+  artist_rating_factor: Float
+  final_minutes: Float
+  percent_of_profit_pool: Float
+  monthly_quantity: Int
+  annual_quantity: Int
+  finder_fee: Int
+  payment_from_profit_pool: Float
+  total_payment: Float
+}
+
+input TotalMinutesForArtistWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  year: Int
+  year_not: Int
+  year_in: [Int!]
+  year_not_in: [Int!]
+  year_lt: Int
+  year_lte: Int
+  year_gt: Int
+  year_gte: Int
+  month: Int
+  month_not: Int
+  month_in: [Int!]
+  month_not_in: [Int!]
+  month_lt: Int
+  month_lte: Int
+  month_gt: Int
+  month_gte: Int
+  artist: UserWhereInput
+  minutes_as_owner1: Float
+  minutes_as_owner1_not: Float
+  minutes_as_owner1_in: [Float!]
+  minutes_as_owner1_not_in: [Float!]
+  minutes_as_owner1_lt: Float
+  minutes_as_owner1_lte: Float
+  minutes_as_owner1_gt: Float
+  minutes_as_owner1_gte: Float
+  minutes_as_owner2: Float
+  minutes_as_owner2_not: Float
+  minutes_as_owner2_in: [Float!]
+  minutes_as_owner2_not_in: [Float!]
+  minutes_as_owner2_lt: Float
+  minutes_as_owner2_lte: Float
+  minutes_as_owner2_gt: Float
+  minutes_as_owner2_gte: Float
+  minutes_as_owner3: Float
+  minutes_as_owner3_not: Float
+  minutes_as_owner3_in: [Float!]
+  minutes_as_owner3_not_in: [Float!]
+  minutes_as_owner3_lt: Float
+  minutes_as_owner3_lte: Float
+  minutes_as_owner3_gt: Float
+  minutes_as_owner3_gte: Float
+  total_minutes: Float
+  total_minutes_not: Float
+  total_minutes_in: [Float!]
+  total_minutes_not_in: [Float!]
+  total_minutes_lt: Float
+  total_minutes_lte: Float
+  total_minutes_gt: Float
+  total_minutes_gte: Float
+  artist_rating_factor: Float
+  artist_rating_factor_not: Float
+  artist_rating_factor_in: [Float!]
+  artist_rating_factor_not_in: [Float!]
+  artist_rating_factor_lt: Float
+  artist_rating_factor_lte: Float
+  artist_rating_factor_gt: Float
+  artist_rating_factor_gte: Float
+  final_minutes: Float
+  final_minutes_not: Float
+  final_minutes_in: [Float!]
+  final_minutes_not_in: [Float!]
+  final_minutes_lt: Float
+  final_minutes_lte: Float
+  final_minutes_gt: Float
+  final_minutes_gte: Float
+  percent_of_profit_pool: Float
+  percent_of_profit_pool_not: Float
+  percent_of_profit_pool_in: [Float!]
+  percent_of_profit_pool_not_in: [Float!]
+  percent_of_profit_pool_lt: Float
+  percent_of_profit_pool_lte: Float
+  percent_of_profit_pool_gt: Float
+  percent_of_profit_pool_gte: Float
+  monthly_quantity: Int
+  monthly_quantity_not: Int
+  monthly_quantity_in: [Int!]
+  monthly_quantity_not_in: [Int!]
+  monthly_quantity_lt: Int
+  monthly_quantity_lte: Int
+  monthly_quantity_gt: Int
+  monthly_quantity_gte: Int
+  annual_quantity: Int
+  annual_quantity_not: Int
+  annual_quantity_in: [Int!]
+  annual_quantity_not_in: [Int!]
+  annual_quantity_lt: Int
+  annual_quantity_lte: Int
+  annual_quantity_gt: Int
+  annual_quantity_gte: Int
+  finder_fee: Int
+  finder_fee_not: Int
+  finder_fee_in: [Int!]
+  finder_fee_not_in: [Int!]
+  finder_fee_lt: Int
+  finder_fee_lte: Int
+  finder_fee_gt: Int
+  finder_fee_gte: Int
+  payment_from_profit_pool: Float
+  payment_from_profit_pool_not: Float
+  payment_from_profit_pool_in: [Float!]
+  payment_from_profit_pool_not_in: [Float!]
+  payment_from_profit_pool_lt: Float
+  payment_from_profit_pool_lte: Float
+  payment_from_profit_pool_gt: Float
+  payment_from_profit_pool_gte: Float
+  total_payment: Float
+  total_payment_not: Float
+  total_payment_in: [Float!]
+  total_payment_not_in: [Float!]
+  total_payment_lt: Float
+  total_payment_lte: Float
+  total_payment_gt: Float
+  total_payment_gte: Float
+  AND: [TotalMinutesForArtistWhereInput!]
+  OR: [TotalMinutesForArtistWhereInput!]
+  NOT: [TotalMinutesForArtistWhereInput!]
+}
+
+input TotalMinutesForArtistWhereUniqueInput {
+  id: ID
 }
 
 type TransferPlan {
@@ -3050,6 +4288,15 @@ input UserUpdateManyWithWhereNestedInput {
     data: UserUpdateManyDataInput!
 }
 
+input UserUpdateOneInput {
+  create: UserCreateInput
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: UserWhereUniqueInput
+}
+
 input UserUpdateOneRequiredInput {
     create: UserCreateInput
     update: UserUpdateDataInput
@@ -3783,6 +5030,229 @@ input VideoCreateWithoutWatched_usersInput {
     deleted: Boolean
 }
 
+type VideoDataForMonth {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  year: Int!
+  month: Int!
+  video: Video!
+  video_length: Int!
+  unique_users: Int!
+  real_minutes_watched: Int!
+  avg_minutes_watched: Int!
+  exponent_applied: Int!
+  minutes_after_exponent: Int!
+}
+
+type VideoDataForMonthConnection {
+  pageInfo: PageInfo!
+  edges: [VideoDataForMonthEdge]!
+  aggregate: AggregateVideoDataForMonth!
+}
+
+input VideoDataForMonthCreateInput {
+  year: Int!
+  month: Int!
+  video: VideoCreateOneInput!
+  video_length: Int!
+  unique_users: Int
+  real_minutes_watched: Int
+  avg_minutes_watched: Int
+  exponent_applied: Int
+  minutes_after_exponent: Int
+}
+
+type VideoDataForMonthEdge {
+  node: VideoDataForMonth!
+  cursor: String!
+}
+
+enum VideoDataForMonthOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  year_ASC
+  year_DESC
+  month_ASC
+  month_DESC
+  video_length_ASC
+  video_length_DESC
+  unique_users_ASC
+  unique_users_DESC
+  real_minutes_watched_ASC
+  real_minutes_watched_DESC
+  avg_minutes_watched_ASC
+  avg_minutes_watched_DESC
+  exponent_applied_ASC
+  exponent_applied_DESC
+  minutes_after_exponent_ASC
+  minutes_after_exponent_DESC
+}
+
+type VideoDataForMonthPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  year: Int!
+  month: Int!
+  video_length: Int!
+  unique_users: Int!
+  real_minutes_watched: Int!
+  avg_minutes_watched: Int!
+  exponent_applied: Int!
+  minutes_after_exponent: Int!
+}
+
+type VideoDataForMonthSubscriptionPayload {
+  mutation: MutationType!
+  node: VideoDataForMonth
+  updatedFields: [String!]
+  previousValues: VideoDataForMonthPreviousValues
+}
+
+input VideoDataForMonthSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: VideoDataForMonthWhereInput
+  AND: [VideoDataForMonthSubscriptionWhereInput!]
+  OR: [VideoDataForMonthSubscriptionWhereInput!]
+  NOT: [VideoDataForMonthSubscriptionWhereInput!]
+}
+
+input VideoDataForMonthUpdateInput {
+  year: Int
+  month: Int
+  video: VideoUpdateOneRequiredInput
+  video_length: Int
+  unique_users: Int
+  real_minutes_watched: Int
+  avg_minutes_watched: Int
+  exponent_applied: Int
+  minutes_after_exponent: Int
+}
+
+input VideoDataForMonthUpdateManyMutationInput {
+  year: Int
+  month: Int
+  video_length: Int
+  unique_users: Int
+  real_minutes_watched: Int
+  avg_minutes_watched: Int
+  exponent_applied: Int
+  minutes_after_exponent: Int
+}
+
+input VideoDataForMonthWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  year: Int
+  year_not: Int
+  year_in: [Int!]
+  year_not_in: [Int!]
+  year_lt: Int
+  year_lte: Int
+  year_gt: Int
+  year_gte: Int
+  month: Int
+  month_not: Int
+  month_in: [Int!]
+  month_not_in: [Int!]
+  month_lt: Int
+  month_lte: Int
+  month_gt: Int
+  month_gte: Int
+  video: VideoWhereInput
+  video_length: Int
+  video_length_not: Int
+  video_length_in: [Int!]
+  video_length_not_in: [Int!]
+  video_length_lt: Int
+  video_length_lte: Int
+  video_length_gt: Int
+  video_length_gte: Int
+  unique_users: Int
+  unique_users_not: Int
+  unique_users_in: [Int!]
+  unique_users_not_in: [Int!]
+  unique_users_lt: Int
+  unique_users_lte: Int
+  unique_users_gt: Int
+  unique_users_gte: Int
+  real_minutes_watched: Int
+  real_minutes_watched_not: Int
+  real_minutes_watched_in: [Int!]
+  real_minutes_watched_not_in: [Int!]
+  real_minutes_watched_lt: Int
+  real_minutes_watched_lte: Int
+  real_minutes_watched_gt: Int
+  real_minutes_watched_gte: Int
+  avg_minutes_watched: Int
+  avg_minutes_watched_not: Int
+  avg_minutes_watched_in: [Int!]
+  avg_minutes_watched_not_in: [Int!]
+  avg_minutes_watched_lt: Int
+  avg_minutes_watched_lte: Int
+  avg_minutes_watched_gt: Int
+  avg_minutes_watched_gte: Int
+  exponent_applied: Int
+  exponent_applied_not: Int
+  exponent_applied_in: [Int!]
+  exponent_applied_not_in: [Int!]
+  exponent_applied_lt: Int
+  exponent_applied_lte: Int
+  exponent_applied_gt: Int
+  exponent_applied_gte: Int
+  minutes_after_exponent: Int
+  minutes_after_exponent_not: Int
+  minutes_after_exponent_in: [Int!]
+  minutes_after_exponent_not_in: [Int!]
+  minutes_after_exponent_lt: Int
+  minutes_after_exponent_lte: Int
+  minutes_after_exponent_gt: Int
+  minutes_after_exponent_gte: Int
+  AND: [VideoDataForMonthWhereInput!]
+  OR: [VideoDataForMonthWhereInput!]
+  NOT: [VideoDataForMonthWhereInput!]
+}
+
+input VideoDataForMonthWhereUniqueInput {
+  id: ID
+}
+
 type VideoEdge {
     node: Video!
     cursor: String!
@@ -3813,6 +5283,416 @@ enum VideoOrderByInput {
     preview_video_duration_DESC
     deleted_ASC
     deleted_DESC
+}
+
+type VideoParameters {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  video: Video!
+  owner1: User
+  owner1_percentage: Int!
+  owner2: User
+  owner2_percentage: Int!
+  owner3: User
+  owner3_percentage: Int!
+}
+
+type VideoParametersConnection {
+  pageInfo: PageInfo!
+  edges: [VideoParametersEdge]!
+  aggregate: AggregateVideoParameters!
+}
+
+input VideoParametersCreateInput {
+  video: VideoCreateOneInput!
+  owner1: UserCreateOneInput
+  owner1_percentage: Int!
+  owner2: UserCreateOneInput
+  owner2_percentage: Int!
+  owner3: UserCreateOneInput
+  owner3_percentage: Int!
+}
+
+type VideoParametersEdge {
+  node: VideoParameters!
+  cursor: String!
+}
+
+type VideoParametersForMonth {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  year: Int!
+  month: Int!
+  video: Video!
+  owner1: User
+  owner1_percentage: Int!
+  owner2: User
+  owner2_percentage: Int!
+  owner3: User
+  owner3_percentage: Int!
+  total_minutes: Float!
+  owner1_minutes: Float!
+  owner2_minutes: Float!
+  owner3_minutes: Float!
+}
+
+type VideoParametersForMonthConnection {
+  pageInfo: PageInfo!
+  edges: [VideoParametersForMonthEdge]!
+  aggregate: AggregateVideoParametersForMonth!
+}
+
+input VideoParametersForMonthCreateInput {
+  year: Int!
+  month: Int!
+  video: VideoCreateOneInput!
+  owner1: UserCreateOneInput
+  owner1_percentage: Int!
+  owner2: UserCreateOneInput
+  owner2_percentage: Int!
+  owner3: UserCreateOneInput
+  owner3_percentage: Int!
+  total_minutes: Float
+  owner1_minutes: Float
+  owner2_minutes: Float
+  owner3_minutes: Float
+}
+
+type VideoParametersForMonthEdge {
+  node: VideoParametersForMonth!
+  cursor: String!
+}
+
+enum VideoParametersForMonthOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  year_ASC
+  year_DESC
+  month_ASC
+  month_DESC
+  owner1_percentage_ASC
+  owner1_percentage_DESC
+  owner2_percentage_ASC
+  owner2_percentage_DESC
+  owner3_percentage_ASC
+  owner3_percentage_DESC
+  total_minutes_ASC
+  total_minutes_DESC
+  owner1_minutes_ASC
+  owner1_minutes_DESC
+  owner2_minutes_ASC
+  owner2_minutes_DESC
+  owner3_minutes_ASC
+  owner3_minutes_DESC
+}
+
+type VideoParametersForMonthPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  year: Int!
+  month: Int!
+  owner1_percentage: Int!
+  owner2_percentage: Int!
+  owner3_percentage: Int!
+  total_minutes: Float!
+  owner1_minutes: Float!
+  owner2_minutes: Float!
+  owner3_minutes: Float!
+}
+
+type VideoParametersForMonthSubscriptionPayload {
+  mutation: MutationType!
+  node: VideoParametersForMonth
+  updatedFields: [String!]
+  previousValues: VideoParametersForMonthPreviousValues
+}
+
+input VideoParametersForMonthSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: VideoParametersForMonthWhereInput
+  AND: [VideoParametersForMonthSubscriptionWhereInput!]
+  OR: [VideoParametersForMonthSubscriptionWhereInput!]
+  NOT: [VideoParametersForMonthSubscriptionWhereInput!]
+}
+
+input VideoParametersForMonthUpdateInput {
+  year: Int
+  month: Int
+  video: VideoUpdateOneRequiredInput
+  owner1: UserUpdateOneInput
+  owner1_percentage: Int
+  owner2: UserUpdateOneInput
+  owner2_percentage: Int
+  owner3: UserUpdateOneInput
+  owner3_percentage: Int
+  total_minutes: Float
+  owner1_minutes: Float
+  owner2_minutes: Float
+  owner3_minutes: Float
+}
+
+input VideoParametersForMonthUpdateManyMutationInput {
+  year: Int
+  month: Int
+  owner1_percentage: Int
+  owner2_percentage: Int
+  owner3_percentage: Int
+  total_minutes: Float
+  owner1_minutes: Float
+  owner2_minutes: Float
+  owner3_minutes: Float
+}
+
+input VideoParametersForMonthWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  year: Int
+  year_not: Int
+  year_in: [Int!]
+  year_not_in: [Int!]
+  year_lt: Int
+  year_lte: Int
+  year_gt: Int
+  year_gte: Int
+  month: Int
+  month_not: Int
+  month_in: [Int!]
+  month_not_in: [Int!]
+  month_lt: Int
+  month_lte: Int
+  month_gt: Int
+  month_gte: Int
+  video: VideoWhereInput
+  owner1: UserWhereInput
+  owner1_percentage: Int
+  owner1_percentage_not: Int
+  owner1_percentage_in: [Int!]
+  owner1_percentage_not_in: [Int!]
+  owner1_percentage_lt: Int
+  owner1_percentage_lte: Int
+  owner1_percentage_gt: Int
+  owner1_percentage_gte: Int
+  owner2: UserWhereInput
+  owner2_percentage: Int
+  owner2_percentage_not: Int
+  owner2_percentage_in: [Int!]
+  owner2_percentage_not_in: [Int!]
+  owner2_percentage_lt: Int
+  owner2_percentage_lte: Int
+  owner2_percentage_gt: Int
+  owner2_percentage_gte: Int
+  owner3: UserWhereInput
+  owner3_percentage: Int
+  owner3_percentage_not: Int
+  owner3_percentage_in: [Int!]
+  owner3_percentage_not_in: [Int!]
+  owner3_percentage_lt: Int
+  owner3_percentage_lte: Int
+  owner3_percentage_gt: Int
+  owner3_percentage_gte: Int
+  total_minutes: Float
+  total_minutes_not: Float
+  total_minutes_in: [Float!]
+  total_minutes_not_in: [Float!]
+  total_minutes_lt: Float
+  total_minutes_lte: Float
+  total_minutes_gt: Float
+  total_minutes_gte: Float
+  owner1_minutes: Float
+  owner1_minutes_not: Float
+  owner1_minutes_in: [Float!]
+  owner1_minutes_not_in: [Float!]
+  owner1_minutes_lt: Float
+  owner1_minutes_lte: Float
+  owner1_minutes_gt: Float
+  owner1_minutes_gte: Float
+  owner2_minutes: Float
+  owner2_minutes_not: Float
+  owner2_minutes_in: [Float!]
+  owner2_minutes_not_in: [Float!]
+  owner2_minutes_lt: Float
+  owner2_minutes_lte: Float
+  owner2_minutes_gt: Float
+  owner2_minutes_gte: Float
+  owner3_minutes: Float
+  owner3_minutes_not: Float
+  owner3_minutes_in: [Float!]
+  owner3_minutes_not_in: [Float!]
+  owner3_minutes_lt: Float
+  owner3_minutes_lte: Float
+  owner3_minutes_gt: Float
+  owner3_minutes_gte: Float
+  AND: [VideoParametersForMonthWhereInput!]
+  OR: [VideoParametersForMonthWhereInput!]
+  NOT: [VideoParametersForMonthWhereInput!]
+}
+
+input VideoParametersForMonthWhereUniqueInput {
+  id: ID
+}
+
+enum VideoParametersOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  owner1_percentage_ASC
+  owner1_percentage_DESC
+  owner2_percentage_ASC
+  owner2_percentage_DESC
+  owner3_percentage_ASC
+  owner3_percentage_DESC
+}
+
+type VideoParametersPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  owner1_percentage: Int!
+  owner2_percentage: Int!
+  owner3_percentage: Int!
+}
+
+type VideoParametersSubscriptionPayload {
+  mutation: MutationType!
+  node: VideoParameters
+  updatedFields: [String!]
+  previousValues: VideoParametersPreviousValues
+}
+
+input VideoParametersSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: VideoParametersWhereInput
+  AND: [VideoParametersSubscriptionWhereInput!]
+  OR: [VideoParametersSubscriptionWhereInput!]
+  NOT: [VideoParametersSubscriptionWhereInput!]
+}
+
+input VideoParametersUpdateInput {
+  video: VideoUpdateOneRequiredInput
+  owner1: UserUpdateOneInput
+  owner1_percentage: Int
+  owner2: UserUpdateOneInput
+  owner2_percentage: Int
+  owner3: UserUpdateOneInput
+  owner3_percentage: Int
+}
+
+input VideoParametersUpdateManyMutationInput {
+  owner1_percentage: Int
+  owner2_percentage: Int
+  owner3_percentage: Int
+}
+
+input VideoParametersWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  video: VideoWhereInput
+  owner1: UserWhereInput
+  owner1_percentage: Int
+  owner1_percentage_not: Int
+  owner1_percentage_in: [Int!]
+  owner1_percentage_not_in: [Int!]
+  owner1_percentage_lt: Int
+  owner1_percentage_lte: Int
+  owner1_percentage_gt: Int
+  owner1_percentage_gte: Int
+  owner2: UserWhereInput
+  owner2_percentage: Int
+  owner2_percentage_not: Int
+  owner2_percentage_in: [Int!]
+  owner2_percentage_not_in: [Int!]
+  owner2_percentage_lt: Int
+  owner2_percentage_lte: Int
+  owner2_percentage_gt: Int
+  owner2_percentage_gte: Int
+  owner3: UserWhereInput
+  owner3_percentage: Int
+  owner3_percentage_not: Int
+  owner3_percentage_in: [Int!]
+  owner3_percentage_not_in: [Int!]
+  owner3_percentage_lt: Int
+  owner3_percentage_lte: Int
+  owner3_percentage_gt: Int
+  owner3_percentage_gte: Int
+  AND: [VideoParametersWhereInput!]
+  OR: [VideoParametersWhereInput!]
+  NOT: [VideoParametersWhereInput!]
+}
+
+input VideoParametersWhereUniqueInput {
+  id: ID
 }
 
 type VideoPreviousValues {
@@ -3984,6 +5864,159 @@ input VideoSubscriptionWhereInput {
     AND: [VideoSubscriptionWhereInput!]
     OR: [VideoSubscriptionWhereInput!]
     NOT: [VideoSubscriptionWhereInput!]
+}
+
+type VideoTotalParameters {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  minutes_watched_multiplier: Float!
+  exponent_for_minutes_watched: Float!
+  star_rating_multiplier: Float!
+  star_rating_on_off: Boolean!
+}
+
+type VideoTotalParametersConnection {
+  pageInfo: PageInfo!
+  edges: [VideoTotalParametersEdge]!
+  aggregate: AggregateVideoTotalParameters!
+}
+
+input VideoTotalParametersCreateInput {
+  minutes_watched_multiplier: Float
+  exponent_for_minutes_watched: Float
+  star_rating_multiplier: Float
+  star_rating_on_off: Boolean
+}
+
+type VideoTotalParametersEdge {
+  node: VideoTotalParameters!
+  cursor: String!
+}
+
+enum VideoTotalParametersOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  minutes_watched_multiplier_ASC
+  minutes_watched_multiplier_DESC
+  exponent_for_minutes_watched_ASC
+  exponent_for_minutes_watched_DESC
+  star_rating_multiplier_ASC
+  star_rating_multiplier_DESC
+  star_rating_on_off_ASC
+  star_rating_on_off_DESC
+}
+
+type VideoTotalParametersPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  minutes_watched_multiplier: Float!
+  exponent_for_minutes_watched: Float!
+  star_rating_multiplier: Float!
+  star_rating_on_off: Boolean!
+}
+
+type VideoTotalParametersSubscriptionPayload {
+  mutation: MutationType!
+  node: VideoTotalParameters
+  updatedFields: [String!]
+  previousValues: VideoTotalParametersPreviousValues
+}
+
+input VideoTotalParametersSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: VideoTotalParametersWhereInput
+  AND: [VideoTotalParametersSubscriptionWhereInput!]
+  OR: [VideoTotalParametersSubscriptionWhereInput!]
+  NOT: [VideoTotalParametersSubscriptionWhereInput!]
+}
+
+input VideoTotalParametersUpdateInput {
+  minutes_watched_multiplier: Float
+  exponent_for_minutes_watched: Float
+  star_rating_multiplier: Float
+  star_rating_on_off: Boolean
+}
+
+input VideoTotalParametersUpdateManyMutationInput {
+  minutes_watched_multiplier: Float
+  exponent_for_minutes_watched: Float
+  star_rating_multiplier: Float
+  star_rating_on_off: Boolean
+}
+
+input VideoTotalParametersWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  minutes_watched_multiplier: Float
+  minutes_watched_multiplier_not: Float
+  minutes_watched_multiplier_in: [Float!]
+  minutes_watched_multiplier_not_in: [Float!]
+  minutes_watched_multiplier_lt: Float
+  minutes_watched_multiplier_lte: Float
+  minutes_watched_multiplier_gt: Float
+  minutes_watched_multiplier_gte: Float
+  exponent_for_minutes_watched: Float
+  exponent_for_minutes_watched_not: Float
+  exponent_for_minutes_watched_in: [Float!]
+  exponent_for_minutes_watched_not_in: [Float!]
+  exponent_for_minutes_watched_lt: Float
+  exponent_for_minutes_watched_lte: Float
+  exponent_for_minutes_watched_gt: Float
+  exponent_for_minutes_watched_gte: Float
+  star_rating_multiplier: Float
+  star_rating_multiplier_not: Float
+  star_rating_multiplier_in: [Float!]
+  star_rating_multiplier_not_in: [Float!]
+  star_rating_multiplier_lt: Float
+  star_rating_multiplier_lte: Float
+  star_rating_multiplier_gt: Float
+  star_rating_multiplier_gte: Float
+  star_rating_on_off: Boolean
+  star_rating_on_off_not: Boolean
+  AND: [VideoTotalParametersWhereInput!]
+  OR: [VideoTotalParametersWhereInput!]
+  NOT: [VideoTotalParametersWhereInput!]
+}
+
+input VideoTotalParametersWhereUniqueInput {
+  id: ID
 }
 
 input VideoUpdateDataInput {

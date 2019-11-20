@@ -33,6 +33,18 @@ type Mutation {
     upsertActivationCode(where: ActivationCodeWhereUniqueInput!, create: ActivationCodeCreateInput!, update: ActivationCodeUpdateInput!): ActivationCode!
     deleteActivationCode(where: ActivationCodeWhereUniqueInput!): ActivationCode
     deleteManyActivationCodes(where: ActivationCodeWhereInput): BatchPayload!
+    createArtistFactors(data: ArtistFactorsCreateInput!): ArtistFactors!
+    updateArtistFactors(data: ArtistFactorsUpdateInput!, where: ArtistFactorsWhereUniqueInput!): ArtistFactors
+    updateManyArtistFactorses(data: ArtistFactorsUpdateManyMutationInput!, where: ArtistFactorsWhereInput): BatchPayload!
+    upsertArtistFactors(where: ArtistFactorsWhereUniqueInput!, create: ArtistFactorsCreateInput!, update: ArtistFactorsUpdateInput!): ArtistFactors!
+    deleteArtistFactors(where: ArtistFactorsWhereUniqueInput!): ArtistFactors
+    deleteManyArtistFactorses(where: ArtistFactorsWhereInput): BatchPayload!
+    createArtistFactorsSetting(data: ArtistFactorsSettingCreateInput!): ArtistFactorsSetting!
+    updateArtistFactorsSetting(data: ArtistFactorsSettingUpdateInput!, where: ArtistFactorsSettingWhereUniqueInput!): ArtistFactorsSetting
+    updateManyArtistFactorsSettings(data: ArtistFactorsSettingUpdateManyMutationInput!, where: ArtistFactorsSettingWhereInput): BatchPayload!
+    upsertArtistFactorsSetting(where: ArtistFactorsSettingWhereUniqueInput!, create: ArtistFactorsSettingCreateInput!, update: ArtistFactorsSettingUpdateInput!): ArtistFactorsSetting!
+    deleteArtistFactorsSetting(where: ArtistFactorsSettingWhereUniqueInput!): ArtistFactorsSetting
+    deleteManyArtistFactorsSettings(where: ArtistFactorsSettingWhereInput): BatchPayload!
     createCategory(data: CategoryCreateInput!): Category!
     updateCategory(data: CategoryUpdateInput!, where: CategoryWhereUniqueInput!): Category
     updateManyCategories(data: CategoryUpdateManyMutationInput!, where: CategoryWhereInput): BatchPayload!
@@ -63,6 +75,18 @@ type Mutation {
     upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
     deletePost(where: PostWhereUniqueInput!): Post
     deleteManyPosts(where: PostWhereInput): BatchPayload!
+    createProfitPoolCalculation(data: ProfitPoolCalculationCreateInput!): ProfitPoolCalculation!
+    updateProfitPoolCalculation(data: ProfitPoolCalculationUpdateInput!, where: ProfitPoolCalculationWhereUniqueInput!): ProfitPoolCalculation
+    updateManyProfitPoolCalculations(data: ProfitPoolCalculationUpdateManyMutationInput!, where: ProfitPoolCalculationWhereInput): BatchPayload!
+    upsertProfitPoolCalculation(where: ProfitPoolCalculationWhereUniqueInput!, create: ProfitPoolCalculationCreateInput!, update: ProfitPoolCalculationUpdateInput!): ProfitPoolCalculation!
+    deleteProfitPoolCalculation(where: ProfitPoolCalculationWhereUniqueInput!): ProfitPoolCalculation
+    deleteManyProfitPoolCalculations(where: ProfitPoolCalculationWhereInput): BatchPayload!
+    createProfitPoolFactor(data: ProfitPoolFactorCreateInput!): ProfitPoolFactor!
+    updateProfitPoolFactor(data: ProfitPoolFactorUpdateInput!, where: ProfitPoolFactorWhereUniqueInput!): ProfitPoolFactor
+    updateManyProfitPoolFactors(data: ProfitPoolFactorUpdateManyMutationInput!, where: ProfitPoolFactorWhereInput): BatchPayload!
+    upsertProfitPoolFactor(where: ProfitPoolFactorWhereUniqueInput!, create: ProfitPoolFactorCreateInput!, update: ProfitPoolFactorUpdateInput!): ProfitPoolFactor!
+    deleteProfitPoolFactor(where: ProfitPoolFactorWhereUniqueInput!): ProfitPoolFactor
+    deleteManyProfitPoolFactors(where: ProfitPoolFactorWhereInput): BatchPayload!
     createRestoreCode(data: RestoreCodeCreateInput!): RestoreCode!
     updateRestoreCode(data: RestoreCodeUpdateInput!, where: RestoreCodeWhereUniqueInput!): RestoreCode
     updateManyRestoreCodes(data: RestoreCodeUpdateManyMutationInput!, where: RestoreCodeWhereInput): BatchPayload!
@@ -87,6 +111,12 @@ type Mutation {
     upsertTag(where: TagWhereUniqueInput!, create: TagCreateInput!, update: TagUpdateInput!): Tag!
     deleteTag(where: TagWhereUniqueInput!): Tag
     deleteManyTags(where: TagWhereInput): BatchPayload!
+    createTotalMinutesForArtist(data: TotalMinutesForArtistCreateInput!): TotalMinutesForArtist!
+    updateTotalMinutesForArtist(data: TotalMinutesForArtistUpdateInput!, where: TotalMinutesForArtistWhereUniqueInput!): TotalMinutesForArtist
+    updateManyTotalMinutesForArtists(data: TotalMinutesForArtistUpdateManyMutationInput!, where: TotalMinutesForArtistWhereInput): BatchPayload!
+    upsertTotalMinutesForArtist(where: TotalMinutesForArtistWhereUniqueInput!, create: TotalMinutesForArtistCreateInput!, update: TotalMinutesForArtistUpdateInput!): TotalMinutesForArtist!
+    deleteTotalMinutesForArtist(where: TotalMinutesForArtistWhereUniqueInput!): TotalMinutesForArtist
+    deleteManyTotalMinutesForArtists(where: TotalMinutesForArtistWhereInput): BatchPayload!
     createTransferPlan(data: TransferPlanCreateInput!): TransferPlan!
     updateTransferPlan(data: TransferPlanUpdateInput!, where: TransferPlanWhereUniqueInput!): TransferPlan
     updateManyTransferPlans(data: TransferPlanUpdateManyMutationInput!, where: TransferPlanWhereInput): BatchPayload!
@@ -111,6 +141,30 @@ type Mutation {
     upsertVideo(where: VideoWhereUniqueInput!, create: VideoCreateInput!, update: VideoUpdateInput!): Video!
     deleteVideo(where: VideoWhereUniqueInput!): Video
     deleteManyVideos(where: VideoWhereInput): BatchPayload!
+    createVideoDataForMonth(data: VideoDataForMonthCreateInput!): VideoDataForMonth!
+    updateVideoDataForMonth(data: VideoDataForMonthUpdateInput!, where: VideoDataForMonthWhereUniqueInput!): VideoDataForMonth
+    updateManyVideoDataForMonths(data: VideoDataForMonthUpdateManyMutationInput!, where: VideoDataForMonthWhereInput): BatchPayload!
+    upsertVideoDataForMonth(where: VideoDataForMonthWhereUniqueInput!, create: VideoDataForMonthCreateInput!, update: VideoDataForMonthUpdateInput!): VideoDataForMonth!
+    deleteVideoDataForMonth(where: VideoDataForMonthWhereUniqueInput!): VideoDataForMonth
+    deleteManyVideoDataForMonths(where: VideoDataForMonthWhereInput): BatchPayload!
+    createVideoParameters(data: VideoParametersCreateInput!): VideoParameters!
+    updateVideoParameters(data: VideoParametersUpdateInput!, where: VideoParametersWhereUniqueInput!): VideoParameters
+    updateManyVideoParameterses(data: VideoParametersUpdateManyMutationInput!, where: VideoParametersWhereInput): BatchPayload!
+    upsertVideoParameters(where: VideoParametersWhereUniqueInput!, create: VideoParametersCreateInput!, update: VideoParametersUpdateInput!): VideoParameters!
+    deleteVideoParameters(where: VideoParametersWhereUniqueInput!): VideoParameters
+    deleteManyVideoParameterses(where: VideoParametersWhereInput): BatchPayload!
+    createVideoParametersForMonth(data: VideoParametersForMonthCreateInput!): VideoParametersForMonth!
+    updateVideoParametersForMonth(data: VideoParametersForMonthUpdateInput!, where: VideoParametersForMonthWhereUniqueInput!): VideoParametersForMonth
+    updateManyVideoParametersForMonths(data: VideoParametersForMonthUpdateManyMutationInput!, where: VideoParametersForMonthWhereInput): BatchPayload!
+    upsertVideoParametersForMonth(where: VideoParametersForMonthWhereUniqueInput!, create: VideoParametersForMonthCreateInput!, update: VideoParametersForMonthUpdateInput!): VideoParametersForMonth!
+    deleteVideoParametersForMonth(where: VideoParametersForMonthWhereUniqueInput!): VideoParametersForMonth
+    deleteManyVideoParametersForMonths(where: VideoParametersForMonthWhereInput): BatchPayload!
+    createVideoTotalParameters(data: VideoTotalParametersCreateInput!): VideoTotalParameters!
+    updateVideoTotalParameters(data: VideoTotalParametersUpdateInput!, where: VideoTotalParametersWhereUniqueInput!): VideoTotalParameters
+    updateManyVideoTotalParameterses(data: VideoTotalParametersUpdateManyMutationInput!, where: VideoTotalParametersWhereInput): BatchPayload!
+    upsertVideoTotalParameters(where: VideoTotalParametersWhereUniqueInput!, create: VideoTotalParametersCreateInput!, update: VideoTotalParametersUpdateInput!): VideoTotalParameters!
+    deleteVideoTotalParameters(where: VideoTotalParametersWhereUniqueInput!): VideoTotalParameters
+    deleteManyVideoTotalParameterses(where: VideoTotalParametersWhereInput): BatchPayload!
     createWatchedVideoUser(data: WatchedVideoUserCreateInput!): WatchedVideoUser!
     updateWatchedVideoUser(data: WatchedVideoUserUpdateInput!, where: WatchedVideoUserWhereUniqueInput!): WatchedVideoUser
     updateManyWatchedVideoUsers(data: WatchedVideoUserUpdateManyMutationInput!, where: WatchedVideoUserWhereInput): BatchPayload!

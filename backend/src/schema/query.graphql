@@ -23,6 +23,12 @@ type Query {
     activationCode(where: ActivationCodeWhereUniqueInput!): ActivationCode
     activationCodes(where: ActivationCodeWhereInput, orderBy: ActivationCodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActivationCode]!
     activationCodesConnection(where: ActivationCodeWhereInput, orderBy: ActivationCodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ActivationCodeConnection!
+    artistFactors(where: ArtistFactorsWhereUniqueInput!): ArtistFactors
+    artistFactorses(where: ArtistFactorsWhereInput, orderBy: ArtistFactorsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ArtistFactors]!
+    artistFactorsesConnection(where: ArtistFactorsWhereInput, orderBy: ArtistFactorsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ArtistFactorsConnection!
+    artistFactorsSetting(where: ArtistFactorsSettingWhereUniqueInput!): ArtistFactorsSetting
+    artistFactorsSettings(where: ArtistFactorsSettingWhereInput, orderBy: ArtistFactorsSettingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ArtistFactorsSetting]!
+    artistFactorsSettingsConnection(where: ArtistFactorsSettingWhereInput, orderBy: ArtistFactorsSettingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ArtistFactorsSettingConnection!
     category(where: CategoryWhereUniqueInput!): Category
     categories(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Category]!
     categoriesConnection(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CategoryConnection!
@@ -38,6 +44,12 @@ type Query {
     post(where: PostWhereUniqueInput!): Post
     posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
     postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
+    profitPoolCalculation(where: ProfitPoolCalculationWhereUniqueInput!): ProfitPoolCalculation
+    profitPoolCalculations(where: ProfitPoolCalculationWhereInput, orderBy: ProfitPoolCalculationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ProfitPoolCalculation]!
+    profitPoolCalculationsConnection(where: ProfitPoolCalculationWhereInput, orderBy: ProfitPoolCalculationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProfitPoolCalculationConnection!
+    profitPoolFactor(where: ProfitPoolFactorWhereUniqueInput!): ProfitPoolFactor
+    profitPoolFactors(where: ProfitPoolFactorWhereInput, orderBy: ProfitPoolFactorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ProfitPoolFactor]!
+    profitPoolFactorsConnection(where: ProfitPoolFactorWhereInput, orderBy: ProfitPoolFactorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProfitPoolFactorConnection!
     restoreCode(where: RestoreCodeWhereUniqueInput!): RestoreCode
     restoreCodes(where: RestoreCodeWhereInput, orderBy: RestoreCodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RestoreCode]!
     restoreCodesConnection(where: RestoreCodeWhereInput, orderBy: RestoreCodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RestoreCodeConnection!
@@ -50,6 +62,9 @@ type Query {
     tag(where: TagWhereUniqueInput!): Tag
     tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag]!
     tagsConnection(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TagConnection!
+    totalMinutesForArtist(where: TotalMinutesForArtistWhereUniqueInput!): TotalMinutesForArtist
+    totalMinutesForArtists(where: TotalMinutesForArtistWhereInput, orderBy: TotalMinutesForArtistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TotalMinutesForArtist]!
+    totalMinutesForArtistsConnection(where: TotalMinutesForArtistWhereInput, orderBy: TotalMinutesForArtistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TotalMinutesForArtistConnection!
     transferPlan(where: TransferPlanWhereUniqueInput!): TransferPlan
     transferPlans(where: TransferPlanWhereInput, orderBy: TransferPlanOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TransferPlan]!
     transferPlansConnection(where: TransferPlanWhereInput, orderBy: TransferPlanOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TransferPlanConnection!
@@ -62,6 +77,18 @@ type Query {
     video(where: VideoWhereUniqueInput!): Video
     videos(where: VideoWhereInput, orderBy: VideoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Video]!
     videosConnection(where: VideoWhereInput, orderBy: VideoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): VideoConnection!
+    videoDataForMonth(where: VideoDataForMonthWhereUniqueInput!): VideoDataForMonth
+    videoDataForMonths(where: VideoDataForMonthWhereInput, orderBy: VideoDataForMonthOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [VideoDataForMonth]!
+    videoDataForMonthsConnection(where: VideoDataForMonthWhereInput, orderBy: VideoDataForMonthOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): VideoDataForMonthConnection!
+    videoParameters(where: VideoParametersWhereUniqueInput!): VideoParameters
+    videoParameterses(where: VideoParametersWhereInput, orderBy: VideoParametersOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [VideoParameters]!
+    videoParametersesConnection(where: VideoParametersWhereInput, orderBy: VideoParametersOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): VideoParametersConnection!
+    videoParametersForMonth(where: VideoParametersForMonthWhereUniqueInput!): VideoParametersForMonth
+    videoParametersForMonths(where: VideoParametersForMonthWhereInput, orderBy: VideoParametersForMonthOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [VideoParametersForMonth]!
+    videoParametersForMonthsConnection(where: VideoParametersForMonthWhereInput, orderBy: VideoParametersForMonthOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): VideoParametersForMonthConnection!
+    videoTotalParameters(where: VideoTotalParametersWhereUniqueInput!): VideoTotalParameters
+    videoTotalParameterses(where: VideoTotalParametersWhereInput, orderBy: VideoTotalParametersOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [VideoTotalParameters]!
+    videoTotalParametersesConnection(where: VideoTotalParametersWhereInput, orderBy: VideoTotalParametersOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): VideoTotalParametersConnection!
     watchedVideoUser(where: WatchedVideoUserWhereUniqueInput!): WatchedVideoUser
     watchedVideoUsers(where: WatchedVideoUserWhereInput, orderBy: WatchedVideoUserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [WatchedVideoUser]!
     watchedVideoUsersConnection(where: WatchedVideoUserWhereInput, orderBy: WatchedVideoUserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): WatchedVideoUserConnection!
