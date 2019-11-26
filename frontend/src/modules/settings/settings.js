@@ -8,7 +8,7 @@ import {API_URL} from "../../util/consts";
 import Router from "next/dist/client/router";
 import PaymentInfo from "./paymentInfo";
 import {Elements, StripeProvider} from 'react-stripe-elements'
-import { notification } from 'antd';
+import { notification, Button, Icon } from 'antd';
 import 'antd/dist/antd.css';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import * as consts from "../../util/consts";
@@ -33,8 +33,10 @@ class Settings extends PureComponent {
             plan: 'YEARLY',
             resubscribeInProgress: false,
             changeCardInProgress: false,
+            promo_code: props.user.promo_code,
             promo_code_copied: false,
-            promo_link_copied: false
+            promo_link_copied: false,
+            editing_promo_code: false,
         };
     }
 
@@ -51,6 +53,14 @@ class Settings extends PureComponent {
 
         // Return null if the state hasn't changed
         return null;
+    }
+
+    promoCodeChanged = (e) => {
+        const value = e.target.value;
+        console.log('###########', value)
+        this.setState({
+            promo_code: value.toUpperCase(),
+        })
     }
 
     handleChange(field, event) {
@@ -168,7 +178,9 @@ class Settings extends PureComponent {
     }
 
     render() {
-        const promo_link = `https://madeforartists.net/register?promo_code=${this.props.user.promo_code}`;
+        const promo_link = `${consts.SITE_URL}/register?promo_code=${this.props.user.promo_code}`;
+        const navIconStyle = { float: "right", marginBottom: 0, marginTop: 2, marginLeft: 3 };
+        const btnStyle = { heigth: 36 };
 
         return (
             <Menu {...this.props}>
@@ -369,42 +381,53 @@ class Settings extends PureComponent {
                                         <div className="row">
                                             <div className="col-sm-6">
                                                 <div className="form-group">
-                                                    <label className="control-label">
+                                                    <label className="control-label mr-2 mb-2">
                                                         Promo code
                                                     </label>
+                                                    {this.state.editing_promo_code ? (
+                                                        <React.Fragment>
+                                                            <button type="button" className="promo_edit_btn btn btn-warning border-none mr-2" style={btnStyle} onClick={() => this.onClickSaveUserProfile()} ><Icon type="save" /><p style={navIconStyle}>Save</p></button>
+                                                            <button type="button" className="promo_edit_btn btn btn-warning border-none mr-2" style={btnStyle} onClick={() => this.setState({ editing_promo_code: false })} ><Icon type="close" /><p style={navIconStyle}>Cancel</p></button>
+                                                        </React.Fragment>
+                                                    ) : (
+                                                            <React.Fragment>
+                                                                <button type="button" className="promo_edit_btn btn btn-warning border-none mr-2" style={btnStyle} onClick={() => this.setState({ editing_promo_code: true })} ><Icon type="edit" /><p style={navIconStyle}>Edit</p></button>
+                                                                <CopyToClipboard text={this.props.user.promo_code}
+                                                                    onCopy={() => this.setState({ promo_code_copied: true, promo_link_copied: false })}>
+                                                                    <button type="button" style={btnStyle} className="promo_edit_btn btn btn-warning border-none"><Icon type="copy" /><p style={navIconStyle}>Copy</p></button>
+                                                                </CopyToClipboard>
+                                                            </React.Fragment>
+                                                        )}
+                                                    
+                                                    {this.state.promo_code_copied ? <span style={{ color: 'red', paddingLeft: 15 }}>Copied.</span> : null}
                                                     <input
-                                                        className="form-control border-form-control"
+                                                        className="form-control border-form-control mr-2 mb-2 mt-2"
                                                         placeholder=""
                                                         type="text"
-                                                        disabled
-                                                        value={this.props.user.promo_code}
-                                                        style={{ marginBottom: 8 }}
+                                                        disabled={!this.state.editing_promo_code}
+                                                        value={this.state.promo_code}
+                                                        onChange={this.promoCodeChanged}
                                                     />
-                                                    {<CopyToClipboard text={this.props.user.promo_code}
-                                                        onCopy={() => this.setState({promo_code_copied: true, promo_link_copied: false})}>
-                                                        <span>Copy</span>
-                                                    </CopyToClipboard>}
-                                                    {this.state.promo_code_copied ? <span style={{ color: 'red', paddingLeft: 15 }}>Copied.</span> : null}
                                                 </div>
                                             </div>
                                             <div className="col-sm-6">
                                                 <div className="form-group">
-                                                    <label className="control-label">
+                                                    <label className="control-label mr-2 mb-2">
                                                         Please share below URL
                                                     </label>
+                                                    {<CopyToClipboard text={promo_link}
+                                                        onCopy={() => this.setState({promo_link_copied: true, promo_code_copied: false})}>
+                                                        <button type="button" style={btnStyle} className="promo_edit_btn btn btn-warning border-none mb-2"><Icon type="copy" /><p style={navIconStyle}>Copy</p></button>
+                                                    </CopyToClipboard>}
+                                                    {this.state.promo_link_copied ? <span style={{ color: 'red', paddingLeft: 15 }}>Copied.</span> : null}
                                                     <input
-                                                        className="form-control border-form-control"
+                                                        className="form-control border-form-control mr-2 mb-2"
                                                         placeholder=""
                                                         type="text"
                                                         disabled
                                                         value={promo_link}
-                                                        style={{ marginBottom: 8 }}
+                                                        style={{ minWidth: 360 }}
                                                     />
-                                                    {<CopyToClipboard text={promo_link}
-                                                        onCopy={() => this.setState({promo_link_copied: true, promo_code_copied: false})}>
-                                                        <span>Copy</span>
-                                                    </CopyToClipboard>}
-                                                    {this.state.promo_link_copied ? <span style={{ color: 'red', paddingLeft: 15 }}>Copied.</span> : null}
                                                 </div>
                                             </div>
                                         </div>

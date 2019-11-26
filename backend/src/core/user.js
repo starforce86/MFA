@@ -261,8 +261,13 @@ async function change_password(userId, oldPassword, newPassword) {
     }
 }
 
+async function change_promo_code(userId, promo_code) {
+    return false;
+}
+
 module.exports = {
     signUp: signUp,
     change_password: change_password,
+    change_promo_code: change_promo_code,
     signIn: signIn
 };

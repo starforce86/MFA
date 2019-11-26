@@ -1972,7 +1972,7 @@ type ProfitPoolFactor {
   profit_pool_option1_multiplier: Float!
   profit_pool_option2_variable: Int!
   profit_pool_option2_multiplier: Float!
-  profit_pool_percentage: Int!
+  profit_pool_percentage: Float!
   manual_change: Int!
 }
 
@@ -1990,7 +1990,7 @@ input ProfitPoolFactorCreateInput {
   profit_pool_option1_multiplier: Float
   profit_pool_option2_variable: Int
   profit_pool_option2_multiplier: Float
-  profit_pool_percentage: Int
+  profit_pool_percentage: Float
   manual_change: Int
 }
 
@@ -2037,7 +2037,7 @@ type ProfitPoolFactorPreviousValues {
   profit_pool_option1_multiplier: Float!
   profit_pool_option2_variable: Int!
   profit_pool_option2_multiplier: Float!
-  profit_pool_percentage: Int!
+  profit_pool_percentage: Float!
   manual_change: Int!
 }
 
@@ -2067,7 +2067,7 @@ input ProfitPoolFactorUpdateInput {
   profit_pool_option1_multiplier: Float
   profit_pool_option2_variable: Int
   profit_pool_option2_multiplier: Float
-  profit_pool_percentage: Int
+  profit_pool_percentage: Float
   manual_change: Int
 }
 
@@ -2079,7 +2079,7 @@ input ProfitPoolFactorUpdateManyMutationInput {
   profit_pool_option1_multiplier: Float
   profit_pool_option2_variable: Int
   profit_pool_option2_multiplier: Float
-  profit_pool_percentage: Int
+  profit_pool_percentage: Float
   manual_change: Int
 }
 
@@ -2170,14 +2170,14 @@ input ProfitPoolFactorWhereInput {
   profit_pool_option2_multiplier_lte: Float
   profit_pool_option2_multiplier_gt: Float
   profit_pool_option2_multiplier_gte: Float
-  profit_pool_percentage: Int
-  profit_pool_percentage_not: Int
-  profit_pool_percentage_in: [Int!]
-  profit_pool_percentage_not_in: [Int!]
-  profit_pool_percentage_lt: Int
-  profit_pool_percentage_lte: Int
-  profit_pool_percentage_gt: Int
-  profit_pool_percentage_gte: Int
+  profit_pool_percentage: Float
+  profit_pool_percentage_not: Float
+  profit_pool_percentage_in: [Float!]
+  profit_pool_percentage_not_in: [Float!]
+  profit_pool_percentage_lt: Float
+  profit_pool_percentage_lte: Float
+  profit_pool_percentage_gt: Float
+  profit_pool_percentage_gte: Float
   manual_change: Int
   manual_change_not: Int
   manual_change_in: [Int!]
@@ -4090,6 +4090,7 @@ enum UserRole {
   USER_PUBLISHER
   MODERATOR
   ADMIN
+  MFA
 }
 
 input UserScalarWhereInput {
@@ -6179,7 +6180,7 @@ type VideoTotalParameters {
   minutes_watched_multiplier: Float!
   exponent_for_minutes_watched: Float!
   star_rating_multiplier: Float!
-  star_rating_on_off: Boolean!
+  star_rating_on_off: Int!
 }
 
 type VideoTotalParametersConnection {
@@ -6192,7 +6193,7 @@ input VideoTotalParametersCreateInput {
   minutes_watched_multiplier: Float
   exponent_for_minutes_watched: Float
   star_rating_multiplier: Float
-  star_rating_on_off: Boolean
+  star_rating_on_off: Int
 }
 
 type VideoTotalParametersEdge {
@@ -6224,7 +6225,7 @@ type VideoTotalParametersPreviousValues {
   minutes_watched_multiplier: Float!
   exponent_for_minutes_watched: Float!
   star_rating_multiplier: Float!
-  star_rating_on_off: Boolean!
+  star_rating_on_off: Int!
 }
 
 type VideoTotalParametersSubscriptionPayload {
@@ -6249,14 +6250,14 @@ input VideoTotalParametersUpdateInput {
   minutes_watched_multiplier: Float
   exponent_for_minutes_watched: Float
   star_rating_multiplier: Float
-  star_rating_on_off: Boolean
+  star_rating_on_off: Int
 }
 
 input VideoTotalParametersUpdateManyMutationInput {
   minutes_watched_multiplier: Float
   exponent_for_minutes_watched: Float
   star_rating_multiplier: Float
-  star_rating_on_off: Boolean
+  star_rating_on_off: Int
 }
 
 input VideoTotalParametersWhereInput {
@@ -6314,8 +6315,14 @@ input VideoTotalParametersWhereInput {
   star_rating_multiplier_lte: Float
   star_rating_multiplier_gt: Float
   star_rating_multiplier_gte: Float
-  star_rating_on_off: Boolean
-  star_rating_on_off_not: Boolean
+  star_rating_on_off: Int
+  star_rating_on_off_not: Int
+  star_rating_on_off_in: [Int!]
+  star_rating_on_off_not_in: [Int!]
+  star_rating_on_off_lt: Int
+  star_rating_on_off_lte: Int
+  star_rating_on_off_gt: Int
+  star_rating_on_off_gte: Int
   AND: [VideoTotalParametersWhereInput!]
   OR: [VideoTotalParametersWhereInput!]
   NOT: [VideoTotalParametersWhereInput!]

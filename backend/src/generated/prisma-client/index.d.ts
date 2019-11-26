@@ -1328,7 +1328,12 @@ export type ActivationCodeOrderByInput =
   | "code_ASC"
   | "code_DESC";
 
-export type UserRole = "USER_VIEWER" | "USER_PUBLISHER" | "MODERATOR" | "ADMIN";
+export type UserRole =
+  | "USER_VIEWER"
+  | "USER_PUBLISHER"
+  | "MODERATOR"
+  | "ADMIN"
+  | "MFA";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -3154,14 +3159,14 @@ export interface ProfitPoolFactorWhereInput {
   profit_pool_option2_multiplier_lte?: Float;
   profit_pool_option2_multiplier_gt?: Float;
   profit_pool_option2_multiplier_gte?: Float;
-  profit_pool_percentage?: Int;
-  profit_pool_percentage_not?: Int;
-  profit_pool_percentage_in?: Int[] | Int;
-  profit_pool_percentage_not_in?: Int[] | Int;
-  profit_pool_percentage_lt?: Int;
-  profit_pool_percentage_lte?: Int;
-  profit_pool_percentage_gt?: Int;
-  profit_pool_percentage_gte?: Int;
+  profit_pool_percentage?: Float;
+  profit_pool_percentage_not?: Float;
+  profit_pool_percentage_in?: Float[] | Float;
+  profit_pool_percentage_not_in?: Float[] | Float;
+  profit_pool_percentage_lt?: Float;
+  profit_pool_percentage_lte?: Float;
+  profit_pool_percentage_gt?: Float;
+  profit_pool_percentage_gte?: Float;
   manual_change?: Int;
   manual_change_not?: Int;
   manual_change_in?: Int[] | Int;
@@ -4070,8 +4075,14 @@ export interface VideoTotalParametersWhereInput {
   star_rating_multiplier_lte?: Float;
   star_rating_multiplier_gt?: Float;
   star_rating_multiplier_gte?: Float;
-  star_rating_on_off?: Boolean;
-  star_rating_on_off_not?: Boolean;
+  star_rating_on_off?: Int;
+  star_rating_on_off_not?: Int;
+  star_rating_on_off_in?: Int[] | Int;
+  star_rating_on_off_not_in?: Int[] | Int;
+  star_rating_on_off_lt?: Int;
+  star_rating_on_off_lte?: Int;
+  star_rating_on_off_gt?: Int;
+  star_rating_on_off_gte?: Int;
   AND?: VideoTotalParametersWhereInput[] | VideoTotalParametersWhereInput;
   OR?: VideoTotalParametersWhereInput[] | VideoTotalParametersWhereInput;
   NOT?: VideoTotalParametersWhereInput[] | VideoTotalParametersWhereInput;
@@ -6180,7 +6191,7 @@ export interface ProfitPoolFactorCreateInput {
   profit_pool_option1_multiplier?: Float;
   profit_pool_option2_variable?: Int;
   profit_pool_option2_multiplier?: Float;
-  profit_pool_percentage?: Int;
+  profit_pool_percentage?: Float;
   manual_change?: Int;
 }
 
@@ -6192,7 +6203,7 @@ export interface ProfitPoolFactorUpdateInput {
   profit_pool_option1_multiplier?: Float;
   profit_pool_option2_variable?: Int;
   profit_pool_option2_multiplier?: Float;
-  profit_pool_percentage?: Int;
+  profit_pool_percentage?: Float;
   manual_change?: Int;
 }
 
@@ -6204,7 +6215,7 @@ export interface ProfitPoolFactorUpdateManyMutationInput {
   profit_pool_option1_multiplier?: Float;
   profit_pool_option2_variable?: Int;
   profit_pool_option2_multiplier?: Float;
-  profit_pool_percentage?: Int;
+  profit_pool_percentage?: Float;
   manual_change?: Int;
 }
 
@@ -6660,21 +6671,21 @@ export interface VideoTotalParametersCreateInput {
   minutes_watched_multiplier?: Float;
   exponent_for_minutes_watched?: Float;
   star_rating_multiplier?: Float;
-  star_rating_on_off?: Boolean;
+  star_rating_on_off?: Int;
 }
 
 export interface VideoTotalParametersUpdateInput {
   minutes_watched_multiplier?: Float;
   exponent_for_minutes_watched?: Float;
   star_rating_multiplier?: Float;
-  star_rating_on_off?: Boolean;
+  star_rating_on_off?: Int;
 }
 
 export interface VideoTotalParametersUpdateManyMutationInput {
   minutes_watched_multiplier?: Float;
   exponent_for_minutes_watched?: Float;
   star_rating_multiplier?: Float;
-  star_rating_on_off?: Boolean;
+  star_rating_on_off?: Int;
 }
 
 export interface WatchedVideoUserCreateInput {
@@ -8363,7 +8374,7 @@ export interface ProfitPoolFactor {
   profit_pool_option1_multiplier: Float;
   profit_pool_option2_variable: Int;
   profit_pool_option2_multiplier: Float;
-  profit_pool_percentage: Int;
+  profit_pool_percentage: Float;
   manual_change: Int;
 }
 
@@ -8380,7 +8391,7 @@ export interface ProfitPoolFactorPromise
   profit_pool_option1_multiplier: () => Promise<Float>;
   profit_pool_option2_variable: () => Promise<Int>;
   profit_pool_option2_multiplier: () => Promise<Float>;
-  profit_pool_percentage: () => Promise<Int>;
+  profit_pool_percentage: () => Promise<Float>;
   manual_change: () => Promise<Int>;
 }
 
@@ -8397,7 +8408,7 @@ export interface ProfitPoolFactorSubscription
   profit_pool_option1_multiplier: () => Promise<AsyncIterator<Float>>;
   profit_pool_option2_variable: () => Promise<AsyncIterator<Int>>;
   profit_pool_option2_multiplier: () => Promise<AsyncIterator<Float>>;
-  profit_pool_percentage: () => Promise<AsyncIterator<Int>>;
+  profit_pool_percentage: () => Promise<AsyncIterator<Float>>;
   manual_change: () => Promise<AsyncIterator<Int>>;
 }
 
@@ -9522,7 +9533,7 @@ export interface VideoTotalParameters {
   minutes_watched_multiplier: Float;
   exponent_for_minutes_watched: Float;
   star_rating_multiplier: Float;
-  star_rating_on_off: Boolean;
+  star_rating_on_off: Int;
 }
 
 export interface VideoTotalParametersPromise
@@ -9534,7 +9545,7 @@ export interface VideoTotalParametersPromise
   minutes_watched_multiplier: () => Promise<Float>;
   exponent_for_minutes_watched: () => Promise<Float>;
   star_rating_multiplier: () => Promise<Float>;
-  star_rating_on_off: () => Promise<Boolean>;
+  star_rating_on_off: () => Promise<Int>;
 }
 
 export interface VideoTotalParametersSubscription
@@ -9546,7 +9557,7 @@ export interface VideoTotalParametersSubscription
   minutes_watched_multiplier: () => Promise<AsyncIterator<Float>>;
   exponent_for_minutes_watched: () => Promise<AsyncIterator<Float>>;
   star_rating_multiplier: () => Promise<AsyncIterator<Float>>;
-  star_rating_on_off: () => Promise<AsyncIterator<Boolean>>;
+  star_rating_on_off: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface VideoTotalParametersConnection {
@@ -10258,7 +10269,7 @@ export interface ProfitPoolFactorPreviousValues {
   profit_pool_option1_multiplier: Float;
   profit_pool_option2_variable: Int;
   profit_pool_option2_multiplier: Float;
-  profit_pool_percentage: Int;
+  profit_pool_percentage: Float;
   manual_change: Int;
 }
 
@@ -10275,7 +10286,7 @@ export interface ProfitPoolFactorPreviousValuesPromise
   profit_pool_option1_multiplier: () => Promise<Float>;
   profit_pool_option2_variable: () => Promise<Int>;
   profit_pool_option2_multiplier: () => Promise<Float>;
-  profit_pool_percentage: () => Promise<Int>;
+  profit_pool_percentage: () => Promise<Float>;
   manual_change: () => Promise<Int>;
 }
 
@@ -10292,7 +10303,7 @@ export interface ProfitPoolFactorPreviousValuesSubscription
   profit_pool_option1_multiplier: () => Promise<AsyncIterator<Float>>;
   profit_pool_option2_variable: () => Promise<AsyncIterator<Int>>;
   profit_pool_option2_multiplier: () => Promise<AsyncIterator<Float>>;
-  profit_pool_percentage: () => Promise<AsyncIterator<Int>>;
+  profit_pool_percentage: () => Promise<AsyncIterator<Float>>;
   manual_change: () => Promise<AsyncIterator<Int>>;
 }
 
@@ -11155,7 +11166,7 @@ export interface VideoTotalParametersPreviousValues {
   minutes_watched_multiplier: Float;
   exponent_for_minutes_watched: Float;
   star_rating_multiplier: Float;
-  star_rating_on_off: Boolean;
+  star_rating_on_off: Int;
 }
 
 export interface VideoTotalParametersPreviousValuesPromise
@@ -11167,7 +11178,7 @@ export interface VideoTotalParametersPreviousValuesPromise
   minutes_watched_multiplier: () => Promise<Float>;
   exponent_for_minutes_watched: () => Promise<Float>;
   star_rating_multiplier: () => Promise<Float>;
-  star_rating_on_off: () => Promise<Boolean>;
+  star_rating_on_off: () => Promise<Int>;
 }
 
 export interface VideoTotalParametersPreviousValuesSubscription
@@ -11179,7 +11190,7 @@ export interface VideoTotalParametersPreviousValuesSubscription
   minutes_watched_multiplier: () => Promise<AsyncIterator<Float>>;
   exponent_for_minutes_watched: () => Promise<AsyncIterator<Float>>;
   star_rating_multiplier: () => Promise<AsyncIterator<Float>>;
-  star_rating_on_off: () => Promise<AsyncIterator<Boolean>>;
+  star_rating_on_off: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface WatchedVideoUserSubscriptionPayload {

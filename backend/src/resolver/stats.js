@@ -326,9 +326,18 @@ async function videoStats(root, args, ctx, info) {
         }
         const user = await prisma.user({id: userId});
         if (user.role == "ADMIN") {
-            videos = await prisma.videos();
+            videos = await prisma.videos({
+                where: {
+                    deleted: false
+                }
+            });
         } else if (user.role == "USER_PUBLISHER") {
-            videos = await prisma.videos({where: {author: {id: userId}}});
+            videos = await prisma.videos({
+                where: {
+                    author: {id: userId},
+                    deleted: false
+                }
+            });
         }
 
         videos = await Promise.all(videos.map(async (v) => {
@@ -347,8 +356,8 @@ async function videoStats(root, args, ctx, info) {
                 let totalPlaySeconds = 0;
                 let totalRealPlaySeconds = 0;
                 for (history of histories) {
-                    if (uniqueUserIds.indexOf(history.id) < 0) {
-                        uniqueUserIds.push(history.id);
+                    if (uniqueUserIds.indexOf(history.user.id) < 0) {
+                        uniqueUserIds.push(history.user.id);
                     }
                     totalPlaySeconds += history.playSeconds;
                     totalRealPlaySeconds += history.realPlaySeconds;
@@ -614,6 +623,169 @@ async function artistFactorses(root, args, ctx, info) {
     }
 }
 
+async function videoParameterses(root, args, ctx, info) {
+    try {
+        const videos = await prisma.videos({
+            where: {
+                deleted: false
+            }
+        });
+        await Promise.all(videos.map(async (video) => {
+            const records = await prisma.videoParameterses({
+                where: {
+                    video: { id: video.id }
+                }
+            });
+            if (records.length == 0) {
+                const author = await prisma.video({id: video.id}).author();
+                await prisma.createVideoParameters({
+                    video: {
+                        connect: { id: video.id }
+                    },
+                    owner1: {
+                        connect: { id: author.id }
+                    },
+                    owner1_percentage: 100,
+                    owner2_percentage: 0,
+                    owner3_percentage: 0
+                });
+            }
+        }));
+        
+        return await prisma.videoParameterses(args);
+    } catch (e) {
+        log.error('videoParameterses resolver error:', e);
+        return null;
+    }
+}
+
+async function videoDataForMonthStats(root, args, ctx, info) {
+
+    try {
+        const year = args.year;
+        const month = args.month;
+
+        const beginTime = moment(`${year}-${month}-01 00:00:00`);
+        const endTime = moment(beginTime).endOf('month');
+
+        const b = beginTime.format('YYYY-MM-DD HH:mm:ss');
+        const e = endTime.format('YYYY-MM-DD HH:mm:ss');
+
+        const videoTotalParameters = await prisma.videoTotalParameterses({
+            orderBy: 'createdAt_DESC'
+        });
+
+        if(videoTotalParameters.length == 0) {
+            throw new GQLError({message: 'There is no total video parameters!', code: 401});
+        }
+
+        const videoTotalParameter = videoTotalParameters[0];
+
+        videos = await prisma.videos({
+            where: {
+                deleted: false
+            }
+        });
+
+        for (v of videos) {
+            console.log('############# 1', v.id);
+
+            let uniqueUserIds = [];
+            let totalRealPlaySeconds = 0;
+            
+            const histories = (await prisma.playHistories({
+                where: {
+                    video: { id: v.id },
+                    createdAt_gte: beginTime,
+                    createdAt_lt: endTime
+                }
+            }));
+
+            console.log('############# 2', v.id, histories.length);
+
+            for (const history of histories) {
+                try {
+                    const historyUser = await prisma.playHistory({ id: history.id }).user();
+
+                    console.log('############# 4', historyUser.id);
+
+                    if (uniqueUserIds.indexOf(historyUser.id) < 0) {
+                        uniqueUserIds.push(historyUser.id);
+                    }
+                } catch (e) {
+                    // log.error('videoDataForMonthStats playHistory.user() error:', e);
+                }
+                
+                totalRealPlaySeconds += history.realPlaySeconds;
+
+                console.log('############# 5');
+            }
+                
+            console.log('############# 6');
+
+            const realMinutesWatched = Math.floor(totalRealPlaySeconds / 60);
+            const avgMinutesWatched = uniqueUserIds.length ? Math.floor(realMinutesWatched / uniqueUserIds.length) : 0;
+            const exponentApplied = Math.pow(avgMinutesWatched, videoTotalParameter.exponent_for_minutes_watched);
+            const totalMinutesWatched = exponentApplied * uniqueUserIds.length;
+
+            console.log('############# 7');
+
+            const videoDataForMonths = await prisma.videoDataForMonths({
+                where: {
+                    year: parseInt(year),
+                    month: parseInt(month),
+                    video: { id: v.id }
+                }
+            });
+
+            console.log('############# 8');
+
+            if (videoDataForMonths.length == 0) {
+                await prisma.createVideoDataForMonth({
+                    year: parseInt(year),
+                    month: parseInt(month),
+                    video: { connect: { id: v.id } },
+                    video_length: v.video_duration ? v.video_duration : 0,
+                    unique_users: uniqueUserIds.length,
+                    real_minutes_watched: realMinutesWatched,
+                    avg_minutes_watched: avgMinutesWatched,
+                    exponent_applied: exponentApplied,
+                    minutes_after_exponent: totalMinutesWatched
+                });
+            } else {
+                const videoDataForMonth = videoDataForMonths[0];
+                await prisma.updateVideoDataForMonth({
+                    where: {
+                        id: videoDataForMonth.id
+                    },
+                    data: {
+                        video_length: v.video_duration ? v.video_duration : 0,
+                        unique_users: uniqueUserIds.length,
+                        real_minutes_watched: realMinutesWatched,
+                        avg_minutes_watched: avgMinutesWatched,
+                        exponent_applied: exponentApplied,
+                        minutes_after_exponent: totalMinutesWatched
+                    }
+                });
+            }
+        }
+        // await Promise.all(videos.map(async (v) => {
+        // }));
+
+        console.log('############# 9');
+
+        return await prisma.videoDataForMonths({
+            where: {
+                year: parseInt(year),
+                month: parseInt(month)
+            }
+        });
+    } catch (e) {
+        log.error('videoDataForMonthStats error:', e);
+        return null;
+    }
+}
+
 module.exports = {
     signupStats: signupStats,
     subscriptionStats: subscriptionStats,
@@ -624,5 +796,7 @@ module.exports = {
     availableBalance: availableBalance,
     populateChargeHistory: populateChargeHistory,
     populateSubscriptionHistory: populateSubscriptionHistory,
-    artistFactorses: artistFactorses
+    artistFactorses: artistFactorses,
+    videoParameterses: videoParameterses,
+    videoDataForMonthStats: videoDataForMonthStats
 };

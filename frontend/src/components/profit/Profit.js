@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import gql from "graphql-tag";
 import { Query, withApollo } from "react-apollo";
 import { compose, graphql } from "react-apollo/index";
-import { Table } from 'antd';
+import { Table, Input, InputNumber, Popconfirm, Form, notification } from 'antd';
+import 'antd/dist/antd.css';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -11,10 +12,11 @@ import moment from 'moment';
 import { Line, Bar, Pie } from 'react-chartjs-2';
 import logger from "../../util/logger";
 import Menu from "../../components/menu";
-import 'antd/dist/antd.css';
 import TextField from '@material-ui/core/TextField';
-import { notification } from 'antd';
-import 'antd/dist/antd.css';
+import ArtistFactorTable from "./ArtistFactorTable";
+import VideoTotalParameterTable from "./VideoTotalParameterTable";
+import ProfitPoolFactorTable from "./ProfitPoolFactorTable";
+import VideoParameterTable from "./VideoParameterTable";
 
 const log = logger('Profit');
 const dateFormat = 'YYYY-MM-DD HH:mm:ss';
@@ -91,7 +93,7 @@ const line_colors = [
 ]
 
 const STATS_QUERY = gql`
-    query GetStats($payoutStatsBeginDate: DateTime!, $payoutStatsEndDate: DateTime!) {
+    query GetStats($payoutStatsBeginDate: DateTime!, $payoutStatsEndDate: DateTime!, $year: Int!, $month: Int!) {
 			payoutStats(
 				beginDate: $payoutStatsBeginDate
 				endDate: $payoutStatsEndDate
@@ -119,6 +121,24 @@ const STATS_QUERY = gql`
 					month
 					due_amount
 				}
+			}
+			videoDataForMonthStats(
+				year: $year
+				month: $month
+			) {
+				id,
+				year,
+				month,
+				video {
+					id,
+					title
+				},
+				video_length,
+				unique_users,
+				real_minutes_watched,
+				avg_minutes_watched,
+				exponent_applied,
+				minutes_after_exponent
 			}
 			availableBalance
     }
@@ -183,8 +203,16 @@ class Profit extends Component {
 	}
 
 	stringSorter = (key) => (a, b) => {
-		if (a[key] < b[key]) { return -1; }
-		if (a[key] > b[key]) { return 1; }
+		if (key.includes('.')) {
+			const keys = key.split('.');
+			const key1 = keys[0];
+			const key2 = keys[1];
+			if (a[key1][key2] < b[key1][key2]) { return -1; }
+			if (a[key1][key2] > b[key1][key2]) { return 1; }
+		} else {
+			if (a[key] < b[key]) { return -1; }
+			if (a[key] > b[key]) { return 1; }
+		}
 		return 0;
 	}
 
@@ -198,13 +226,15 @@ class Profit extends Component {
 			query={STATS_QUERY}
 			variables={{
 				payoutStatsBeginDate: payoutStats.beginDate,
-				payoutStatsEndDate: payoutStats.endDate
+				payoutStatsEndDate: payoutStats.endDate,
+				year: parseInt(moment().format('YYYY')),
+				month: parseInt(moment().format('MM'))
 			}}>
 			{
 				({ loading, error, data }) => {
 					if (loading) return <div>Loading...</div>;
 					if (error) return <div>Error</div>;
-					// console.log('############# response', data)
+					console.log('############# response', data)
 
 					let payout_table_columns = [
 						{
@@ -275,6 +305,53 @@ class Profit extends Component {
 					data.payoutStats.due_months.map(d => {
 						due_total += parseInt(d.due_amount);
 					});
+
+					// Video data for month
+					const video_data_for_month_table_columns = [
+						{
+							title: 'Video',
+							dataIndex: 'video.title',
+							key: 'id',
+							sorter: this.stringSorter('video.title')
+						},
+						{
+							title: 'Total video length',
+							dataIndex: 'video_length',
+							key: 'video_length',
+							sorter: this.stringSorter('approved'),
+							align: 'center',
+						},
+						{
+							title: 'Total unique users who viewed',
+							dataIndex: 'unique_users',
+							key: 'unique_users',
+							align: 'center',
+						},
+						{
+							title: 'Real minutes watched',
+							dataIndex: 'real_minutes_watched',
+							key: 'payout_amount',
+							align: 'center',
+						},
+						{
+							title: 'Average minutes watched',
+							dataIndex: 'avg_minutes_watched',
+							key: 'avg_minutes_watched',
+							align: 'center',
+						},
+						{
+							title: 'Exponent applied to average',
+							dataIndex: 'exponent_applied',
+							key: 'exponent_applied',
+							align: 'center',
+						},
+						{
+							title: 'Total minutes watched after exponent',
+							dataIndex: 'minutes_after_exponent',
+							key: 'minutes_after_exponent',
+							align: 'center',
+						},
+					]
 					
 					return (
 						<Menu>
@@ -308,7 +385,7 @@ class Profit extends Component {
 										<div className="row">
 											<div className="col-md-12">
 												<div className="main-title">
-													<h4>Profit Sharing</h4>
+													<h3>Profit Sharing</h3>
 												</div>
 											</div>
 											<div className="col-md-12">
@@ -362,12 +439,61 @@ class Profit extends Component {
 											</div>
 											<div className="col-md-12" style={{ marginTop: 30 }}>
 												<Table
+													bordered
 													columns={payout_table_columns}
 													dataSource={payout_table_data}
 													size='small'
 													pagination={false}
 												/>
 											</div>
+
+											<div className="col-md-12 mt-5">
+												<div className="main-title">
+													<h4>Profit Sharing Setting</h4>
+												</div>
+											</div>
+
+											<div className="col-md-12 mt-4">
+												<h5>Artist factors</h5>
+											</div>
+											<div className="col-md-12">
+												<ArtistFactorTable />
+											</div>
+
+											<div className="col-md-12 mt-4">
+												<h5>Video parameters</h5>
+											</div>
+											<div className="col-md-12">
+												<VideoParameterTable />
+											</div>
+
+											<div className="col-md-12 mt-4">
+												<h5>Video total parameters</h5>
+											</div>
+											<div className="col-md-12">
+												<VideoTotalParameterTable />
+											</div>
+
+											<div className="col-md-12 mt-4">
+												<h5>Profit pool factors</h5>
+											</div>
+											<div className="col-md-12">
+												<ProfitPoolFactorTable />
+											</div>
+
+											<div className="col-md-12 mt-4">
+												<h5>Video data for month</h5>
+											</div>
+											<div className="col-md-12">
+												<Table
+													bordered
+													columns={video_data_for_month_table_columns}
+													dataSource={data.videoDataForMonthStats}
+													size='small'
+													pagination={false}
+												/>
+											</div>
+											
 										</div>
 									</div>
 									<hr className="mt-0" />

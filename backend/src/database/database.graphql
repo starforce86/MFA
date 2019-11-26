@@ -109,6 +109,7 @@ enum UserRole {
     USER_PUBLISHER
     MODERATOR
     ADMIN
+    MFA
 }
 
 type Video {
@@ -257,7 +258,7 @@ type VideoTotalParameters {
     minutes_watched_multiplier: Float! @default(value: 0)
     exponent_for_minutes_watched: Float! @default(value: 0.5)
     star_rating_multiplier: Float! @default(value: 0)
-    star_rating_on_off: Boolean! @default(value: "true")
+    star_rating_on_off: Int! @default(value: 1)
 }
 
 type ProfitPoolFactor {
@@ -272,7 +273,7 @@ type ProfitPoolFactor {
     profit_pool_option1_multiplier: Float! @default(value: 1)
     profit_pool_option2_variable: Int! @default(value: 0)
     profit_pool_option2_multiplier: Float! @default(value: 1)
-    profit_pool_percentage: Int! @default(value: 70)
+    profit_pool_percentage: Float! @default(value: 70)
     manual_change: Int! @default(value: 0)
 }
 

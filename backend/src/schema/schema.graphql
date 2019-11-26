@@ -3859,6 +3859,7 @@ enum UserRole {
     USER_PUBLISHER
     MODERATOR
     ADMIN
+    MFA
 }
 
 input UserScalarWhereInput {
@@ -5873,7 +5874,7 @@ type VideoTotalParameters {
   minutes_watched_multiplier: Float!
   exponent_for_minutes_watched: Float!
   star_rating_multiplier: Float!
-  star_rating_on_off: Boolean!
+  star_rating_on_off: Int!
 }
 
 type VideoTotalParametersConnection {
@@ -5886,7 +5887,7 @@ input VideoTotalParametersCreateInput {
   minutes_watched_multiplier: Float
   exponent_for_minutes_watched: Float
   star_rating_multiplier: Float
-  star_rating_on_off: Boolean
+  star_rating_on_off: Int
 }
 
 type VideoTotalParametersEdge {
@@ -5918,7 +5919,7 @@ type VideoTotalParametersPreviousValues {
   minutes_watched_multiplier: Float!
   exponent_for_minutes_watched: Float!
   star_rating_multiplier: Float!
-  star_rating_on_off: Boolean!
+  star_rating_on_off: Int!
 }
 
 type VideoTotalParametersSubscriptionPayload {
@@ -5943,14 +5944,14 @@ input VideoTotalParametersUpdateInput {
   minutes_watched_multiplier: Float
   exponent_for_minutes_watched: Float
   star_rating_multiplier: Float
-  star_rating_on_off: Boolean
+  star_rating_on_off: Int
 }
 
 input VideoTotalParametersUpdateManyMutationInput {
   minutes_watched_multiplier: Float
   exponent_for_minutes_watched: Float
   star_rating_multiplier: Float
-  star_rating_on_off: Boolean
+  star_rating_on_off: Int
 }
 
 input VideoTotalParametersWhereInput {
@@ -6008,8 +6009,14 @@ input VideoTotalParametersWhereInput {
   star_rating_multiplier_lte: Float
   star_rating_multiplier_gt: Float
   star_rating_multiplier_gte: Float
-  star_rating_on_off: Boolean
-  star_rating_on_off_not: Boolean
+  star_rating_on_off: Int
+  star_rating_on_off_not: Int
+  star_rating_on_off_in: [Int!]
+  star_rating_on_off_not_in: [Int!]
+  star_rating_on_off_lt: Int
+  star_rating_on_off_lte: Int
+  star_rating_on_off_gt: Int
+  star_rating_on_off_gte: Int
   AND: [VideoTotalParametersWhereInput!]
   OR: [VideoTotalParametersWhereInput!]
   NOT: [VideoTotalParametersWhereInput!]

@@ -103,5 +103,6 @@ type Query {
     populateChargeHistory: Boolean
     populateSubscriptionHistory: Boolean
     populateTransferPlan: Boolean
+    videoDataForMonthStats(year: Int, month: Int): [VideoDataForMonth]
     node(id: ID!): Node
 }

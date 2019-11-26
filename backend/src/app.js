@@ -106,11 +106,16 @@ const resolvers = {
         payoutStats: statsResolver.payoutStats,
         availableBalance: statsResolver.availableBalance,
         artistFactorses: statsResolver.artistFactorses,
+        videoTotalParameterses: (root, args) => prisma.videoTotalParameterses(args.where),
+        profitPoolFactors: (root, args) => prisma.profitPoolFactors(args.where),
+        videoParameterses: statsResolver.videoParameterses,
+        videoDataForMonthStats: statsResolver.videoDataForMonthStats,
     },
     Mutation: {
         sign_up: userResolver.signUp,
         sign_in: userResolver.signIn,
         change_password: userResolver.change_password,
+        change_promo_code: userResolver.change_promo_code,
         restore_password: userResolver.restore_password,
         purchase: userResolver.purchase,
         changeCard: userResolver.changeCard,
@@ -186,6 +191,34 @@ const resolvers = {
         upsertCurriculum: (root, args) => prisma.upsertCurriculum(args),
         deleteCurriculum: (root, args) => prisma.deleteCurriculum(args.where),
         deleteManyCurricula: (root, args) => prisma.deleteManyCurricula(args.where),
+
+        createArtistFactors: (root, args) => prisma.createArtistFactors(args.data),
+        updateArtistFactors: (root, args) => prisma.updateArtistFactors(args),
+        updateManyArtistFactorses: (root, args) => prisma.updateManyArtistFactorses(args),
+        upsertArtistFactors: (root, args) => prisma.upsertArtistFactors(args),
+        deleteArtistFactors: (root, args) => prisma.deleteArtistFactors(args.where),
+        deleteManyArtistFactorses: (root, args) => prisma.deleteManyArtistFactorses(args.where),
+
+        createVideoTotalParameters: (root, args) => prisma.createVideoTotalParameters(args.data),
+        updateVideoTotalParameters: (root, args) => prisma.updateVideoTotalParameters(args),
+        updateManyVideoTotalParameterses: (root, args) => prisma.updateManyVideoTotalParameterses(args),
+        upsertVideoTotalParameters: (root, args) => prisma.upsertVideoTotalParameters(args),
+        deleteVideoTotalParameters: (root, args) => prisma.deleteVideoTotalParameters(args.where),
+        deleteManyVideoTotalParameterses: (root, args) => prisma.deleteManyVideoTotalParameterses(args.where),
+
+        createProfitPoolFactor: (root, args) => prisma.createProfitPoolFactor(args.data),
+        updateProfitPoolFactor: (root, args) => prisma.updateProfitPoolFactor(args),
+        updateManyProfitPoolFactors: (root, args) => prisma.updateManyProfitPoolFactors(args),
+        upsertProfitPoolFactor: (root, args) => prisma.upsertProfitPoolFactor(args),
+        deleteProfitPoolFactor: (root, args) => prisma.deleteProfitPoolFactor(args.where),
+        deleteManyProfitPoolFactors: (root, args) => prisma.deleteManyProfitPoolFactors(args.where),
+
+        createVideoParameters: (root, args) => prisma.createVideoParameters(args.data),
+        updateVideoParameters: (root, args) => prisma.updateVideoParameters(args),
+        updateManyVideoParameterses: (root, args) => prisma.updateManyVideoParameterses(args),
+        upsertVideoParameters: (root, args) => prisma.upsertVideoParameters(args),
+        deleteVideoParameters: (root, args) => prisma.deleteVideoParameters(args.where),
+        deleteManyVideoParameterses: (root, args) => prisma.deleteManyVideoParameterses(args.where),
     },
     User: {
         artist: (root, args) => prisma.user({id: root.id}).artist(args),
@@ -221,6 +254,18 @@ const resolvers = {
     },
     ArtistFactors: {
         artist: (root, args) => prisma.artistFactors({id: root.id}).artist(args),
+    },
+    VideoParameters: {
+        video: (root, args) => prisma.videoParameters({id: root.id}).video(args),
+        owner1: (root, args) => prisma.videoParameters({id: root.id}).owner1(args),
+        owner2: (root, args) => prisma.videoParameters({id: root.id}).owner2(args),
+        owner3: (root, args) => prisma.videoParameters({id: root.id}).owner3(args),
+    },
+    PlayHistory: {
+        video: (root, args) => prisma.playHistory({id: root.id}).video(args),
+    },
+    VideoDataForMonth: {
+        video: (root, args) => prisma.videoDataForMonth({id: root.id}).video(args),
     },
     Node: { // to remove warning "Type "Node" is missing a "__resolveType" resolver. Pass false into "resolverValidationOptions.requireResolversForResolveType" to disable this warning."
         __resolveType() {

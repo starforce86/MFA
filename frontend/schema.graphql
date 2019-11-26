@@ -587,6 +587,7 @@ enum UserRole {
     MODERATOR
     USER_PUBLISHER
     USER_VIEWER
+    MFA
 }
 
 enum VideoOrderByInput {

@@ -66,6 +66,14 @@ const UPDATE_USER_PROFILE = gql`
     }
 `;
 
+const CHANGE_PROMO_CODE = gql`
+    mutation changePromoCode($promo_code: String!) {
+        changePromoCode(
+            promo_code: $promo_code
+        )
+    }
+`;
+
 const CHANGE_PASSWORD = gql`
     mutation ChangeUserPasswordMutation(
         $old_password: String!
@@ -158,6 +166,14 @@ class SettingsPageWithoutMutations extends Component {
         });
     };
 
+    handleChangePromoCode = async () => {
+        return await this.props.changeCard({
+            variables: {
+                promo_code: this.state.promo_code
+            }
+        });
+    };
+
     render() {
         return (
             (this.props.getUserProfile.user && (
@@ -233,6 +249,44 @@ const SettingsPage = compose(
             },
             onCompleted: (res) => {
                 if(res.purchase) {
+                    location.reload();
+                }
+                else {
+                    notification['error']({
+                        message: 'Error!',
+                        description: "Unknown error occured!",
+                    });
+                }
+            },
+            onError: async errors => {
+                let errs = JSON.stringify(errors);
+                //TODO return error to component
+                log.trace(errs);
+                if(errors && errors.graphQLErrors && errors.graphQLErrors.length > 0) {
+                    const errMsg = errors.graphQLErrors.map(e => e.message ? e.message : "").join(" ");
+                    notification['error']({
+                        message: 'Error!',
+                        description: errMsg,
+                    });
+                } else {
+                    notification['error']({
+                        message: 'Error!',
+                        description: "Unknown error occured!",
+                    });
+                }
+                return {error: true}
+            }
+        })
+    }),
+
+    graphql(CHANGE_PROMO_CODE, {
+        name: "changePromoCode",
+        options: props => ({
+            variables: {
+                promo_code: props.promo_code
+            },
+            onCompleted: (res) => {
+                if(res.changePromoCode) {
                     location.reload();
                 }
                 else {

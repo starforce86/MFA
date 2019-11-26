@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import logger from "../../util/logger";
-import { Profit } from "../../components/profit";
+import Profit from "../../components/profit/Profit";
 import {withUser} from "../../util/auth";
 
 const log = logger('Profit Sharing');
@@ -12,7 +12,11 @@ class ProfitPage extends Component {
 
     render() {
 
-        return <Profit user={this.props.user} />
+        return (
+            this.props.user.role == 'ADMIN' ?
+                <Profit user={this.props.user} />
+                : ''
+        );
     }
 }
 
