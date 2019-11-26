@@ -13,6 +13,7 @@ import 'antd/dist/antd.css';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import * as consts from "../../util/consts";
 import SubscribePlan from "../../components/stripe/SubscribePlan";
+import { async } from "q";
 
 const log = logger('Settings');
 
@@ -33,7 +34,7 @@ class Settings extends PureComponent {
             plan: 'YEARLY',
             resubscribeInProgress: false,
             changeCardInProgress: false,
-            promo_code: props.user.promo_code,
+            promo_code: props.user.role == 'USER_PUBLISHER' ? props.user.my_promo_codes.find(d => d.current_promo_code == true).promo_code : '',
             promo_code_copied: false,
             promo_link_copied: false,
             editing_promo_code: false,
@@ -53,6 +54,37 @@ class Settings extends PureComponent {
 
         // Return null if the state hasn't changed
         return null;
+    }
+
+    onClickPromoCodeCancel = () => {
+        this.setState({
+            editing_promo_code: false,
+            promo_code: this.props.user.my_promo_codes.find(d => d.current_promo_code == true).promo_code,
+            promo_code_copied: false,
+            promo_link_copied: false,
+        })
+    }
+
+    onClickPromoCodeSave = async () => {
+        if (!this.state.promo_code) {
+            notification['error']({
+                message: 'Error!',
+                description: "Promo code is empty!",
+            });
+            return;
+        }
+        try {
+            if (await this.props.changePromoCode(this.state.promo_code)) {
+                location.reload();
+            }
+            // this.paymentInfoRef.current.handleSave();
+        } catch(ex) {
+            notification['error']({
+                message: 'Error!',
+                description: ex.message,
+            });
+            return;
+        }
     }
 
     promoCodeChanged = (e) => {
@@ -178,7 +210,7 @@ class Settings extends PureComponent {
     }
 
     render() {
-        const promo_link = `${consts.SITE_URL}/register?promo_code=${this.props.user.promo_code}`;
+        const promo_link = this.props.user.role == 'USER_PUBLISHER' ? `${consts.SITE_URL}/register?promo_code=${this.props.user.my_promo_codes.find(d => d.current_promo_code == true).promo_code}` : '';
         const navIconStyle = { float: "right", marginBottom: 0, marginTop: 2, marginLeft: 3 };
         const btnStyle = { heigth: 36 };
 
@@ -386,13 +418,13 @@ class Settings extends PureComponent {
                                                     </label>
                                                     {this.state.editing_promo_code ? (
                                                         <React.Fragment>
-                                                            <button type="button" className="promo_edit_btn btn btn-warning border-none mr-2" style={btnStyle} onClick={() => this.onClickSaveUserProfile()} ><Icon type="save" /><p style={navIconStyle}>Save</p></button>
-                                                            <button type="button" className="promo_edit_btn btn btn-warning border-none mr-2" style={btnStyle} onClick={() => this.setState({ editing_promo_code: false })} ><Icon type="close" /><p style={navIconStyle}>Cancel</p></button>
+                                                            <button type="button" className="promo_edit_btn btn btn-warning border-none mr-2" style={btnStyle} onClick={this.onClickPromoCodeSave} ><Icon type="save" /><p style={navIconStyle}>Save</p></button>
+                                                            <button type="button" className="promo_edit_btn btn btn-warning border-none mr-2" style={btnStyle} onClick={this.onClickPromoCodeCancel} ><Icon type="close" /><p style={navIconStyle}>Cancel</p></button>
                                                         </React.Fragment>
                                                     ) : (
                                                             <React.Fragment>
                                                                 <button type="button" className="promo_edit_btn btn btn-warning border-none mr-2" style={btnStyle} onClick={() => this.setState({ editing_promo_code: true })} ><Icon type="edit" /><p style={navIconStyle}>Edit</p></button>
-                                                                <CopyToClipboard text={this.props.user.promo_code}
+                                                                <CopyToClipboard text={this.state.promo_code}
                                                                     onCopy={() => this.setState({ promo_code_copied: true, promo_link_copied: false })}>
                                                                     <button type="button" style={btnStyle} className="promo_edit_btn btn btn-warning border-none"><Icon type="copy" /><p style={navIconStyle}>Copy</p></button>
                                                                 </CopyToClipboard>

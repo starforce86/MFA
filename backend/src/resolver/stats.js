@@ -508,6 +508,10 @@ async function payoutStats(root, args, ctx, info) {
 
         artists = await Promise.all(artists.map(async (artist) => {
             const users = await prisma.user({id: artist.id}).users();
+            const promo_codes = await prisma.user({id: artist.id}).my_promo_codes();
+            const cur_promo_codes = promo_codes.find(d => d.current_promo_code == true);
+
+            artist.promo_code = cur_promo_codes ? cur_promo_codes.promo_code : '';
             artist.promo_code_uses = users.length;
             artist.timespans = await Promise.all(timespans.map(async (ts) => {
                 let tspan = {...ts};

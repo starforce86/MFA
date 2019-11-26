@@ -5,6 +5,7 @@ import {compose, graphql, withApollo} from "react-apollo";
 import { notification } from 'antd';
 import 'antd/dist/antd.css';
 import logger from "../../util/logger";
+import { async } from "q";
 
 const log = logger('Settings');
 
@@ -25,8 +26,10 @@ const PROFILE_QUERY = gql`
             avatar
             background_image
             about_text
-            promo_code
-
+            my_promo_codes {
+                promo_code
+                current_promo_code
+            }
             billing_subscription_active
             stripe_customer_id
             last_login_date
@@ -145,6 +148,18 @@ class SettingsPageWithoutMutations extends Component {
         // }
     };
 
+    handleChangePromoCode = async (promo_code) => {
+        console.log('############# handleChangePromoCode', promo_code)
+
+        if (promo_code) {
+            await this.props.changePromoCode({
+                variables: {
+                    promo_code: promo_code
+                }
+            });
+        }
+    };
+
     handleCancelSubscription = async () => {
         await this.props.cancelSubscription();
     };
@@ -166,14 +181,6 @@ class SettingsPageWithoutMutations extends Component {
         });
     };
 
-    handleChangePromoCode = async () => {
-        return await this.props.changeCard({
-            variables: {
-                promo_code: this.state.promo_code
-            }
-        });
-    };
-
     render() {
         return (
             (this.props.getUserProfile.user && (
@@ -185,6 +192,12 @@ class SettingsPageWithoutMutations extends Component {
                             lastname,
                             username,
                             bio
+                        )
+                    }}
+                    changePromoCode={async (promo_code) => {
+                        console.log('########### changePromoCode', promo_code)
+                        return await this.handleChangePromoCode(
+                            promo_code
                         )
                     }}
                     cancelSubscription={() => this.handleCancelSubscription()}

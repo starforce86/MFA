@@ -104,18 +104,22 @@ async function signUp(email, firstname, lastname, phone, password, promo_code, s
                     role: userRole,
                 }
                 if (userRole === 'USER_VIEWER' && promo_code) {
-                    const artists = await prisma.users({
+                    const promo_codes = await prisma.promoCodes({
                         where: {
                             promo_code: promo_code
                         }
                     });
-                    if(artists.length == 0) {
+                    if(promo_codes.length == 0) {
                         throw new GQLError({message: `No such promo code with '${promo_code}'`, code: 410});
                     }
 
+                    const artist = await prisma.promoCode({ id: promo_codes[0].id }).user();
+
                     newUserData.artist = {
-                        connect: { id: artists[0].id }
+                        connect: { id: artist.id }
                     };
+
+                    newUser = await prisma.createUser(newUserData);
                 }
                 if (userRole === 'USER_PUBLISHER') {
                     
@@ -134,11 +138,7 @@ async function signUp(email, firstname, lastname, phone, password, promo_code, s
                         userIp
                     )
 
-                    const promo_codes = (await prisma.users({
-                        where: {
-                            role: "USER_PUBLISHER"
-                        }
-                    })).map(d => d.promo_code);
+                    const promo_codes = await prisma.promoCodes();
         
                     let new_promo_code = makeRandStr(promo_code_len);
                     while(promo_codes.includes(new_promo_code)) {
@@ -155,13 +155,26 @@ async function signUp(email, firstname, lastname, phone, password, promo_code, s
 
                     newUserData.approved = false;
                     newUserData.stripe_customer_id = result.id;
-                    newUserData.promo_code = new_promo_code;
                     newUserData.payout_amount = payout_amount.int_val;
                     newUserData.payout_months_total = payout_months.int_val;
                     newUserData.payout_months_left = payout_months.int_val;
                     newUserData.payout_enabled = true;
+
+                    newUser = await prisma.createUser(newUserData);
+                    
+                    if (newUser) {
+                        await prisma.createPromoCode({
+                            user: {
+                                connect: { id: newUser.id }
+                            },
+                            promo_code: new_promo_code,
+                            current_promo_code: true
+                        });
+                    }
                 }
-                newUser = await prisma.createUser(newUserData);
+                
+
+                
             } catch (e) {
                 log.trace(e);
                 let err_msg;
@@ -261,13 +274,55 @@ async function change_password(userId, oldPassword, newPassword) {
     }
 }
 
-async function change_promo_code(userId, promo_code) {
+async function changePromoCode(userId, promo_code) {
+
+    const promo_codes = await prisma.promoCodes({
+        where: {
+            promo_code: promo_code
+        }
+    });
+
+    if (promo_codes.length > 0) {
+        throw new GQLError({message: `${promo_code} already used!. Please input another.`, code: 401});
+    }
+
+    try {
+        if (await prisma.updateManyPromoCodes({
+            where: {
+                user: { id: userId }
+            },
+            data: {
+                current_promo_code: false
+            }
+        })) {
+            if (await prisma.createPromoCode({
+                user: {
+                    connect: { id: userId }
+                },
+                promo_code: promo_code,
+                current_promo_code: true
+            })) {
+                return true;
+            }
+        }
+        return false;
+    } catch (e) {
+        log.trace(e);
+        let err_msg;
+        if (typeof e.message === 'object') {
+            err_msg = e.message.message;
+        } else {
+            err_msg = e.message;
+        }
+        throw new GQLError({message: err_msg, code: 409});
+    }
+
     return false;
 }
 
 module.exports = {
     signUp: signUp,
     change_password: change_password,
-    change_promo_code: change_promo_code,
+    changePromoCode: changePromoCode,
     signIn: signIn
 };

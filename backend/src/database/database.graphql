@@ -19,7 +19,6 @@ type User {
     background_image: String
     about_text: String
 
-    promo_code: String
     payout_amount: Int
     payout_months_total: Int
     payout_months_left: Int
@@ -43,7 +42,19 @@ type User {
     stripe_customer_id: String @unique
     stripe_subsciption_json: Json
 
+    my_promo_codes: [PromoCode!]! @relation(name: "PromoCodeUserRel")
+
     last_login_date: DateTime
+}
+
+type PromoCode {
+    id: ID! @unique
+    createdAt: DateTime!
+    updatedAt: DateTime!
+
+    user: User! @relation(name: "PromoCodeUserRel")
+    promo_code: String @unique
+    current_promo_code: Boolean! @default(value: "false")
 }
 
 type TransferPlan {

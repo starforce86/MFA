@@ -27,12 +27,12 @@ async function change_password(root, {old_password, new_password}, ctx, info) {
     return userCore.change_password(userId, old_password, new_password);
 }
 
-async function change_promo_code(root, {promo_code}, ctx, info) {
+async function changePromoCode(root, {promo_code}, ctx, info) {
     if (!ctx.user || !ctx.user.id) {
         throw new GQLError({message: 'Unauthorized', code: 401});
     }
     const userId = ctx.user.id;
-    return userCore.change_promo_code(userId, promo_code);
+    return userCore.changePromoCode(userId, promo_code);
 }
 
 async function restore_password(root, {email, restore_code, new_password, step}, ctx, info) {
@@ -583,7 +583,7 @@ async function transfer(root, args, ctx, info) {
 module.exports = {
     signUp: signUp,
     change_password: change_password,
-    change_promo_code: change_promo_code,
+    changePromoCode: changePromoCode,
     restore_password: restore_password,
     purchase: purchase,
     changeCard: changeCard,

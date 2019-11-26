@@ -9,6 +9,10 @@ var models = [
     embedded: false
   },
   {
+    name: "PromoCode",
+    embedded: false
+  },
+  {
     name: "TransferPlan",
     embedded: false
   },

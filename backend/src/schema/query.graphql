@@ -51,6 +51,9 @@ type Query {
     profitPoolFactor(where: ProfitPoolFactorWhereUniqueInput!): ProfitPoolFactor
     profitPoolFactors(where: ProfitPoolFactorWhereInput, orderBy: ProfitPoolFactorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ProfitPoolFactor]!
     profitPoolFactorsConnection(where: ProfitPoolFactorWhereInput, orderBy: ProfitPoolFactorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProfitPoolFactorConnection!
+    promoCode(where: PromoCodeWhereUniqueInput!): PromoCode
+    promoCodes(where: PromoCodeWhereInput, orderBy: PromoCodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PromoCode]!
+    promoCodesConnection(where: PromoCodeWhereInput, orderBy: PromoCodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PromoCodeConnection!
     restoreCode(where: RestoreCodeWhereUniqueInput!): RestoreCode
     restoreCodes(where: RestoreCodeWhereInput, orderBy: RestoreCodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RestoreCode]!
     restoreCodesConnection(where: RestoreCodeWhereInput, orderBy: RestoreCodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RestoreCodeConnection!

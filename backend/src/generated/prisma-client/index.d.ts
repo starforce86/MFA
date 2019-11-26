@@ -28,6 +28,7 @@ export interface Exists {
     where?: ProfitPoolCalculationWhereInput
   ) => Promise<boolean>;
   profitPoolFactor: (where?: ProfitPoolFactorWhereInput) => Promise<boolean>;
+  promoCode: (where?: PromoCodeWhereInput) => Promise<boolean>;
   restoreCode: (where?: RestoreCodeWhereInput) => Promise<boolean>;
   settings: (where?: SettingsWhereInput) => Promise<boolean>;
   subscriptionHistory: (
@@ -311,6 +312,29 @@ export interface Prisma {
       last?: Int;
     }
   ) => ProfitPoolFactorConnectionPromise;
+  promoCode: (where: PromoCodeWhereUniqueInput) => PromoCodePromise;
+  promoCodes: (
+    args?: {
+      where?: PromoCodeWhereInput;
+      orderBy?: PromoCodeOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => FragmentableArray<PromoCode>;
+  promoCodesConnection: (
+    args?: {
+      where?: PromoCodeWhereInput;
+      orderBy?: PromoCodeOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => PromoCodeConnectionPromise;
   restoreCode: (where: RestoreCodeWhereUniqueInput) => RestoreCodePromise;
   restoreCodes: (
     args?: {
@@ -891,6 +915,25 @@ export interface Prisma {
   deleteManyProfitPoolFactors: (
     where?: ProfitPoolFactorWhereInput
   ) => BatchPayloadPromise;
+  createPromoCode: (data: PromoCodeCreateInput) => PromoCodePromise;
+  updatePromoCode: (
+    args: { data: PromoCodeUpdateInput; where: PromoCodeWhereUniqueInput }
+  ) => PromoCodePromise;
+  updateManyPromoCodes: (
+    args: {
+      data: PromoCodeUpdateManyMutationInput;
+      where?: PromoCodeWhereInput;
+    }
+  ) => BatchPayloadPromise;
+  upsertPromoCode: (
+    args: {
+      where: PromoCodeWhereUniqueInput;
+      create: PromoCodeCreateInput;
+      update: PromoCodeUpdateInput;
+    }
+  ) => PromoCodePromise;
+  deletePromoCode: (where: PromoCodeWhereUniqueInput) => PromoCodePromise;
+  deleteManyPromoCodes: (where?: PromoCodeWhereInput) => BatchPayloadPromise;
   createRestoreCode: (data: RestoreCodeCreateInput) => RestoreCodePromise;
   updateRestoreCode: (
     args: { data: RestoreCodeUpdateInput; where: RestoreCodeWhereUniqueInput }
@@ -1262,6 +1305,9 @@ export interface Subscription {
   profitPoolFactor: (
     where?: ProfitPoolFactorSubscriptionWhereInput
   ) => ProfitPoolFactorSubscriptionPayloadSubscription;
+  promoCode: (
+    where?: PromoCodeSubscriptionWhereInput
+  ) => PromoCodeSubscriptionPayloadSubscription;
   restoreCode: (
     where?: RestoreCodeSubscriptionWhereInput
   ) => RestoreCodeSubscriptionPayloadSubscription;
@@ -1366,8 +1412,6 @@ export type UserOrderByInput =
   | "background_image_DESC"
   | "about_text_ASC"
   | "about_text_DESC"
-  | "promo_code_ASC"
-  | "promo_code_DESC"
   | "payout_amount_ASC"
   | "payout_amount_DESC"
   | "payout_months_total_ASC"
@@ -1446,6 +1490,18 @@ export type TagOrderByInput =
   | "updatedAt_DESC"
   | "text_ASC"
   | "text_DESC";
+
+export type PromoCodeOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC"
+  | "promo_code_ASC"
+  | "promo_code_DESC"
+  | "current_promo_code_ASC"
+  | "current_promo_code_DESC";
 
 export type ArtistFactorsOrderByInput =
   | "id_ASC"
@@ -2055,20 +2111,6 @@ export interface UserWhereInput {
   about_text_not_starts_with?: String;
   about_text_ends_with?: String;
   about_text_not_ends_with?: String;
-  promo_code?: String;
-  promo_code_not?: String;
-  promo_code_in?: String[] | String;
-  promo_code_not_in?: String[] | String;
-  promo_code_lt?: String;
-  promo_code_lte?: String;
-  promo_code_gt?: String;
-  promo_code_gte?: String;
-  promo_code_contains?: String;
-  promo_code_not_contains?: String;
-  promo_code_starts_with?: String;
-  promo_code_not_starts_with?: String;
-  promo_code_ends_with?: String;
-  promo_code_not_ends_with?: String;
   payout_amount?: Int;
   payout_amount_not?: Int;
   payout_amount_in?: Int[] | Int;
@@ -2158,6 +2200,9 @@ export interface UserWhereInput {
   stripe_customer_id_not_starts_with?: String;
   stripe_customer_id_ends_with?: String;
   stripe_customer_id_not_ends_with?: String;
+  my_promo_codes_every?: PromoCodeWhereInput;
+  my_promo_codes_some?: PromoCodeWhereInput;
+  my_promo_codes_none?: PromoCodeWhereInput;
   last_login_date?: DateTimeInput;
   last_login_date_not?: DateTimeInput;
   last_login_date_in?: DateTimeInput[] | DateTimeInput;
@@ -2470,6 +2515,59 @@ export interface TagWhereInput {
   AND?: TagWhereInput[] | TagWhereInput;
   OR?: TagWhereInput[] | TagWhereInput;
   NOT?: TagWhereInput[] | TagWhereInput;
+}
+
+export interface PromoCodeWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  updatedAt?: DateTimeInput;
+  updatedAt_not?: DateTimeInput;
+  updatedAt_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_lt?: DateTimeInput;
+  updatedAt_lte?: DateTimeInput;
+  updatedAt_gt?: DateTimeInput;
+  updatedAt_gte?: DateTimeInput;
+  user?: UserWhereInput;
+  promo_code?: String;
+  promo_code_not?: String;
+  promo_code_in?: String[] | String;
+  promo_code_not_in?: String[] | String;
+  promo_code_lt?: String;
+  promo_code_lte?: String;
+  promo_code_gt?: String;
+  promo_code_gte?: String;
+  promo_code_contains?: String;
+  promo_code_not_contains?: String;
+  promo_code_starts_with?: String;
+  promo_code_not_starts_with?: String;
+  promo_code_ends_with?: String;
+  promo_code_not_ends_with?: String;
+  current_promo_code?: Boolean;
+  current_promo_code_not?: Boolean;
+  AND?: PromoCodeWhereInput[] | PromoCodeWhereInput;
+  OR?: PromoCodeWhereInput[] | PromoCodeWhereInput;
+  NOT?: PromoCodeWhereInput[] | PromoCodeWhereInput;
 }
 
 export interface ArtistFactorsWhereInput {
@@ -3179,6 +3277,11 @@ export interface ProfitPoolFactorWhereInput {
   OR?: ProfitPoolFactorWhereInput[] | ProfitPoolFactorWhereInput;
   NOT?: ProfitPoolFactorWhereInput[] | ProfitPoolFactorWhereInput;
 }
+
+export type PromoCodeWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+  promo_code?: String;
+}>;
 
 export type RestoreCodeWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
@@ -4138,7 +4241,6 @@ export interface UserCreateInput {
   avatar?: String;
   background_image?: String;
   about_text?: String;
-  promo_code?: String;
   payout_amount?: Int;
   payout_months_total?: Int;
   payout_months_left?: Int;
@@ -4155,6 +4257,7 @@ export interface UserCreateInput {
   billing_subscription_active?: Boolean;
   stripe_customer_id?: String;
   stripe_subsciption_json?: Json;
+  my_promo_codes?: PromoCodeCreateManyWithoutUserInput;
   last_login_date?: DateTimeInput;
 }
 
@@ -4176,7 +4279,6 @@ export interface UserCreateWithoutUsersInput {
   avatar?: String;
   background_image?: String;
   about_text?: String;
-  promo_code?: String;
   payout_amount?: Int;
   payout_months_total?: Int;
   payout_months_left?: Int;
@@ -4192,6 +4294,7 @@ export interface UserCreateWithoutUsersInput {
   billing_subscription_active?: Boolean;
   stripe_customer_id?: String;
   stripe_subsciption_json?: Json;
+  my_promo_codes?: PromoCodeCreateManyWithoutUserInput;
   last_login_date?: DateTimeInput;
 }
 
@@ -4248,7 +4351,6 @@ export interface UserCreateWithoutLiked_videosInput {
   avatar?: String;
   background_image?: String;
   about_text?: String;
-  promo_code?: String;
   payout_amount?: Int;
   payout_months_total?: Int;
   payout_months_left?: Int;
@@ -4264,6 +4366,7 @@ export interface UserCreateWithoutLiked_videosInput {
   billing_subscription_active?: Boolean;
   stripe_customer_id?: String;
   stripe_subsciption_json?: Json;
+  my_promo_codes?: PromoCodeCreateManyWithoutUserInput;
   last_login_date?: DateTimeInput;
 }
 
@@ -4285,7 +4388,6 @@ export interface UserCreateWithoutArtistInput {
   avatar?: String;
   background_image?: String;
   about_text?: String;
-  promo_code?: String;
   payout_amount?: Int;
   payout_months_total?: Int;
   payout_months_left?: Int;
@@ -4301,6 +4403,7 @@ export interface UserCreateWithoutArtistInput {
   billing_subscription_active?: Boolean;
   stripe_customer_id?: String;
   stripe_subsciption_json?: Json;
+  my_promo_codes?: PromoCodeCreateManyWithoutUserInput;
   last_login_date?: DateTimeInput;
 }
 
@@ -4345,7 +4448,6 @@ export interface UserCreateWithoutMy_videosInput {
   avatar?: String;
   background_image?: String;
   about_text?: String;
-  promo_code?: String;
   payout_amount?: Int;
   payout_months_total?: Int;
   payout_months_left?: Int;
@@ -4361,6 +4463,7 @@ export interface UserCreateWithoutMy_videosInput {
   billing_subscription_active?: Boolean;
   stripe_customer_id?: String;
   stripe_subsciption_json?: Json;
+  my_promo_codes?: PromoCodeCreateManyWithoutUserInput;
   last_login_date?: DateTimeInput;
 }
 
@@ -4428,7 +4531,6 @@ export interface UserCreateWithoutSubscribed_usersInput {
   avatar?: String;
   background_image?: String;
   about_text?: String;
-  promo_code?: String;
   payout_amount?: Int;
   payout_months_total?: Int;
   payout_months_left?: Int;
@@ -4444,7 +4546,18 @@ export interface UserCreateWithoutSubscribed_usersInput {
   billing_subscription_active?: Boolean;
   stripe_customer_id?: String;
   stripe_subsciption_json?: Json;
+  my_promo_codes?: PromoCodeCreateManyWithoutUserInput;
   last_login_date?: DateTimeInput;
+}
+
+export interface PromoCodeCreateManyWithoutUserInput {
+  create?: PromoCodeCreateWithoutUserInput[] | PromoCodeCreateWithoutUserInput;
+  connect?: PromoCodeWhereUniqueInput[] | PromoCodeWhereUniqueInput;
+}
+
+export interface PromoCodeCreateWithoutUserInput {
+  promo_code?: String;
+  current_promo_code?: Boolean;
 }
 
 export interface UserCreateManyWithoutMy_subscription_usersInput {
@@ -4467,7 +4580,6 @@ export interface UserCreateWithoutMy_subscription_usersInput {
   avatar?: String;
   background_image?: String;
   about_text?: String;
-  promo_code?: String;
   payout_amount?: Int;
   payout_months_total?: Int;
   payout_months_left?: Int;
@@ -4483,6 +4595,7 @@ export interface UserCreateWithoutMy_subscription_usersInput {
   billing_subscription_active?: Boolean;
   stripe_customer_id?: String;
   stripe_subsciption_json?: Json;
+  my_promo_codes?: PromoCodeCreateManyWithoutUserInput;
   last_login_date?: DateTimeInput;
 }
 
@@ -4518,7 +4631,6 @@ export interface UserCreateWithoutWatched_videosInput {
   avatar?: String;
   background_image?: String;
   about_text?: String;
-  promo_code?: String;
   payout_amount?: Int;
   payout_months_total?: Int;
   payout_months_left?: Int;
@@ -4534,6 +4646,7 @@ export interface UserCreateWithoutWatched_videosInput {
   billing_subscription_active?: Boolean;
   stripe_customer_id?: String;
   stripe_subsciption_json?: Json;
+  my_promo_codes?: PromoCodeCreateManyWithoutUserInput;
   last_login_date?: DateTimeInput;
 }
 
@@ -4567,7 +4680,6 @@ export interface UserUpdateDataInput {
   avatar?: String;
   background_image?: String;
   about_text?: String;
-  promo_code?: String;
   payout_amount?: Int;
   payout_months_total?: Int;
   payout_months_left?: Int;
@@ -4584,6 +4696,7 @@ export interface UserUpdateDataInput {
   billing_subscription_active?: Boolean;
   stripe_customer_id?: String;
   stripe_subsciption_json?: Json;
+  my_promo_codes?: PromoCodeUpdateManyWithoutUserInput;
   last_login_date?: DateTimeInput;
 }
 
@@ -4609,7 +4722,6 @@ export interface UserUpdateWithoutUsersDataInput {
   avatar?: String;
   background_image?: String;
   about_text?: String;
-  promo_code?: String;
   payout_amount?: Int;
   payout_months_total?: Int;
   payout_months_left?: Int;
@@ -4625,6 +4737,7 @@ export interface UserUpdateWithoutUsersDataInput {
   billing_subscription_active?: Boolean;
   stripe_customer_id?: String;
   stripe_subsciption_json?: Json;
+  my_promo_codes?: PromoCodeUpdateManyWithoutUserInput;
   last_login_date?: DateTimeInput;
 }
 
@@ -4815,7 +4928,6 @@ export interface UserUpdateWithoutLiked_videosDataInput {
   avatar?: String;
   background_image?: String;
   about_text?: String;
-  promo_code?: String;
   payout_amount?: Int;
   payout_months_total?: Int;
   payout_months_left?: Int;
@@ -4831,6 +4943,7 @@ export interface UserUpdateWithoutLiked_videosDataInput {
   billing_subscription_active?: Boolean;
   stripe_customer_id?: String;
   stripe_subsciption_json?: Json;
+  my_promo_codes?: PromoCodeUpdateManyWithoutUserInput;
   last_login_date?: DateTimeInput;
 }
 
@@ -4870,7 +4983,6 @@ export interface UserUpdateWithoutArtistDataInput {
   avatar?: String;
   background_image?: String;
   about_text?: String;
-  promo_code?: String;
   payout_amount?: Int;
   payout_months_total?: Int;
   payout_months_left?: Int;
@@ -4886,6 +4998,7 @@ export interface UserUpdateWithoutArtistDataInput {
   billing_subscription_active?: Boolean;
   stripe_customer_id?: String;
   stripe_subsciption_json?: Json;
+  my_promo_codes?: PromoCodeUpdateManyWithoutUserInput;
   last_login_date?: DateTimeInput;
 }
 
@@ -4950,7 +5063,6 @@ export interface UserUpdateWithoutMy_videosDataInput {
   avatar?: String;
   background_image?: String;
   about_text?: String;
-  promo_code?: String;
   payout_amount?: Int;
   payout_months_total?: Int;
   payout_months_left?: Int;
@@ -4966,6 +5078,7 @@ export interface UserUpdateWithoutMy_videosDataInput {
   billing_subscription_active?: Boolean;
   stripe_customer_id?: String;
   stripe_subsciption_json?: Json;
+  my_promo_codes?: PromoCodeUpdateManyWithoutUserInput;
   last_login_date?: DateTimeInput;
 }
 
@@ -5210,7 +5323,6 @@ export interface UserUpdateWithoutSubscribed_usersDataInput {
   avatar?: String;
   background_image?: String;
   about_text?: String;
-  promo_code?: String;
   payout_amount?: Int;
   payout_months_total?: Int;
   payout_months_left?: Int;
@@ -5226,7 +5338,104 @@ export interface UserUpdateWithoutSubscribed_usersDataInput {
   billing_subscription_active?: Boolean;
   stripe_customer_id?: String;
   stripe_subsciption_json?: Json;
+  my_promo_codes?: PromoCodeUpdateManyWithoutUserInput;
   last_login_date?: DateTimeInput;
+}
+
+export interface PromoCodeUpdateManyWithoutUserInput {
+  create?: PromoCodeCreateWithoutUserInput[] | PromoCodeCreateWithoutUserInput;
+  delete?: PromoCodeWhereUniqueInput[] | PromoCodeWhereUniqueInput;
+  connect?: PromoCodeWhereUniqueInput[] | PromoCodeWhereUniqueInput;
+  set?: PromoCodeWhereUniqueInput[] | PromoCodeWhereUniqueInput;
+  disconnect?: PromoCodeWhereUniqueInput[] | PromoCodeWhereUniqueInput;
+  update?:
+    | PromoCodeUpdateWithWhereUniqueWithoutUserInput[]
+    | PromoCodeUpdateWithWhereUniqueWithoutUserInput;
+  upsert?:
+    | PromoCodeUpsertWithWhereUniqueWithoutUserInput[]
+    | PromoCodeUpsertWithWhereUniqueWithoutUserInput;
+  deleteMany?: PromoCodeScalarWhereInput[] | PromoCodeScalarWhereInput;
+  updateMany?:
+    | PromoCodeUpdateManyWithWhereNestedInput[]
+    | PromoCodeUpdateManyWithWhereNestedInput;
+}
+
+export interface PromoCodeUpdateWithWhereUniqueWithoutUserInput {
+  where: PromoCodeWhereUniqueInput;
+  data: PromoCodeUpdateWithoutUserDataInput;
+}
+
+export interface PromoCodeUpdateWithoutUserDataInput {
+  promo_code?: String;
+  current_promo_code?: Boolean;
+}
+
+export interface PromoCodeUpsertWithWhereUniqueWithoutUserInput {
+  where: PromoCodeWhereUniqueInput;
+  update: PromoCodeUpdateWithoutUserDataInput;
+  create: PromoCodeCreateWithoutUserInput;
+}
+
+export interface PromoCodeScalarWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  updatedAt?: DateTimeInput;
+  updatedAt_not?: DateTimeInput;
+  updatedAt_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_lt?: DateTimeInput;
+  updatedAt_lte?: DateTimeInput;
+  updatedAt_gt?: DateTimeInput;
+  updatedAt_gte?: DateTimeInput;
+  promo_code?: String;
+  promo_code_not?: String;
+  promo_code_in?: String[] | String;
+  promo_code_not_in?: String[] | String;
+  promo_code_lt?: String;
+  promo_code_lte?: String;
+  promo_code_gt?: String;
+  promo_code_gte?: String;
+  promo_code_contains?: String;
+  promo_code_not_contains?: String;
+  promo_code_starts_with?: String;
+  promo_code_not_starts_with?: String;
+  promo_code_ends_with?: String;
+  promo_code_not_ends_with?: String;
+  current_promo_code?: Boolean;
+  current_promo_code_not?: Boolean;
+  AND?: PromoCodeScalarWhereInput[] | PromoCodeScalarWhereInput;
+  OR?: PromoCodeScalarWhereInput[] | PromoCodeScalarWhereInput;
+  NOT?: PromoCodeScalarWhereInput[] | PromoCodeScalarWhereInput;
+}
+
+export interface PromoCodeUpdateManyWithWhereNestedInput {
+  where: PromoCodeScalarWhereInput;
+  data: PromoCodeUpdateManyDataInput;
+}
+
+export interface PromoCodeUpdateManyDataInput {
+  promo_code?: String;
+  current_promo_code?: Boolean;
 }
 
 export interface UserUpsertWithWhereUniqueWithoutSubscribed_usersInput {
@@ -5412,20 +5621,6 @@ export interface UserScalarWhereInput {
   about_text_not_starts_with?: String;
   about_text_ends_with?: String;
   about_text_not_ends_with?: String;
-  promo_code?: String;
-  promo_code_not?: String;
-  promo_code_in?: String[] | String;
-  promo_code_not_in?: String[] | String;
-  promo_code_lt?: String;
-  promo_code_lte?: String;
-  promo_code_gt?: String;
-  promo_code_gte?: String;
-  promo_code_contains?: String;
-  promo_code_not_contains?: String;
-  promo_code_starts_with?: String;
-  promo_code_not_starts_with?: String;
-  promo_code_ends_with?: String;
-  promo_code_not_ends_with?: String;
   payout_amount?: Int;
   payout_amount_not?: Int;
   payout_amount_in?: Int[] | Int;
@@ -5527,7 +5722,6 @@ export interface UserUpdateManyDataInput {
   avatar?: String;
   background_image?: String;
   about_text?: String;
-  promo_code?: String;
   payout_amount?: Int;
   payout_months_total?: Int;
   payout_months_left?: Int;
@@ -5578,7 +5772,6 @@ export interface UserUpdateWithoutMy_subscription_usersDataInput {
   avatar?: String;
   background_image?: String;
   about_text?: String;
-  promo_code?: String;
   payout_amount?: Int;
   payout_months_total?: Int;
   payout_months_left?: Int;
@@ -5594,6 +5787,7 @@ export interface UserUpdateWithoutMy_subscription_usersDataInput {
   billing_subscription_active?: Boolean;
   stripe_customer_id?: String;
   stripe_subsciption_json?: Json;
+  my_promo_codes?: PromoCodeUpdateManyWithoutUserInput;
   last_login_date?: DateTimeInput;
 }
 
@@ -5666,7 +5860,6 @@ export interface UserUpdateWithoutWatched_videosDataInput {
   avatar?: String;
   background_image?: String;
   about_text?: String;
-  promo_code?: String;
   payout_amount?: Int;
   payout_months_total?: Int;
   payout_months_left?: Int;
@@ -5682,6 +5875,7 @@ export interface UserUpdateWithoutWatched_videosDataInput {
   billing_subscription_active?: Boolean;
   stripe_customer_id?: String;
   stripe_subsciption_json?: Json;
+  my_promo_codes?: PromoCodeUpdateManyWithoutUserInput;
   last_login_date?: DateTimeInput;
 }
 
@@ -6219,6 +6413,104 @@ export interface ProfitPoolFactorUpdateManyMutationInput {
   manual_change?: Int;
 }
 
+export interface PromoCodeCreateInput {
+  user: UserCreateOneWithoutMy_promo_codesInput;
+  promo_code?: String;
+  current_promo_code?: Boolean;
+}
+
+export interface UserCreateOneWithoutMy_promo_codesInput {
+  create?: UserCreateWithoutMy_promo_codesInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface UserCreateWithoutMy_promo_codesInput {
+  firstname?: String;
+  lastname?: String;
+  username?: String;
+  email: String;
+  phone?: String;
+  role?: UserRole;
+  approved?: Boolean;
+  password_hash: String;
+  password_salt: String;
+  avatar?: String;
+  background_image?: String;
+  about_text?: String;
+  payout_amount?: Int;
+  payout_months_total?: Int;
+  payout_months_left?: Int;
+  payout_enabled?: Boolean;
+  artist?: UserCreateOneWithoutUsersInput;
+  users?: UserCreateManyWithoutArtistInput;
+  front_id_scan?: String;
+  back_id_scan?: String;
+  my_videos?: VideoCreateManyWithoutAuthorInput;
+  liked_videos?: VideoCreateManyWithoutLike_usersInput;
+  watched_videos?: WatchedVideoUserCreateManyWithoutUserInput;
+  my_subscription_users?: UserCreateManyWithoutSubscribed_usersInput;
+  subscribed_users?: UserCreateManyWithoutMy_subscription_usersInput;
+  billing_subscription_active?: Boolean;
+  stripe_customer_id?: String;
+  stripe_subsciption_json?: Json;
+  last_login_date?: DateTimeInput;
+}
+
+export interface PromoCodeUpdateInput {
+  user?: UserUpdateOneRequiredWithoutMy_promo_codesInput;
+  promo_code?: String;
+  current_promo_code?: Boolean;
+}
+
+export interface UserUpdateOneRequiredWithoutMy_promo_codesInput {
+  create?: UserCreateWithoutMy_promo_codesInput;
+  update?: UserUpdateWithoutMy_promo_codesDataInput;
+  upsert?: UserUpsertWithoutMy_promo_codesInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface UserUpdateWithoutMy_promo_codesDataInput {
+  firstname?: String;
+  lastname?: String;
+  username?: String;
+  email?: String;
+  phone?: String;
+  role?: UserRole;
+  approved?: Boolean;
+  password_hash?: String;
+  password_salt?: String;
+  avatar?: String;
+  background_image?: String;
+  about_text?: String;
+  payout_amount?: Int;
+  payout_months_total?: Int;
+  payout_months_left?: Int;
+  payout_enabled?: Boolean;
+  artist?: UserUpdateOneWithoutUsersInput;
+  users?: UserUpdateManyWithoutArtistInput;
+  front_id_scan?: String;
+  back_id_scan?: String;
+  my_videos?: VideoUpdateManyWithoutAuthorInput;
+  liked_videos?: VideoUpdateManyWithoutLike_usersInput;
+  watched_videos?: WatchedVideoUserUpdateManyWithoutUserInput;
+  my_subscription_users?: UserUpdateManyWithoutSubscribed_usersInput;
+  subscribed_users?: UserUpdateManyWithoutMy_subscription_usersInput;
+  billing_subscription_active?: Boolean;
+  stripe_customer_id?: String;
+  stripe_subsciption_json?: Json;
+  last_login_date?: DateTimeInput;
+}
+
+export interface UserUpsertWithoutMy_promo_codesInput {
+  update: UserUpdateWithoutMy_promo_codesDataInput;
+  create: UserCreateWithoutMy_promo_codesInput;
+}
+
+export interface PromoCodeUpdateManyMutationInput {
+  promo_code?: String;
+  current_promo_code?: Boolean;
+}
+
 export interface RestoreCodeCreateInput {
   email: String;
   valid_until: DateTimeInput;
@@ -6478,7 +6770,6 @@ export interface UserUpdateInput {
   avatar?: String;
   background_image?: String;
   about_text?: String;
-  promo_code?: String;
   payout_amount?: Int;
   payout_months_total?: Int;
   payout_months_left?: Int;
@@ -6495,6 +6786,7 @@ export interface UserUpdateInput {
   billing_subscription_active?: Boolean;
   stripe_customer_id?: String;
   stripe_subsciption_json?: Json;
+  my_promo_codes?: PromoCodeUpdateManyWithoutUserInput;
   last_login_date?: DateTimeInput;
 }
 
@@ -6511,7 +6803,6 @@ export interface UserUpdateManyMutationInput {
   avatar?: String;
   background_image?: String;
   about_text?: String;
-  promo_code?: String;
   payout_amount?: Int;
   payout_months_total?: Int;
   payout_months_left?: Int;
@@ -6848,6 +7139,17 @@ export interface ProfitPoolFactorSubscriptionWhereInput {
   NOT?:
     | ProfitPoolFactorSubscriptionWhereInput[]
     | ProfitPoolFactorSubscriptionWhereInput;
+}
+
+export interface PromoCodeSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: PromoCodeWhereInput;
+  AND?: PromoCodeSubscriptionWhereInput[] | PromoCodeSubscriptionWhereInput;
+  OR?: PromoCodeSubscriptionWhereInput[] | PromoCodeSubscriptionWhereInput;
+  NOT?: PromoCodeSubscriptionWhereInput[] | PromoCodeSubscriptionWhereInput;
 }
 
 export interface RestoreCodeSubscriptionWhereInput {
@@ -7230,7 +7532,6 @@ export interface User {
   avatar?: String;
   background_image?: String;
   about_text?: String;
-  promo_code?: String;
   payout_amount?: Int;
   payout_months_total?: Int;
   payout_months_left?: Int;
@@ -7259,7 +7560,6 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   avatar: () => Promise<String>;
   background_image: () => Promise<String>;
   about_text: () => Promise<String>;
-  promo_code: () => Promise<String>;
   payout_amount: () => Promise<Int>;
   payout_months_total: () => Promise<Int>;
   payout_months_left: () => Promise<Int>;
@@ -7336,6 +7636,17 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   billing_subscription_active: () => Promise<Boolean>;
   stripe_customer_id: () => Promise<String>;
   stripe_subsciption_json: () => Promise<Json>;
+  my_promo_codes: <T = FragmentableArray<PromoCode>>(
+    args?: {
+      where?: PromoCodeWhereInput;
+      orderBy?: PromoCodeOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
   last_login_date: () => Promise<DateTimeOutput>;
 }
 
@@ -7357,7 +7668,6 @@ export interface UserSubscription
   avatar: () => Promise<AsyncIterator<String>>;
   background_image: () => Promise<AsyncIterator<String>>;
   about_text: () => Promise<AsyncIterator<String>>;
-  promo_code: () => Promise<AsyncIterator<String>>;
   payout_amount: () => Promise<AsyncIterator<Int>>;
   payout_months_total: () => Promise<AsyncIterator<Int>>;
   payout_months_left: () => Promise<AsyncIterator<Int>>;
@@ -7434,6 +7744,17 @@ export interface UserSubscription
   billing_subscription_active: () => Promise<AsyncIterator<Boolean>>;
   stripe_customer_id: () => Promise<AsyncIterator<String>>;
   stripe_subsciption_json: () => Promise<AsyncIterator<Json>>;
+  my_promo_codes: <T = Promise<AsyncIterator<PromoCodeSubscription>>>(
+    args?: {
+      where?: PromoCodeWhereInput;
+      orderBy?: PromoCodeOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
   last_login_date: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
@@ -7688,6 +8009,34 @@ export interface TagSubscription
       last?: Int;
     }
   ) => T;
+}
+
+export interface PromoCode {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  promo_code?: String;
+  current_promo_code: Boolean;
+}
+
+export interface PromoCodePromise extends Promise<PromoCode>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  user: <T = UserPromise>() => T;
+  promo_code: () => Promise<String>;
+  current_promo_code: () => Promise<Boolean>;
+}
+
+export interface PromoCodeSubscription
+  extends Promise<AsyncIterator<PromoCode>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  user: <T = UserSubscription>() => T;
+  promo_code: () => Promise<AsyncIterator<String>>;
+  current_promo_code: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface ArtistFactorsConnection {
@@ -8464,6 +8813,62 @@ export interface AggregateProfitPoolFactorPromise
 
 export interface AggregateProfitPoolFactorSubscription
   extends Promise<AsyncIterator<AggregateProfitPoolFactor>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface PromoCodeConnection {
+  pageInfo: PageInfo;
+  edges: PromoCodeEdge[];
+}
+
+export interface PromoCodeConnectionPromise
+  extends Promise<PromoCodeConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<PromoCodeEdge>>() => T;
+  aggregate: <T = AggregatePromoCodePromise>() => T;
+}
+
+export interface PromoCodeConnectionSubscription
+  extends Promise<AsyncIterator<PromoCodeConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<PromoCodeEdgeSubscription>>>() => T;
+  aggregate: <T = AggregatePromoCodeSubscription>() => T;
+}
+
+export interface PromoCodeEdge {
+  node: PromoCode;
+  cursor: String;
+}
+
+export interface PromoCodeEdgePromise
+  extends Promise<PromoCodeEdge>,
+    Fragmentable {
+  node: <T = PromoCodePromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface PromoCodeEdgeSubscription
+  extends Promise<AsyncIterator<PromoCodeEdge>>,
+    Fragmentable {
+  node: <T = PromoCodeSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregatePromoCode {
+  count: Int;
+}
+
+export interface AggregatePromoCodePromise
+  extends Promise<AggregatePromoCode>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregatePromoCodeSubscription
+  extends Promise<AsyncIterator<AggregatePromoCode>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
@@ -10307,6 +10712,59 @@ export interface ProfitPoolFactorPreviousValuesSubscription
   manual_change: () => Promise<AsyncIterator<Int>>;
 }
 
+export interface PromoCodeSubscriptionPayload {
+  mutation: MutationType;
+  node: PromoCode;
+  updatedFields: String[];
+  previousValues: PromoCodePreviousValues;
+}
+
+export interface PromoCodeSubscriptionPayloadPromise
+  extends Promise<PromoCodeSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = PromoCodePromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = PromoCodePreviousValuesPromise>() => T;
+}
+
+export interface PromoCodeSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<PromoCodeSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = PromoCodeSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = PromoCodePreviousValuesSubscription>() => T;
+}
+
+export interface PromoCodePreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  promo_code?: String;
+  current_promo_code: Boolean;
+}
+
+export interface PromoCodePreviousValuesPromise
+  extends Promise<PromoCodePreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  promo_code: () => Promise<String>;
+  current_promo_code: () => Promise<Boolean>;
+}
+
+export interface PromoCodePreviousValuesSubscription
+  extends Promise<AsyncIterator<PromoCodePreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  promo_code: () => Promise<AsyncIterator<String>>;
+  current_promo_code: () => Promise<AsyncIterator<Boolean>>;
+}
+
 export interface RestoreCodeSubscriptionPayload {
   mutation: MutationType;
   node: RestoreCode;
@@ -10782,7 +11240,6 @@ export interface UserPreviousValues {
   avatar?: String;
   background_image?: String;
   about_text?: String;
-  promo_code?: String;
   payout_amount?: Int;
   payout_months_total?: Int;
   payout_months_left?: Int;
@@ -10813,7 +11270,6 @@ export interface UserPreviousValuesPromise
   avatar: () => Promise<String>;
   background_image: () => Promise<String>;
   about_text: () => Promise<String>;
-  promo_code: () => Promise<String>;
   payout_amount: () => Promise<Int>;
   payout_months_total: () => Promise<Int>;
   payout_months_left: () => Promise<Int>;
@@ -10844,7 +11300,6 @@ export interface UserPreviousValuesSubscription
   avatar: () => Promise<AsyncIterator<String>>;
   background_image: () => Promise<AsyncIterator<String>>;
   about_text: () => Promise<AsyncIterator<String>>;
-  promo_code: () => Promise<AsyncIterator<String>>;
   payout_amount: () => Promise<AsyncIterator<Int>>;
   payout_months_total: () => Promise<AsyncIterator<Int>>;
   payout_months_left: () => Promise<AsyncIterator<Int>>;
@@ -11284,6 +11739,10 @@ export type Long = string;
 export const models: Model[] = [
   {
     name: "User",
+    embedded: false
+  },
+  {
+    name: "PromoCode",
     embedded: false
   },
   {

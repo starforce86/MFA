@@ -200,6 +200,10 @@ type AggregateProfitPoolFactor {
   count: Int!
 }
 
+type AggregatePromoCode {
+  count: Int!
+}
+
 type AggregateRestoreCode {
   count: Int!
 }
@@ -1291,6 +1295,12 @@ type Mutation {
   upsertProfitPoolFactor(where: ProfitPoolFactorWhereUniqueInput!, create: ProfitPoolFactorCreateInput!, update: ProfitPoolFactorUpdateInput!): ProfitPoolFactor!
   deleteProfitPoolFactor(where: ProfitPoolFactorWhereUniqueInput!): ProfitPoolFactor
   deleteManyProfitPoolFactors(where: ProfitPoolFactorWhereInput): BatchPayload!
+  createPromoCode(data: PromoCodeCreateInput!): PromoCode!
+  updatePromoCode(data: PromoCodeUpdateInput!, where: PromoCodeWhereUniqueInput!): PromoCode
+  updateManyPromoCodes(data: PromoCodeUpdateManyMutationInput!, where: PromoCodeWhereInput): BatchPayload!
+  upsertPromoCode(where: PromoCodeWhereUniqueInput!, create: PromoCodeCreateInput!, update: PromoCodeUpdateInput!): PromoCode!
+  deletePromoCode(where: PromoCodeWhereUniqueInput!): PromoCode
+  deleteManyPromoCodes(where: PromoCodeWhereInput): BatchPayload!
   createRestoreCode(data: RestoreCodeCreateInput!): RestoreCode!
   updateRestoreCode(data: RestoreCodeUpdateInput!, where: RestoreCodeWhereUniqueInput!): RestoreCode
   updateManyRestoreCodes(data: RestoreCodeUpdateManyMutationInput!, where: RestoreCodeWhereInput): BatchPayload!
@@ -2195,6 +2205,240 @@ input ProfitPoolFactorWhereUniqueInput {
   id: ID
 }
 
+type PromoCode {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  user: User!
+  promo_code: String
+  current_promo_code: Boolean!
+}
+
+type PromoCodeConnection {
+  pageInfo: PageInfo!
+  edges: [PromoCodeEdge]!
+  aggregate: AggregatePromoCode!
+}
+
+input PromoCodeCreateInput {
+  user: UserCreateOneWithoutMy_promo_codesInput!
+  promo_code: String
+  current_promo_code: Boolean
+}
+
+input PromoCodeCreateManyWithoutUserInput {
+  create: [PromoCodeCreateWithoutUserInput!]
+  connect: [PromoCodeWhereUniqueInput!]
+}
+
+input PromoCodeCreateWithoutUserInput {
+  promo_code: String
+  current_promo_code: Boolean
+}
+
+type PromoCodeEdge {
+  node: PromoCode!
+  cursor: String!
+}
+
+enum PromoCodeOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  promo_code_ASC
+  promo_code_DESC
+  current_promo_code_ASC
+  current_promo_code_DESC
+}
+
+type PromoCodePreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  promo_code: String
+  current_promo_code: Boolean!
+}
+
+input PromoCodeScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  promo_code: String
+  promo_code_not: String
+  promo_code_in: [String!]
+  promo_code_not_in: [String!]
+  promo_code_lt: String
+  promo_code_lte: String
+  promo_code_gt: String
+  promo_code_gte: String
+  promo_code_contains: String
+  promo_code_not_contains: String
+  promo_code_starts_with: String
+  promo_code_not_starts_with: String
+  promo_code_ends_with: String
+  promo_code_not_ends_with: String
+  current_promo_code: Boolean
+  current_promo_code_not: Boolean
+  AND: [PromoCodeScalarWhereInput!]
+  OR: [PromoCodeScalarWhereInput!]
+  NOT: [PromoCodeScalarWhereInput!]
+}
+
+type PromoCodeSubscriptionPayload {
+  mutation: MutationType!
+  node: PromoCode
+  updatedFields: [String!]
+  previousValues: PromoCodePreviousValues
+}
+
+input PromoCodeSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: PromoCodeWhereInput
+  AND: [PromoCodeSubscriptionWhereInput!]
+  OR: [PromoCodeSubscriptionWhereInput!]
+  NOT: [PromoCodeSubscriptionWhereInput!]
+}
+
+input PromoCodeUpdateInput {
+  user: UserUpdateOneRequiredWithoutMy_promo_codesInput
+  promo_code: String
+  current_promo_code: Boolean
+}
+
+input PromoCodeUpdateManyDataInput {
+  promo_code: String
+  current_promo_code: Boolean
+}
+
+input PromoCodeUpdateManyMutationInput {
+  promo_code: String
+  current_promo_code: Boolean
+}
+
+input PromoCodeUpdateManyWithoutUserInput {
+  create: [PromoCodeCreateWithoutUserInput!]
+  delete: [PromoCodeWhereUniqueInput!]
+  connect: [PromoCodeWhereUniqueInput!]
+  set: [PromoCodeWhereUniqueInput!]
+  disconnect: [PromoCodeWhereUniqueInput!]
+  update: [PromoCodeUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [PromoCodeUpsertWithWhereUniqueWithoutUserInput!]
+  deleteMany: [PromoCodeScalarWhereInput!]
+  updateMany: [PromoCodeUpdateManyWithWhereNestedInput!]
+}
+
+input PromoCodeUpdateManyWithWhereNestedInput {
+  where: PromoCodeScalarWhereInput!
+  data: PromoCodeUpdateManyDataInput!
+}
+
+input PromoCodeUpdateWithoutUserDataInput {
+  promo_code: String
+  current_promo_code: Boolean
+}
+
+input PromoCodeUpdateWithWhereUniqueWithoutUserInput {
+  where: PromoCodeWhereUniqueInput!
+  data: PromoCodeUpdateWithoutUserDataInput!
+}
+
+input PromoCodeUpsertWithWhereUniqueWithoutUserInput {
+  where: PromoCodeWhereUniqueInput!
+  update: PromoCodeUpdateWithoutUserDataInput!
+  create: PromoCodeCreateWithoutUserInput!
+}
+
+input PromoCodeWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  user: UserWhereInput
+  promo_code: String
+  promo_code_not: String
+  promo_code_in: [String!]
+  promo_code_not_in: [String!]
+  promo_code_lt: String
+  promo_code_lte: String
+  promo_code_gt: String
+  promo_code_gte: String
+  promo_code_contains: String
+  promo_code_not_contains: String
+  promo_code_starts_with: String
+  promo_code_not_starts_with: String
+  promo_code_ends_with: String
+  promo_code_not_ends_with: String
+  current_promo_code: Boolean
+  current_promo_code_not: Boolean
+  AND: [PromoCodeWhereInput!]
+  OR: [PromoCodeWhereInput!]
+  NOT: [PromoCodeWhereInput!]
+}
+
+input PromoCodeWhereUniqueInput {
+  id: ID
+  promo_code: String
+}
+
 type Query {
   activationCode(where: ActivationCodeWhereUniqueInput!): ActivationCode
   activationCodes(where: ActivationCodeWhereInput, orderBy: ActivationCodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActivationCode]!
@@ -2226,6 +2470,9 @@ type Query {
   profitPoolFactor(where: ProfitPoolFactorWhereUniqueInput!): ProfitPoolFactor
   profitPoolFactors(where: ProfitPoolFactorWhereInput, orderBy: ProfitPoolFactorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ProfitPoolFactor]!
   profitPoolFactorsConnection(where: ProfitPoolFactorWhereInput, orderBy: ProfitPoolFactorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProfitPoolFactorConnection!
+  promoCode(where: PromoCodeWhereUniqueInput!): PromoCode
+  promoCodes(where: PromoCodeWhereInput, orderBy: PromoCodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PromoCode]!
+  promoCodesConnection(where: PromoCodeWhereInput, orderBy: PromoCodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PromoCodeConnection!
   restoreCode(where: RestoreCodeWhereUniqueInput!): RestoreCode
   restoreCodes(where: RestoreCodeWhereInput, orderBy: RestoreCodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RestoreCode]!
   restoreCodesConnection(where: RestoreCodeWhereInput, orderBy: RestoreCodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RestoreCodeConnection!
@@ -2596,6 +2843,7 @@ type Subscription {
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   profitPoolCalculation(where: ProfitPoolCalculationSubscriptionWhereInput): ProfitPoolCalculationSubscriptionPayload
   profitPoolFactor(where: ProfitPoolFactorSubscriptionWhereInput): ProfitPoolFactorSubscriptionPayload
+  promoCode(where: PromoCodeSubscriptionWhereInput): PromoCodeSubscriptionPayload
   restoreCode(where: RestoreCodeSubscriptionWhereInput): RestoreCodeSubscriptionPayload
   settings(where: SettingsSubscriptionWhereInput): SettingsSubscriptionPayload
   subscriptionHistory(where: SubscriptionHistorySubscriptionWhereInput): SubscriptionHistorySubscriptionPayload
@@ -3673,7 +3921,6 @@ type User {
   avatar: String
   background_image: String
   about_text: String
-  promo_code: String
   payout_amount: Int
   payout_months_total: Int
   payout_months_left: Int
@@ -3690,6 +3937,7 @@ type User {
   billing_subscription_active: Boolean!
   stripe_customer_id: String
   stripe_subsciption_json: Json
+  my_promo_codes(where: PromoCodeWhereInput, orderBy: PromoCodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PromoCode!]
   last_login_date: DateTime
 }
 
@@ -3712,7 +3960,6 @@ input UserCreateInput {
   avatar: String
   background_image: String
   about_text: String
-  promo_code: String
   payout_amount: Int
   payout_months_total: Int
   payout_months_left: Int
@@ -3729,6 +3976,7 @@ input UserCreateInput {
   billing_subscription_active: Boolean
   stripe_customer_id: String
   stripe_subsciption_json: Json
+  my_promo_codes: PromoCodeCreateManyWithoutUserInput
   last_login_date: DateTime
 }
 
@@ -3754,6 +4002,11 @@ input UserCreateManyWithoutSubscribed_usersInput {
 
 input UserCreateOneInput {
   create: UserCreateInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutMy_promo_codesInput {
+  create: UserCreateWithoutMy_promo_codesInput
   connect: UserWhereUniqueInput
 }
 
@@ -3785,7 +4038,6 @@ input UserCreateWithoutArtistInput {
   avatar: String
   background_image: String
   about_text: String
-  promo_code: String
   payout_amount: Int
   payout_months_total: Int
   payout_months_left: Int
@@ -3801,6 +4053,7 @@ input UserCreateWithoutArtistInput {
   billing_subscription_active: Boolean
   stripe_customer_id: String
   stripe_subsciption_json: Json
+  my_promo_codes: PromoCodeCreateManyWithoutUserInput
   last_login_date: DateTime
 }
 
@@ -3817,7 +4070,6 @@ input UserCreateWithoutLiked_videosInput {
   avatar: String
   background_image: String
   about_text: String
-  promo_code: String
   payout_amount: Int
   payout_months_total: Int
   payout_months_left: Int
@@ -3827,6 +4079,39 @@ input UserCreateWithoutLiked_videosInput {
   front_id_scan: String
   back_id_scan: String
   my_videos: VideoCreateManyWithoutAuthorInput
+  watched_videos: WatchedVideoUserCreateManyWithoutUserInput
+  my_subscription_users: UserCreateManyWithoutSubscribed_usersInput
+  subscribed_users: UserCreateManyWithoutMy_subscription_usersInput
+  billing_subscription_active: Boolean
+  stripe_customer_id: String
+  stripe_subsciption_json: Json
+  my_promo_codes: PromoCodeCreateManyWithoutUserInput
+  last_login_date: DateTime
+}
+
+input UserCreateWithoutMy_promo_codesInput {
+  firstname: String
+  lastname: String
+  username: String
+  email: String!
+  phone: String
+  role: UserRole
+  approved: Boolean
+  password_hash: String!
+  password_salt: String!
+  avatar: String
+  background_image: String
+  about_text: String
+  payout_amount: Int
+  payout_months_total: Int
+  payout_months_left: Int
+  payout_enabled: Boolean
+  artist: UserCreateOneWithoutUsersInput
+  users: UserCreateManyWithoutArtistInput
+  front_id_scan: String
+  back_id_scan: String
+  my_videos: VideoCreateManyWithoutAuthorInput
+  liked_videos: VideoCreateManyWithoutLike_usersInput
   watched_videos: WatchedVideoUserCreateManyWithoutUserInput
   my_subscription_users: UserCreateManyWithoutSubscribed_usersInput
   subscribed_users: UserCreateManyWithoutMy_subscription_usersInput
@@ -3849,7 +4134,6 @@ input UserCreateWithoutMy_subscription_usersInput {
   avatar: String
   background_image: String
   about_text: String
-  promo_code: String
   payout_amount: Int
   payout_months_total: Int
   payout_months_left: Int
@@ -3865,6 +4149,7 @@ input UserCreateWithoutMy_subscription_usersInput {
   billing_subscription_active: Boolean
   stripe_customer_id: String
   stripe_subsciption_json: Json
+  my_promo_codes: PromoCodeCreateManyWithoutUserInput
   last_login_date: DateTime
 }
 
@@ -3881,7 +4166,6 @@ input UserCreateWithoutMy_videosInput {
   avatar: String
   background_image: String
   about_text: String
-  promo_code: String
   payout_amount: Int
   payout_months_total: Int
   payout_months_left: Int
@@ -3897,6 +4181,7 @@ input UserCreateWithoutMy_videosInput {
   billing_subscription_active: Boolean
   stripe_customer_id: String
   stripe_subsciption_json: Json
+  my_promo_codes: PromoCodeCreateManyWithoutUserInput
   last_login_date: DateTime
 }
 
@@ -3913,7 +4198,6 @@ input UserCreateWithoutSubscribed_usersInput {
   avatar: String
   background_image: String
   about_text: String
-  promo_code: String
   payout_amount: Int
   payout_months_total: Int
   payout_months_left: Int
@@ -3929,6 +4213,7 @@ input UserCreateWithoutSubscribed_usersInput {
   billing_subscription_active: Boolean
   stripe_customer_id: String
   stripe_subsciption_json: Json
+  my_promo_codes: PromoCodeCreateManyWithoutUserInput
   last_login_date: DateTime
 }
 
@@ -3945,7 +4230,6 @@ input UserCreateWithoutUsersInput {
   avatar: String
   background_image: String
   about_text: String
-  promo_code: String
   payout_amount: Int
   payout_months_total: Int
   payout_months_left: Int
@@ -3961,6 +4245,7 @@ input UserCreateWithoutUsersInput {
   billing_subscription_active: Boolean
   stripe_customer_id: String
   stripe_subsciption_json: Json
+  my_promo_codes: PromoCodeCreateManyWithoutUserInput
   last_login_date: DateTime
 }
 
@@ -3977,7 +4262,6 @@ input UserCreateWithoutWatched_videosInput {
   avatar: String
   background_image: String
   about_text: String
-  promo_code: String
   payout_amount: Int
   payout_months_total: Int
   payout_months_left: Int
@@ -3993,6 +4277,7 @@ input UserCreateWithoutWatched_videosInput {
   billing_subscription_active: Boolean
   stripe_customer_id: String
   stripe_subsciption_json: Json
+  my_promo_codes: PromoCodeCreateManyWithoutUserInput
   last_login_date: DateTime
 }
 
@@ -4032,8 +4317,6 @@ enum UserOrderByInput {
   background_image_DESC
   about_text_ASC
   about_text_DESC
-  promo_code_ASC
-  promo_code_DESC
   payout_amount_ASC
   payout_amount_DESC
   payout_months_total_ASC
@@ -4072,7 +4355,6 @@ type UserPreviousValues {
   avatar: String
   background_image: String
   about_text: String
-  promo_code: String
   payout_amount: Int
   payout_months_total: Int
   payout_months_left: Int
@@ -4270,20 +4552,6 @@ input UserScalarWhereInput {
   about_text_not_starts_with: String
   about_text_ends_with: String
   about_text_not_ends_with: String
-  promo_code: String
-  promo_code_not: String
-  promo_code_in: [String!]
-  promo_code_not_in: [String!]
-  promo_code_lt: String
-  promo_code_lte: String
-  promo_code_gt: String
-  promo_code_gte: String
-  promo_code_contains: String
-  promo_code_not_contains: String
-  promo_code_starts_with: String
-  promo_code_not_starts_with: String
-  promo_code_ends_with: String
-  promo_code_not_ends_with: String
   payout_amount: Int
   payout_amount_not: Int
   payout_amount_in: [Int!]
@@ -4398,7 +4666,6 @@ input UserUpdateDataInput {
   avatar: String
   background_image: String
   about_text: String
-  promo_code: String
   payout_amount: Int
   payout_months_total: Int
   payout_months_left: Int
@@ -4415,6 +4682,7 @@ input UserUpdateDataInput {
   billing_subscription_active: Boolean
   stripe_customer_id: String
   stripe_subsciption_json: Json
+  my_promo_codes: PromoCodeUpdateManyWithoutUserInput
   last_login_date: DateTime
 }
 
@@ -4431,7 +4699,6 @@ input UserUpdateInput {
   avatar: String
   background_image: String
   about_text: String
-  promo_code: String
   payout_amount: Int
   payout_months_total: Int
   payout_months_left: Int
@@ -4448,6 +4715,7 @@ input UserUpdateInput {
   billing_subscription_active: Boolean
   stripe_customer_id: String
   stripe_subsciption_json: Json
+  my_promo_codes: PromoCodeUpdateManyWithoutUserInput
   last_login_date: DateTime
 }
 
@@ -4464,7 +4732,6 @@ input UserUpdateManyDataInput {
   avatar: String
   background_image: String
   about_text: String
-  promo_code: String
   payout_amount: Int
   payout_months_total: Int
   payout_months_left: Int
@@ -4490,7 +4757,6 @@ input UserUpdateManyMutationInput {
   avatar: String
   background_image: String
   about_text: String
-  promo_code: String
   payout_amount: Int
   payout_months_total: Int
   payout_months_left: Int
@@ -4572,6 +4838,13 @@ input UserUpdateOneRequiredInput {
   connect: UserWhereUniqueInput
 }
 
+input UserUpdateOneRequiredWithoutMy_promo_codesInput {
+  create: UserCreateWithoutMy_promo_codesInput
+  update: UserUpdateWithoutMy_promo_codesDataInput
+  upsert: UserUpsertWithoutMy_promo_codesInput
+  connect: UserWhereUniqueInput
+}
+
 input UserUpdateOneRequiredWithoutMy_videosInput {
   create: UserCreateWithoutMy_videosInput
   update: UserUpdateWithoutMy_videosDataInput
@@ -4608,7 +4881,6 @@ input UserUpdateWithoutArtistDataInput {
   avatar: String
   background_image: String
   about_text: String
-  promo_code: String
   payout_amount: Int
   payout_months_total: Int
   payout_months_left: Int
@@ -4624,6 +4896,7 @@ input UserUpdateWithoutArtistDataInput {
   billing_subscription_active: Boolean
   stripe_customer_id: String
   stripe_subsciption_json: Json
+  my_promo_codes: PromoCodeUpdateManyWithoutUserInput
   last_login_date: DateTime
 }
 
@@ -4640,7 +4913,6 @@ input UserUpdateWithoutLiked_videosDataInput {
   avatar: String
   background_image: String
   about_text: String
-  promo_code: String
   payout_amount: Int
   payout_months_total: Int
   payout_months_left: Int
@@ -4650,6 +4922,39 @@ input UserUpdateWithoutLiked_videosDataInput {
   front_id_scan: String
   back_id_scan: String
   my_videos: VideoUpdateManyWithoutAuthorInput
+  watched_videos: WatchedVideoUserUpdateManyWithoutUserInput
+  my_subscription_users: UserUpdateManyWithoutSubscribed_usersInput
+  subscribed_users: UserUpdateManyWithoutMy_subscription_usersInput
+  billing_subscription_active: Boolean
+  stripe_customer_id: String
+  stripe_subsciption_json: Json
+  my_promo_codes: PromoCodeUpdateManyWithoutUserInput
+  last_login_date: DateTime
+}
+
+input UserUpdateWithoutMy_promo_codesDataInput {
+  firstname: String
+  lastname: String
+  username: String
+  email: String
+  phone: String
+  role: UserRole
+  approved: Boolean
+  password_hash: String
+  password_salt: String
+  avatar: String
+  background_image: String
+  about_text: String
+  payout_amount: Int
+  payout_months_total: Int
+  payout_months_left: Int
+  payout_enabled: Boolean
+  artist: UserUpdateOneWithoutUsersInput
+  users: UserUpdateManyWithoutArtistInput
+  front_id_scan: String
+  back_id_scan: String
+  my_videos: VideoUpdateManyWithoutAuthorInput
+  liked_videos: VideoUpdateManyWithoutLike_usersInput
   watched_videos: WatchedVideoUserUpdateManyWithoutUserInput
   my_subscription_users: UserUpdateManyWithoutSubscribed_usersInput
   subscribed_users: UserUpdateManyWithoutMy_subscription_usersInput
@@ -4672,7 +4977,6 @@ input UserUpdateWithoutMy_subscription_usersDataInput {
   avatar: String
   background_image: String
   about_text: String
-  promo_code: String
   payout_amount: Int
   payout_months_total: Int
   payout_months_left: Int
@@ -4688,6 +4992,7 @@ input UserUpdateWithoutMy_subscription_usersDataInput {
   billing_subscription_active: Boolean
   stripe_customer_id: String
   stripe_subsciption_json: Json
+  my_promo_codes: PromoCodeUpdateManyWithoutUserInput
   last_login_date: DateTime
 }
 
@@ -4704,7 +5009,6 @@ input UserUpdateWithoutMy_videosDataInput {
   avatar: String
   background_image: String
   about_text: String
-  promo_code: String
   payout_amount: Int
   payout_months_total: Int
   payout_months_left: Int
@@ -4720,6 +5024,7 @@ input UserUpdateWithoutMy_videosDataInput {
   billing_subscription_active: Boolean
   stripe_customer_id: String
   stripe_subsciption_json: Json
+  my_promo_codes: PromoCodeUpdateManyWithoutUserInput
   last_login_date: DateTime
 }
 
@@ -4736,7 +5041,6 @@ input UserUpdateWithoutSubscribed_usersDataInput {
   avatar: String
   background_image: String
   about_text: String
-  promo_code: String
   payout_amount: Int
   payout_months_total: Int
   payout_months_left: Int
@@ -4752,6 +5056,7 @@ input UserUpdateWithoutSubscribed_usersDataInput {
   billing_subscription_active: Boolean
   stripe_customer_id: String
   stripe_subsciption_json: Json
+  my_promo_codes: PromoCodeUpdateManyWithoutUserInput
   last_login_date: DateTime
 }
 
@@ -4768,7 +5073,6 @@ input UserUpdateWithoutUsersDataInput {
   avatar: String
   background_image: String
   about_text: String
-  promo_code: String
   payout_amount: Int
   payout_months_total: Int
   payout_months_left: Int
@@ -4784,6 +5088,7 @@ input UserUpdateWithoutUsersDataInput {
   billing_subscription_active: Boolean
   stripe_customer_id: String
   stripe_subsciption_json: Json
+  my_promo_codes: PromoCodeUpdateManyWithoutUserInput
   last_login_date: DateTime
 }
 
@@ -4800,7 +5105,6 @@ input UserUpdateWithoutWatched_videosDataInput {
   avatar: String
   background_image: String
   about_text: String
-  promo_code: String
   payout_amount: Int
   payout_months_total: Int
   payout_months_left: Int
@@ -4816,6 +5120,7 @@ input UserUpdateWithoutWatched_videosDataInput {
   billing_subscription_active: Boolean
   stripe_customer_id: String
   stripe_subsciption_json: Json
+  my_promo_codes: PromoCodeUpdateManyWithoutUserInput
   last_login_date: DateTime
 }
 
@@ -4842,6 +5147,11 @@ input UserUpdateWithWhereUniqueWithoutSubscribed_usersInput {
 input UserUpsertNestedInput {
   update: UserUpdateDataInput!
   create: UserCreateInput!
+}
+
+input UserUpsertWithoutMy_promo_codesInput {
+  update: UserUpdateWithoutMy_promo_codesDataInput!
+  create: UserCreateWithoutMy_promo_codesInput!
 }
 
 input UserUpsertWithoutMy_videosInput {
@@ -5060,20 +5370,6 @@ input UserWhereInput {
   about_text_not_starts_with: String
   about_text_ends_with: String
   about_text_not_ends_with: String
-  promo_code: String
-  promo_code_not: String
-  promo_code_in: [String!]
-  promo_code_not_in: [String!]
-  promo_code_lt: String
-  promo_code_lte: String
-  promo_code_gt: String
-  promo_code_gte: String
-  promo_code_contains: String
-  promo_code_not_contains: String
-  promo_code_starts_with: String
-  promo_code_not_starts_with: String
-  promo_code_ends_with: String
-  promo_code_not_ends_with: String
   payout_amount: Int
   payout_amount_not: Int
   payout_amount_in: [Int!]
@@ -5163,6 +5459,9 @@ input UserWhereInput {
   stripe_customer_id_not_starts_with: String
   stripe_customer_id_ends_with: String
   stripe_customer_id_not_ends_with: String
+  my_promo_codes_every: PromoCodeWhereInput
+  my_promo_codes_some: PromoCodeWhereInput
+  my_promo_codes_none: PromoCodeWhereInput
   last_login_date: DateTime
   last_login_date_not: DateTime
   last_login_date_in: [DateTime!]
