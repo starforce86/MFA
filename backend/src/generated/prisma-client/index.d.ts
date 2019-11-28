@@ -3906,30 +3906,30 @@ export interface VideoDataForMonthWhereInput {
   real_minutes_watched_lte?: Int;
   real_minutes_watched_gt?: Int;
   real_minutes_watched_gte?: Int;
-  avg_minutes_watched?: Int;
-  avg_minutes_watched_not?: Int;
-  avg_minutes_watched_in?: Int[] | Int;
-  avg_minutes_watched_not_in?: Int[] | Int;
-  avg_minutes_watched_lt?: Int;
-  avg_minutes_watched_lte?: Int;
-  avg_minutes_watched_gt?: Int;
-  avg_minutes_watched_gte?: Int;
-  exponent_applied?: Int;
-  exponent_applied_not?: Int;
-  exponent_applied_in?: Int[] | Int;
-  exponent_applied_not_in?: Int[] | Int;
-  exponent_applied_lt?: Int;
-  exponent_applied_lte?: Int;
-  exponent_applied_gt?: Int;
-  exponent_applied_gte?: Int;
-  minutes_after_exponent?: Int;
-  minutes_after_exponent_not?: Int;
-  minutes_after_exponent_in?: Int[] | Int;
-  minutes_after_exponent_not_in?: Int[] | Int;
-  minutes_after_exponent_lt?: Int;
-  minutes_after_exponent_lte?: Int;
-  minutes_after_exponent_gt?: Int;
-  minutes_after_exponent_gte?: Int;
+  avg_minutes_watched?: Float;
+  avg_minutes_watched_not?: Float;
+  avg_minutes_watched_in?: Float[] | Float;
+  avg_minutes_watched_not_in?: Float[] | Float;
+  avg_minutes_watched_lt?: Float;
+  avg_minutes_watched_lte?: Float;
+  avg_minutes_watched_gt?: Float;
+  avg_minutes_watched_gte?: Float;
+  exponent_applied?: Float;
+  exponent_applied_not?: Float;
+  exponent_applied_in?: Float[] | Float;
+  exponent_applied_not_in?: Float[] | Float;
+  exponent_applied_lt?: Float;
+  exponent_applied_lte?: Float;
+  exponent_applied_gt?: Float;
+  exponent_applied_gte?: Float;
+  minutes_after_exponent?: Float;
+  minutes_after_exponent_not?: Float;
+  minutes_after_exponent_in?: Float[] | Float;
+  minutes_after_exponent_not_in?: Float[] | Float;
+  minutes_after_exponent_lt?: Float;
+  minutes_after_exponent_lte?: Float;
+  minutes_after_exponent_gt?: Float;
+  minutes_after_exponent_gte?: Float;
   AND?: VideoDataForMonthWhereInput[] | VideoDataForMonthWhereInput;
   OR?: VideoDataForMonthWhereInput[] | VideoDataForMonthWhereInput;
   NOT?: VideoDataForMonthWhereInput[] | VideoDataForMonthWhereInput;
@@ -6851,9 +6851,9 @@ export interface VideoDataForMonthCreateInput {
   video_length: Int;
   unique_users?: Int;
   real_minutes_watched?: Int;
-  avg_minutes_watched?: Int;
-  exponent_applied?: Int;
-  minutes_after_exponent?: Int;
+  avg_minutes_watched?: Float;
+  exponent_applied?: Float;
+  minutes_after_exponent?: Float;
 }
 
 export interface VideoDataForMonthUpdateInput {
@@ -6863,9 +6863,9 @@ export interface VideoDataForMonthUpdateInput {
   video_length?: Int;
   unique_users?: Int;
   real_minutes_watched?: Int;
-  avg_minutes_watched?: Int;
-  exponent_applied?: Int;
-  minutes_after_exponent?: Int;
+  avg_minutes_watched?: Float;
+  exponent_applied?: Float;
+  minutes_after_exponent?: Float;
 }
 
 export interface VideoDataForMonthUpdateManyMutationInput {
@@ -6874,9 +6874,9 @@ export interface VideoDataForMonthUpdateManyMutationInput {
   video_length?: Int;
   unique_users?: Int;
   real_minutes_watched?: Int;
-  avg_minutes_watched?: Int;
-  exponent_applied?: Int;
-  minutes_after_exponent?: Int;
+  avg_minutes_watched?: Float;
+  exponent_applied?: Float;
+  minutes_after_exponent?: Float;
 }
 
 export interface VideoParametersCreateInput {
@@ -9626,9 +9626,9 @@ export interface VideoDataForMonth {
   video_length: Int;
   unique_users: Int;
   real_minutes_watched: Int;
-  avg_minutes_watched: Int;
-  exponent_applied: Int;
-  minutes_after_exponent: Int;
+  avg_minutes_watched: Float;
+  exponent_applied: Float;
+  minutes_after_exponent: Float;
 }
 
 export interface VideoDataForMonthPromise
@@ -9643,9 +9643,9 @@ export interface VideoDataForMonthPromise
   video_length: () => Promise<Int>;
   unique_users: () => Promise<Int>;
   real_minutes_watched: () => Promise<Int>;
-  avg_minutes_watched: () => Promise<Int>;
-  exponent_applied: () => Promise<Int>;
-  minutes_after_exponent: () => Promise<Int>;
+  avg_minutes_watched: () => Promise<Float>;
+  exponent_applied: () => Promise<Float>;
+  minutes_after_exponent: () => Promise<Float>;
 }
 
 export interface VideoDataForMonthSubscription
@@ -9660,9 +9660,9 @@ export interface VideoDataForMonthSubscription
   video_length: () => Promise<AsyncIterator<Int>>;
   unique_users: () => Promise<AsyncIterator<Int>>;
   real_minutes_watched: () => Promise<AsyncIterator<Int>>;
-  avg_minutes_watched: () => Promise<AsyncIterator<Int>>;
-  exponent_applied: () => Promise<AsyncIterator<Int>>;
-  minutes_after_exponent: () => Promise<AsyncIterator<Int>>;
+  avg_minutes_watched: () => Promise<AsyncIterator<Float>>;
+  exponent_applied: () => Promise<AsyncIterator<Float>>;
+  minutes_after_exponent: () => Promise<AsyncIterator<Float>>;
 }
 
 export interface VideoDataForMonthConnection {
@@ -11420,9 +11420,9 @@ export interface VideoDataForMonthPreviousValues {
   video_length: Int;
   unique_users: Int;
   real_minutes_watched: Int;
-  avg_minutes_watched: Int;
-  exponent_applied: Int;
-  minutes_after_exponent: Int;
+  avg_minutes_watched: Float;
+  exponent_applied: Float;
+  minutes_after_exponent: Float;
 }
 
 export interface VideoDataForMonthPreviousValuesPromise
@@ -11436,9 +11436,9 @@ export interface VideoDataForMonthPreviousValuesPromise
   video_length: () => Promise<Int>;
   unique_users: () => Promise<Int>;
   real_minutes_watched: () => Promise<Int>;
-  avg_minutes_watched: () => Promise<Int>;
-  exponent_applied: () => Promise<Int>;
-  minutes_after_exponent: () => Promise<Int>;
+  avg_minutes_watched: () => Promise<Float>;
+  exponent_applied: () => Promise<Float>;
+  minutes_after_exponent: () => Promise<Float>;
 }
 
 export interface VideoDataForMonthPreviousValuesSubscription
@@ -11452,9 +11452,9 @@ export interface VideoDataForMonthPreviousValuesSubscription
   video_length: () => Promise<AsyncIterator<Int>>;
   unique_users: () => Promise<AsyncIterator<Int>>;
   real_minutes_watched: () => Promise<AsyncIterator<Int>>;
-  avg_minutes_watched: () => Promise<AsyncIterator<Int>>;
-  exponent_applied: () => Promise<AsyncIterator<Int>>;
-  minutes_after_exponent: () => Promise<AsyncIterator<Int>>;
+  avg_minutes_watched: () => Promise<AsyncIterator<Float>>;
+  exponent_applied: () => Promise<AsyncIterator<Float>>;
+  minutes_after_exponent: () => Promise<AsyncIterator<Float>>;
 }
 
 export interface VideoParametersSubscriptionPayload {

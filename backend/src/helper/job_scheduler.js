@@ -129,7 +129,8 @@ async function addPopulateTransferPlanEvent() {
     
             const artists = await prisma.users({
                 where: {
-                    role: 'USER_PUBLISHER'
+                    role: 'USER_PUBLISHER',
+                    approved: true
                 }
             });
             artists.forEach(async artist => {

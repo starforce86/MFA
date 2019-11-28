@@ -345,6 +345,8 @@ class ProfitPoolFactorTableComp extends React.Component {
     const { data } = await this.props.client.query({
       query: PROFIT_POOL_FACTOR_QUERY,
       variables: { },
+      fetchPolicy: "no-cache",
+      errorPolicy: "all"
     });
     this.setState({
       data: data.profitPoolFactors.map(d => ({...d, key: d.id}))
@@ -452,7 +454,8 @@ const ProfitPoolFactorTable = compose(
     options: props => ({
         variables: {
         },
-        fetchPolicy: "cache-and-network",
+        fetchPolicy: "no-cache",
+        errorPolicy: "all",
         onCompleted: async (result) => {
             return result;
         },

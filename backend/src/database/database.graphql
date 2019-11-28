@@ -299,9 +299,9 @@ type VideoDataForMonth {
     video_length: Int!
     unique_users: Int! @default(value: 0)
     real_minutes_watched: Int! @default(value: 0)
-    avg_minutes_watched: Int! @default(value: 0)
-    exponent_applied: Int! @default(value: 0)
-    minutes_after_exponent: Int! @default(value: 0)
+    avg_minutes_watched: Float! @default(value: 0)
+    exponent_applied: Float! @default(value: 0)
+    minutes_after_exponent: Float! @default(value: 0)
 }
 
 type VideoParameters {

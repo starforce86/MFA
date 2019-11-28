@@ -261,6 +261,8 @@ class VideoTotalParameterTableComp extends React.Component {
     const { data } = await this.props.client.query({
       query: VIDEO_TOTAL_PARAMETER_QUERY,
       variables: { },
+      fetchPolicy: "no-cache",
+      errorPolicy: "all"
     });
     this.setState({
       data: data.videoTotalParameterses.map(d => ({...d, key: d.id}))
@@ -363,7 +365,8 @@ const VideoTotalParameterTable = compose(
     options: props => ({
         variables: {
         },
-        fetchPolicy: "cache-and-network",
+        fetchPolicy: "no-cache",
+        errorPolicy: "all",
         onCompleted: async (result) => {
             return result;
         },

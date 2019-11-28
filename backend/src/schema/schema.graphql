@@ -5331,9 +5331,9 @@ type VideoDataForMonth {
   video_length: Int!
   unique_users: Int!
   real_minutes_watched: Int!
-  avg_minutes_watched: Int!
-  exponent_applied: Int!
-  minutes_after_exponent: Int!
+  avg_minutes_watched: Float!
+  exponent_applied: Float!
+  minutes_after_exponent: Float!
 }
 
 type VideoDataForMonthConnection {
@@ -5349,9 +5349,9 @@ input VideoDataForMonthCreateInput {
   video_length: Int!
   unique_users: Int
   real_minutes_watched: Int
-  avg_minutes_watched: Int
-  exponent_applied: Int
-  minutes_after_exponent: Int
+  avg_minutes_watched: Float
+  exponent_applied: Float
+  minutes_after_exponent: Float
 }
 
 type VideoDataForMonthEdge {
@@ -5393,9 +5393,9 @@ type VideoDataForMonthPreviousValues {
   video_length: Int!
   unique_users: Int!
   real_minutes_watched: Int!
-  avg_minutes_watched: Int!
-  exponent_applied: Int!
-  minutes_after_exponent: Int!
+  avg_minutes_watched: Float!
+  exponent_applied: Float!
+  minutes_after_exponent: Float!
 }
 
 type VideoDataForMonthSubscriptionPayload {
@@ -5423,9 +5423,9 @@ input VideoDataForMonthUpdateInput {
   video_length: Int
   unique_users: Int
   real_minutes_watched: Int
-  avg_minutes_watched: Int
-  exponent_applied: Int
-  minutes_after_exponent: Int
+  avg_minutes_watched: Float
+  exponent_applied: Float
+  minutes_after_exponent: Float
 }
 
 input VideoDataForMonthUpdateManyMutationInput {
@@ -5434,9 +5434,9 @@ input VideoDataForMonthUpdateManyMutationInput {
   video_length: Int
   unique_users: Int
   real_minutes_watched: Int
-  avg_minutes_watched: Int
-  exponent_applied: Int
-  minutes_after_exponent: Int
+  avg_minutes_watched: Float
+  exponent_applied: Float
+  minutes_after_exponent: Float
 }
 
 input VideoDataForMonthWhereInput {
@@ -5511,30 +5511,30 @@ input VideoDataForMonthWhereInput {
   real_minutes_watched_lte: Int
   real_minutes_watched_gt: Int
   real_minutes_watched_gte: Int
-  avg_minutes_watched: Int
-  avg_minutes_watched_not: Int
-  avg_minutes_watched_in: [Int!]
-  avg_minutes_watched_not_in: [Int!]
-  avg_minutes_watched_lt: Int
-  avg_minutes_watched_lte: Int
-  avg_minutes_watched_gt: Int
-  avg_minutes_watched_gte: Int
-  exponent_applied: Int
-  exponent_applied_not: Int
-  exponent_applied_in: [Int!]
-  exponent_applied_not_in: [Int!]
-  exponent_applied_lt: Int
-  exponent_applied_lte: Int
-  exponent_applied_gt: Int
-  exponent_applied_gte: Int
-  minutes_after_exponent: Int
-  minutes_after_exponent_not: Int
-  minutes_after_exponent_in: [Int!]
-  minutes_after_exponent_not_in: [Int!]
-  minutes_after_exponent_lt: Int
-  minutes_after_exponent_lte: Int
-  minutes_after_exponent_gt: Int
-  minutes_after_exponent_gte: Int
+  avg_minutes_watched: Float
+  avg_minutes_watched_not: Float
+  avg_minutes_watched_in: [Float!]
+  avg_minutes_watched_not_in: [Float!]
+  avg_minutes_watched_lt: Float
+  avg_minutes_watched_lte: Float
+  avg_minutes_watched_gt: Float
+  avg_minutes_watched_gte: Float
+  exponent_applied: Float
+  exponent_applied_not: Float
+  exponent_applied_in: [Float!]
+  exponent_applied_not_in: [Float!]
+  exponent_applied_lt: Float
+  exponent_applied_lte: Float
+  exponent_applied_gt: Float
+  exponent_applied_gte: Float
+  minutes_after_exponent: Float
+  minutes_after_exponent_not: Float
+  minutes_after_exponent_in: [Float!]
+  minutes_after_exponent_not_in: [Float!]
+  minutes_after_exponent_lt: Float
+  minutes_after_exponent_lte: Float
+  minutes_after_exponent_gt: Float
+  minutes_after_exponent_gte: Float
   AND: [VideoDataForMonthWhereInput!]
   OR: [VideoDataForMonthWhereInput!]
   NOT: [VideoDataForMonthWhereInput!]

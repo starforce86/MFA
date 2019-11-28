@@ -479,6 +479,642 @@ async function populateSubscriptionHistory(root, args, ctx, info) {
     }
 }
 
+async function availableBalance(root, args, ctx, info) {
+    try {
+        const balanceObj = await stripeHelper.availableBalance();
+        const usdBalance = balanceObj.available.find(d => d.currency == "usd");
+        return usdBalance.amount;
+    } catch (e) {
+        log.error('availableBalance error:', e);
+        return null;
+    }
+}
+
+async function artistFactorses(root, args, ctx, info) {
+    try {
+        const artistFactorsSettings = await prisma.artistFactorsSettings();
+        if (artistFactorsSettings.length == 0) {
+            throw new GQLError({message: 'Artist Factors Setting empty.', code: 402});
+        }
+        const artistFactorsSetting = artistFactorsSettings[0];
+        let artists = await prisma.users({
+            where: {
+                role: 'USER_PUBLISHER',
+                approved: true
+            }
+        });
+        const mfa = await prisma.users({
+            where: {
+                role: 'MFA',
+            }
+        });
+        artists = [...artists, ...mfa];
+
+        await Promise.all(artists.map(async (artist) => {
+            const records = await prisma.artistFactorses({
+                where: {
+                    artist: { id: artist.id }
+                }
+            });
+            if (records.length == 0) {
+                await prisma.createArtistFactors({
+                    artist: {
+                        connect: { id: artist.id }
+                    },
+                    promotion_factor: artistFactorsSetting.promotion_factor,
+                    minutes_exponent: artistFactorsSetting.minutes_exponent,
+                    finder_fee_factor: artistFactorsSetting.finder_fee_factor,
+                    monthly_fee_duration: artistFactorsSetting.monthly_fee_duration,
+                    monthly_fee_amount_per_month: artistFactorsSetting.monthly_fee_amount_per_month,
+                    annual_fee_amount_per_month: artistFactorsSetting.annual_fee_amount_per_month,
+                });
+            }
+        }));
+        
+        return await prisma.artistFactorses({
+            where: {
+                artist: { approved: true }
+            }
+        });
+    } catch (e) {
+        log.error('artistFactorses resolver error:', e);
+        return null;
+    }
+}
+
+async function videoParameterses(root, args, ctx, info) {
+    try {
+        const videos = await prisma.videos({
+            where: {
+                deleted: false
+            }
+        });
+        await Promise.all(videos.map(async (video) => {
+            const records = await prisma.videoParameterses({
+                where: {
+                    video: { id: video.id }
+                }
+            });
+            if (records.length == 0) {
+                const author = await prisma.video({id: video.id}).author();
+                await prisma.createVideoParameters({
+                    video: {
+                        connect: { id: video.id }
+                    },
+                    owner1: {
+                        connect: { id: author.id }
+                    },
+                    owner1_percentage: 100,
+                    owner2_percentage: 0,
+                    owner3_percentage: 0
+                });
+            }
+        }));
+        
+        return await prisma.videoParameterses(args);
+    } catch (e) {
+        log.error('videoParameterses resolver error:', e);
+        return null;
+    }
+}
+
+async function videoDataForMonthStats(root, args, ctx, info) {
+
+    try {
+        const year = args.year;
+        const month = args.month;
+
+        const beginTime = moment(`${year}-${month}-01 00:00:00`);
+        const endTime = moment(beginTime).endOf('month');
+
+        const b = beginTime.format('YYYY-MM-DD HH:mm:ss');
+        const e = endTime.format('YYYY-MM-DD HH:mm:ss');
+
+        const videoTotalParameters = await prisma.videoTotalParameterses({
+            orderBy: 'createdAt_DESC'
+        });
+
+        if(videoTotalParameters.length == 0) {
+            throw new GQLError({message: 'There is no total video parameters!', code: 401});
+        }
+
+        const videoTotalParameter = videoTotalParameters[0];
+
+        videos = await prisma.videos({
+            where: {
+                deleted: false
+            }
+        });
+
+        for (v of videos) {
+
+            let uniqueUserIds = [];
+            let totalRealPlaySeconds = 0;
+            
+            const histories = (await prisma.playHistories({
+                where: {
+                    video: { id: v.id },
+                    createdAt_gte: beginTime,
+                    createdAt_lt: endTime
+                }
+            }));
+
+            for (const history of histories) {
+                try {
+                    const historyUser = await prisma.playHistory({ id: history.id }).user();
+
+                    if (uniqueUserIds.indexOf(historyUser.id) < 0) {
+                        uniqueUserIds.push(historyUser.id);
+                    }
+                } catch (e) {
+                    log.error('videoDataForMonthStats playHistory.user() error:', e);
+                }
+                
+                totalRealPlaySeconds += history.realPlaySeconds;
+            }
+                
+            const realMinutesWatched = Math.floor(totalRealPlaySeconds / 60);
+            let avgMinutesWatched = uniqueUserIds.length ? (Math.floor(realMinutesWatched / uniqueUserIds.length)).toFixed(2) : 0;
+            avgMinutesWatched = parseFloat(avgMinutesWatched);
+            let exponentApplied = Math.pow(avgMinutesWatched, videoTotalParameter.exponent_for_minutes_watched).toFixed(2);
+            exponentApplied = parseFloat(exponentApplied);
+            const totalMinutesWatched = exponentApplied * uniqueUserIds.length;
+
+            const videoDataForMonths = await prisma.videoDataForMonths({
+                where: {
+                    year: parseInt(year),
+                    month: parseInt(month),
+                    video: { id: v.id }
+                }
+            });
+
+            if (videoDataForMonths.length == 0) {
+                await prisma.createVideoDataForMonth({
+                    year: parseInt(year),
+                    month: parseInt(month),
+                    video: { connect: { id: v.id } },
+                    video_length: v.video_duration ? v.video_duration : 0,
+                    unique_users: uniqueUserIds.length,
+                    real_minutes_watched: realMinutesWatched,
+                    avg_minutes_watched: avgMinutesWatched,
+                    exponent_applied: exponentApplied,
+                    minutes_after_exponent: totalMinutesWatched
+                });
+            } else {
+                const videoDataForMonth = videoDataForMonths[0];
+                await prisma.updateVideoDataForMonth({
+                    where: {
+                        id: videoDataForMonth.id
+                    },
+                    data: {
+                        video_length: v.video_duration ? v.video_duration : 0,
+                        unique_users: uniqueUserIds.length,
+                        real_minutes_watched: realMinutesWatched,
+                        avg_minutes_watched: avgMinutesWatched,
+                        exponent_applied: exponentApplied,
+                        minutes_after_exponent: totalMinutesWatched
+                    }
+                });
+            }
+        }
+        
+        return await prisma.videoDataForMonths({
+            where: {
+                year: parseInt(year),
+                month: parseInt(month)
+            }
+        });
+    } catch (e) {
+        log.error('videoDataForMonthStats error:', e);
+        return null;
+    }
+}
+
+async function videoParametersForMonthStats(root, args, ctx, info) {
+    try {
+        const year = parseInt(args.year);
+        const month = parseInt(args.month);
+
+        const cur_year = moment().format('YYYY');
+        const cur_month = moment().format('MM');
+
+        if (year == cur_year && month == cur_month) {
+
+            const videoData = await prisma.videoDataForMonths({
+                where: {
+                    year: year,
+                    month: month
+                }
+            });
+    
+            for (videoDatum of videoData) {
+
+                const video = await prisma.videoDataForMonth({id: videoDatum.id}).video();
+
+                const videoParameters = await prisma.videoParameterses({
+                    where: {
+                        video: { id: video.id }
+                    }
+                });
+
+                if (!videoParameters || videoParameters.length == 0) {
+                    throw new GQLError({message: `There is no video parameters set for video: ${video.id}`, code: 401});
+                }
+
+                const videoParameter = videoParameters[0];
+                const owner1 = await prisma.videoParameters({id: videoParameter.id}).owner1();
+                const owner2 = await prisma.videoParameters({id: videoParameter.id}).owner2();
+                const owner3 = await prisma.videoParameters({id: videoParameter.id}).owner3();
+
+                const owner1_minutes = parseFloat((videoDatum.minutes_after_exponent * videoParameter.owner1_percentage / 100).toFixed(2))
+                const owner2_minutes = parseFloat((videoDatum.minutes_after_exponent * videoParameter.owner2_percentage / 100).toFixed(2))
+                const owner3_minutes = parseFloat((videoDatum.minutes_after_exponent * videoParameter.owner3_percentage / 100).toFixed(2))
+
+                const videosApplied = await prisma.videoParametersForMonths({
+                    where: {
+                        year: year,
+                        month: month,
+                        video: { id: video.id }
+                    }
+                });
+                
+                let videoParametersForMonth;
+
+                if (videosApplied.length == 0) {
+                    videoParametersForMonth = await prisma.createVideoParametersForMonth({
+                        year: year,
+                        month: month,
+                        video: {
+                            connect: { id: video.id }
+                        },
+                        owner1_percentage: videoParameter.owner1_percentage,
+                        owner2_percentage: videoParameter.owner2_percentage,
+                        owner3_percentage: videoParameter.owner3_percentage,
+                        total_minutes: videoDatum.minutes_after_exponent,
+                        owner1_minutes: owner1_minutes,
+                        owner2_minutes: owner2_minutes,
+                        owner3_minutes: owner3_minutes
+                    });
+                } else {
+                    videoParametersForMonth = videosApplied[0];
+                    await prisma.updateVideoParametersForMonth({
+                        where: { id: videoParametersForMonth.id },
+                        data: {
+                            owner1_percentage: videoParameter.owner1_percentage,
+                            owner2_percentage: videoParameter.owner2_percentage,
+                            owner3_percentage: videoParameter.owner3_percentage,
+                            total_minutes: video.minutes_after_exponent,
+                            owner1_minutes: owner1_minutes,
+                            owner2_minutes: owner2_minutes,
+                            owner3_minutes: owner3_minutes
+                        }
+                    });
+                }
+
+                if (owner1) {
+                    await prisma.updateVideoParametersForMonth({
+                        where: { id: videoParametersForMonth.id },
+                        data: {
+                            owner1: {
+                                connect: { id: owner1.id }
+                            }
+                        }
+                    });
+                } else if (await prisma.videoParametersForMonth({id: videoParametersForMonth.id}).owner1()) {
+                    await prisma.updateVideoParametersForMonth({
+                        where: { id: videoParametersForMonth.id },
+                        data: {
+                            owner1: {
+                                disconnect: true
+                            }
+                        }
+                    });
+                }
+
+                if (owner2) {
+                    await prisma.updateVideoParametersForMonth({
+                        where: { id: videoParametersForMonth.id },
+                        data: {
+                            owner2: {
+                                connect: { id: owner2.id }
+                            }
+                        }
+                    });
+                } else if (await prisma.videoParametersForMonth({id: videoParametersForMonth.id}).owner2()) {
+                    await prisma.updateVideoParametersForMonth({
+                        where: { id: videoParametersForMonth.id },
+                        data: {
+                            owner2: {
+                                disconnect: true
+                            }
+                        }
+                    });
+                }
+
+                if (owner3) {
+                    await prisma.updateVideoParametersForMonth({
+                        where: { id: videoParametersForMonth.id },
+                        data: {
+                            owner3: {
+                                connect: { id: owner3.id }
+                            }
+                        }
+                    });
+                } else if (await prisma.videoParametersForMonth({id: videoParametersForMonth.id}).owner3()) {
+                    await prisma.updateVideoParametersForMonth({
+                        where: { id: videoParametersForMonth.id },
+                        data: {
+                            owner3: {
+                                disconnect: true
+                            }
+                        }
+                    });
+                }
+            }
+        }
+
+        return await prisma.videoParametersForMonths({
+            where: {
+                year: year,
+                month: month
+            }
+        });
+    } catch (e) {
+        log.error('videoParametersForMonthStats error:', e);
+        let err_msg;
+        if (typeof e.message === 'object') {
+            err_msg = e.message.message;
+        } else {
+            err_msg = e.message;
+        }
+        throw new GQLError({message: err_msg, code: 409});
+    }
+}
+
+async function totalMinutesForArtistStats(root, args, ctx, info) {
+    try {
+        const year = parseInt(args.year);
+        const month = parseInt(args.month);
+
+        const cur_year = moment().format('YYYY');
+        const cur_month = moment().format('MM');
+
+        if (year == cur_year && month == cur_month) {
+
+            const artistFactors = await prisma.artistFactorses({
+                where: {
+                    artist: { approved: true }
+                }
+            });
+
+            let sumFinalMinutes = 0;
+            let totalProfitPool = 0;
+
+            for (artistFactor of artistFactors) {
+
+                const artist = await prisma.artistFactors({id: artistFactor.id}).artist();
+
+                const videoParametersForMonthsAsOwner1 = await prisma.videoParametersForMonths({
+                    where: {
+                        year: year,
+                        month: month,
+                        owner1: { id: artist.id }
+                    }
+                });
+
+                const videoParametersForMonthsAsOwner2 = await prisma.videoParametersForMonths({
+                    where: {
+                        year: year,
+                        month: month,
+                        owner2: { id: artist.id }
+                    }
+                });
+
+                const videoParametersForMonthsAsOwner3 = await prisma.videoParametersForMonths({
+                    where: {
+                        year: year,
+                        month: month,
+                        owner3: { id: artist.id }
+                    }
+                });
+
+                const minutesAsOwner1 = videoParametersForMonthsAsOwner1.length > 0 ? videoParametersForMonthsAsOwner1.reduce((sum, x) => sum + x.owner1_minutes, 0) : 0;
+                const minutesAsOwner2 = videoParametersForMonthsAsOwner2.length > 0 ? videoParametersForMonthsAsOwner2.reduce((sum, x) => sum + x.owner2_minutes, 0) : 0;
+                const minutesAsOwner3 = videoParametersForMonthsAsOwner3.length > 0 ? videoParametersForMonthsAsOwner3.reduce((sum, x) => sum + x.owner3_minutes, 0) : 0;
+                const totalMinutes = minutesAsOwner1 + minutesAsOwner2 + minutesAsOwner3;
+                const finalMinutes = totalMinutes * artistFactor.promotion_factor;
+                sumFinalMinutes += finalMinutes;
+
+                const totalMinutesForArtists = await prisma.totalMinutesForArtists({
+                    where: {
+                        year: year,
+                        month: month,
+                        artist: { id: artist.id }
+                    }
+                });
+
+                // Profit Pool Calculation
+                const active_subscribers = await prisma.users({
+                    where: {
+                        role: "USER_VIEWER",
+                        billing_subscription_active: true,
+                        artist: { id: artist.id }
+                    }
+                });
+    
+                let cnt_annual = 0;
+                let cnt_monthly = 0;
+    
+                for (active_subscriber of active_subscribers) {
+                    if (!active_subscriber.stripe_subsciption_json) {
+                        continue;
+                    }
+                    if (active_subscriber.stripe_subsciption_json.plan) {
+                        if (active_subscriber.stripe_subsciption_json.plan.id == config.stripe.plans.monthly_plan_id) {
+                            cnt_monthly ++;
+                        } else if (active_subscriber.stripe_subsciption_json.plan.id == config.stripe.plans.yearly_plan_id) {
+                            cnt_annual ++;
+                        }
+                    }
+                }
+
+                const finder_fee = (cnt_annual * artistFactor.annual_fee_amount_per_month + cnt_monthly * artistFactor.monthly_fee_amount_per_month) * artistFactor.finder_fee_factor;
+                totalProfitPool += finder_fee;
+
+                if (!totalMinutesForArtists || totalMinutesForArtists.length == 0) {
+                    await prisma.createTotalMinutesForArtist({
+                        year: year,
+                        month: month,
+                        artist: {
+                            connect: { id: artist.id }
+                        },
+                        minutes_as_owner1: minutesAsOwner1,
+                        minutes_as_owner2: minutesAsOwner2,
+                        minutes_as_owner3: minutesAsOwner3,
+                        total_minutes: totalMinutes,
+                        artist_rating_factor: artistFactor.promotion_factor,
+                        final_minutes: finalMinutes,
+                        monthly_quantity: cnt_monthly,
+                        annual_quantity: cnt_annual,
+                        finder_fee: finder_fee
+                    });
+                } else {
+                    await prisma.updateTotalMinutesForArtist({
+                        where: { id: totalMinutesForArtists[0].id },
+                        data: {
+                            minutes_as_owner1: minutesAsOwner1,
+                            minutes_as_owner2: minutesAsOwner2,
+                            minutes_as_owner3: minutesAsOwner3,
+                            total_minutes: totalMinutes,
+                            artist_rating_factor: artistFactor.promotion_factor,
+                            final_minutes: finalMinutes,
+                            monthly_quantity: cnt_monthly,
+                            annual_quantity: cnt_annual,
+                            finder_fee: finder_fee
+                        }
+                    });
+                }
+            }
+
+            for (artistFactor of artistFactors) {
+
+                const artist = await prisma.artistFactors({id: artistFactor.id}).artist();
+
+                const totalMinutesForArtists = await prisma.totalMinutesForArtists({
+                    where: {
+                        year: year,
+                        month: month,
+                        artist: { id: artist.id }
+                    }
+                });
+                
+                const percent_of_profit_pool = parseFloat((totalMinutesForArtists[0].final_minutes * 100 / sumFinalMinutes).toFixed(3));
+                const payment_from_profit_pool = parseFloat((percent_of_profit_pool * totalProfitPool / 100).toFixed(2));
+
+                await prisma.updateTotalMinutesForArtist({
+                    where: { id: totalMinutesForArtists[0].id },
+                    data: {
+                        percent_of_profit_pool: percent_of_profit_pool,
+                        payment_from_profit_pool: payment_from_profit_pool,
+                        total_payment: payment_from_profit_pool + totalMinutesForArtists[0].finder_fee
+                    }
+                });
+
+                // Insert/Update TransferPlan
+                
+            }
+        }
+
+        return await prisma.totalMinutesForArtists({
+            where: {
+                year: year,
+                month: month
+            }
+        });
+    } catch (e) {
+        log.error('totalMinutesForArtistStats error:', e);
+        let err_msg;
+        if (typeof e.message === 'object') {
+            err_msg = e.message.message;
+        } else {
+            err_msg = e.message;
+        }
+        throw new GQLError({message: err_msg, code: 409});
+    }
+}
+
+async function profitPoolCalculationStats(root, args, ctx, info) {
+    try {
+        const year = parseInt(args.year);
+        const month = parseInt(args.month);
+
+        const cur_year = moment().format('YYYY');
+        const cur_month = moment().format('MM');
+
+        if (year == cur_year && month == cur_month) {
+
+            const active_subscribers = await prisma.users({
+                where: {
+                    role: "USER_VIEWER",
+                    billing_subscription_active: true
+                }
+            });
+
+            let cnt_annual = 0;
+            let cnt_monthly = 0;
+            const annual_subscription_rate = 300;
+            const monthly_subscription_rate = 30;
+
+            for (active_subscriber of active_subscribers) {
+                if (!active_subscriber.stripe_subsciption_json) {
+                    continue;
+                }
+                if (active_subscriber.stripe_subsciption_json.plan) {
+                    if (active_subscriber.stripe_subsciption_json.plan.id == config.stripe.plans.monthly_plan_id) {
+                        cnt_monthly ++;
+                    } else if (active_subscriber.stripe_subsciption_json.plan.id == config.stripe.plans.yearly_plan_id) {
+                        cnt_annual ++;
+                    }
+                }
+            }
+
+            const annual_pool_revenue = Math.floor(cnt_annual * annual_subscription_rate / 12);
+            const monthly_pool_revenue = Math.floor(cnt_monthly * monthly_subscription_rate / 12);
+            const total_revenue = annual_pool_revenue + monthly_pool_revenue;
+
+            const profitPoolCalculations = await prisma.profitPoolCalculations({
+                where: {
+                    year: year,
+                    month: month
+                }
+            });
+
+            if (!profitPoolCalculations || profitPoolCalculations.length == 0) {
+                await prisma.createProfitPoolCalculation({
+                    year: year,
+                    month: month,
+                    annual_active_subscribers: cnt_annual,
+                    monthly_active_subscribers: cnt_monthly,
+                    annual_subscription_rate: annual_subscription_rate,
+                    monthly_subscription_rate: monthly_subscription_rate,
+                    annual_pool_revenue: annual_pool_revenue,
+                    monthly_pool_revenue: monthly_pool_revenue,
+                    total_revenue: total_revenue
+                });
+            } else {
+                await prisma.updateProfitPoolCalculation({
+                    where: { id: profitPoolCalculations[0].id },
+                    data: {
+                        annual_active_subscribers: cnt_annual,
+                        monthly_active_subscribers: cnt_monthly,
+                        annual_subscription_rate: annual_subscription_rate,
+                        monthly_subscription_rate: monthly_subscription_rate,
+                        annual_pool_revenue: annual_pool_revenue,
+                        monthly_pool_revenue: monthly_pool_revenue,
+                        total_revenue: total_revenue
+                    }
+                });
+            }
+        }
+
+        return await prisma.profitPoolCalculations({
+            where: {
+                year: year,
+                month: month
+            }
+        });
+    } catch (e) {
+        log.error('profitPoolCalculationStats error:', e);
+        let err_msg;
+        if (typeof e.message === 'object') {
+            err_msg = e.message.message;
+        } else {
+            err_msg = e.message;
+        }
+        throw new GQLError({message: err_msg, code: 409});
+    }
+}
+
 async function payoutStats(root, args, ctx, info) {
 
     try {
@@ -572,221 +1208,13 @@ async function payoutStats(root, args, ctx, info) {
         };
     } catch (e) {
         log.error('payoutStats error:', e);
-        return null;
-    }
-}
-
-async function availableBalance(root, args, ctx, info) {
-    try {
-        const balanceObj = await stripeHelper.availableBalance();
-        const usdBalance = balanceObj.available.find(d => d.currency == "usd");
-        return usdBalance.amount;
-    } catch (e) {
-        log.error('availableBalance error:', e);
-        return null;
-    }
-}
-
-async function artistFactorses(root, args, ctx, info) {
-    try {
-        const artistFactorsSettings = await prisma.artistFactorsSettings();
-        if (artistFactorsSettings.length == 0) {
-            throw new GQLError({message: 'Artist Factors Setting empty.', code: 402});
+        let err_msg;
+        if (typeof e.message === 'object') {
+            err_msg = e.message.message;
+        } else {
+            err_msg = e.message;
         }
-        const artistFactorsSetting = artistFactorsSettings[0];
-        const artists = await prisma.users({
-            where: {
-                role: 'USER_PUBLISHER'
-            }
-        });
-        await Promise.all(artists.map(async (artist) => {
-            const records = await prisma.artistFactorses({
-                where: {
-                    artist: { id: artist.id }
-                }
-            });
-            if (records.length == 0) {
-                await prisma.createArtistFactors({
-                    artist: {
-                        connect: { id: artist.id }
-                    },
-                    promotion_factor: artistFactorsSetting.promotion_factor,
-                    minutes_exponent: artistFactorsSetting.minutes_exponent,
-                    finder_fee_factor: artistFactorsSetting.finder_fee_factor,
-                    monthly_fee_duration: artistFactorsSetting.monthly_fee_duration,
-                    monthly_fee_amount_per_month: artistFactorsSetting.monthly_fee_amount_per_month,
-                    annual_fee_amount_per_month: artistFactorsSetting.annual_fee_amount_per_month,
-                });
-            }
-        }));
-        
-        return await prisma.artistFactorses(args);
-    } catch (e) {
-        log.error('artistFactorses resolver error:', e);
-        return null;
-    }
-}
-
-async function videoParameterses(root, args, ctx, info) {
-    try {
-        const videos = await prisma.videos({
-            where: {
-                deleted: false
-            }
-        });
-        await Promise.all(videos.map(async (video) => {
-            const records = await prisma.videoParameterses({
-                where: {
-                    video: { id: video.id }
-                }
-            });
-            if (records.length == 0) {
-                const author = await prisma.video({id: video.id}).author();
-                await prisma.createVideoParameters({
-                    video: {
-                        connect: { id: video.id }
-                    },
-                    owner1: {
-                        connect: { id: author.id }
-                    },
-                    owner1_percentage: 100,
-                    owner2_percentage: 0,
-                    owner3_percentage: 0
-                });
-            }
-        }));
-        
-        return await prisma.videoParameterses(args);
-    } catch (e) {
-        log.error('videoParameterses resolver error:', e);
-        return null;
-    }
-}
-
-async function videoDataForMonthStats(root, args, ctx, info) {
-
-    try {
-        const year = args.year;
-        const month = args.month;
-
-        const beginTime = moment(`${year}-${month}-01 00:00:00`);
-        const endTime = moment(beginTime).endOf('month');
-
-        const b = beginTime.format('YYYY-MM-DD HH:mm:ss');
-        const e = endTime.format('YYYY-MM-DD HH:mm:ss');
-
-        const videoTotalParameters = await prisma.videoTotalParameterses({
-            orderBy: 'createdAt_DESC'
-        });
-
-        if(videoTotalParameters.length == 0) {
-            throw new GQLError({message: 'There is no total video parameters!', code: 401});
-        }
-
-        const videoTotalParameter = videoTotalParameters[0];
-
-        videos = await prisma.videos({
-            where: {
-                deleted: false
-            }
-        });
-
-        for (v of videos) {
-            console.log('############# 1', v.id);
-
-            let uniqueUserIds = [];
-            let totalRealPlaySeconds = 0;
-            
-            const histories = (await prisma.playHistories({
-                where: {
-                    video: { id: v.id },
-                    createdAt_gte: beginTime,
-                    createdAt_lt: endTime
-                }
-            }));
-
-            console.log('############# 2', v.id, histories.length);
-
-            for (const history of histories) {
-                try {
-                    const historyUser = await prisma.playHistory({ id: history.id }).user();
-
-                    console.log('############# 4', historyUser.id);
-
-                    if (uniqueUserIds.indexOf(historyUser.id) < 0) {
-                        uniqueUserIds.push(historyUser.id);
-                    }
-                } catch (e) {
-                    // log.error('videoDataForMonthStats playHistory.user() error:', e);
-                }
-                
-                totalRealPlaySeconds += history.realPlaySeconds;
-
-                console.log('############# 5');
-            }
-                
-            console.log('############# 6');
-
-            const realMinutesWatched = Math.floor(totalRealPlaySeconds / 60);
-            const avgMinutesWatched = uniqueUserIds.length ? Math.floor(realMinutesWatched / uniqueUserIds.length) : 0;
-            const exponentApplied = Math.pow(avgMinutesWatched, videoTotalParameter.exponent_for_minutes_watched);
-            const totalMinutesWatched = exponentApplied * uniqueUserIds.length;
-
-            console.log('############# 7');
-
-            const videoDataForMonths = await prisma.videoDataForMonths({
-                where: {
-                    year: parseInt(year),
-                    month: parseInt(month),
-                    video: { id: v.id }
-                }
-            });
-
-            console.log('############# 8');
-
-            if (videoDataForMonths.length == 0) {
-                await prisma.createVideoDataForMonth({
-                    year: parseInt(year),
-                    month: parseInt(month),
-                    video: { connect: { id: v.id } },
-                    video_length: v.video_duration ? v.video_duration : 0,
-                    unique_users: uniqueUserIds.length,
-                    real_minutes_watched: realMinutesWatched,
-                    avg_minutes_watched: avgMinutesWatched,
-                    exponent_applied: exponentApplied,
-                    minutes_after_exponent: totalMinutesWatched
-                });
-            } else {
-                const videoDataForMonth = videoDataForMonths[0];
-                await prisma.updateVideoDataForMonth({
-                    where: {
-                        id: videoDataForMonth.id
-                    },
-                    data: {
-                        video_length: v.video_duration ? v.video_duration : 0,
-                        unique_users: uniqueUserIds.length,
-                        real_minutes_watched: realMinutesWatched,
-                        avg_minutes_watched: avgMinutesWatched,
-                        exponent_applied: exponentApplied,
-                        minutes_after_exponent: totalMinutesWatched
-                    }
-                });
-            }
-        }
-        // await Promise.all(videos.map(async (v) => {
-        // }));
-
-        console.log('############# 9');
-
-        return await prisma.videoDataForMonths({
-            where: {
-                year: parseInt(year),
-                month: parseInt(month)
-            }
-        });
-    } catch (e) {
-        log.error('videoDataForMonthStats error:', e);
-        return null;
+        throw new GQLError({message: err_msg, code: 409});
     }
 }
 
@@ -802,5 +1230,9 @@ module.exports = {
     populateSubscriptionHistory: populateSubscriptionHistory,
     artistFactorses: artistFactorses,
     videoParameterses: videoParameterses,
-    videoDataForMonthStats: videoDataForMonthStats
+    videoDataForMonthStats: videoDataForMonthStats,
+    videoParametersForMonthStats: videoParametersForMonthStats,
+    totalMinutesForArtistStats: totalMinutesForArtistStats,
+    profitPoolCalculationStats: profitPoolCalculationStats
+
 };

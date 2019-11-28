@@ -77,7 +77,7 @@ const Login = props => (
                                     </div>
                                     <div className="text-center mt-5">
                                         <p className="light-gray" style={{height: "13px"}}>
-                                            {props.error ? (<p style={{color: "rgb(255, 0, 0)"}}>{props.error.graphQLErrors[0].message}</p>) : null}
+                                            {props.error && props.error.graphQLErrors && props.error.graphQLErrors.length > 0 ? (<p style={{color: "rgb(255, 0, 0)"}}>{props.error.graphQLErrors[0].message}</p>) : null}
                                         </p>
                                     </div>
                                     <div className="mt-4">

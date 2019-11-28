@@ -331,6 +331,8 @@ class VideoParameterTableComp extends React.Component {
     const { data } = await this.props.client.query({
       query: VIDEO_PARAMETER_QUERY,
       variables: { },
+      fetchPolicy: "no-cache",
+      errorPolicy: "all"
     });
     this.setState({
       data: data.videoParameterses.map(d => ({...d, key: d.id})),
@@ -632,7 +634,8 @@ const VideoParameterTable = compose(
     options: props => ({
         variables: {
         },
-        fetchPolicy: "cache-and-network",
+        fetchPolicy: "no-cache",
+        errorPolicy: "all",
         onCompleted: async (result) => {
             return result;
         },
@@ -655,7 +658,7 @@ const VideoParameterTable = compose(
           return { error: true }
       }
     })
-})
+  })
 )(VideoParameterTableComp);
 
 export default withApollo(Form.create({name: 'VideoParameterTable'})(VideoParameterTable));

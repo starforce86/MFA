@@ -188,7 +188,6 @@ async function signUp(email, firstname, lastname, phone, password, promo_code, s
                 } else {
                     throw new GQLError({message: err_msg, code: 409});
                 }
-                
             }
 
             log.trace('User created: ', newUser.email);

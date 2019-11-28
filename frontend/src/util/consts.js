@@ -4,3 +4,4 @@ export const FEATURED_CATEGORY_ID = process.env.FEATURED_CATEGORY_ID;
 export const PROMO_CATEGORY_ID = process.env.PROMO_CATEGORY_ID;
 export const STRIPE_KEY = process.env.STRIPE_KEY;
 export const MFA_USER_ID = process.env.MFA_USER_ID;
+export const QUANGHO_USER_ID = process.env.QUANGHO_USER_ID;

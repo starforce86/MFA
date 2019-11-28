@@ -305,6 +305,8 @@ class ArtistFactorTableComp extends React.Component {
     const { data } = await this.props.client.query({
       query: ARTIST_FACTORS_QUERY,
       variables: { },
+      fetchPolicy: "no-cache",
+      errorPolicy: "all"
     });
     this.setState({
       data: data.artistFactorses.map(d => ({ ...d, key: d.id }))

@@ -13,7 +13,7 @@ class ProfitPage extends Component {
     render() {
 
         return (
-            this.props.user.role == 'ADMIN' ?
+            this.props.user && this.props.user.role == 'ADMIN' ?
                 <Profit user={this.props.user} />
                 : ''
         );

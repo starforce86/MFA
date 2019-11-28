@@ -189,10 +189,9 @@ class player extends Component {
 
     render() {
         const {className, video, user, isPurchaseActive, isPayExpiredForVideo, startTime} = this.props;
-        console.log('QQQQQQQQQQQQQQQQQQQQQQQQ', isPurchaseActive, isPayExpiredForVideo);
         return (
             <>
-                {isPurchaseActive || !isPayExpiredForVideo ?
+                {isPurchaseActive || !isPayExpiredForVideo || user.role == "ADMIN" ?
                     <Player className={className} playsInline ref={"player"} poster={video.preview_url} src={video.file_url} startTime={startTime} >
                         <BigPlayButton position="center" />
                     </Player>
