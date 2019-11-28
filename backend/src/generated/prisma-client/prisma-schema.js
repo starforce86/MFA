@@ -1722,6 +1722,9 @@ type ProfitPoolCalculation {
   total_revenue: Int!
   total_payment_to_artists: Float!
   net_revenue: Float!
+  gross_revenue_mfa: Float!
+  total_payments_to_artists: Float!
+  net_revenue_mfa: Float!
 }
 
 type ProfitPoolCalculationConnection {
@@ -1742,6 +1745,9 @@ input ProfitPoolCalculationCreateInput {
   total_revenue: Int
   total_payment_to_artists: Float
   net_revenue: Float
+  gross_revenue_mfa: Float
+  total_payments_to_artists: Float
+  net_revenue_mfa: Float
 }
 
 type ProfitPoolCalculationEdge {
@@ -1778,6 +1784,12 @@ enum ProfitPoolCalculationOrderByInput {
   total_payment_to_artists_DESC
   net_revenue_ASC
   net_revenue_DESC
+  gross_revenue_mfa_ASC
+  gross_revenue_mfa_DESC
+  total_payments_to_artists_ASC
+  total_payments_to_artists_DESC
+  net_revenue_mfa_ASC
+  net_revenue_mfa_DESC
 }
 
 type ProfitPoolCalculationPreviousValues {
@@ -1795,6 +1807,9 @@ type ProfitPoolCalculationPreviousValues {
   total_revenue: Int!
   total_payment_to_artists: Float!
   net_revenue: Float!
+  gross_revenue_mfa: Float!
+  total_payments_to_artists: Float!
+  net_revenue_mfa: Float!
 }
 
 type ProfitPoolCalculationSubscriptionPayload {
@@ -1827,6 +1842,9 @@ input ProfitPoolCalculationUpdateInput {
   total_revenue: Int
   total_payment_to_artists: Float
   net_revenue: Float
+  gross_revenue_mfa: Float
+  total_payments_to_artists: Float
+  net_revenue_mfa: Float
 }
 
 input ProfitPoolCalculationUpdateManyMutationInput {
@@ -1841,6 +1859,9 @@ input ProfitPoolCalculationUpdateManyMutationInput {
   total_revenue: Int
   total_payment_to_artists: Float
   net_revenue: Float
+  gross_revenue_mfa: Float
+  total_payments_to_artists: Float
+  net_revenue_mfa: Float
 }
 
 input ProfitPoolCalculationWhereInput {
@@ -1962,6 +1983,30 @@ input ProfitPoolCalculationWhereInput {
   net_revenue_lte: Float
   net_revenue_gt: Float
   net_revenue_gte: Float
+  gross_revenue_mfa: Float
+  gross_revenue_mfa_not: Float
+  gross_revenue_mfa_in: [Float!]
+  gross_revenue_mfa_not_in: [Float!]
+  gross_revenue_mfa_lt: Float
+  gross_revenue_mfa_lte: Float
+  gross_revenue_mfa_gt: Float
+  gross_revenue_mfa_gte: Float
+  total_payments_to_artists: Float
+  total_payments_to_artists_not: Float
+  total_payments_to_artists_in: [Float!]
+  total_payments_to_artists_not_in: [Float!]
+  total_payments_to_artists_lt: Float
+  total_payments_to_artists_lte: Float
+  total_payments_to_artists_gt: Float
+  total_payments_to_artists_gte: Float
+  net_revenue_mfa: Float
+  net_revenue_mfa_not: Float
+  net_revenue_mfa_in: [Float!]
+  net_revenue_mfa_not_in: [Float!]
+  net_revenue_mfa_lt: Float
+  net_revenue_mfa_lte: Float
+  net_revenue_mfa_gt: Float
+  net_revenue_mfa_gte: Float
   AND: [ProfitPoolCalculationWhereInput!]
   OR: [ProfitPoolCalculationWhereInput!]
   NOT: [ProfitPoolCalculationWhereInput!]
@@ -3552,10 +3597,9 @@ type TransferPlan {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  artist: User!
-  subscriber: User!
   year: Int!
   month: Int!
+  artist: User!
   amount: Int!
   ignore_status: Boolean!
   paid_status: Boolean!
@@ -3569,10 +3613,9 @@ type TransferPlanConnection {
 }
 
 input TransferPlanCreateInput {
-  artist: UserCreateOneInput!
-  subscriber: UserCreateOneInput!
   year: Int!
   month: Int!
+  artist: UserCreateOneInput!
   amount: Int!
   ignore_status: Boolean
   paid_status: Boolean
@@ -3636,10 +3679,9 @@ input TransferPlanSubscriptionWhereInput {
 }
 
 input TransferPlanUpdateInput {
-  artist: UserUpdateOneRequiredInput
-  subscriber: UserUpdateOneRequiredInput
   year: Int
   month: Int
+  artist: UserUpdateOneRequiredInput
   amount: Int
   ignore_status: Boolean
   paid_status: Boolean
@@ -3686,8 +3728,6 @@ input TransferPlanWhereInput {
   updatedAt_lte: DateTime
   updatedAt_gt: DateTime
   updatedAt_gte: DateTime
-  artist: UserWhereInput
-  subscriber: UserWhereInput
   year: Int
   year_not: Int
   year_in: [Int!]
@@ -3704,6 +3744,7 @@ input TransferPlanWhereInput {
   month_lte: Int
   month_gt: Int
   month_gte: Int
+  artist: UserWhereInput
   amount: Int
   amount_not: Int
   amount_in: [Int!]

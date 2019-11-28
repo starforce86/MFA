@@ -1627,7 +1627,13 @@ export type ProfitPoolCalculationOrderByInput =
   | "total_payment_to_artists_ASC"
   | "total_payment_to_artists_DESC"
   | "net_revenue_ASC"
-  | "net_revenue_DESC";
+  | "net_revenue_DESC"
+  | "gross_revenue_mfa_ASC"
+  | "gross_revenue_mfa_DESC"
+  | "total_payments_to_artists_ASC"
+  | "total_payments_to_artists_DESC"
+  | "net_revenue_mfa_ASC"
+  | "net_revenue_mfa_DESC";
 
 export type ProfitPoolFactorOrderByInput =
   | "id_ASC"
@@ -3161,6 +3167,30 @@ export interface ProfitPoolCalculationWhereInput {
   net_revenue_lte?: Float;
   net_revenue_gt?: Float;
   net_revenue_gte?: Float;
+  gross_revenue_mfa?: Float;
+  gross_revenue_mfa_not?: Float;
+  gross_revenue_mfa_in?: Float[] | Float;
+  gross_revenue_mfa_not_in?: Float[] | Float;
+  gross_revenue_mfa_lt?: Float;
+  gross_revenue_mfa_lte?: Float;
+  gross_revenue_mfa_gt?: Float;
+  gross_revenue_mfa_gte?: Float;
+  total_payments_to_artists?: Float;
+  total_payments_to_artists_not?: Float;
+  total_payments_to_artists_in?: Float[] | Float;
+  total_payments_to_artists_not_in?: Float[] | Float;
+  total_payments_to_artists_lt?: Float;
+  total_payments_to_artists_lte?: Float;
+  total_payments_to_artists_gt?: Float;
+  total_payments_to_artists_gte?: Float;
+  net_revenue_mfa?: Float;
+  net_revenue_mfa_not?: Float;
+  net_revenue_mfa_in?: Float[] | Float;
+  net_revenue_mfa_not_in?: Float[] | Float;
+  net_revenue_mfa_lt?: Float;
+  net_revenue_mfa_lte?: Float;
+  net_revenue_mfa_gt?: Float;
+  net_revenue_mfa_gte?: Float;
   AND?: ProfitPoolCalculationWhereInput[] | ProfitPoolCalculationWhereInput;
   OR?: ProfitPoolCalculationWhereInput[] | ProfitPoolCalculationWhereInput;
   NOT?: ProfitPoolCalculationWhereInput[] | ProfitPoolCalculationWhereInput;
@@ -3700,8 +3730,6 @@ export interface TransferPlanWhereInput {
   updatedAt_lte?: DateTimeInput;
   updatedAt_gt?: DateTimeInput;
   updatedAt_gte?: DateTimeInput;
-  artist?: UserWhereInput;
-  subscriber?: UserWhereInput;
   year?: Int;
   year_not?: Int;
   year_in?: Int[] | Int;
@@ -3718,6 +3746,7 @@ export interface TransferPlanWhereInput {
   month_lte?: Int;
   month_gt?: Int;
   month_gte?: Int;
+  artist?: UserWhereInput;
   amount?: Int;
   amount_not?: Int;
   amount_in?: Int[] | Int;
@@ -6347,6 +6376,9 @@ export interface ProfitPoolCalculationCreateInput {
   total_revenue?: Int;
   total_payment_to_artists?: Float;
   net_revenue?: Float;
+  gross_revenue_mfa?: Float;
+  total_payments_to_artists?: Float;
+  net_revenue_mfa?: Float;
 }
 
 export interface ProfitPoolCalculationUpdateInput {
@@ -6361,6 +6393,9 @@ export interface ProfitPoolCalculationUpdateInput {
   total_revenue?: Int;
   total_payment_to_artists?: Float;
   net_revenue?: Float;
+  gross_revenue_mfa?: Float;
+  total_payments_to_artists?: Float;
+  net_revenue_mfa?: Float;
 }
 
 export interface ProfitPoolCalculationUpdateManyMutationInput {
@@ -6375,6 +6410,9 @@ export interface ProfitPoolCalculationUpdateManyMutationInput {
   total_revenue?: Int;
   total_payment_to_artists?: Float;
   net_revenue?: Float;
+  gross_revenue_mfa?: Float;
+  total_payments_to_artists?: Float;
+  net_revenue_mfa?: Float;
 }
 
 export interface ProfitPoolFactorCreateInput {
@@ -6701,10 +6739,9 @@ export interface TotalMinutesForArtistUpdateManyMutationInput {
 }
 
 export interface TransferPlanCreateInput {
-  artist: UserCreateOneInput;
-  subscriber: UserCreateOneInput;
   year: Int;
   month: Int;
+  artist: UserCreateOneInput;
   amount: Int;
   ignore_status?: Boolean;
   paid_status?: Boolean;
@@ -6712,10 +6749,9 @@ export interface TransferPlanCreateInput {
 }
 
 export interface TransferPlanUpdateInput {
-  artist?: UserUpdateOneRequiredInput;
-  subscriber?: UserUpdateOneRequiredInput;
   year?: Int;
   month?: Int;
+  artist?: UserUpdateOneRequiredInput;
   amount?: Int;
   ignore_status?: Boolean;
   paid_status?: Boolean;
@@ -8614,6 +8650,9 @@ export interface ProfitPoolCalculation {
   total_revenue: Int;
   total_payment_to_artists: Float;
   net_revenue: Float;
+  gross_revenue_mfa: Float;
+  total_payments_to_artists: Float;
+  net_revenue_mfa: Float;
 }
 
 export interface ProfitPoolCalculationPromise
@@ -8633,6 +8672,9 @@ export interface ProfitPoolCalculationPromise
   total_revenue: () => Promise<Int>;
   total_payment_to_artists: () => Promise<Float>;
   net_revenue: () => Promise<Float>;
+  gross_revenue_mfa: () => Promise<Float>;
+  total_payments_to_artists: () => Promise<Float>;
+  net_revenue_mfa: () => Promise<Float>;
 }
 
 export interface ProfitPoolCalculationSubscription
@@ -8652,6 +8694,9 @@ export interface ProfitPoolCalculationSubscription
   total_revenue: () => Promise<AsyncIterator<Int>>;
   total_payment_to_artists: () => Promise<AsyncIterator<Float>>;
   net_revenue: () => Promise<AsyncIterator<Float>>;
+  gross_revenue_mfa: () => Promise<AsyncIterator<Float>>;
+  total_payments_to_artists: () => Promise<AsyncIterator<Float>>;
+  net_revenue_mfa: () => Promise<AsyncIterator<Float>>;
 }
 
 export interface ProfitPoolCalculationConnection {
@@ -9330,10 +9375,9 @@ export interface TransferPlanPromise
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
-  artist: <T = UserPromise>() => T;
-  subscriber: <T = UserPromise>() => T;
   year: () => Promise<Int>;
   month: () => Promise<Int>;
+  artist: <T = UserPromise>() => T;
   amount: () => Promise<Int>;
   ignore_status: () => Promise<Boolean>;
   paid_status: () => Promise<Boolean>;
@@ -9346,10 +9390,9 @@ export interface TransferPlanSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  artist: <T = UserSubscription>() => T;
-  subscriber: <T = UserSubscription>() => T;
   year: () => Promise<AsyncIterator<Int>>;
   month: () => Promise<AsyncIterator<Int>>;
+  artist: <T = UserSubscription>() => T;
   amount: () => Promise<AsyncIterator<Int>>;
   ignore_status: () => Promise<AsyncIterator<Boolean>>;
   paid_status: () => Promise<AsyncIterator<Boolean>>;
@@ -10598,6 +10641,9 @@ export interface ProfitPoolCalculationPreviousValues {
   total_revenue: Int;
   total_payment_to_artists: Float;
   net_revenue: Float;
+  gross_revenue_mfa: Float;
+  total_payments_to_artists: Float;
+  net_revenue_mfa: Float;
 }
 
 export interface ProfitPoolCalculationPreviousValuesPromise
@@ -10617,6 +10663,9 @@ export interface ProfitPoolCalculationPreviousValuesPromise
   total_revenue: () => Promise<Int>;
   total_payment_to_artists: () => Promise<Float>;
   net_revenue: () => Promise<Float>;
+  gross_revenue_mfa: () => Promise<Float>;
+  total_payments_to_artists: () => Promise<Float>;
+  net_revenue_mfa: () => Promise<Float>;
 }
 
 export interface ProfitPoolCalculationPreviousValuesSubscription
@@ -10636,6 +10685,9 @@ export interface ProfitPoolCalculationPreviousValuesSubscription
   total_revenue: () => Promise<AsyncIterator<Int>>;
   total_payment_to_artists: () => Promise<AsyncIterator<Float>>;
   net_revenue: () => Promise<AsyncIterator<Float>>;
+  gross_revenue_mfa: () => Promise<AsyncIterator<Float>>;
+  total_payments_to_artists: () => Promise<AsyncIterator<Float>>;
+  net_revenue_mfa: () => Promise<AsyncIterator<Float>>;
 }
 
 export interface ProfitPoolFactorSubscriptionPayload {

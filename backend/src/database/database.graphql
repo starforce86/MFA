@@ -62,10 +62,9 @@ type TransferPlan {
     createdAt: DateTime!
     updatedAt: DateTime!
 
-    artist: User! @relation(name: "TransferPlanArtistRel")
-    subscriber: User! @relation(name: "TransferPlanSubscriberRel")
     year: Int!
     month: Int!
+    artist: User! @relation(name: "TransferPlanArtistRel")
     amount: Int!
     ignore_status: Boolean! @default(value: "false")
     paid_status: Boolean! @default(value: "false")
@@ -378,7 +377,10 @@ type ProfitPoolCalculation {
     annual_pool_revenue: Int! @default(value: 0)
     monthly_pool_revenue: Int! @default(value: 0)
     total_revenue: Int! @default(value: 0)
-
     total_payment_to_artists: Float! @default(value: 0)
     net_revenue: Float! @default(value: 0)
+
+    gross_revenue_mfa: Float! @default(value: 0)
+    total_payments_to_artists: Float! @default(value: 0)
+    net_revenue_mfa: Float! @default(value: 0)
 }
