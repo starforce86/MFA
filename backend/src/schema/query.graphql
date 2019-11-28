@@ -101,7 +101,8 @@ type Query {
     artistStats(userId: String, beginDate: DateTime, endDate: DateTime): [ArtistStatsResult]
     chargeStats(beginDate: DateTime, endDate: DateTime, type: String): [ChargeStatsResult]
     subscriptionStats(beginDate: DateTime, endDate: DateTime, type: String): [SubscriptionStatsResult]
-    payoutStats(beginDate: DateTime, endDate: DateTime): PayoutStatsResult
+    # payoutStats(beginDate: DateTime, endDate: DateTime): PayoutStatsResult
+    payoutStats(year: Int, month: Int): PayoutStatsResult
     availableBalance: Int
     populateChargeHistory: Boolean
     populateSubscriptionHistory: Boolean

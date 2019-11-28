@@ -326,6 +326,7 @@ class ProfitPoolFactorTableComp extends React.Component {
             });
             this.setState({ data: newData, editingKey: '' });
           }
+          location.reload();
         }
       } catch (ex) {
         notification['error']({

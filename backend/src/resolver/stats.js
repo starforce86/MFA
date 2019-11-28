@@ -999,9 +999,61 @@ async function totalMinutesForArtistStats(root, args, ctx, info) {
                         total_payment: payment_from_profit_pool + totalMinutesForArtists[0].finder_fee
                     }
                 });
+            }
 
-                // Insert/Update TransferPlan
-                
+            // Insert/Update TransferPlan
+
+            for (artistFactor of artistFactors) {
+
+                const artist = await prisma.artistFactors({id: artistFactor.id}).artist();
+
+                if (artist.id == config.user_id.MFA || artist.id == config.user_id.quangho) {
+                    continue;
+                }
+
+                const totalMinutesForArtists = await prisma.totalMinutesForArtists({
+                    where: {
+                        year: year,
+                        month: month,
+                        artist: { id: artist.id }
+                    }
+                });
+
+                if (totalMinutesForArtists && totalMinutesForArtists.length > 0) {
+
+                    const transferPlans = await prisma.transferPlans({
+                        where: {
+                            year: year,
+                            month: month,
+                            artist: { id: artist.id }
+                        }
+                    });
+
+                    if (!transferPlans || transferPlans.length == 0) {
+        
+                        await prisma.createTransferPlan({
+                            year: year,
+                            month: month,
+                            artist: {
+                                connect: { id: artist.id }
+                            },
+                            amount: totalMinutesForArtists[0].total_payment * 100,
+                            paid_status: false,
+                            ignore_status: false
+                        });
+
+                    } else {
+
+                        if (transferPlans[0].paid_status == false) {
+                            await prisma.updateTransferPlan({
+                                where: { id: transferPlans[0].id },
+                                data: {
+                                    amount: totalMinutesForArtists[0].total_payment * 100
+                                }
+                            });
+                        }
+                    }
+                }
             }
         }
 
@@ -1062,6 +1114,28 @@ async function profitPoolCalculationStats(root, args, ctx, info) {
             const monthly_pool_revenue = Math.floor(cnt_monthly * monthly_subscription_rate / 12);
             const total_revenue = annual_pool_revenue + monthly_pool_revenue;
 
+            // Calc Total payments to artists
+            const totalMinutesForArtists = await prisma.totalMinutesForArtists({
+                where: {
+                    year: year,
+                    month: month
+                }
+            });
+
+            let total_payments_to_artists = 0;
+
+            for (totalMinutesForArtist of totalMinutesForArtists) {
+
+                const artist = await prisma.totalMinutesForArtist({id: totalMinutesForArtist.id}).artist();
+                if (artist.id == config.user_id.MFA || artist.id == config.user_id.quangho) {
+                    continue;
+                }
+
+                total_payments_to_artists += totalMinutesForArtist.total_payment;
+            }
+
+            const net_revenue_mfa = total_revenue - total_payments_to_artists;
+
             const profitPoolCalculations = await prisma.profitPoolCalculations({
                 where: {
                     year: year,
@@ -1079,7 +1153,9 @@ async function profitPoolCalculationStats(root, args, ctx, info) {
                     monthly_subscription_rate: monthly_subscription_rate,
                     annual_pool_revenue: annual_pool_revenue,
                     monthly_pool_revenue: monthly_pool_revenue,
-                    total_revenue: total_revenue
+                    total_revenue: total_revenue,
+                    total_payments_to_artists: total_payments_to_artists,
+                    net_revenue_mfa: net_revenue_mfa
                 });
             } else {
                 await prisma.updateProfitPoolCalculation({
@@ -1091,7 +1167,9 @@ async function profitPoolCalculationStats(root, args, ctx, info) {
                         monthly_subscription_rate: monthly_subscription_rate,
                         annual_pool_revenue: annual_pool_revenue,
                         monthly_pool_revenue: monthly_pool_revenue,
-                        total_revenue: total_revenue
+                        total_revenue: total_revenue,
+                        total_payments_to_artists: total_payments_to_artists,
+                        net_revenue_mfa: net_revenue_mfa
                     }
                 });
             }
@@ -1115,97 +1193,140 @@ async function profitPoolCalculationStats(root, args, ctx, info) {
     }
 }
 
+// async function payoutStats(root, args, ctx, info) {
+
+//     try {
+//         let beginDate = args.beginDate;
+//         let endDate = args.endDate;
+
+//         beginDate = moment(beginDate);
+//         endDate = moment(endDate);
+//         beginDate.set({'date': 1, 'hour': 0, 'minute': 0, 'second': 0});
+//         endDate.set({ 'date': 1, 'hour': 0, 'minute': 0, 'second': 0 });
+//         let tmpDate = beginDate.clone();
+        
+//         let timespans = [];
+//         while (tmpDate < endDate) {
+//             timespans.push({
+//                 year: moment(tmpDate).format('YYYY'),
+//                 month: moment(tmpDate).format('MM')
+//             });
+//             tmpDate = tmpDate.add(moment.duration(1, 'months')).clone();
+//         }
+        
+//         let artists = await prisma.users({
+//             where: {
+//                 role: 'USER_PUBLISHER'
+//             }
+//         });
+
+//         artists = await Promise.all(artists.map(async (artist) => {
+//             const users = await prisma.user({id: artist.id}).users();
+//             const promo_codes = await prisma.user({id: artist.id}).my_promo_codes();
+//             const cur_promo_codes = promo_codes.find(d => d.current_promo_code == true);
+
+//             artist.promo_code = cur_promo_codes ? cur_promo_codes.promo_code : '';
+//             artist.promo_code_uses = users.length;
+//             artist.timespans = await Promise.all(timespans.map(async (ts) => {
+//                 let tspan = {...ts};
+//                 const transferTrans = await prisma.transferTransactions({
+//                     where: {
+//                         artist: { id: artist.id },
+//                         year: parseInt(tspan.year),
+//                         month: parseInt(tspan.month)
+//                     }
+//                 });
+//                 let transferAmount = 0;
+//                 if (transferTrans.length > 0) {
+//                     transferAmount = transferTrans[0].amount;
+//                 }
+//                 tspan.payout_amount = transferAmount;
+
+//                 const transferPlans = await prisma.transferPlans({
+//                     where: {
+//                         artist: { id: artist.id },
+//                         year: parseInt(tspan.year),
+//                         month: parseInt(tspan.month),
+//                         ignore_status: false,
+//                         paid_status: false
+//                     }
+//                 });
+//                 transferAmount = 0;
+//                 transferPlans.forEach(tp => {
+//                     transferAmount += tp.amount;
+//                 });
+//                 tspan.due_amount = transferAmount;
+
+//                 return tspan;
+//             }));
+//             return artist;
+//         }));
+
+//         const months = await Promise.all(timespans.map(async (ts) => {
+//             let tspan = {...ts};
+
+//             let due_amount = 0;
+//             artists.forEach(artist => {
+//                 artist.timespans.forEach(t => {
+//                     if (t.year == ts.year && t.month == ts.month) {
+//                         due_amount += t.due_amount;
+//                     }
+//                 });
+//             });
+//             tspan.due_amount = due_amount;
+            
+//             return tspan;
+//         }));
+
+//         const due_months = months.filter(m => parseInt(m.due_amount) > 0);
+
+//         return {
+//             artists: artists,
+//             due_months: due_months
+//         };
+//     } catch (e) {
+        // log.error('payoutStats error:', e);
+        // let err_msg;
+        // if (typeof e.message === 'object') {
+        //     err_msg = e.message.message;
+        // } else {
+        //     err_msg = e.message;
+        // }
+        // throw new GQLError({message: err_msg, code: 409});
+//     }
+// }
+
 async function payoutStats(root, args, ctx, info) {
 
     try {
-        let beginDate = args.beginDate;
-        let endDate = args.endDate;
+        const year = parseInt(args.year);
+        const month = parseInt(args.month);
 
-        beginDate = moment(beginDate);
-        endDate = moment(endDate);
-        beginDate.set({'date': 1, 'hour': 0, 'minute': 0, 'second': 0});
-        endDate.set({ 'date': 1, 'hour': 0, 'minute': 0, 'second': 0 });
-        let tmpDate = beginDate.clone();
-        
-        let timespans = [];
-        while (tmpDate < endDate) {
-            timespans.push({
-                year: moment(tmpDate).format('YYYY'),
-                month: moment(tmpDate).format('MM')
-            });
-            tmpDate = tmpDate.add(moment.duration(1, 'months')).clone();
-        }
-        
-        let artists = await prisma.users({
+        let paid = 0;
+        let due = 0;
+
+        const transferPlans = await prisma.transferPlans({
             where: {
-                role: 'USER_PUBLISHER'
+                year: year,
+                month: month
             }
         });
 
-        artists = await Promise.all(artists.map(async (artist) => {
-            const users = await prisma.user({id: artist.id}).users();
-            const promo_codes = await prisma.user({id: artist.id}).my_promo_codes();
-            const cur_promo_codes = promo_codes.find(d => d.current_promo_code == true);
+        for (transferPlan of transferPlans) {
 
-            artist.promo_code = cur_promo_codes ? cur_promo_codes.promo_code : '';
-            artist.promo_code_uses = users.length;
-            artist.timespans = await Promise.all(timespans.map(async (ts) => {
-                let tspan = {...ts};
-                const transferTrans = await prisma.transferTransactions({
-                    where: {
-                        artist: { id: artist.id },
-                        year: parseInt(tspan.year),
-                        month: parseInt(tspan.month)
-                    }
-                });
-                let transferAmount = 0;
-                if (transferTrans.length > 0) {
-                    transferAmount = transferTrans[0].amount;
-                }
-                tspan.payout_amount = transferAmount;
-
-                const transferPlans = await prisma.transferPlans({
-                    where: {
-                        artist: { id: artist.id },
-                        year: parseInt(tspan.year),
-                        month: parseInt(tspan.month),
-                        ignore_status: false,
-                        paid_status: false
-                    }
-                });
-                transferAmount = 0;
-                transferPlans.forEach(tp => {
-                    transferAmount += tp.amount;
-                });
-                tspan.due_amount = transferAmount;
-
-                return tspan;
-            }));
-            return artist;
-        }));
-
-        const months = await Promise.all(timespans.map(async (ts) => {
-            let tspan = {...ts};
-
-            let due_amount = 0;
-            artists.forEach(artist => {
-                artist.timespans.forEach(t => {
-                    if (t.year == ts.year && t.month == ts.month) {
-                        due_amount += t.due_amount;
-                    }
-                });
-            });
-            tspan.due_amount = due_amount;
-            
-            return tspan;
-        }));
-
-        const due_months = months.filter(m => parseInt(m.due_amount) > 0);
+            if (transferPlan.amount > 0 && transferPlan.paid_status == true) {
+                paid += transferPlan.amount;
+            }
+            if (transferPlan.amount > 0 && transferPlan.paid_status == false && transferPlan.ignore_status == false) {
+                due += transferPlan.amount;
+            }
+        }
 
         return {
-            artists: artists,
-            due_months: due_months
+            paid: paid,
+            due: due
         };
+
     } catch (e) {
         log.error('payoutStats error:', e);
         let err_msg;

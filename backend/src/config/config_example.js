@@ -238,6 +238,10 @@ const config = {
         enabled: true,
         path: '/log'
     },
+    user_id: {
+        MFA: 'ck3d3ol4f02de072031hbovc6',
+        quangho: 'cjuy81v2p003h0749340t46q7'
+    }
 };
 
 module.exports = config;

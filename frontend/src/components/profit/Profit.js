@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import gql from "graphql-tag";
 import { Query, withApollo } from "react-apollo";
 import { compose, graphql } from "react-apollo/index";
-import { Table, Input, InputNumber, Popconfirm, Form, notification } from 'antd';
+import { Table, Input, InputNumber, Popconfirm, Form, notification, DatePicker, Spin, Modal } from 'antd';
 import 'antd/dist/antd.css';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
@@ -18,7 +18,9 @@ import VideoTotalParameterTable from "./VideoTotalParameterTable";
 import ProfitPoolFactorTable from "./ProfitPoolFactorTable";
 import VideoParameterTable from "./VideoParameterTable";
 import * as consts from "../../util/consts";
+import { async } from "q";
 
+const { MonthPicker } = DatePicker;
 const log = logger('Profit');
 const dateOnlyFormat = 'YYYY-MM-DD';
 
@@ -37,34 +39,13 @@ const stringSorter = (key) => (a, b) => {
 }
 
 const STATS_QUERY = gql`
-    query GetStats($payoutStatsBeginDate: DateTime!, $payoutStatsEndDate: DateTime!) {
+    query GetStats($year: Int!, $month: Int!) {
 			payoutStats(
-				beginDate: $payoutStatsBeginDate
-				endDate: $payoutStatsEndDate
+				year: $year
+				month: $month
 			) {
-				artists {
-					id
-					firstname
-					lastname
-					username
-					email
-					approved
-					promo_code
-					payout_amount
-					payout_months_total
-					promo_code_uses
-					timespans {
-						year
-						month
-						payout_amount
-						due_amount
-					}
-				}
-				due_months {
-					year
-					month
-					due_amount
-				}
+				paid
+				due
 			}
 			availableBalance
     }
@@ -173,7 +154,9 @@ const PROFIT_POOL_QUERY = gql`
 				monthly_subscription_rate,
 				annual_pool_revenue,
 				monthly_pool_revenue,
-    		total_revenue
+    		total_revenue,
+				total_payments_to_artists,
+				net_revenue_mfa
 			}
     }
 `;
@@ -308,12 +291,13 @@ const last_table_columns = [
 class Profit extends Component {
 
 	state = {
+		loading: false,
 		availableBalance: 0,
+		selectedYear: moment().format('YYYY'),
+		selectedMonth: moment().format('MM'),
 		payoutStats: {
-			beginDate: moment().subtract(moment.duration(1, 'years')).format(dateOnlyFormat),
-			endDate: moment().format(dateOnlyFormat),
-			table_data: [],
-			table_columns: payout_table_columns,
+			paid: 0,
+			due: 0,
 		},
 		video_data_for_month: {
 			table_data: [],
@@ -534,49 +518,54 @@ class Profit extends Component {
 		super(props);
 	}
 
-	handlePayMonth = async (year, month) => {
-		try {
-			return await this.props.transfer({
-				variables: {
-					year: year,
-					month: month
-				}
-			});
-		} catch (ex) {
+	handlePayMonth = () => {
+		Modal.confirm({
+			title: `Are you sure payout?`,
+			okText: 'Yes',
+			okType: 'danger',
+			cancelText: 'No',
+			onOk: async () => {
+				await this.props.transfer({
+					variables: {
+						year: parseInt(this.state.selectedYear),
+						month: parseInt(this.state.selectedMonth)
+					}
+				});
+			},
+		});
+	};
+
+	onChangeMonth = (date) => {
+
+		if (!date) {
 			notification['error']({
 				message: 'Error!',
-				description: ex.message,
+				description: "Month is empty! Please select a month",
 			});
 			return;
 		}
-	};
 
-	handleFromDateChange = (e) => {
-		if(e.target.value < this.state.payoutStats.endDate) {
-			this.setState({
-				payoutStats: {
-					...this.state.payoutStats,
-					beginDate: e.target.value
-				}
-			});
-		}
+		this.setState({
+			selectedYear: moment(date).format('YYYY'),
+			selectedMonth: moment(date).format('MM')
+		}, () => {
+			this.loadData();
+		})
 	}
 
-	handleToDateChange = (e) => {
-		if(e.target.value > this.state.payoutStats.beginDate) {
-			this.setState({
-				payoutStats: {
-					...this.state.payoutStats,
-					endDate: e.target.value
-				}
-			});
-		}
+	componentDidMount() {
+
+		this.loadData();
 	}
 
-	async componentDidMount() {
+	loadData = async () => {
 
-		const year = parseInt(moment().format('YYYY'));
-		const month = parseInt(moment().format('MM'));
+		const year = parseInt(this.state.selectedYear);
+		const month = parseInt(this.state.selectedMonth);
+
+		this.setState({
+			loading: true
+		});
 
     let result = await this.props.client.query({
       query: VIDEO_DATA_FOR_MONTH_QUERY,
@@ -639,7 +628,6 @@ class Profit extends Component {
       errorPolicy: "all"
 		});
 
-		console.log('###################', profitPoolCalculationStats)
 		if (profitPoolCalculationStats && profitPoolCalculationStats.length > 0) {
 			const profit_pool_table_data = [
 				{
@@ -670,31 +658,28 @@ class Profit extends Component {
 			})
 		}
 
-		let grossRevenueMFA = 0;
-		let totalPayToArtists = 0;
+		let gross_revenue_mfa = 0;
+		let total_payments_to_artists = 0;
+		let net_revenue_mfa = 0;
 
 		if (profitPoolCalculationStats && profitPoolCalculationStats.length > 0) {
-			grossRevenueMFA = profitPoolCalculationStats[0].total_revenue;
+			gross_revenue_mfa = profitPoolCalculationStats[0].total_revenue;
+			total_payments_to_artists = profitPoolCalculationStats[0].total_payments_to_artists;
+			net_revenue_mfa = profitPoolCalculationStats[0].net_revenue_mfa;
 		}
-
-		totalMinutesForArtistStats.map(d => {
-			if (d.artist.id != consts.MFA_USER_ID && d.artist.id != consts.QUANGHO_USER_ID) {
-				totalPayToArtists += d.total_payment;
-			}
-		});
 		
 		const last_table_data = [
 			{
 				title: 'Gross revenue MFA',
-				amount: grossRevenueMFA,
+				amount: gross_revenue_mfa,
 			},
 			{
 				title: 'Total payments to artists',
-				amount: totalPayToArtists,
+				amount: total_payments_to_artists,
 			},
 			{
 				title: 'Net revenue MFA',
-				amount: grossRevenueMFA - totalPayToArtists,
+				amount: net_revenue_mfa,
 			},
 		];
 
@@ -705,52 +690,61 @@ class Profit extends Component {
 		result = await this.props.client.query({
       query: STATS_QUERY,
       variables: {
-				payoutStatsBeginDate: this.state.payoutStats.beginDate,
-				payoutStatsEndDate: this.state.payoutStats.endDate
+				year: parseInt(this.state.selectedYear),
+				month: parseInt(this.state.selectedMonth)
 			},
 			fetchPolicy: "no-cache",
       errorPolicy: "all"
 		});
 
-		let new_payout_table_columns = [];
-		let payout_table_data = [];
+		this.setState({
+			payoutStats: result.data.payoutStats,
+			availableBalance: result.data.availableBalance,
+		})
 
-		if(result.data.payoutStats.artists && result.data.payoutStats.artists.length > 0) {
-			for(let i=0; i<result.data.payoutStats.artists[0].timespans.length; i++) {
-				const d = result.data.payoutStats.artists[0].timespans[i];
-				new_payout_table_columns.push({
-					title: `${d.year}-${d.month}`,
-					dataIndex: `${d.year}-${d.month}`,
-					key: `${d.year}-${d.month}`,
-				});
-			}
+		// let new_payout_table_columns = [];
+		// let payout_table_data = [];
 
-			result.data.payoutStats.artists.map(v => {
-				let val = {};
-				for(let i=0; i<v.timespans.length; i++) {
-					const d = v.timespans[i];
-					val[`${d.year}-${d.month}`] = `${(d.due_amount / 100.0).toFixed(2)}/${(d.payout_amount / 100.0).toFixed(2)}`;
-				}
-				let sum = 0;
-				payout_table_data.push({
-					...v,
-					...val
-				});
+		// if(result.data.payoutStats.artists && result.data.payoutStats.artists.length > 0) {
+		// 	for(let i=0; i<result.data.payoutStats.artists[0].timespans.length; i++) {
+		// 		const d = result.data.payoutStats.artists[0].timespans[i];
+		// 		new_payout_table_columns.push({
+		// 			title: `${d.year}-${d.month}`,
+		// 			dataIndex: `${d.year}-${d.month}`,
+		// 			key: `${d.year}-${d.month}`,
+		// 		});
+		// 	}
+
+		// 	result.data.payoutStats.artists.map(v => {
+		// 		let val = {};
+		// 		for(let i=0; i<v.timespans.length; i++) {
+		// 			const d = v.timespans[i];
+		// 			val[`${d.year}-${d.month}`] = `${(d.due_amount / 100.0).toFixed(2)}/${(d.payout_amount / 100.0).toFixed(2)}`;
+		// 		}
+		// 		let sum = 0;
+		// 		payout_table_data.push({
+		// 			...v,
+		// 			...val
+		// 		});
 				
-			});
+		// 	});
 
-			this.setState({
-				availableBalance: result.data.availableBalance,
-				payoutStats: {
-					...this.state.payoutStats,
-					table_columns: [
-						...payout_table_columns,
-						...new_payout_table_columns,
-					],
-					table_data: payout_table_data,
-				}
-			});
-		}
+		// 	this.setState({
+		// 		availableBalance: result.data.availableBalance,
+		// 		payoutStats: {
+		// 			...this.state.payoutStats,
+		// 			table_columns: [
+		// 				...payout_table_columns,
+		// 				...new_payout_table_columns,
+		// 			],
+		// 			table_data: payout_table_data,
+		// 		}
+		// 	});
+		// }
+
+		this.setState({
+			loading: false
+		});
 	}
 	
 	render() {
@@ -782,200 +776,186 @@ class Profit extends Component {
 							</div>
 						</div>
 
-						<div className="video-block section-padding">
-							<div className="row">
-								<div className="col-md-12">
-									<div className="main-title">
-										<h3>Profit Sharing</h3>
-									</div>
-								</div>
-								<div className="col-md-12">
-										<h6 style={{ height: 36, marginTop: 20 }}>Available balance: ${(this.state.availableBalance / 100).toFixed(2)}</h6> 
-								</div>
-
-								{this.state.payoutStats.due_months && this.state.payoutStats.due_months.map(due_month => {
-									return (
-										<div className="col-md-12">
-											<h6 className="float-left" style={{ height: 36, marginTop: 10, width: 180 }}>{`Due for ${due_month.year}-${due_month.month}`}:  ${(due_month.due_amount / 100).toFixed(2)}</h6>
-											<button
-												type="button"
-												className="btn btn-warning border-none"
-												style={{ marginLeft: 10, minWidth: 152 }}
-												onClick={() => this.handlePayMonth(due_month.year, due_month.month)}
-											>
-												Payout for {`${due_month.year}-${due_month.month}`}
-											</button>
+						<Spin spinning={this.state.loading}>
+							<div className="video-block section-padding">
+								<div className="row">
+									<div className="col-md-12">
+										<div className="main-title">
+											<h3>Profit Sharing</h3>
 										</div>
-									)
-								})}
+									</div>
+									<div className="col-md-12">
+										<MonthPicker onChange={this.onChangeMonth} defaultValue={moment(`${this.state.selectedYear}-${this.state.selectedMonth}`)} placeholder="Select month" />
+									</div>
+									<div className="col-md-12">
+										<h6 style={{ height: 36, marginTop: 20 }}>Available balance: ${(this.state.availableBalance / 100).toFixed(2)}</h6>
+										<h6 style={{ height: 36 }}>{`Paid Amount for ${this.state.selectedYear}-${this.state.selectedMonth}`} : ${(this.state.payoutStats.paid / 100).toFixed(2)}</h6>
+										<h6 style={{ height: 36 }}>{`Due  Amount for ${this.state.selectedYear}-${this.state.selectedMonth}`} : ${(this.state.payoutStats.due / 100).toFixed(2)}</h6>
+										<button
+											type="button"
+											className="btn btn-warning border-none"
+											style={{ marginLeft: 10, minWidth: 152 }}
+											disabled={this.state.payoutStats.due == 0 || this.state.availableBalance < this.state.payoutStats.due}
+											onClick={this.handlePayMonth}
+										>
+											Pay for {`${this.state.selectedYear}-${this.state.selectedMonth}`}
+										</button>
+									</div>
 
-								{/* <div className="col-md-12">
-									<h6 className="float-left" style={{ height: 36, marginTop: 10, width: 180 }}>Due Total:  ${(due_total / 100).toFixed(2)}</h6>
-									<button
-										type="button"
-										className="btn btn-warning border-none"
-										style={{ marginLeft: 10, minWidth: 152 }}
-									>
-										Payout All
-									</button>
-								</div> */}
-								
-								<div className="col-md-2 col-xs-12 mh-auto" style={{ marginTop: 30 }}>
-									<span style={{ color: 'white' }}>from</span>
-									<TextField
-										type="date"
-										defaultValue={this.state.payoutStats.beginDate}
-										style={{ marginLeft: 20, color: 'white' }}
-										onChange={this.handleFromDateChange}
-									/>
-								</div>
-								<div className="col-md-3 col-xs-12 mh-auto" style={{ marginTop: 30 }}>
-									<span style={{ color: 'white' }}>to</span>
-									<TextField
-										type="date"
-										defaultValue={this.state.payoutStats.endDate}
-										style={{ marginLeft: 20, color: 'white' }}
-										onChange={this.handleToDateChange}
-									/>
-								</div>
-								<div className="col-md-12" style={{ marginTop: 30 }}>
-									<Table
-										bordered
-										columns={this.state.payoutStats.table_columns}
-										dataSource={this.state.payoutStats.table_data}
-										size='small'
-										pagination={false}
-									/>
-								</div>
+									{/* {this.state.payoutStats.due_months && this.state.payoutStats.due_months.map(due_month => {
+										return (
+											<div className="col-md-12">
+												<h6 className="float-left" style={{ height: 36, marginTop: 10, width: 180 }}>{`Due for ${due_month.year}-${due_month.month}`}:  ${(due_month.due_amount / 100).toFixed(2)}</h6>
+												<button
+													type="button"
+													className="btn btn-warning border-none"
+													style={{ marginLeft: 10, minWidth: 152 }}
+													onClick={() => this.handlePayMonth(due_month.year, due_month.month)}
+												>
+													Payout for {`${due_month.year}-${due_month.month}`}
+												</button>
+											</div>
+										)
+									})} */}
 
-								<div className="col-md-12 mt-5">
-									<div className="main-title">
-										<h4>Profit Sharing Setting</h4>
+									{/* <div className="col-md-12">
+										<h6 className="float-left" style={{ height: 36, marginTop: 10, width: 180 }}>Due Total:  ${(due_total / 100).toFixed(2)}</h6>
+										<button
+											type="button"
+											className="btn btn-warning border-none"
+											style={{ marginLeft: 10, minWidth: 152 }}
+										>
+											Payout All
+										</button>
+									</div> */}
+
+									<div className="col-md-12 mt-5">
+										<div className="main-title">
+											<h4>Profit Sharing Setting</h4>
+										</div>
+									</div>
+
+									<div className="col-md-12 mt-4">
+										<h5>Artist factors</h5>
+									</div>
+									<div className="col-md-12">
+										<ArtistFactorTable />
+									</div>
+
+									<div className="col-md-12 mt-4">
+										<h5>Video parameters</h5>
+									</div>
+									<div className="col-md-12">
+										<VideoParameterTable />
+									</div>
+
+									<div className="col-md-12 mt-4">
+										<h5>Video total parameters</h5>
+									</div>
+									<div className="col-md-12">
+										<VideoTotalParameterTable />
+									</div>
+
+									<div className="col-md-12 mt-4">
+										<h5>Profit pool factors</h5>
+									</div>
+									<div className="col-md-12">
+										<ProfitPoolFactorTable />
+									</div>
+
+									<div className="col-md-12 mt-4">
+										<h5>Video data for month</h5>
+									</div>
+									<div className="col-md-12">
+										<Table
+											bordered
+											columns={this.state.video_data_for_month.table_columns}
+											dataSource={this.state.video_data_for_month.table_data}
+											size='small'
+											pagination={false}
+										/>
+									</div>
+
+									<div className="col-md-12 mt-4">
+										<h5>Apply data back to the owners</h5>
+									</div>
+									<div className="col-md-12">
+										<Table
+											bordered
+											columns={this.state.video_parameters_for_month.table_columns}
+											dataSource={this.state.video_parameters_for_month.table_data}
+											size='small'
+											pagination={false}
+										/>
+									</div>
+
+									<div className="col-md-12 mt-4">
+										<h5>Total minutes for each artist/owner</h5>
+									</div>
+									<div className="col-md-12">
+										<Table
+											bordered
+											columns={this.state.minutes_for_artist.table_columns}
+											dataSource={this.state.minutes_for_artist.table_data}
+											size='small'
+											pagination={false}
+										/>
 									</div>
 								</div>
 
-								<div className="col-md-12 mt-4">
-									<h5>Artist factors</h5>
-								</div>
-								<div className="col-md-12">
-									<ArtistFactorTable />
-								</div>
-
-								<div className="col-md-12 mt-4">
-									<h5>Video parameters</h5>
-								</div>
-								<div className="col-md-12">
-									<VideoParameterTable />
-								</div>
-
-								<div className="col-md-12 mt-4">
-									<h5>Video total parameters</h5>
-								</div>
-								<div className="col-md-12">
-									<VideoTotalParameterTable />
+								<div className="row">
+									<div className="col-md-12 mt-4">
+										<h5>Profit Pool Calculation</h5>
+									</div>
+									<div className="col-md-12 col-lg-6">
+										<Table
+											bordered
+											columns={this.state.profit_pool.table_columns}
+											dataSource={this.state.profit_pool.table_data}
+											size='small'
+											pagination={false}
+										/>
+									</div>
 								</div>
 
-								<div className="col-md-12 mt-4">
-									<h5>Profit pool factors</h5>
-								</div>
-								<div className="col-md-12">
-									<ProfitPoolFactorTable />
-								</div>
-
-								<div className="col-md-12 mt-4">
-									<h5>Video data for month</h5>
-								</div>
-								<div className="col-md-12">
-									<Table
-										bordered
-										columns={this.state.video_data_for_month.table_columns}
-										dataSource={this.state.video_data_for_month.table_data}
-										size='small'
-										pagination={false}
-									/>
+								<div className="row">
+									<div className="col-md-12 col-lg-6 mt-4">
+										<Table
+											bordered
+											columns={profit_pool_calc1_table_columns}
+											dataSource={this.state.minutes_for_artist.table_data}
+											size='small'
+											pagination={false}
+										/>
+									</div>
 								</div>
 
-								<div className="col-md-12 mt-4">
-									<h5>Apply data back to the owners</h5>
-								</div>
-								<div className="col-md-12">
-									<Table
-										bordered
-										columns={this.state.video_parameters_for_month.table_columns}
-										dataSource={this.state.video_parameters_for_month.table_data}
-										size='small'
-										pagination={false}
-									/>
+								<div className="row">
+									<div className="col-md-12 col-lg-6 mt-4">
+										<Table
+											bordered
+											columns={profit_pool_calc2_table_columns}
+											dataSource={this.state.minutes_for_artist.table_data}
+											size='small'
+											pagination={false}
+										/>
+									</div>
 								</div>
 
-								<div className="col-md-12 mt-4">
-									<h5>Total minutes for each artist/owner</h5>
-								</div>
-								<div className="col-md-12">
-									<Table
-										bordered
-										columns={this.state.minutes_for_artist.table_columns}
-										dataSource={this.state.minutes_for_artist.table_data}
-										size='small'
-										pagination={false}
-									/>
+								<div className="row">
+									<div className="col-md-6 col-lg-3 mt-4 mb-4">
+										<Table
+											bordered
+											columns={last_table_columns}
+											dataSource={this.state.last_table_data}
+											size='small'
+											pagination={false}
+											showHeader={false}
+										/>
+									</div>
 								</div>
 							</div>
-
-							<div className="row">
-								<div className="col-md-12 mt-4">
-									<h5>Profit Pool Calculation</h5>
-								</div>
-								<div className="col-md-6">
-									<Table
-										bordered
-										columns={this.state.profit_pool.table_columns}
-										dataSource={this.state.profit_pool.table_data}
-										size='small'
-										pagination={false}
-									/>
-								</div>
-							</div>
-
-							<div className="row">
-								<div className="col-md-6 mt-4">
-									<Table
-										bordered
-										columns={profit_pool_calc1_table_columns}
-										dataSource={this.state.minutes_for_artist.table_data}
-										size='small'
-										pagination={false}
-									/>
-								</div>
-							</div>
-
-							<div className="row">
-								<div className="col-md-6 mt-4">
-									<Table
-										bordered
-										columns={profit_pool_calc2_table_columns}
-										dataSource={this.state.minutes_for_artist.table_data}
-										size='small'
-										pagination={false}
-									/>
-								</div>
-							</div>
-
-							<div className="row">
-								<div className="col-md-3 mt-4">
-									<Table
-										bordered
-										columns={last_table_columns}
-										dataSource={this.state.last_table_data}
-										size='small'
-										pagination={false}
-										showHeader={false}
-									/>
-								</div>
-							</div>
-								
-						</div>
-						<hr className="mt-0" />
+						</Spin>
 					</div>
 					{/* /.container-fluid */}
 				</div>

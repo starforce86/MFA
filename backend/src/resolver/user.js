@@ -416,78 +416,78 @@ async function populateTransferPlan(root, args, ctx, info) {
         const year = parseInt(moment().format('YYYY'));
         const month = parseInt(moment().format('MM'));
 
-        const artists = await prisma.users({
-            where: {
-                role: 'USER_PUBLISHER',
-                approved: true
-            }
-        });
-        artists.forEach(async artist => {
-            const users = await prisma.user({id: artist.id}).users();
-            users.forEach(async subscriber => {
-                const transferPlans = await prisma.transferPlans({
-                    where: {
-                        artist: { id: artist.id },
-                        subscriber: { id: subscriber.id }
-                    }
-                });
-                if (transferPlans.length < artist.payout_months_left) {
-                    const curMonthTransferPlan = await prisma.transferPlans({
-                        where: {
-                            artist: { id: artist.id },
-                            subscriber: { id: subscriber.id },
-                            year: year,
-                            month: month,
-                        }
-                    });
-                    if (curMonthTransferPlan.length == 0) {
-                        if (subscriber.billing_subscription_active) {
-                            await prisma.createTransferPlan({
-                                artist: {
-                                    connect: { id: artist.id }
-                                },
-                                subscriber: {
-                                    connect: { id: subscriber.id }
-                                },
-                                year: year,
-                                month: month,
-                                amount: artist.payout_amount,
-                                ignore_status: false,
-                                paid_status: false
-                            }); 
-                        }
-                    } else {
-                        if (subscriber.billing_subscription_active) {
-                            await prisma.updateManyTransferPlans({
-                                where: {
-                                    artist: { id: artist.id },
-                                    subscriber: { id: subscriber.id },
-                                    year: year,
-                                    month: month,
-                                    paid_status: false
-                                },
-                                data: {
-                                    ignore_status: false
-                                }
-                            });
-                        } else {
-                            await prisma.updateManyTransferPlans({
-                                where: {
-                                    artist: { id: artist.id },
-                                    subscriber: { id: subscriber.id },
-                                    year: year,
-                                    month: month,
-                                    paid_status: false
-                                },
-                                data: {
-                                    ignore_status: true
-                                }
-                            });
-                        }
-                    }
-                }
-            });
-        });
+        // const artists = await prisma.users({
+        //     where: {
+        //         role: 'USER_PUBLISHER',
+        //         approved: true
+        //     }
+        // });
+        // artists.forEach(async artist => {
+        //     const users = await prisma.user({id: artist.id}).users();
+        //     users.forEach(async subscriber => {
+        //         const transferPlans = await prisma.transferPlans({
+        //             where: {
+        //                 artist: { id: artist.id },
+        //                 subscriber: { id: subscriber.id }
+        //             }
+        //         });
+        //         if (transferPlans.length < artist.payout_months_left) {
+        //             const curMonthTransferPlan = await prisma.transferPlans({
+        //                 where: {
+        //                     artist: { id: artist.id },
+        //                     subscriber: { id: subscriber.id },
+        //                     year: year,
+        //                     month: month,
+        //                 }
+        //             });
+        //             if (curMonthTransferPlan.length == 0) {
+        //                 if (subscriber.billing_subscription_active) {
+        //                     await prisma.createTransferPlan({
+        //                         artist: {
+        //                             connect: { id: artist.id }
+        //                         },
+        //                         subscriber: {
+        //                             connect: { id: subscriber.id }
+        //                         },
+        //                         year: year,
+        //                         month: month,
+        //                         amount: artist.payout_amount,
+        //                         ignore_status: false,
+        //                         paid_status: false
+        //                     }); 
+        //                 }
+        //             } else {
+        //                 if (subscriber.billing_subscription_active) {
+        //                     await prisma.updateManyTransferPlans({
+        //                         where: {
+        //                             artist: { id: artist.id },
+        //                             subscriber: { id: subscriber.id },
+        //                             year: year,
+        //                             month: month,
+        //                             paid_status: false
+        //                         },
+        //                         data: {
+        //                             ignore_status: false
+        //                         }
+        //                     });
+        //                 } else {
+        //                     await prisma.updateManyTransferPlans({
+        //                         where: {
+        //                             artist: { id: artist.id },
+        //                             subscriber: { id: subscriber.id },
+        //                             year: year,
+        //                             month: month,
+        //                             paid_status: false
+        //                         },
+        //                         data: {
+        //                             ignore_status: true
+        //                         }
+        //                     });
+        //                 }
+        //             }
+        //         }
+        //     });
+        // });
         return true;
     } catch (e) {
         log.error('populateTransferPlan error:', e);
@@ -509,75 +509,51 @@ async function transfer(root, args, ctx, info) {
         const prevDate = moment(`${prev_year}-${prev_month}-01`);
 
         if (inputDate > prevDate) {
-            throw new GQLError({message: `Not allowed to payout for ${year}-${month}`, code: 401});
+            throw new GQLError({message: `Not allowed to payout for Not ended month, ${year}-${month}`, code: 401});
         }
 
-        const artists = await prisma.users({
+        const transferPlans = await prisma.transferPlans({
             where: {
-                role: 'USER_PUBLISHER'
+                year: year,
+                month: month,
+                paid_status: false,
+                ignore_status: false
             }
         });
-        artists.forEach(async artist => {
-            const users = await prisma.user({id: artist.id}).users();
-            if (users.length > 0) {
-                const transferTransactions = await prisma.transferTransactions({
-                    where: {
-                        artist: { id: artist.id },
-                        year: year,
-                        month: month
-                    }
-                });
-                if (transferTransactions.length == 0) {
-                    const transferPlans = await prisma.transferPlans({
-                        where: {
-                            artist: { id: artist.id },
-                            year: year,
-                            month: month,
-                            ignore_status: false,
-                            paid_status: false
-                        }
-                    });
-                    let transferAmount = 0;
-                    transferPlans.forEach(tp => {
-                        transferAmount += tp.amount;
-                    });
-    
-                    if (transferAmount > 0 && artist.stripe_customer_id) {
-                        try {
-                            const result = await stripeHelper.transfer(transferAmount, artist.stripe_customer_id);
-                            if (result) {
-                                await prisma.createTransferTransaction({
-                                    artist: {
-                                        connect: { id: artist.id }
-                                    },
-                                    year: year,
-                                    month: month,
-                                    amount: transferAmount,
-                                    paid_status: false,
-                                    paid_date: moment().format('YYYY-MM-DD')
-                                });
 
-                                transferPlans.forEach(async tp => {
-                                    await prisma.updateTransferPlan({
-                                        where: { id: tp.id },
-                                        data: {
-                                            paid_status: true,
-                                            paid_date: moment().format('YYYY-MM-DD')
-                                        }
-                                    });
-                                });
+        for (transferPlan of transferPlans) {
+
+            const artist = await prisma.transferPlan({id: transferPlan.id}).artist();
+
+            if (transferPlan.amount > 0 && artist.stripe_customer_id) {
+
+                try {
+                    const result = await stripeHelper.transfer(transferPlan.amount, artist.stripe_customer_id);
+
+                    if (result) {
+                        await prisma.updateTransferPlan({
+                            where: { id: transferPlan.id },
+                            data: {
+                                paid_status: true,
+                                paid_date: moment().format('YYYY-MM-DD')
                             }
-                        } catch (error) {
-                            log.error(`stripeHelper.transfer fail: (${artist.id}:${artist.stripe_customer_id}:${year}:${month}:${transferAmount}:${transferPlans.length})${error.message}`);
-                        }
+                        });
                     }
+                } catch (error) {
+                    log.error(`stripeHelper.transfer fail: (${artist.id}:${artist.stripe_customer_id}:${year}:${month}:${transferAmount}:${transferPlans.length})${error.message}`);
                 }
             }
-        });
+        }
         return true;
     } catch (e) {
-        log.error('populateTransferPlan error:', e);
-        return false;
+        log.error('transfer error:', e);
+        let err_msg;
+        if (typeof e.message === 'object') {
+            err_msg = e.message.message;
+        } else {
+            err_msg = e.message;
+        }
+        throw new GQLError({message: err_msg, code: 409});
     }
 }
 

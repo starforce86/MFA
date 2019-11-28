@@ -16,6 +16,14 @@ const ARTIST_FACTORS_QUERY = gql`
 				artist {
           id
           email
+          my_promo_codes {
+            id
+            promo_code
+            current_promo_code
+          }
+          users {
+            id
+          }
         }
         promotion_factor
         minutes_exponent
@@ -141,7 +149,19 @@ class ArtistFactorTableComp extends React.Component {
         dataIndex: 'artist.email',
         align: 'left',
         sorter: this.stringSorter('artist.email'),
-        width: '25%',
+        width: '15%',
+      },
+      {
+        title: 'Promo Code',
+        dataIndex: 'promo_code.promo_code',
+        align: 'center',
+        width: '10%',
+      },
+      {
+        title: 'Promo Code Use',
+        dataIndex: 'promo_code_use',
+        align: 'center',
+        width: '10%',
       },
       {
         title: 'Artist promotion factor',
@@ -286,6 +306,7 @@ class ArtistFactorTableComp extends React.Component {
             });
             this.setState({ data: newData, editingKey: '' });
           }
+          location.reload();
         }
       } catch (ex) {
         notification['error']({
@@ -309,7 +330,12 @@ class ArtistFactorTableComp extends React.Component {
       errorPolicy: "all"
     });
     this.setState({
-      data: data.artistFactorses.map(d => ({ ...d, key: d.id }))
+      data: data.artistFactorses.map(d => ({ 
+        ...d, 
+        key: d.id,
+        promo_code: d.artist.my_promo_codes.find(p => p.current_promo_code == true),
+        promo_code_use: d.artist.users.length,
+      }))
     });
   }
 

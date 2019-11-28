@@ -1624,12 +1624,6 @@ export type ProfitPoolCalculationOrderByInput =
   | "monthly_pool_revenue_DESC"
   | "total_revenue_ASC"
   | "total_revenue_DESC"
-  | "total_payment_to_artists_ASC"
-  | "total_payment_to_artists_DESC"
-  | "net_revenue_ASC"
-  | "net_revenue_DESC"
-  | "gross_revenue_mfa_ASC"
-  | "gross_revenue_mfa_DESC"
   | "total_payments_to_artists_ASC"
   | "total_payments_to_artists_DESC"
   | "net_revenue_mfa_ASC"
@@ -3151,30 +3145,6 @@ export interface ProfitPoolCalculationWhereInput {
   total_revenue_lte?: Int;
   total_revenue_gt?: Int;
   total_revenue_gte?: Int;
-  total_payment_to_artists?: Float;
-  total_payment_to_artists_not?: Float;
-  total_payment_to_artists_in?: Float[] | Float;
-  total_payment_to_artists_not_in?: Float[] | Float;
-  total_payment_to_artists_lt?: Float;
-  total_payment_to_artists_lte?: Float;
-  total_payment_to_artists_gt?: Float;
-  total_payment_to_artists_gte?: Float;
-  net_revenue?: Float;
-  net_revenue_not?: Float;
-  net_revenue_in?: Float[] | Float;
-  net_revenue_not_in?: Float[] | Float;
-  net_revenue_lt?: Float;
-  net_revenue_lte?: Float;
-  net_revenue_gt?: Float;
-  net_revenue_gte?: Float;
-  gross_revenue_mfa?: Float;
-  gross_revenue_mfa_not?: Float;
-  gross_revenue_mfa_in?: Float[] | Float;
-  gross_revenue_mfa_not_in?: Float[] | Float;
-  gross_revenue_mfa_lt?: Float;
-  gross_revenue_mfa_lte?: Float;
-  gross_revenue_mfa_gt?: Float;
-  gross_revenue_mfa_gte?: Float;
   total_payments_to_artists?: Float;
   total_payments_to_artists_not?: Float;
   total_payments_to_artists_in?: Float[] | Float;
@@ -6374,9 +6344,6 @@ export interface ProfitPoolCalculationCreateInput {
   annual_pool_revenue?: Int;
   monthly_pool_revenue?: Int;
   total_revenue?: Int;
-  total_payment_to_artists?: Float;
-  net_revenue?: Float;
-  gross_revenue_mfa?: Float;
   total_payments_to_artists?: Float;
   net_revenue_mfa?: Float;
 }
@@ -6391,9 +6358,6 @@ export interface ProfitPoolCalculationUpdateInput {
   annual_pool_revenue?: Int;
   monthly_pool_revenue?: Int;
   total_revenue?: Int;
-  total_payment_to_artists?: Float;
-  net_revenue?: Float;
-  gross_revenue_mfa?: Float;
   total_payments_to_artists?: Float;
   net_revenue_mfa?: Float;
 }
@@ -6408,9 +6372,6 @@ export interface ProfitPoolCalculationUpdateManyMutationInput {
   annual_pool_revenue?: Int;
   monthly_pool_revenue?: Int;
   total_revenue?: Int;
-  total_payment_to_artists?: Float;
-  net_revenue?: Float;
-  gross_revenue_mfa?: Float;
   total_payments_to_artists?: Float;
   net_revenue_mfa?: Float;
 }
@@ -8648,9 +8609,6 @@ export interface ProfitPoolCalculation {
   annual_pool_revenue: Int;
   monthly_pool_revenue: Int;
   total_revenue: Int;
-  total_payment_to_artists: Float;
-  net_revenue: Float;
-  gross_revenue_mfa: Float;
   total_payments_to_artists: Float;
   net_revenue_mfa: Float;
 }
@@ -8670,9 +8628,6 @@ export interface ProfitPoolCalculationPromise
   annual_pool_revenue: () => Promise<Int>;
   monthly_pool_revenue: () => Promise<Int>;
   total_revenue: () => Promise<Int>;
-  total_payment_to_artists: () => Promise<Float>;
-  net_revenue: () => Promise<Float>;
-  gross_revenue_mfa: () => Promise<Float>;
   total_payments_to_artists: () => Promise<Float>;
   net_revenue_mfa: () => Promise<Float>;
 }
@@ -8692,9 +8647,6 @@ export interface ProfitPoolCalculationSubscription
   annual_pool_revenue: () => Promise<AsyncIterator<Int>>;
   monthly_pool_revenue: () => Promise<AsyncIterator<Int>>;
   total_revenue: () => Promise<AsyncIterator<Int>>;
-  total_payment_to_artists: () => Promise<AsyncIterator<Float>>;
-  net_revenue: () => Promise<AsyncIterator<Float>>;
-  gross_revenue_mfa: () => Promise<AsyncIterator<Float>>;
   total_payments_to_artists: () => Promise<AsyncIterator<Float>>;
   net_revenue_mfa: () => Promise<AsyncIterator<Float>>;
 }
@@ -10639,9 +10591,6 @@ export interface ProfitPoolCalculationPreviousValues {
   annual_pool_revenue: Int;
   monthly_pool_revenue: Int;
   total_revenue: Int;
-  total_payment_to_artists: Float;
-  net_revenue: Float;
-  gross_revenue_mfa: Float;
   total_payments_to_artists: Float;
   net_revenue_mfa: Float;
 }
@@ -10661,9 +10610,6 @@ export interface ProfitPoolCalculationPreviousValuesPromise
   annual_pool_revenue: () => Promise<Int>;
   monthly_pool_revenue: () => Promise<Int>;
   total_revenue: () => Promise<Int>;
-  total_payment_to_artists: () => Promise<Float>;
-  net_revenue: () => Promise<Float>;
-  gross_revenue_mfa: () => Promise<Float>;
   total_payments_to_artists: () => Promise<Float>;
   net_revenue_mfa: () => Promise<Float>;
 }
@@ -10683,9 +10629,6 @@ export interface ProfitPoolCalculationPreviousValuesSubscription
   annual_pool_revenue: () => Promise<AsyncIterator<Int>>;
   monthly_pool_revenue: () => Promise<AsyncIterator<Int>>;
   total_revenue: () => Promise<AsyncIterator<Int>>;
-  total_payment_to_artists: () => Promise<AsyncIterator<Float>>;
-  net_revenue: () => Promise<AsyncIterator<Float>>;
-  gross_revenue_mfa: () => Promise<AsyncIterator<Float>>;
   total_payments_to_artists: () => Promise<AsyncIterator<Float>>;
   net_revenue_mfa: () => Promise<AsyncIterator<Float>>;
 }

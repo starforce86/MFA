@@ -172,9 +172,6 @@ async function signUp(email, firstname, lastname, phone, password, promo_code, s
                         });
                     }
                 }
-                
-
-                
             } catch (e) {
                 log.trace(e);
                 let err_msg;

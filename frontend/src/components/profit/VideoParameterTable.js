@@ -307,6 +307,7 @@ class VideoParameterTableComp extends React.Component {
             // console.log('######### newData', newData)
             this.setState({ data: newData, editingKey: '' });
           }
+          location.reload();
         } else {
           notification['error']({
             message: 'Error!',

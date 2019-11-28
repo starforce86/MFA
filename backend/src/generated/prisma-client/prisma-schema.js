@@ -1720,9 +1720,6 @@ type ProfitPoolCalculation {
   annual_pool_revenue: Int!
   monthly_pool_revenue: Int!
   total_revenue: Int!
-  total_payment_to_artists: Float!
-  net_revenue: Float!
-  gross_revenue_mfa: Float!
   total_payments_to_artists: Float!
   net_revenue_mfa: Float!
 }
@@ -1743,9 +1740,6 @@ input ProfitPoolCalculationCreateInput {
   annual_pool_revenue: Int
   monthly_pool_revenue: Int
   total_revenue: Int
-  total_payment_to_artists: Float
-  net_revenue: Float
-  gross_revenue_mfa: Float
   total_payments_to_artists: Float
   net_revenue_mfa: Float
 }
@@ -1780,12 +1774,6 @@ enum ProfitPoolCalculationOrderByInput {
   monthly_pool_revenue_DESC
   total_revenue_ASC
   total_revenue_DESC
-  total_payment_to_artists_ASC
-  total_payment_to_artists_DESC
-  net_revenue_ASC
-  net_revenue_DESC
-  gross_revenue_mfa_ASC
-  gross_revenue_mfa_DESC
   total_payments_to_artists_ASC
   total_payments_to_artists_DESC
   net_revenue_mfa_ASC
@@ -1805,9 +1793,6 @@ type ProfitPoolCalculationPreviousValues {
   annual_pool_revenue: Int!
   monthly_pool_revenue: Int!
   total_revenue: Int!
-  total_payment_to_artists: Float!
-  net_revenue: Float!
-  gross_revenue_mfa: Float!
   total_payments_to_artists: Float!
   net_revenue_mfa: Float!
 }
@@ -1840,9 +1825,6 @@ input ProfitPoolCalculationUpdateInput {
   annual_pool_revenue: Int
   monthly_pool_revenue: Int
   total_revenue: Int
-  total_payment_to_artists: Float
-  net_revenue: Float
-  gross_revenue_mfa: Float
   total_payments_to_artists: Float
   net_revenue_mfa: Float
 }
@@ -1857,9 +1839,6 @@ input ProfitPoolCalculationUpdateManyMutationInput {
   annual_pool_revenue: Int
   monthly_pool_revenue: Int
   total_revenue: Int
-  total_payment_to_artists: Float
-  net_revenue: Float
-  gross_revenue_mfa: Float
   total_payments_to_artists: Float
   net_revenue_mfa: Float
 }
@@ -1967,30 +1946,6 @@ input ProfitPoolCalculationWhereInput {
   total_revenue_lte: Int
   total_revenue_gt: Int
   total_revenue_gte: Int
-  total_payment_to_artists: Float
-  total_payment_to_artists_not: Float
-  total_payment_to_artists_in: [Float!]
-  total_payment_to_artists_not_in: [Float!]
-  total_payment_to_artists_lt: Float
-  total_payment_to_artists_lte: Float
-  total_payment_to_artists_gt: Float
-  total_payment_to_artists_gte: Float
-  net_revenue: Float
-  net_revenue_not: Float
-  net_revenue_in: [Float!]
-  net_revenue_not_in: [Float!]
-  net_revenue_lt: Float
-  net_revenue_lte: Float
-  net_revenue_gt: Float
-  net_revenue_gte: Float
-  gross_revenue_mfa: Float
-  gross_revenue_mfa_not: Float
-  gross_revenue_mfa_in: [Float!]
-  gross_revenue_mfa_not_in: [Float!]
-  gross_revenue_mfa_lt: Float
-  gross_revenue_mfa_lte: Float
-  gross_revenue_mfa_gt: Float
-  gross_revenue_mfa_gte: Float
   total_payments_to_artists: Float
   total_payments_to_artists_not: Float
   total_payments_to_artists_in: [Float!]
