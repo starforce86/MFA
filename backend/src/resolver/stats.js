@@ -691,6 +691,7 @@ async function videoDataForMonthStats(root, args, ctx, info) {
 }
 
 async function videoParametersForMonthStats(root, args, ctx, info) {
+
     try {
         const year = parseInt(args.year);
         const month = parseInt(args.month);
@@ -852,6 +853,9 @@ async function videoParametersForMonthStats(root, args, ctx, info) {
 }
 
 async function totalMinutesForArtistStats(root, args, ctx, info) {
+
+    await populateChargeHistory();
+
     try {
         const year = parseInt(args.year);
         const month = parseInt(args.month);
@@ -933,7 +937,12 @@ async function totalMinutesForArtistStats(root, args, ctx, info) {
                         if (chargeHistories[0].amount >= 30000) {
                             annual_quantity ++;
                         } else {
-                            monthly_quantity ++;
+                            if (artistFactor.monthly_fee_duration > 0) {
+                                const monthly_fee_expire_date = moment(subscriber.createdAt).add(artistFactor.monthly_fee_duration - 1, 'M').endOf('month');
+                                if (moment(chargeHistories[0].chargeDate) <= monthly_fee_expire_date) {
+                                    monthly_quantity ++;
+                                }
+                            }
                         }
                     }
                 }
