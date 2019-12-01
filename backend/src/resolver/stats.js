@@ -914,31 +914,31 @@ async function totalMinutesForArtistStats(root, args, ctx, info) {
                 });
 
                 // Profit Pool Calculation
-                const active_subscribers = await prisma.users({
-                    where: {
-                        role: "USER_VIEWER",
-                        billing_subscription_active: true,
-                        artist: { id: artist.id }
-                    }
-                });
-    
-                let cnt_annual = 0;
-                let cnt_monthly = 0;
-    
-                for (active_subscriber of active_subscribers) {
-                    if (!active_subscriber.stripe_subsciption_json) {
-                        continue;
-                    }
-                    if (active_subscriber.stripe_subsciption_json.plan) {
-                        if (active_subscriber.stripe_subsciption_json.plan.id == config.stripe.plans.monthly_plan_id) {
-                            cnt_monthly ++;
-                        } else if (active_subscriber.stripe_subsciption_json.plan.id == config.stripe.plans.yearly_plan_id) {
-                            cnt_annual ++;
+                let annual_quantity = 0;
+                let monthly_quantity = 0;
+                const start_time_of_month = moment(`${year}-${month}-01 00:00:00`);
+                const end_time_of_month = moment(start_time_of_month).endOf('month');
+
+                const subscribers = await prisma.user({id: artist.id}).users();
+                
+                for (subscriber of subscribers) {
+                    const chargeHistories = await prisma.chargeHistories({
+                        where: {
+                            user: {id: subscriber.id},
+                            chargeDate_gte: start_time_of_month,
+                            chargeDate_lte: end_time_of_month
+                        }
+                    });
+                    if (chargeHistories && chargeHistories.length > 0) {
+                        if (chargeHistories[0].amount >= 30000) {
+                            annual_quantity ++;
+                        } else {
+                            monthly_quantity ++;
                         }
                     }
                 }
-
-                const finder_fee = (cnt_annual * artistFactor.annual_fee_amount_per_month + cnt_monthly * artistFactor.monthly_fee_amount_per_month) * artistFactor.finder_fee_factor;
+    
+                const finder_fee = (annual_quantity * artistFactor.annual_fee_amount_per_month + monthly_quantity * artistFactor.monthly_fee_amount_per_month) * artistFactor.finder_fee_factor;
                 totalProfitPool += finder_fee;
 
                 if (!totalMinutesForArtists || totalMinutesForArtists.length == 0) {
@@ -954,8 +954,8 @@ async function totalMinutesForArtistStats(root, args, ctx, info) {
                         total_minutes: totalMinutes,
                         artist_rating_factor: artistFactor.promotion_factor,
                         final_minutes: finalMinutes,
-                        monthly_quantity: cnt_monthly,
-                        annual_quantity: cnt_annual,
+                        monthly_quantity: monthly_quantity,
+                        annual_quantity: annual_quantity,
                         finder_fee: finder_fee
                     });
                 } else {
@@ -968,8 +968,8 @@ async function totalMinutesForArtistStats(root, args, ctx, info) {
                             total_minutes: totalMinutes,
                             artist_rating_factor: artistFactor.promotion_factor,
                             final_minutes: finalMinutes,
-                            monthly_quantity: cnt_monthly,
-                            annual_quantity: cnt_annual,
+                            monthly_quantity: monthly_quantity,
+                            annual_quantity: annual_quantity,
                             finder_fee: finder_fee
                         }
                     });

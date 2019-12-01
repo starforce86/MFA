@@ -907,7 +907,7 @@ class Profit extends Component {
 									<div className="col-md-12 mt-4">
 										<h5>Profit Pool Calculation</h5>
 									</div>
-									<div className="col-md-12 col-lg-6">
+									<div className="col-md-12">
 										<Table
 											bordered
 											columns={this.state.profit_pool.table_columns}
@@ -919,7 +919,7 @@ class Profit extends Component {
 								</div>
 
 								<div className="row">
-									<div className="col-md-12 col-lg-6 mt-4">
+									<div className="col-md-12 mt-4">
 										<Table
 											bordered
 											columns={profit_pool_calc1_table_columns}
@@ -931,7 +931,7 @@ class Profit extends Component {
 								</div>
 
 								<div className="row">
-									<div className="col-md-12 col-lg-6 mt-4">
+									<div className="col-md-12 mt-4">
 										<Table
 											bordered
 											columns={profit_pool_calc2_table_columns}
@@ -943,7 +943,7 @@ class Profit extends Component {
 								</div>
 
 								<div className="row">
-									<div className="col-md-6 col-lg-3 mt-4 mb-4">
+									<div className="col-md-6 mt-4 mb-4">
 										<Table
 											bordered
 											columns={last_table_columns}
