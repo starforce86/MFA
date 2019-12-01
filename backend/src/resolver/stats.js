@@ -988,7 +988,7 @@ async function totalMinutesForArtistStats(root, args, ctx, info) {
                     }
                 });
                 
-                const percent_of_profit_pool = parseFloat((totalMinutesForArtists[0].final_minutes * 100 / sumFinalMinutes).toFixed(3));
+                const percent_of_profit_pool = sumFinalMinutes > 0 ? parseFloat((totalMinutesForArtists[0].final_minutes * 100 / sumFinalMinutes).toFixed(3)) : 0;
                 const payment_from_profit_pool = parseFloat((percent_of_profit_pool * totalProfitPool / 100).toFixed(2));
 
                 await prisma.updateTotalMinutesForArtist({
