@@ -120,8 +120,8 @@ async function signUp(email, firstname, lastname, phone, password, promo_code, s
                     };
 
                     newUser = await prisma.createUser(newUserData);
-                }
-                if (userRole === 'USER_PUBLISHER') {
+
+                } else if (userRole === 'USER_PUBLISHER') {
                     
                     const result = await stripeHelper.createCustomConnectAccount(
                         firstname,
@@ -171,6 +171,9 @@ async function signUp(email, firstname, lastname, phone, password, promo_code, s
                             current_promo_code: true
                         });
                     }
+                } else {
+                    
+                    newUser = await prisma.createUser(newUserData);
                 }
             } catch (e) {
                 log.trace(e);
