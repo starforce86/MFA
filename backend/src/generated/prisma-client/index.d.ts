@@ -2823,8 +2823,20 @@ export interface ChargeHistoryWhereInput {
   paid_not?: Boolean;
   refunded?: Boolean;
   refunded_not?: Boolean;
-  status?: Boolean;
-  status_not?: Boolean;
+  status?: String;
+  status_not?: String;
+  status_in?: String[] | String;
+  status_not_in?: String[] | String;
+  status_lt?: String;
+  status_lte?: String;
+  status_gt?: String;
+  status_gte?: String;
+  status_contains?: String;
+  status_not_contains?: String;
+  status_starts_with?: String;
+  status_not_starts_with?: String;
+  status_ends_with?: String;
+  status_not_ends_with?: String;
   charge_json?: String;
   charge_json_not?: String;
   charge_json_in?: String[] | String;
@@ -6232,7 +6244,7 @@ export interface ChargeHistoryCreateInput {
   chargeId?: String;
   paid?: Boolean;
   refunded?: Boolean;
-  status?: Boolean;
+  status?: String;
   charge_json?: String;
 }
 
@@ -6243,7 +6255,7 @@ export interface ChargeHistoryUpdateInput {
   chargeId?: String;
   paid?: Boolean;
   refunded?: Boolean;
-  status?: Boolean;
+  status?: String;
   charge_json?: String;
 }
 
@@ -6253,7 +6265,7 @@ export interface ChargeHistoryUpdateManyMutationInput {
   chargeId?: String;
   paid?: Boolean;
   refunded?: Boolean;
-  status?: Boolean;
+  status?: String;
   charge_json?: String;
 }
 
@@ -8288,7 +8300,7 @@ export interface ChargeHistory {
   chargeId?: String;
   paid?: Boolean;
   refunded: Boolean;
-  status?: Boolean;
+  status?: String;
   charge_json?: String;
 }
 
@@ -8304,7 +8316,7 @@ export interface ChargeHistoryPromise
   chargeId: () => Promise<String>;
   paid: () => Promise<Boolean>;
   refunded: () => Promise<Boolean>;
-  status: () => Promise<Boolean>;
+  status: () => Promise<String>;
   charge_json: () => Promise<String>;
 }
 
@@ -8320,7 +8332,7 @@ export interface ChargeHistorySubscription
   chargeId: () => Promise<AsyncIterator<String>>;
   paid: () => Promise<AsyncIterator<Boolean>>;
   refunded: () => Promise<AsyncIterator<Boolean>>;
-  status: () => Promise<AsyncIterator<Boolean>>;
+  status: () => Promise<AsyncIterator<String>>;
   charge_json: () => Promise<AsyncIterator<String>>;
 }
 
@@ -10405,7 +10417,7 @@ export interface ChargeHistoryPreviousValues {
   chargeId?: String;
   paid?: Boolean;
   refunded: Boolean;
-  status?: Boolean;
+  status?: String;
   charge_json?: String;
 }
 
@@ -10420,7 +10432,7 @@ export interface ChargeHistoryPreviousValuesPromise
   chargeId: () => Promise<String>;
   paid: () => Promise<Boolean>;
   refunded: () => Promise<Boolean>;
-  status: () => Promise<Boolean>;
+  status: () => Promise<String>;
   charge_json: () => Promise<String>;
 }
 
@@ -10435,7 +10447,7 @@ export interface ChargeHistoryPreviousValuesSubscription
   chargeId: () => Promise<AsyncIterator<String>>;
   paid: () => Promise<AsyncIterator<Boolean>>;
   refunded: () => Promise<AsyncIterator<Boolean>>;
-  status: () => Promise<AsyncIterator<Boolean>>;
+  status: () => Promise<AsyncIterator<String>>;
   charge_json: () => Promise<AsyncIterator<String>>;
 }
 

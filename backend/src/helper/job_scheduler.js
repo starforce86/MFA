@@ -85,25 +85,38 @@ async function addPullChargeHistoryEvent() {
     const task_name = `pull_charge_history`;
     agenda.define(task_name, async (job, done) => {
         try {
-            const charges = await stripe.getCharges();
-            await Promise.all(charges.data.map(async (c) => {
-                const users = await prisma.users({where: {stripe_customer_id: c.customer}});
-                if(users && users.length > 0) {
-                    const user = users[0];
-                    const histories = await prisma.chargeHistories({where: {chargeId: c.id}});
-                    if (!histories || histories.length == 0) {
-                        await prisma.createChargeHistory({
-                            amount: c.amount,
-                            user: {
-                                connect: {id: user.id}
-                            },
-                            chargeDate: moment(c.created * 1000),
-                            chargeId: c.id,
-                            refunded: false
-                        });
+            const charges = await stripeHelper.getCharges();
+
+            for (charge of charges.data) {
+
+                // if (charge.paid == true) {
+
+                    const users = await prisma.users({where: {stripe_customer_id: charge.customer}});
+
+                    if(users && users.length > 0) {
+
+                        const user = users[0];
+
+                        const histories = await prisma.chargeHistories({where: {chargeId: charge.id}});
+
+                        if (!histories || histories.length == 0) {
+
+                            await prisma.createChargeHistory({
+                                amount: charge.amount,
+                                user: {
+                                    connect: {id: user.id}
+                                },
+                                chargeDate: moment(charge.created * 1000),
+                                chargeId: charge.id,
+                                paid: charge.paid,
+                                refunded: charge.refunded,
+                                status: charge.status,
+                                charge_json: JSON.stringify(charge)
+                            });
+                        }
                     }
-                }
-            }));
+                // }
+            }
 
             log.trace(`PullChargeHistory job: ${task_name}`);
         } catch (e) {

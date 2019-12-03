@@ -915,7 +915,7 @@ type ChargeHistory {
   chargeId: String
   paid: Boolean
   refunded: Boolean!
-  status: Boolean
+  status: String
   charge_json: String
 }
 
@@ -932,7 +932,7 @@ input ChargeHistoryCreateInput {
   chargeId: String
   paid: Boolean
   refunded: Boolean
-  status: Boolean
+  status: String
   charge_json: String
 }
 
@@ -973,7 +973,7 @@ type ChargeHistoryPreviousValues {
   chargeId: String
   paid: Boolean
   refunded: Boolean!
-  status: Boolean
+  status: String
   charge_json: String
 }
 
@@ -1002,7 +1002,7 @@ input ChargeHistoryUpdateInput {
   chargeId: String
   paid: Boolean
   refunded: Boolean
-  status: Boolean
+  status: String
   charge_json: String
 }
 
@@ -1012,7 +1012,7 @@ input ChargeHistoryUpdateManyMutationInput {
   chargeId: String
   paid: Boolean
   refunded: Boolean
-  status: Boolean
+  status: String
   charge_json: String
 }
 
@@ -1082,8 +1082,20 @@ input ChargeHistoryWhereInput {
   paid_not: Boolean
   refunded: Boolean
   refunded_not: Boolean
-  status: Boolean
-  status_not: Boolean
+  status: String
+  status_not: String
+  status_in: [String!]
+  status_not_in: [String!]
+  status_lt: String
+  status_lte: String
+  status_gt: String
+  status_gte: String
+  status_contains: String
+  status_not_contains: String
+  status_starts_with: String
+  status_not_starts_with: String
+  status_ends_with: String
+  status_not_ends_with: String
   charge_json: String
   charge_json_not: String
   charge_json_in: [String!]

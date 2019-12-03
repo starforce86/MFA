@@ -430,28 +430,47 @@ async function artistStats(root, args, ctx, info) {
 async function populateChargeHistory(root, args, ctx, info) {
     try {
         const charges = await stripeHelper.getCharges();
-        await Promise.all(charges.data.map(async (c) => {
-            const users = await prisma.users({where: {stripe_customer_id: c.customer}});
-            if(users && users.length > 0) {
-                const user = users[0];
-                const histories = await prisma.chargeHistories({where: {chargeId: c.id}});
-                if (!histories || histories.length == 0) {
-                    await prisma.createChargeHistory({
-                        amount: c.amount,
-                        user: {
-                            connect: {id: user.id}
-                        },
-                        chargeDate: moment(c.created * 1000),
-                        chargeId: c.id,
-                        refunded: false
-                    });
+
+        for (charge of charges.data) {
+
+            // if (charge.paid == true) {
+
+                const users = await prisma.users({where: {stripe_customer_id: charge.customer}});
+
+                if(users && users.length > 0) {
+
+                    const user = users[0];
+
+                    const histories = await prisma.chargeHistories({where: {chargeId: charge.id}});
+
+                    if (!histories || histories.length == 0) {
+
+                        await prisma.createChargeHistory({
+                            amount: charge.amount,
+                            user: {
+                                connect: {id: user.id}
+                            },
+                            chargeDate: moment(charge.created * 1000),
+                            chargeId: charge.id,
+                            paid: charge.paid,
+                            refunded: charge.refunded,
+                            status: charge.status,
+                            charge_json: JSON.stringify(charge)
+                        });
+                    }
                 }
-            }
-        }));
+            // }
+        }
         return true;
     } catch (e) {
         log.error('populateChargeHistory error:', e);
-        return false;
+        let err_msg;
+        if (typeof e.message === 'object') {
+            err_msg = e.message.message;
+        } else {
+            err_msg = e.message;
+        }
+        throw new GQLError({message: err_msg, code: 409});
     }
 }
 
@@ -474,7 +493,7 @@ async function populateSubscriptionHistory(root, args, ctx, info) {
         }));
         return true;
     } catch (e) {
-        log.error('populateChargeHistory error:', e);
+        log.error('populateSubscriptionHistory error:', e);
         return false;
     }
 }
@@ -854,9 +873,9 @@ async function videoParametersForMonthStats(root, args, ctx, info) {
 
 async function totalMinutesForArtistStats(root, args, ctx, info) {
 
-    await populateChargeHistory();
-
     try {
+        await populateChargeHistory();
+
         const year = parseInt(args.year);
         const month = parseInt(args.month);
 

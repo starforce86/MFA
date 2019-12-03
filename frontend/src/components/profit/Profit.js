@@ -567,7 +567,7 @@ class Profit extends Component {
 			loading: true
 		});
 
-    let result = await this.props.client.query({
+    const { data: { videoDataForMonthStats }} = await this.props.client.query({
       query: VIDEO_DATA_FOR_MONTH_QUERY,
       variables: {
 				year: year,
@@ -577,14 +577,21 @@ class Profit extends Component {
       errorPolicy: "all"
 		});
 
+		if (!videoDataForMonthStats) {
+			notification['error']({
+				message: 'Error!',
+				description: "videoDataForMonthStats error occured!",
+			});
+		}
+
 		this.setState({
 			video_data_for_month: {
 				...this.state.video_data_for_month,
-					table_data: result.data.videoDataForMonthStats,
+					table_data: videoDataForMonthStats,
 			}
 		})
 
-		result = await this.props.client.query({
+		const { data: { videoParametersForMonthStats }} = await this.props.client.query({
       query: VIDEO_PARAMETERS_FOR_MONTH_QUERY,
       variables: {
 				year: year,
@@ -594,22 +601,36 @@ class Profit extends Component {
       errorPolicy: "all"
 		});
 
+		if (!videoParametersForMonthStats) {
+			notification['error']({
+				message: 'Error!',
+				description: "videoParametersForMonthStats error occured!",
+			});
+		}
+
 		this.setState({
 			video_parameters_for_month: {
 				...this.state.video_parameters_for_month,
-					table_data: result.data.videoParametersForMonthStats,
+					table_data: videoParametersForMonthStats,
 			}
 		})
 
 		const { data: { totalMinutesForArtistStats } } = await this.props.client.query({
-      query: TOTAL_MINUTES_FOR_ARTIST_QUERY,
-      variables: {
+			query: TOTAL_MINUTES_FOR_ARTIST_QUERY,
+			variables: {
 				year: year,
 				month: month
 			},
 			fetchPolicy: "no-cache",
-      errorPolicy: "all"
+			errorPolicy: "all"
 		});
+
+		if (!totalMinutesForArtistStats) {
+			notification['error']({
+				message: 'Error!',
+				description: "totalMinutesForArtistStats error occured!",
+			});
+		}
 
 		this.setState({
 			minutes_for_artist: {
@@ -627,6 +648,13 @@ class Profit extends Component {
 			fetchPolicy: "no-cache",
       errorPolicy: "all"
 		});
+
+		if (!profitPoolCalculationStats) {
+			notification['error']({
+				message: 'Error!',
+				description: "profitPoolCalculationStats error occured!",
+			});
+		}
 
 		if (profitPoolCalculationStats && profitPoolCalculationStats.length > 0) {
 			const profit_pool_table_data = [
@@ -687,7 +715,7 @@ class Profit extends Component {
 			last_table_data: last_table_data
 		})
 
-		result = await this.props.client.query({
+		const { data: { payoutStats, availableBalance }} = await this.props.client.query({
       query: STATS_QUERY,
       variables: {
 				year: parseInt(this.state.selectedYear),
@@ -697,9 +725,16 @@ class Profit extends Component {
       errorPolicy: "all"
 		});
 
+		if (!payoutStats) {
+			notification['error']({
+				message: 'Error!',
+				description: "payoutStats error occured!",
+			});
+		}
+
 		this.setState({
-			payoutStats: result.data.payoutStats,
-			availableBalance: result.data.availableBalance,
+			payoutStats: payoutStats,
+			availableBalance: availableBalance,
 		})
 
 		// let new_payout_table_columns = [];
