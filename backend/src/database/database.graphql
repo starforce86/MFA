@@ -220,6 +220,7 @@ type ChargeHistory {
     chargeDate: DateTime
     chargeId: String
     refunded: Boolean! @default(value: "false")
+    charge_json: String
 }
 
 type SubscriptionHistory {

@@ -962,6 +962,7 @@ type ChargeHistory {
   user: User!
   amount: Int!
   chargeDate: DateTime
+  charge_json: String
 }
 
 type ChargeHistoryConnection {
@@ -974,6 +975,9 @@ input ChargeHistoryCreateInput {
   user: UserCreateOneInput!
   amount: Int!
   chargeDate: DateTime
+  chargeId: String
+  refunded: Boolean
+  charge_json: String
 }
 
 type ChargeHistoryEdge {
@@ -992,6 +996,12 @@ enum ChargeHistoryOrderByInput {
   amount_DESC
   chargeDate_ASC
   chargeDate_DESC
+  chargeId_ASC
+  chargeId_DESC
+  refunded_ASC
+  refunded_DESC
+  charge_json_ASC
+  charge_json_DESC
 }
 
 type ChargeHistoryPreviousValues {
@@ -1000,6 +1010,9 @@ type ChargeHistoryPreviousValues {
   updatedAt: DateTime!
   amount: Int!
   chargeDate: DateTime
+  chargeId: String
+  refunded: Boolean!
+  charge_json: String
 }
 
 type ChargeHistorySubscriptionPayload {
@@ -1024,11 +1037,17 @@ input ChargeHistoryUpdateInput {
   user: UserUpdateOneRequiredInput
   amount: Int
   chargeDate: DateTime
+  chargeId: String
+  refunded: Boolean
+  charge_json: String
 }
 
 input ChargeHistoryUpdateManyMutationInput {
   amount: Int
   chargeDate: DateTime
+  chargeId: String
+  refunded: Boolean
+  charge_json: String
 }
 
 input ChargeHistoryWhereInput {
@@ -1079,6 +1098,36 @@ input ChargeHistoryWhereInput {
   chargeDate_lte: DateTime
   chargeDate_gt: DateTime
   chargeDate_gte: DateTime
+  chargeId: String
+  chargeId_not: String
+  chargeId_in: [String!]
+  chargeId_not_in: [String!]
+  chargeId_lt: String
+  chargeId_lte: String
+  chargeId_gt: String
+  chargeId_gte: String
+  chargeId_contains: String
+  chargeId_not_contains: String
+  chargeId_starts_with: String
+  chargeId_not_starts_with: String
+  chargeId_ends_with: String
+  chargeId_not_ends_with: String
+  refunded: Boolean
+  refunded_not: Boolean
+  charge_json: String
+  charge_json_not: String
+  charge_json_in: [String!]
+  charge_json_not_in: [String!]
+  charge_json_lt: String
+  charge_json_lte: String
+  charge_json_gt: String
+  charge_json_gte: String
+  charge_json_contains: String
+  charge_json_not_contains: String
+  charge_json_starts_with: String
+  charge_json_not_starts_with: String
+  charge_json_ends_with: String
+  charge_json_not_ends_with: String
   AND: [ChargeHistoryWhereInput!]
   OR: [ChargeHistoryWhereInput!]
   NOT: [ChargeHistoryWhereInput!]

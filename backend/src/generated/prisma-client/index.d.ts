@@ -1557,7 +1557,9 @@ export type ChargeHistoryOrderByInput =
   | "chargeId_ASC"
   | "chargeId_DESC"
   | "refunded_ASC"
-  | "refunded_DESC";
+  | "refunded_DESC"
+  | "charge_json_ASC"
+  | "charge_json_DESC";
 
 export type CurriculumOrderByInput =
   | "id_ASC"
@@ -2815,6 +2817,20 @@ export interface ChargeHistoryWhereInput {
   chargeId_not_ends_with?: String;
   refunded?: Boolean;
   refunded_not?: Boolean;
+  charge_json?: String;
+  charge_json_not?: String;
+  charge_json_in?: String[] | String;
+  charge_json_not_in?: String[] | String;
+  charge_json_lt?: String;
+  charge_json_lte?: String;
+  charge_json_gt?: String;
+  charge_json_gte?: String;
+  charge_json_contains?: String;
+  charge_json_not_contains?: String;
+  charge_json_starts_with?: String;
+  charge_json_not_starts_with?: String;
+  charge_json_ends_with?: String;
+  charge_json_not_ends_with?: String;
   AND?: ChargeHistoryWhereInput[] | ChargeHistoryWhereInput;
   OR?: ChargeHistoryWhereInput[] | ChargeHistoryWhereInput;
   NOT?: ChargeHistoryWhereInput[] | ChargeHistoryWhereInput;
@@ -6207,6 +6223,7 @@ export interface ChargeHistoryCreateInput {
   chargeDate?: DateTimeInput;
   chargeId?: String;
   refunded?: Boolean;
+  charge_json?: String;
 }
 
 export interface ChargeHistoryUpdateInput {
@@ -6215,6 +6232,7 @@ export interface ChargeHistoryUpdateInput {
   chargeDate?: DateTimeInput;
   chargeId?: String;
   refunded?: Boolean;
+  charge_json?: String;
 }
 
 export interface ChargeHistoryUpdateManyMutationInput {
@@ -6222,6 +6240,7 @@ export interface ChargeHistoryUpdateManyMutationInput {
   chargeDate?: DateTimeInput;
   chargeId?: String;
   refunded?: Boolean;
+  charge_json?: String;
 }
 
 export interface CurriculumCreateInput {
@@ -8254,6 +8273,7 @@ export interface ChargeHistory {
   chargeDate?: DateTimeOutput;
   chargeId?: String;
   refunded: Boolean;
+  charge_json?: String;
 }
 
 export interface ChargeHistoryPromise
@@ -8267,6 +8287,7 @@ export interface ChargeHistoryPromise
   chargeDate: () => Promise<DateTimeOutput>;
   chargeId: () => Promise<String>;
   refunded: () => Promise<Boolean>;
+  charge_json: () => Promise<String>;
 }
 
 export interface ChargeHistorySubscription
@@ -8280,6 +8301,7 @@ export interface ChargeHistorySubscription
   chargeDate: () => Promise<AsyncIterator<DateTimeOutput>>;
   chargeId: () => Promise<AsyncIterator<String>>;
   refunded: () => Promise<AsyncIterator<Boolean>>;
+  charge_json: () => Promise<AsyncIterator<String>>;
 }
 
 export interface ChargeHistoryConnection {
@@ -10362,6 +10384,7 @@ export interface ChargeHistoryPreviousValues {
   chargeDate?: DateTimeOutput;
   chargeId?: String;
   refunded: Boolean;
+  charge_json?: String;
 }
 
 export interface ChargeHistoryPreviousValuesPromise
@@ -10374,6 +10397,7 @@ export interface ChargeHistoryPreviousValuesPromise
   chargeDate: () => Promise<DateTimeOutput>;
   chargeId: () => Promise<String>;
   refunded: () => Promise<Boolean>;
+  charge_json: () => Promise<String>;
 }
 
 export interface ChargeHistoryPreviousValuesSubscription
@@ -10386,6 +10410,7 @@ export interface ChargeHistoryPreviousValuesSubscription
   chargeDate: () => Promise<AsyncIterator<DateTimeOutput>>;
   chargeId: () => Promise<AsyncIterator<String>>;
   refunded: () => Promise<AsyncIterator<Boolean>>;
+  charge_json: () => Promise<AsyncIterator<String>>;
 }
 
 export interface CurriculumSubscriptionPayload {

@@ -914,6 +914,7 @@ type ChargeHistory {
   chargeDate: DateTime
   chargeId: String
   refunded: Boolean!
+  charge_json: String
 }
 
 type ChargeHistoryConnection {
@@ -928,6 +929,7 @@ input ChargeHistoryCreateInput {
   chargeDate: DateTime
   chargeId: String
   refunded: Boolean
+  charge_json: String
 }
 
 type ChargeHistoryEdge {
@@ -950,6 +952,8 @@ enum ChargeHistoryOrderByInput {
   chargeId_DESC
   refunded_ASC
   refunded_DESC
+  charge_json_ASC
+  charge_json_DESC
 }
 
 type ChargeHistoryPreviousValues {
@@ -960,6 +964,7 @@ type ChargeHistoryPreviousValues {
   chargeDate: DateTime
   chargeId: String
   refunded: Boolean!
+  charge_json: String
 }
 
 type ChargeHistorySubscriptionPayload {
@@ -986,6 +991,7 @@ input ChargeHistoryUpdateInput {
   chargeDate: DateTime
   chargeId: String
   refunded: Boolean
+  charge_json: String
 }
 
 input ChargeHistoryUpdateManyMutationInput {
@@ -993,6 +999,7 @@ input ChargeHistoryUpdateManyMutationInput {
   chargeDate: DateTime
   chargeId: String
   refunded: Boolean
+  charge_json: String
 }
 
 input ChargeHistoryWhereInput {
@@ -1059,6 +1066,20 @@ input ChargeHistoryWhereInput {
   chargeId_not_ends_with: String
   refunded: Boolean
   refunded_not: Boolean
+  charge_json: String
+  charge_json_not: String
+  charge_json_in: [String!]
+  charge_json_not_in: [String!]
+  charge_json_lt: String
+  charge_json_lte: String
+  charge_json_gt: String
+  charge_json_gte: String
+  charge_json_contains: String
+  charge_json_not_contains: String
+  charge_json_starts_with: String
+  charge_json_not_starts_with: String
+  charge_json_ends_with: String
+  charge_json_not_ends_with: String
   AND: [ChargeHistoryWhereInput!]
   OR: [ChargeHistoryWhereInput!]
   NOT: [ChargeHistoryWhereInput!]
