@@ -913,7 +913,9 @@ type ChargeHistory {
   amount: Int!
   chargeDate: DateTime
   chargeId: String
+  paid: Boolean
   refunded: Boolean!
+  status: Boolean
   charge_json: String
 }
 
@@ -928,7 +930,9 @@ input ChargeHistoryCreateInput {
   amount: Int!
   chargeDate: DateTime
   chargeId: String
+  paid: Boolean
   refunded: Boolean
+  status: Boolean
   charge_json: String
 }
 
@@ -950,8 +954,12 @@ enum ChargeHistoryOrderByInput {
   chargeDate_DESC
   chargeId_ASC
   chargeId_DESC
+  paid_ASC
+  paid_DESC
   refunded_ASC
   refunded_DESC
+  status_ASC
+  status_DESC
   charge_json_ASC
   charge_json_DESC
 }
@@ -963,7 +971,9 @@ type ChargeHistoryPreviousValues {
   amount: Int!
   chargeDate: DateTime
   chargeId: String
+  paid: Boolean
   refunded: Boolean!
+  status: Boolean
   charge_json: String
 }
 
@@ -990,7 +1000,9 @@ input ChargeHistoryUpdateInput {
   amount: Int
   chargeDate: DateTime
   chargeId: String
+  paid: Boolean
   refunded: Boolean
+  status: Boolean
   charge_json: String
 }
 
@@ -998,7 +1010,9 @@ input ChargeHistoryUpdateManyMutationInput {
   amount: Int
   chargeDate: DateTime
   chargeId: String
+  paid: Boolean
   refunded: Boolean
+  status: Boolean
   charge_json: String
 }
 
@@ -1064,8 +1078,12 @@ input ChargeHistoryWhereInput {
   chargeId_not_starts_with: String
   chargeId_ends_with: String
   chargeId_not_ends_with: String
+  paid: Boolean
+  paid_not: Boolean
   refunded: Boolean
   refunded_not: Boolean
+  status: Boolean
+  status_not: Boolean
   charge_json: String
   charge_json_not: String
   charge_json_in: [String!]

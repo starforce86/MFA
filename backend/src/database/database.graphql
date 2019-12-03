@@ -219,7 +219,9 @@ type ChargeHistory {
     amount: Int!
     chargeDate: DateTime
     chargeId: String
+    paid: Boolean
     refunded: Boolean! @default(value: "false")
+    status: String
     charge_json: String
 }
 
