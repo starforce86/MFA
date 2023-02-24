@@ -228,8 +228,8 @@ const config = {
     },
     aws: {
         aws_bucket_name: 'mfa-video-bucket',
-        aws_access_key_id: 'AKIARFV4DDDME5LVEP4R',
-        aws_secret_access_key: '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',
+        aws_access_key_id: '',
+        aws_secret_access_key: '',
         aws_region: 'us-east-2',
         aws_uploaded_file_url_link: 'https://s3.us-east-2.amazonaws.com/mfa-video-bucket/'
     },
